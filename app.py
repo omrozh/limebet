@@ -480,9 +480,14 @@ def admin_console():
                 // Oyuncu ekle
                 <br>
                 
-                add-match <maçın_bugünden_kaç_gün_sonra_olacağı> <takım_1> <takım_2>
+                add-match <maçın_bugünden_kaç_gün_sonra_olacağı> <takım_1> <takım_2> <maçın_ligi>
                 <br>
                 // Maç ekle
+                <br>
+                
+                change-request-status <status_id> <new_status>
+                <br>
+                // Ödeme Statüsü Değiştir
                 <br>
                 
                 add-points <puan_miktarı> <oyuncu_adı> <puanın_kaç_gün_önce_kazanıldığı>
