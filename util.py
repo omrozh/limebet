@@ -72,6 +72,7 @@ if argv[1] == "add-match":
         )
         db.session.add(new_match)
         db.session.commit()
+        print("add match")
 
 
 if argv[1] == "add-points":
