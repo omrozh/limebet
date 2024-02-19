@@ -76,9 +76,15 @@ if argv[1] == "add-match":
 
 if argv[1] == "add-points":
     with app.app_context():
+        team = Team.query.filter_by(team_name=argv[3]).first()
+        athlete = None
+        for i in Athlete.query.filter_by(team_fk=team.id).all():
+            if i.athlete_name == argv[3]:
+                athlete = i
+                break
         new_point = Points(
             points=int(argv[2]),
-            athlete_fk=Athlete.query.filter_by(athlete_name=argv[3].replace("-", " ")).first().id,
+            athlete_fk=athlete.id,
             point_date=(datetime.datetime.today() - datetime.timedelta(days=int(argv[4]))).date()
         )
         db.session.add(new_point)
