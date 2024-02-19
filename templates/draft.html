@@ -14,7 +14,7 @@
         var url = new URL(url_string);
         var c = url.searchParams.get("desktop");
         if(window.innerWidth < window.innerHeight && !c){
-            document.location = window.location+"?desktop=true"
+            document.location = window.location+"?desktop=true&mobile=true"
         }
     </script>
 
@@ -257,18 +257,34 @@
                     </center>
                 </form>
             {% else %}
-                <form enctype="multipart/form-data" method="post" style="background-image: url('/static/saha2.jpg'); background-size: cover; background-position: center">
-                    {% for i in range(11) %}
-                        <div id="draft-div-{{ i }}" onclick="last_choice={{ i }}; this.style.opacity = 0.5; document.getElementById('search-box').scrollIntoView({block: 'center'}); document.getElementById('search-box').focus()" style="border-top: 1px solid gray; padding: 10px; box-sizing: border-box; color: white; background: rgba(0,0,0,0.5); width: 100%; height: 100%">
-                            <div id="team-img-{{ i }}" style="float: left; width: 25px; margin-right: 15px; background-image: url('/static/player.png'); background-size: cover; height: 25px"></div><span style="float: left;  margin-top: 1px" id="athlete-{{ i }}">Oyuncu - {{ i+1 }}</span>
-                            <span style="float: right; display: none; margin-top: 2px" id="athlete-cost-wrapper-{{ i }}">
-                                <span id="athlete-cost-{{i}}"></span>₺
-                            </span>
-                            <input type="text" style="border: none; outline: none; display: none" name="athlete-{{i}}">
-                            <br>
-                        </div>
-                    {% endfor %}
-                </form>
+
+                {% if not mobile %}
+                    <form enctype="multipart/form-data" method="post" style="background-image: url('/static/saha2.jpg'); background-size: cover; background-position: center">
+                        {% for i in range(11) %}
+                            <div id="draft-div-{{ i }}" onclick="last_choice={{ i }}; this.style.opacity = 0.5; document.getElementById('search-box').scrollIntoView({block: 'center'}); document.getElementById('search-box').focus()" style="border-top: 1px solid gray; padding: 10px; box-sizing: border-box; color: white; background: rgba(0,0,0,0.5); width: 100%; height: 100%">
+                                <div id="team-img-{{ i }}" style="float: left; width: 25px; margin-right: 15px; background-image: url('/static/player.png'); background-size: cover; height: 25px"></div><span style="float: left;  margin-top: 1px" id="athlete-{{ i }}">Oyuncu - {{ i+1 }}</span>
+                                <span style="float: right; display: none; margin-top: 2px" id="athlete-cost-wrapper-{{ i }}">
+                                    <span id="athlete-cost-{{i}}"></span>₺
+                                </span>
+                                <input type="text" style="border: none; outline: none; display: none" name="athlete-{{i}}">
+                                <br>
+                            </div>
+                        {% endfor %}
+                    </form>
+                {% else %}
+                    <form enctype="multipart/form-data" method="post" style="background-image: url('/static/saha2.jpg'); background-size: cover; background-position: center">
+                        {% for i in range(11) %}
+                            <div id="draft-div-{{ i }}" onclick="last_choice={{ i }}; this.style.opacity = 0.5; document.getElementById('search-box').scrollIntoView({block: 'center'}); document.getElementById('search-box').focus()" style="border-top: 1px solid gray; padding: 10px; box-sizing: border-box; color: white; background: rgba(0,0,0,0.5); width: 100%; height: 100%; font-size: 12px; padding-bottom: 15px">
+                                <div id="team-img-{{ i }}" style="float: left; width: 25px; margin-right: 15px; background-image: url('/static/player.png'); background-size: cover; height: 25px"></div><span style="float: left;  margin-top: 4px" id="athlete-{{ i }}">Oyuncu - {{ i+1 }}</span>
+                                <span style="float: right; display: none; margin-top: 4px" id="athlete-cost-wrapper-{{ i }}">
+                                    <span id="athlete-cost-{{i}}"></span>₺
+                                </span>
+                                <input type="text" style="border: none; outline: none; display: none" name="athlete-{{i}}">
+                                <br>
+                            </div>
+                        {% endfor %}
+                    </form>
+                {% endif %}
             {% endif %}
             <br>
             <input type="text" oninput="searchPlayer()" id="search-box" style="width: 100%; padding: 10px 15px; font-family: sans-serif; outline: none; font-size: 1rem; box-sizing: border-box" placeholder="Oyuncu Ara">
@@ -277,13 +293,24 @@
             </div>
             <div style="background-color: white; overflow-y: auto; max-height: 310px">
                 {% for i in competition.available_athletes %}
-                    <div class="searchable-div" onclick="addToDraft('{{i.id}}', '{{ i.athlete_name }}', this, {{ i.athlete_cost }}, '{{ i.team_name }}')" id="athlete-selection-{{i.id}}" style="background-color: white; border-top: 1px solid gray; padding: 10px; box-sizing: border-box;">
-                        <img style="float: left; width: 25px; margin-right: 15px" src="/static/{{ i.team_name }}.png"><span style="float: left; text-decoration: underline; margin-top: 2px">{{ i.athlete_name }}</span>
-                        <span style="float: right; margin-top: 2px">
-                            {{ i.athlete_cost | int }}₺
-                        </span>
-                        <br>
-                    </div>
+                    {% if desktop and mobile %}
+                        <div class="searchable-div" onclick="addToDraft('{{i.id}}', '{{ i.athlete_name }}', this, {{ i.athlete_cost }}, '{{ i.team_name }}')" id="athlete-selection-{{i.id}}" style="background-color: white; border-top: 1px solid gray; box-sizing: border-box; font-size: 12px; padding-top: 10px; padding-left: 10px; padding-right: 10px; padding-bottom: 20px">
+                            <img style="float: left; width: 25px; margin-right: 15px; margin-top: 3px" src="/static/{{ i.team_name }}.png"><span style="float: left; text-decoration: underline; margin-top: 7px">{{ i.athlete_name }}</span>
+                            <span style="float: right; margin-top: 7px">
+                                {{ i.athlete_cost | int }}₺
+                            </span>
+                            <br>
+                        </div>
+                    {% else %}
+                        <div class="searchable-div" onclick="addToDraft('{{i.id}}', '{{ i.athlete_name }}', this, {{ i.athlete_cost }}, '{{ i.team_name }}')" id="athlete-selection-{{i.id}}" style="background-color: white; border-top: 1px solid gray; padding: 10px; box-sizing: border-box;">
+                            <img style="float: left; width: 25px; margin-right: 15px" src="/static/{{ i.team_name }}.png"><span style="float: left; text-decoration: underline;">{{ i.athlete_name }}</span>
+                            <span style="float: right;">
+                                {{ i.athlete_cost | int }}₺
+                            </span>
+                            <br>
+                        </div>
+                    {% endif %}
+
                 {% endfor %}
             </div>
             <br>

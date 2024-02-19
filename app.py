@@ -715,7 +715,7 @@ def draft(competition_id):
         return flask.render_template("completed_draft.html")
 
     return flask.render_template("draft.html", competition=current_competition,
-                                 desktop=flask.request.args.get("desktop", False))
+                                 desktop=flask.request.args.get("desktop", False), mobile=flask.request.args.get("mobile", False))
 
 
 @app.route("/static/<filename>")
