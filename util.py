@@ -80,13 +80,13 @@ if argv[1] == "add-points":
         athlete = None
         for i in Athlete.query.filter_by(team_fk=team.id).all():
             print(i.athlete_name)
-            if argv[3] in i.athlete_name:
+            if argv[4] in i.athlete_name:
                 athlete = i
                 break
         new_point = Points(
             points=int(argv[2]),
             athlete_fk=athlete.id,
-            point_date=(datetime.datetime.today() - datetime.timedelta(days=int(argv[4]))).date()
+            point_date=(datetime.datetime.today() - datetime.timedelta(days=int(argv[5]))).date()
         )
         db.session.add(new_point)
         db.session.commit()
