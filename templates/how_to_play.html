@@ -28,9 +28,14 @@
             <p style="color: white; font-size: 1rem; margin-top: 35px; font-family: 'Protest Guerrilla', sans-serif">
                 KadroMilyon
             </p>
-            <p style="color: orange; font-size: 1rem; margin-top: -10px; font-family: 'Protest Guerrilla', sans-serif">
+            <p id="hid-mob" style="color: orange; font-size: 1rem; margin-top: -10px; font-family: 'Protest Guerrilla', sans-serif">
                 Fantezi Spor
             </p>
+            <script>
+                if(window.innerHeight > window.innerWidth){
+                    document.getElementById("hid-mob").style.display = "none";
+                }
+            </script>
         </div>
         <div style="float: right; margin-top: 50px">
             {% if current_user.is_authenticated %}
