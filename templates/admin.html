@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Protest+Guerrilla&display=swap" rel="stylesheet">
+    <title>Admin Portalı - KadroMilyon</title>
+</head>
+<body style="background-color: #222">
+  <img src="/static/kadromilyon.png" alt="" style="width: 75px; padding: 20px; float: left">
+  <form method="post" enctype="multipart/form-data" style="background-color: rgba(0,134,255,0.38); border-top: dodgerblue 5px solid; color: white; padding: 20px; box-sizing: border-box; position: absolute; top: 0; bottom: 0; right: 0; left: 0; margin: auto; width: fit-content; height: fit-content">
+    <h1 style="color: white; font-family: 'Protest Guerrilla', sans-serif">
+        Admin
+    </h1>
+      <label for="competition_name" style="font-family: sans-serif; font-size: 12px">Yarışma Adı</label>
+      <br>
+      <input id="competition_name" name="competition_name" type="text" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem">
+      <br>
+      <br>
+      <label for="start_date" style="font-family: sans-serif; font-size: 12px">Başlangıç Tarihi</label>
+      <br>
+      <input id="start_date" name="start_date" type="date" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem">
+      <br>
+      <br>
+      <label for="end_date" style="font-family: sans-serif; font-size: 12px">Bitiş Tarihi</label>
+      <br>
+      <input id="end_date" name="end_date" type="date" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem">
+      <br>
+      <br>
+      <label for="entry_fee" style="font-family: sans-serif; font-size: 12px">Katılım Ücreti</label>
+      <br>
+      <input id="entry_fee" name="entry_fee" type="text" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem">
+      <br>
+      <br>
+      <label for="competition_type" style="font-family: sans-serif; font-size: 12px">Yarışma Türü</label>
+      <br>
+      <input id="competition_type" name="competition_type" type="text" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem">
+      <br>
+      <br>
+      <label for="highest_prize" style="font-family: sans-serif; font-size: 12px">Büyük Ödül</label>
+      <br>
+      <input id="highest_prize" name="highest_prize" type="text" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem">
+      <br>
+      <br>
+      <label for="max_number_of_participants" style="font-family: sans-serif; font-size: 12px">Maksimum Katılımcı Sayısı</label>
+      <br>
+      <input id="max_number_of_participants" name="max_number_of_participants" type="text" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem">
+      <br>
+      <br>
+      <label for="prize_winners" style="font-family: sans-serif; font-size: 12px">Ödül Alacak Oyuncu Sayısı</label>
+      <br>
+      <input id="prize_winners" name="prize_winners" type="text" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem">
+      <br>
+      <br>
+      <label for="prize_decrease_multiplier" style="font-family: sans-serif; font-size: 12px">Her sıralama düşüşünde ödülün bölüneceği çarpan</label>
+      <br>
+      <input id="prize_decrease_multiplier" name="prize_decrease_multiplier" type="text" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem">
+      <br>
+      <br>
+      <label for="minimum_prize" style="font-family: sans-serif; font-size: 12px">Sıralamaya girenler için minimum ikramiye</label>
+      <br>
+      <input id="minimum_prize" name="minimum_prize" type="text" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem">
+      <br>
+      <br>
+      <label for="allow_multiple_entries" style="font-family: sans-serif; font-size: 12px">Birden fazla katılıma izin ver: </label>
+    <br>
+      <input id="allow_multiple_entries" name="allow_multiple_entries" type="checkbox" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem">
+      <br>
+      <br>
+      <button style="color: white; font-family: sans-serif; width: 100%; padding: 10px; box-sizing: border-box; background-color: dodgerblue; outline: none; border: none">Yarışma Ekle</button>
+  </form>
+  <button style="color: white; background-color: dodgerblue; border: none; outline: none; padding: 5px; top: 25px; right: 25px; position:absolute;" onclick="prizePoolEstimate()">Get Pool Estimate</button>
+  <script>
+    function prizePoolEstimate(){
+      total_price = parseFloat(document.getElementById("highest_prize").value)
+      temp_price = total_price
+      for(let i = 0; i < document.getElementById("prize_winners").value; i++) {
+        if(parseFloat(temp_price) / parseFloat(document.getElementById("prize_decrease_multiplier").value) > parseFloat(document.getElementById("minimum_prize").value)){
+          temp_price = parseFloat(temp_price) / parseFloat(document.getElementById("prize_decrease_multiplier").value);
+        } else{
+          temp_price = parseFloat(document.getElementById("minimum_prize").value);
+        }
+        total_price += parseFloat(temp_price)
+      }
+      alert(total_price)
+      alert((parseFloat(document.getElementById("entry_fee").value)*parseFloat(document.getElementById("max_number_of_participants").value))-total_price)
+    }
+  </script>
+</body>
+</html>

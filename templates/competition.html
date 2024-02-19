@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ competition.competition_name }} | KadroMilyon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Protest+Guerrilla&display=swap" rel="stylesheet">
+    <style>
+        .displaybr{
+            display: none;
+            clear: both;
+        }
+        @media screen and (max-width: 1000px) {
+            .displaybr{
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body style="background-color: #222; padding: 0; margin: 0; font-family: 'Open Sans', sans-serif">
+    <div style="width: 100%; box-sizing: border-box; height: 220px">
+        <img src="/static/kadromilyon.png" alt="" style="width: 75px; padding: 20px; float: left">
+        <div style="float: left;">
+            <p style="color: white; font-size: 1rem; margin-top: 35px; font-family: 'Protest Guerrilla', sans-serif">
+                KadroMilyon
+            </p>
+            <p style="color: orange; font-size: 1rem; margin-top: -10px; font-family: 'Protest Guerrilla', sans-serif">
+                Fantezi Spor
+            </p>
+        </div>
+        <div style="float: right; margin-top: 50px">
+            <div style="background-color: rgba(0,134,255,0.38); border-left: dodgerblue 3px solid; color: white; padding: 10px; box-sizing: border-box; margin-right: 20px; margin-top: -10px; float: right">
+                {{'%0.2f'| format(current_user.balance|float)}}₺
+            </div>
+            <a href="/profile" style="color: dodgerblue; text-decoration: none; margin-right: 25px; float: right">
+                <img style="width: 25px" src="/static/profile.png" alt="">
+            </a>
+        </div>
+        <div style="padding: 20px 50px; overflow-x: auto; float: left; white-space: nowrap; width: 100vw; background-color: #333; box-sizing: border-box">
+            <span style="display: inline-block; color: white" onclick="document.location = '/'">
+                Anasayfa
+            </span>
+            <span style="display: inline-block; margin-left: 50px; color: white" onclick="localStorage.clear(); window.location = '/'">
+                Kampanyalar
+            </span>
+            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/?filter_q=daily'">
+                Günlük Yarışmalar
+            </span>
+            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/?filter_q=weekly'">
+                Haftalık Yarışmalar
+            </span>
+            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/?filter_q=daily'">
+                Yüksek Limitli Yarışmalar
+            </span>
+            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/?filter_q=Premier-Lig'">
+                Premier Lig
+            </span>
+            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/?filter_q=Süper-Lig'">
+                Süper Lig
+            </span>
+            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/?filter_q=Bundesliga'">
+                Bundesliga
+            </span>
+            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/?filter_q=LaLiga'">
+                LaLiga
+            </span>
+        </div>
+    </div>
+    <center>
+        <div style="background-color: #333333; width: 80%; height: fit-content; text-align: left; padding: 25px; box-sizing: border-box; min-height: fit-content">
+            <img src="/static/money-bag2.png" style="width: 50px; float: left" alt="">
+            <h1 style="font-family: 'Protest Guerrilla', sans-serif; color: white; margin-top: 5px; float: left;">{{ competition.competition_name }}</h1>
+            <span style="font-size: 1rem; float: right; color: white">
+                {{ competition.start_date.strftime('%d/%m/%Y') }} - {{ competition.end_date.strftime('%d/%m/%Y') }}
+            </span>
+            <br class="displaybr">
+            <br class="displaybr">
+            <p style="clear: both; color: white;">
+                <span style="margin-left: 25px">
+                    Giriş Ücreti: {{ competition.entry_fee }}₺
+                </span>
+                <br class="displaybr">
+                <span style="margin-left: 25px;">
+                    Maksimum Katılımcı Sayısı: {{ competition.participant_max }}
+                </span>
+                <br class="displaybr">
+                <span style="margin-left: 25px">
+                    Ödül Havuzu: {{"{:,.2f}".format(competition.prize_pool|float)}}₺
+                </span>
+                <br class="displaybr">
+                <span style="margin-left: 25px">
+                    Birden Fazla Kere Katılım:
+                    {% if competition.allow_multiple_entries %}
+                        Evet
+                    {% else %}
+                        Hayır
+                    {% endif %}
+                </span>
+                <br class="displaybr">
+            </p>
+            <div style="background-color: dodgerblue; width: 100%; padding: 20px; color: white; box-sizing: border-box; margin-top: 50px;">
+                Ödüller
+            </div>
+            <div style="background-color: white">
+                {% for index, prize in competition.all_prizes.items() %}
+                    <div style="background-color: white; border-top: 1px solid gray; padding: 10px; box-sizing: border-box">
+                        <span style="float: left">{{ index }}</span>
+                        <span style="float: right">
+                            {{ "{:,.2f}".format(prize) }}₺
+                        </span>
+                    </div>
+                    <br>
+                {% endfor %}
+            </div>
+            <br>
+            <button onclick="document.location = '/draft/{{ competition.id }}'" style="color: white; font-family: 'Protest Guerrilla', sans-serif; width: 100%; padding: 15px; box-sizing: border-box; background-color: orange; outline: none; border: none">Yarışmaya Katıl</button>
+        </div>
+    </center>
+    <br style="clear: both">
+    <span style="opacity: 0;">KadroMilyon</span>
+</body>
+</html>

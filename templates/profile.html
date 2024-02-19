@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>KadroMilyon | Fantezi Futbol'un Merkezi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Protest+Guerrilla&display=swap" rel="stylesheet">
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+        .select-payment:hover{
+            opacity: 0.7;
+            cursor: pointer;
+        }
+
+        tr:nth-child(even) {background-color: #f2f2f2;}
+    </style>
+</head>
+<body style="background-color: #222; padding: 0; margin: 0; font-family: 'Open Sans', sans-serif">
+    <div style="width: 100%; box-sizing: border-box; height: 220px">
+        <img src="/static/kadromilyon.png" alt="" style="width: 75px; padding: 20px; float: left">
+        <div style="float: left;">
+            <p style="color: white; font-size: 1rem; margin-top: 35px; font-family: 'Protest Guerrilla', sans-serif">
+                KadroMilyon
+            </p>
+            <p style="color: orange; font-size: 1rem; margin-top: -10px; font-family: 'Protest Guerrilla', sans-serif">
+                Fantezi Spor
+            </p>
+        </div>
+        <div style="float: right; margin-top: 50px">
+            <div style="background-color: rgba(0,134,255,0.38); border-left: dodgerblue 3px solid; color: white; padding: 10px; box-sizing: border-box; margin-right: 20px; margin-top: -10px; float: right">
+                {{'%0.2f'| format(current_user.balance|float)}}₺
+            </div>
+        </div>
+        <div style="padding: 20px 50px; overflow-x: auto; float: left; white-space: nowrap; width: 100vw; background-color: #333; box-sizing: border-box">
+            <span style="display: inline-block; color: white" onclick="document.location = '/'">
+                Anasayfa
+            </span>
+            <span class="navbar-item" onclick="changeDivision('current-competitions', this)" style="display: inline-block; margin-left: 50px; color: white; text-decoration: underline">
+                Katıldığım Yarışmalar
+            </span>
+            <span class="navbar-item" onclick="changeDivision('profile-information', this)" style="display: inline-block; margin-left: 50px; color: white">
+                Kullanıcı Bilgileri
+            </span>
+            <span onclick="changeDivision('previous-competitions', this)" class="navbar-item" style="display: inline-block; margin-left: 50px; color: white">
+                Geçmiş Yarışmalarım
+            </span>
+            <span onclick="changeDivision('deposit-money', this)" class="navbar-item" style="display: inline-block; margin-left: 50px; color: white">
+                Para Yatır
+            </span>
+            <span class="navbar-item" style="display: inline-block; margin-left: 50px; color: white" onclick="changeDivision('withdraw-money', this)">
+                Para Çek
+            </span>
+        </div>
+    </div>
+    <center>
+        <div id="current-competitions" class="division-profile">
+            <h1 style="color: white; text-align: left; font-family: 'Protest Guerrilla', sans-serif; width: 80%">Aktif Kadrolar</h1>
+            {% if current_user.active_drafts|length == 0%}
+                <p style="color: white; text-align: left; margin-left: 10%">Henüz aktif bir kadronuz yok</p>
+            {% endif %}
+            {% for i in current_user.active_drafts %}
+            <h1 onclick="document.location = '/competition/{{ i.competition.id }}'" style="font-family: 'Protest Guerrilla', sans-serif; text-decoration: underline; background-color: orange; color: white; box-sizing: border-box; padding: 10px; width: 80%; margin-bottom: 0; margin-top: 50px">{{ i.draft_name }}</h1>
+                <div style="background-color: white; width: 80%; margin-top: 0; background-image: url('/static/saha.jpg'); background-size: cover; background-position: center 0;">
+                    {% for i in i.chosen_athletes %}
+                        <div style="border-top: 1px solid gray; padding: 10px; box-sizing: border-box; color: white; background: rgba(0,0,0,0.5); width: 100%; height: 100%">
+                            <img style="float: left; width: 25px; margin-right: 15px" src="/athlete/image/{{ i.athlete.id }}"><span style="float: left; margin-top: 2px">{{ i.athlete.athlete_name }}</span>
+                            <span style="float: right; margin-top: 2px">
+                                Puanı: {{ i.current_points | int }}
+                            </span>
+                            <br>
+                        </div>
+                    {% endfor %}
+                    <div style="background-color: white; border-top: 1px solid gray; padding: 10px; box-sizing: border-box">
+                        <span style="float: left; margin-top: 2px">Toplam Kadro Puanı: </span>
+                        <span style="float: right; margin-top: 2px">
+                            {{ i.total_points | int }}
+                        </span>
+                        <br>
+                    </div>
+                    <div style="background-color: white; border-top: 1px solid gray; padding: 10px; box-sizing: border-box">
+                        <span style="float: left; margin-top: 2px">Mevcut Sıralama: </span>
+                        <span style="float: right; margin-top: 2px">
+                            {{ i.current_rank | int }}
+                        </span>
+                        <br>
+                    </div>
+                    <div style="background-color: white; border-top: 1px solid gray; padding: 10px; box-sizing: border-box">
+                        <span style="float: left; margin-top: 2px">Beklenen Ödül: </span>
+                        <span style="float: right; margin-top: 2px">
+                            {{"{:,.2f}".format(i.current_prize|float)}}₺
+                        </span>
+                        <br>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div id="profile-information" class="division-profile" style="display: none">
+            <center>
+                <div style="background-color: orange; font-family: 'Protest Guerrilla', sans-serif; color: white; padding: 10px; width: 90%; text-align: left; margin-top: 25px" id="fill-profile-box">
+                    <p>
+                        Profilini Doldur
+                    </p>
+                </div>
+            </center>
+            <div style="background-color: #333333; width: fit-content; padding: 20px; box-sizing: border-box;  margin-top: 50px">
+                <form method="post" enctype="multipart/form-data" style="background-color: rgba(0,134,255,0.38); border-top: dodgerblue 5px solid; color: white; padding: 20px; box-sizing: border-box; width: fit-content; height: fit-content;">
+                    <h1 style="color: white; font-family: 'Protest Guerrilla', sans-serif">
+                      Kişisel Bilgiler
+                    </h1>
+                    <input type="text" name="form-type" value="user-info" style="display: none">
+                    <label for="name" style="font-family: sans-serif; font-size: 12px">İsim</label>
+                    <br>
+                    <input id="name" value="{{ current_user.user_information.name }}" name="name" type="text" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem">
+                    <br>
+                    <br>
+                    <label for="address" style="font-family: sans-serif; font-size: 12px">Adres</label>
+                    <br>
+                    <textarea id="address" name="address"  style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem; height: 80px">{{ current_user.user_information.address }}</textarea>
+                    <br>
+                    <br>
+                    <label for="telno" style="font-family: sans-serif; font-size: 12px">Telefon No</label>
+                    <br>
+                    <input id="telno" value="{{ current_user.user_information.tel_no }}" name="telno" type="text" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem">
+                    <br>
+                    <br>
+                    <button style="color: white; font-family: sans-serif; width: 100%; padding: 10px; box-sizing: border-box; background-color: dodgerblue; outline: none; border: none">Bilgileri Kaydet</button>
+                </form>
+            </div>
+        </div>
+        <div id="withdraw-money" class="division-profile" style="display: none">
+            <center>
+                <div style="background-color: orange; font-family: 'Protest Guerrilla', sans-serif; color: white; padding: 10px; width: 90%; text-align: left; margin-top: 25px" id="fill-profile-box">
+                    <p>
+                        Para Çek
+                    </p>
+                </div>
+            </center>
+            <div style="background-color: #333333; width: fit-content; padding: 20px; box-sizing: border-box;  margin-top: 50px">
+                <form method="post" enctype="multipart/form-data" style="background-color: rgba(0,134,255,0.38); border-top: dodgerblue 5px solid; color: white; padding: 20px; box-sizing: border-box; width: fit-content; height: fit-content;">
+                    <h1 style="color: white; font-family: 'Protest Guerrilla', sans-serif">
+                      Para Çek
+                    </h1>
+                    <input type="text" name="form-type" value="withdraw-money" style="display: none">
+                    <label for="amount" style="font-family: sans-serif; font-size: 12px">Çekmek İstenen Miktar</label>
+                    <br>
+                    <input id="amount" name="amount" type="text" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem">
+                    <br>
+                    <br>
+                    <label for="iban" style="font-family: sans-serif; font-size: 12px">IBAN/Papara No/BTC Cüzdan Adresi</label>
+                    <br>
+                    <textarea id="iban" name="iban"  style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem; height: 80px"></textarea>
+                    <br>
+                    <br>
+                    <p style="width: 300px">Önemli Not! 50.000₺ üzeri para çekim işlemlerinde kripto para ile çekim yapmak zorunludur.</p>
+                    <p style="width: 300px">Kullanıcı Bilgileri sekmesinden kişisel bilgilerini tamamlamayan kullanıcıların para çekme istekleri reddedilecektir.</p>
+                    <br>
+                    <br>
+                    <button style="color: white; font-family: sans-serif; width: 100%; padding: 10px; box-sizing: border-box; background-color: dodgerblue; outline: none; border: none">Para Çek</button>
+                </form>
+            </div>
+            <br>
+            <br>
+            <div style="width: 80%; background-color: dodgerblue; color: white; text-align: left; padding: 10px">
+                Geçmiş İşlemler
+            </div>
+            {% for i in withdrawal_requests %}
+                <div style="width: 80%; background-color: #333333; color: white; text-align: left; padding: 10px">
+                    {{ i.withdrawal_amount }}₺: {{ i.status }}
+                </div>
+            {% endfor %}
+        </div>
+        <div id="previous-competitions" class="division-profile" style="display: none">
+            <h1 style="color: white; text-align: left; font-family: 'Protest Guerrilla', sans-serif; width: 80%">Geçmiş Kadrolar</h1>
+            {% if current_user.previous_drafts|length == 0%}
+                <p style="color: white; text-align: left; margin-left: 10%">Henüz geçmiş bir kadro yok</p>
+            {% endif %}
+            {% for i in current_user.previous_drafts %}
+            <h1 onclick="document.location = '/competition/{{ i.competition.id }}'" style="font-family: 'Protest Guerrilla', sans-serif; text-decoration: underline; background-color: orange; color: white; box-sizing: border-box; padding: 10px; width: 80%; margin-bottom: 0; margin-top: 50px">{{ i.draft_name }}</h1>
+                <div style="background-color: white; width: 80%; margin-top: 0; background-image: url('/static/saha.jpg'); background-size: cover; background-position: center 0;">
+                    {% for i in i.chosen_athletes %}
+                        <div style="border-top: 1px solid gray; padding: 10px; box-sizing: border-box; color: white; background: rgba(0,0,0,0.5); width: 100%; height: 100%">
+                            <img style="float: left; width: 25px; margin-right: 15px" src="/static/{{ i.athlete.team_name }}.png"><span style="float: left; margin-top: 2px">{{ i.athlete.athlete_name }}</span>
+                            <span style="float: right; margin-top: 2px">
+                                Puanı: {{ i.current_points | int }}
+                            </span>
+                            <br>
+                        </div>
+                    {% endfor %}
+                    <div style="background-color: white; border-top: 1px solid gray; padding: 10px; box-sizing: border-box">
+                        <span style="float: left; margin-top: 2px">Toplam Kadro Puanı: </span>
+                        <span style="float: right; margin-top: 2px">
+                            {{ i.total_points | int }}
+                        </span>
+                        <br>
+                    </div>
+                    <div style="background-color: white; border-top: 1px solid gray; padding: 10px; box-sizing: border-box">
+                        <span style="float: left; margin-top: 2px">Sıralama: </span>
+                        <span style="float: right; margin-top: 2px">
+                            {{ i.current_rank | int }}
+                        </span>
+                        <br>
+                    </div>
+                    <div style="background-color: white; border-top: 1px solid gray; padding: 10px; box-sizing: border-box">
+                        <span style="float: left; margin-top: 2px">Alınan Ödül: </span>
+                        <span style="float: right; margin-top: 2px">
+                            {{"{:,.2f}".format(i.current_prize|float)}}₺
+                        </span>
+                        <br>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div id="deposit-money" style="display: none" class="division-profile">
+            <h1 style="font-family: 'Protest Guerrilla', sans-serif; color: white">Para Yatır</h1>
+            <div id="papara-modal-button"  style="display: inline-block" class="select-payment">
+                <div style="border-radius: 15px 15px 0 0; font-family: sans-serif; height: fit-content; padding: 15px; display: inline-block; margin: 15px; background: #333333; box-sizing: border-box; width: 200px">
+                    <img src="https://avatars.githubusercontent.com/u/24546447?s=280&v=4" style="width: 150px; border-radius: 15px" alt="">
+                    <p style="font-size: 12px; color: white">
+                        Servis Sağlayıcı: KadroMilyon Ödeme Servisi
+                    </p>
+                </div>
+                <div style="color: white; font-family: 'Protest Guerrilla', sans-serif; background-color: dodgerblue; width: 200px; margin-top: -15px; padding: 10px; box-sizing: border-box; border-radius: 0 0 15px 15px">
+                    Papara
+                </div>
+            </div>
+            <div style="display: inline-block" class="select-payment">
+                <div id="bank-modal-button" style="border-radius: 15px 15px 0 0; font-family: sans-serif; height: fit-content; padding: 15px; display: inline-block; margin: 15px; background: #333333; box-sizing: border-box; width: 200px">
+                    <img src="https://cdn-icons-png.flaticon.com/512/349/349260.png" style="width: 150px" alt="">
+                    <p style="font-size: 12px; color: white">
+                        Servis Sağlayıcı: KadroMilyon Ödeme Servisi
+                    </p>
+                </div>
+                <div style="color: white; font-family: 'Protest Guerrilla', sans-serif; background-color: dodgerblue; width: 200px; margin-top: -15px; padding: 10px; box-sizing: border-box; border-radius: 0 0 15px 15px">
+                    Banka Havalesi
+                </div>
+            </div>
+
+        </div>
+
+        <div id="papara-modal" class="modal">
+
+          <div class="modal-content">
+            <iframe id="deposit-id" style="width: 100%; height: 500px; border: none" src="/deposit/papara">
+
+            </iframe>
+          </div>
+
+        </div>
+        <style>
+            .modal {
+              display: none;
+              position: fixed;
+              z-index: 1;
+              left: 0;
+              top: 0;
+              width: 100%;
+              height: 100%;
+              overflow: auto;
+              background-color: rgb(0,0,0);
+              background-color: rgba(0,0,0,0.4);
+            }
+            .modal-content {
+                background-color: #222;
+                margin: auto;
+                padding: 20px;
+                border: 1px solid #888;
+                width: 80%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                height: fit-content;
+            }
+
+            .close {
+              color: #aaa;
+              float: right;
+              font-size: 28px;
+              font-weight: bold;
+            }
+
+            .close:hover,
+            .close:focus {
+              color: black;
+              text-decoration: none;
+              cursor: pointer;
+            }
+        </style>
+        <script>
+            var modal = document.getElementById("papara-modal");
+
+            var btn = document.getElementById("papara-modal-button");
+            var bankbtn = document.getElementById("bank-modal-button");
+
+            btn.onclick = function() {
+              modal.style.display = "block";
+              document.getElementById("deposit-id").src = "/deposit/papara"
+            }
+
+            bankbtn.onclick = function() {
+              modal.style.display = "block";
+              document.getElementById("deposit-id").src = "/deposit/bank"
+
+            }
+
+            window.onclick = function(event) {
+              if (event.target == modal) {
+                modal.style.display = "none";
+              }
+            }
+        </script>
+    </center>
+    <script>
+        function changeDivision(changeTo, clickElem){
+            let all_divs = document.getElementsByClassName("division-profile");
+            let all_navbar = document.getElementsByClassName("navbar-item");
+            for(let i = 0; i < all_navbar.length; i++){
+                all_navbar[i].style.textDecoration = "none";
+            }
+            for(let i = 0; i < all_divs.length; i++){
+                all_divs[i].style.display = "none";
+            }
+            clickElem.style.textDecoration = "underline";
+            document.getElementById(changeTo).style.display = "block";
+        }
+    </script>
+    <br>
+    <span style="opacity: 0">KadroMilyon</span>
+</body>
+</html>

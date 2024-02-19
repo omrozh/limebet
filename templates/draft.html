@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ competition.competition_name }} | KadroMilyon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Protest+Guerrilla&display=swap" rel="stylesheet">
+    <script>
+        var url_string = window.location;
+        var url = new URL(url_string);
+        var c = url.searchParams.get("desktop");
+        if(window.innerWidth < window.innerHeight && !c){
+            document.location = window.location+"?desktop=true"
+        }
+    </script>
+
+    <style>
+        .displaybr{
+            display: none;
+            clear: both;
+        }
+        @media screen and (max-width: 1000px) {
+            .displaybr{
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body style="background-color: #222; padding: 0; margin: 0; font-family: 'Open Sans', sans-serif">
+    <div style="width: 100%; box-sizing: border-box; height: 220px">
+        <img src="/static/kadromilyon.png" alt="" style="width: 75px; padding: 20px; float: left">
+        <div style="float: left;">
+            <p style="color: white; font-size: 1rem; margin-top: 35px; font-family: 'Protest Guerrilla', sans-serif">
+                KadroMilyon
+            </p>
+            <p style="color: orange; font-size: 1rem; margin-top: -10px; font-family: 'Protest Guerrilla', sans-serif">
+                Fantezi Spor
+            </p>
+        </div>
+        <div style="float: right; margin-top: 50px">
+            <div style="background-color: rgba(0,134,255,0.38); border-left: dodgerblue 3px solid; color: white; padding: 10px; box-sizing: border-box; margin-right: 20px; margin-top: -10px; float: right">
+                {{'%0.2f'| format(current_user.balance|float)}}₺
+            </div>
+            <a href="/profile" style="color: dodgerblue; text-decoration: none; margin-right: 25px; float: right">
+                <img style="width: 25px" src="/static/profile.png" alt="">
+            </a>
+        </div>
+        <div style="padding: 20px 50px; overflow-x: auto; float: left; white-space: nowrap; width: 100vw; background-color: #333; box-sizing: border-box">
+            <span style="display: inline-block; color: white" onclick="document.location = '/'">
+                Anasayfa
+            </span>
+            <span style="display: inline-block; margin-left: 50px; color: white" onclick="localStorage.clear(); window.location = '/'">
+                Kampanyalar
+            </span>
+            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/?filter_q=daily'">
+                Günlük Yarışmalar
+            </span>
+            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/?filter_q=weekly'">
+                Haftalık Yarışmalar
+            </span>
+            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/?filter_q=daily'">
+                Yüksek Limitli Yarışmalar
+            </span>
+            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/?filter_q=Premier-Lig'">
+                Premier Lig
+            </span>
+            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/?filter_q=Süper-Lig'">
+                Süper Lig
+            </span>
+            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/?filter_q=Bundesliga'">
+                Bundesliga
+            </span>
+            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/?filter_q=LaLiga'">
+                LaLiga
+            </span>
+        </div>
+    </div>
+    <center>
+        <div style="background-color: #333333; width: 80%; height: fit-content; text-align: left; padding: 25px; box-sizing: border-box; min-height: fit-content">
+            <h1 style="font-family: 'Protest Guerrilla', sans-serif; color: white; margin-top: 5px; float: left;">Kadronu Seç</h1>
+            <br style="clear: both">
+            <h3 style="font-family: 'Protest Guerrilla', sans-serif; color: white">Kalan Bütçe: <span id="remaining-budget">50000</span>₺</h3>
+            <h3 style="font-family: 'Protest Guerrilla', sans-serif; color: white">Kadro Maliyeti: <span id="money-spent">0</span>₺</h3>
+
+            <div style="background-color: dodgerblue; width: 100%; padding: 20px; color: white; box-sizing: border-box; margin-top: 50px;">
+                Seçilen Oyuncular
+                <span style="float: right; color: white; text-decoration: underline" onclick="resetDraft()">Sıfırla</span>
+                {% if not desktop %}
+                    <span style="float: right; color: white; margin-right: 15px" onclick="document.location = document.location + '?desktop=true'">Liste Görünümüne Geç</span>
+                {% else %}
+                    <span style="float: right; color: white; margin-right: 15px" onclick="document.location = '/draft/{{competition.id}}'" id="position-view">Kadro Görünümüne Geç</span>
+                    <script>
+                        if(window.innerWidth < window.innerHeight){
+                            document.getElementById("position-view").style.display = 'none';
+                        }
+                    </script>
+                {% endif %}
+
+            </div>
+            {% if not desktop %}
+                <form enctype="multipart/form-data" method="post" style="background-image: url('/static/saha2.jpg'); background-size: cover; background-position: center 0;">
+                    <center style="height: fit-content">
+
+                        <center id="draft-div-0" onclick="last_choice = 0; this.style.opacity = 0.5; document.getElementById('search-box').scrollIntoView({block: 'center'}); document.getElementById('search-box').focus()" style="border-radius: 15px; border: 1px solid rgb(200, 200, 200); font-family: sans-serif; width: fit-content; height: fit-content; padding: 15px; background: white; display: inline-block; margin: 15px; background: rgba(0, 0, 0, 0.5)">
+                            <div id="team-img-0" style="width: 100px; height: 100px; background-image: url('/static/player.png'); background-size: cover; float:left;"></div>
+                            <div style="float: left; margin-left: 15px">
+                                <br>
+                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Protest Guerrilla', sans-serif" id="athlete-0">Oyuncu - 1</span>
+                                <input type="text" style="border: none; outline: none; display: none" name="athlete-0">
+                                <br>
+                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Protest Guerrilla', sans-serif; float: left" id="athlete-cost-wrapper-0">
+                                    <span id="athlete-cost-0"></span>₺
+                                </p>
+                            </div>
+                        </center>
+
+                        <br>
+
+                        <center id="draft-div-1" onclick="last_choice = 1; this.style.opacity = 0.5; document.getElementById('search-box').scrollIntoView({block: 'center'}); document.getElementById('search-box').focus()" style="border-radius: 15px; border: 1px solid rgb(200, 200, 200); font-family: sans-serif; width: fit-content; height: fit-content; padding: 15px; background: white; display: inline-block; margin: 15px; background: rgba(0, 0, 0, 0.5)">
+                            <div id="team-img-1" style="width: 100px; height: 100px; background-image: url('/static/player.png'); background-size: cover; float:left;"></div>
+                            <div style="float: left; margin-left: 15px">
+                                <br>
+                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Protest Guerrilla', sans-serif" id="athlete-1">Oyuncu - 2</span>
+                                <input type="text" style="border: none; outline: none; display: none" name="athlete-1">
+                                <br>
+                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Protest Guerrilla', sans-serif; float: left" id="athlete-cost-wrapper-1">
+                                    <span id="athlete-cost-1"></span>₺
+                                </p>
+                            </div>
+                        </center>
+
+                        <center id="draft-div-2" onclick="last_choice = 2; this.style.opacity = 0.5; document.getElementById('search-box').scrollIntoView({block: 'center'}); document.getElementById('search-box').focus()" style="border-radius: 15px; border: 1px solid rgb(200, 200, 200); font-family: sans-serif; width: fit-content; height: fit-content; padding: 15px; background: white; display: inline-block; margin: 15px; background: rgba(0, 0, 0, 0.5)">
+                            <div id="team-img-2" style="width: 100px; height: 100px; background-image: url('/static/player.png'); background-size: cover; float:left;"></div>
+                            <div style="float: left; margin-left: 15px">
+                                <br>
+                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Protest Guerrilla', sans-serif" id="athlete-2">Oyuncu - 3</span>
+                                <input type="text" style="border: none; outline: none; display: none" name="athlete-2">
+                                <br>
+                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Protest Guerrilla', sans-serif; float: left" id="athlete-cost-wrapper-2">
+                                    <span id="athlete-cost-2"></span>₺
+                                </p>
+                            </div>
+                        </center>
+
+                        <center id="draft-div-3" onclick="last_choice = 3; this.style.opacity = 0.5; document.getElementById('search-box').scrollIntoView({block: 'center'}); document.getElementById('search-box').focus()" style="border-radius: 15px; border: 1px solid rgb(200, 200, 200); font-family: sans-serif; width: fit-content; height: fit-content; padding: 15px; background: white; display: inline-block; margin: 15px; background: rgba(0, 0, 0, 0.5)">
+                            <div id="team-img-3" style="width: 100px; height: 100px; background-image: url('/static/player.png'); background-size: cover; float:left;"></div>
+                            <div style="float: left; margin-left: 15px">
+                                <br>
+                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Protest Guerrilla', sans-serif" id="athlete-3">Oyuncu - 4</span>
+                                <input type="text" style="border: none; outline: none; display: none" name="athlete-3">
+                                <br>
+                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Protest Guerrilla', sans-serif; float: left" id="athlete-cost-wrapper-3">
+                                    <span id="athlete-cost-3"></span>₺
+                                </p>
+                            </div>
+                        </center>
+
+                        <br>
+
+                        <center id="draft-div-4" onclick="last_choice = 4; this.style.opacity = 0.5; document.getElementById('search-box').scrollIntoView({block: 'center'}); document.getElementById('search-box').focus()" style="border-radius: 15px; border: 1px solid rgb(200, 200, 200); font-family: sans-serif; width: fit-content; height: fit-content; padding: 15px; background: white; display: inline-block; margin: 15px; background: rgba(0, 0, 0, 0.5)">
+                            <div id="team-img-4" style="width: 100px; height: 100px; background-image: url('/static/player.png'); background-size: cover; float:left;"></div>
+                            <div style="float: left; margin-left: 15px">
+                                <br>
+                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Protest Guerrilla', sans-serif" id="athlete-4">Oyuncu - 5</span>
+                                <input type="text" style="border: none; outline: none; display: none" name="athlete-4">
+                                <br>
+                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Protest Guerrilla', sans-serif; float: left" id="athlete-cost-wrapper-4">
+                                    <span id="athlete-cost-4"></span>₺
+                                </p>
+                            </div>
+                        </center>
+
+                        <center id="draft-div-5" onclick="last_choice = 5; this.style.opacity = 0.5; document.getElementById('search-box').scrollIntoView({block: 'center'}); document.getElementById('search-box').focus()" style="border-radius: 15px; border: 1px solid rgb(200, 200, 200); font-family: sans-serif; width: fit-content; height: fit-content; padding: 15px; background: white; display: inline-block; margin: 15px; background: rgba(0, 0, 0, 0.5)">
+                            <div id="team-img-5" style="width: 100px; height: 100px; background-image: url('/static/player.png'); background-size: cover; float:left;"></div>
+                            <div style="float: left; margin-left: 15px">
+                                <br>
+                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Protest Guerrilla', sans-serif" id="athlete-5">Oyuncu - 6</span>
+                                <input type="text" style="border: none; outline: none; display: none" name="athlete-5">
+                                <br>
+                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Protest Guerrilla', sans-serif; float: left" id="athlete-cost-wrapper-5">
+                                    <span id="athlete-cost-5"></span>₺
+                                </p>
+                            </div>
+                        </center>
+
+                        <br>
+
+                        <center id="draft-div-6" onclick="last_choice = 6; this.style.opacity = 0.5; document.getElementById('search-box').scrollIntoView({block: 'center'}); document.getElementById('search-box').focus()" style="border-radius: 15px; border: 1px solid rgb(200, 200, 200); font-family: sans-serif; width: fit-content; height: fit-content; padding: 15px; background: white; display: inline-block; margin: 15px; background: rgba(0, 0, 0, 0.5)">
+                            <div id="team-img-6" style="width: 100px; height: 100px; background-image: url('/static/player.png'); background-size: cover; float:left;"></div>
+                            <div style="float: left; margin-left: 15px">
+                                <br>
+                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Protest Guerrilla', sans-serif" id="athlete-6">Oyuncu - 7</span>
+                                <input type="text" style="border: none; outline: none; display: none" name="athlete-6">
+                                <br>
+                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Protest Guerrilla', sans-serif; float: left" id="athlete-cost-wrapper-6">
+                                    <span id="athlete-cost-6"></span>₺
+                                </p>
+                            </div>
+                        </center>
+
+                        <center id="draft-div-7" onclick="last_choice = 7; this.style.opacity = 0.5; document.getElementById('search-box').scrollIntoView({block: 'center'}); document.getElementById('search-box').focus()" style="border-radius: 15px; border: 1px solid rgb(200, 200, 200); font-family: sans-serif; width: fit-content; height: fit-content; padding: 15px; background: white; display: inline-block; margin: 15px; background: rgba(0, 0, 0, 0.5)">
+                            <div id="team-img-7" style="width: 100px; height: 100px; background-image: url('/static/player.png'); background-size: cover; float:left;"></div>
+                            <div style="float: left; margin-left: 15px">
+                                <br>
+                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Protest Guerrilla', sans-serif" id="athlete-7">Oyuncu - 8</span>
+                                <input type="text" style="border: none; outline: none; display: none" name="athlete-7">
+                                <br>
+                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Protest Guerrilla', sans-serif; float: left" id="athlete-cost-wrapper-7">
+                                    <span id="athlete-cost-7"></span>₺
+                                </p>
+                            </div>
+                        </center>
+
+                        <center id="draft-div-8" onclick="last_choice = 8; this.style.opacity = 0.5; document.getElementById('search-box').scrollIntoView({block: 'center'}); document.getElementById('search-box').focus()" style="border-radius: 15px; border: 1px solid rgb(200, 200, 200); font-family: sans-serif; width: fit-content; height: fit-content; padding: 15px; background: white; display: inline-block; margin: 15px; background: rgba(0, 0, 0, 0.5)">
+                            <div id="team-img-8" style="width: 100px; height: 100px; background-image: url('/static/player.png'); background-size: cover; float:left;"></div>
+                            <div style="float: left; margin-left: 15px">
+                                <br>
+                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Protest Guerrilla', sans-serif" id="athlete-8">Oyuncu - 9</span>
+                                <input type="text" style="border: none; outline: none; display: none" name="athlete-8">
+                                <br>
+                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Protest Guerrilla', sans-serif; float: left" id="athlete-cost-wrapper-8">
+                                    <span id="athlete-cost-8"></span>₺
+                                </p>
+                            </div>
+                        </center>
+
+                        <center id="draft-div-9" onclick="last_choice = 9; this.style.opacity = 0.5; document.getElementById('search-box').scrollIntoView({block: 'center'}); document.getElementById('search-box').focus()" style="border-radius: 15px; border: 1px solid rgb(200, 200, 200); font-family: sans-serif; width: fit-content; height: fit-content; padding: 15px; background: white; display: inline-block; margin: 15px; background: rgba(0, 0, 0, 0.5)">
+                            <div id="team-img-9" style="width: 100px; height: 100px; background-image: url('/static/player.png'); background-size: cover; float:left;"></div>
+                            <div style="float: left; margin-left: 15px">
+                                <br>
+                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Protest Guerrilla', sans-serif" id="athlete-9">Oyuncu - 10</span>
+                                <input type="text" style="border: none; outline: none; display: none" name="athlete-9">
+                                <br>
+                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Protest Guerrilla', sans-serif; float: left" id="athlete-cost-wrapper-9">
+                                    <span id="athlete-cost-9"></span>₺
+                                </p>
+                            </div>
+                        </center>
+                        <br>
+                        <center id="draft-div-10" onclick="last_choice = 10; this.style.opacity = 0.5; document.getElementById('search-box').scrollIntoView({block: 'center'}); document.getElementById('search-box').focus()" style="border-radius: 15px; border: 1px solid rgb(200, 200, 200); font-family: sans-serif; width: fit-content; height: fit-content; padding: 15px; background: white; display: inline-block; margin: 15px; background: rgba(0, 0, 0, 0.5)">
+                            <div id="team-img-10" style="width: 100px; height: 100px; background-image: url('/static/player.png'); background-size: cover; float:left;"></div>
+                            <div style="float: left; margin-left: 15px">
+                                <br>
+                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Protest Guerrilla', sans-serif" id="athlete-10">Oyuncu - 11</span>
+                                <input type="text" style="border: none; outline: none; display: none" name="athlete-10">
+                                <br>
+                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Protest Guerrilla', sans-serif; float: left" id="athlete-cost-wrapper-10">
+                                    <span id="athlete-cost-10"></span>₺
+                                </p>
+                            </div>
+                        </center>
+
+                    </center>
+                </form>
+            {% else %}
+                <form enctype="multipart/form-data" method="post" style="background-image: url('/static/saha2.jpg'); background-size: cover; background-position: center">
+                    {% for i in range(11) %}
+                        <div id="draft-div-{{ i }}" onclick="last_choice={{ i }}; this.style.opacity = 0.5; document.getElementById('search-box').scrollIntoView({block: 'center'}); document.getElementById('search-box').focus()" style="border-top: 1px solid gray; padding: 10px; box-sizing: border-box; color: white; background: rgba(0,0,0,0.5); width: 100%; height: 100%">
+                            <div id="team-img-{{ i }}" style="float: left; width: 25px; margin-right: 15px; background-image: url('/static/player.png'); background-size: cover; height: 25px"></div><span style="float: left;  margin-top: 1px" id="athlete-{{ i }}">Oyuncu - {{ i+1 }}</span>
+                            <span style="float: right; display: none; margin-top: 2px" id="athlete-cost-wrapper-{{ i }}">
+                                <span id="athlete-cost-{{i}}"></span>₺
+                            </span>
+                            <input type="text" style="border: none; outline: none; display: none" name="athlete-{{i}}">
+                            <br>
+                        </div>
+                    {% endfor %}
+                </form>
+            {% endif %}
+            <br>
+            <input type="text" oninput="searchPlayer()" id="search-box" style="width: 100%; padding: 10px 15px; font-family: sans-serif; outline: none; font-size: 1rem; box-sizing: border-box" placeholder="Oyuncu Ara">
+            <div style="background-color: dodgerblue; width: 100%; padding: 20px; color: white; box-sizing: border-box; margin-top: 20px;">
+                Seçebileceğin Oyuncular
+            </div>
+            <div style="background-color: white; overflow-y: auto; max-height: 310px">
+                {% for i in competition.available_athletes %}
+                    <div class="searchable-div" onclick="addToDraft('{{i.id}}', '{{ i.athlete_name }}', this, {{ i.athlete_cost }}, '{{ i.team_name }}')" id="athlete-selection-{{i.id}}" style="background-color: white; border-top: 1px solid gray; padding: 10px; box-sizing: border-box;">
+                        <img style="float: left; width: 25px; margin-right: 15px" src="/static/{{ i.team_name }}.png"><span style="float: left; text-decoration: underline; margin-top: 2px">{{ i.athlete_name }}</span>
+                        <span style="float: right; margin-top: 2px">
+                            {{ i.athlete_cost | int }}₺
+                        </span>
+                        <br>
+                    </div>
+                {% endfor %}
+            </div>
+            <br>
+            <button onclick="document.getElementsByTagName('form')[0].submit()" style="color: white; font-family: 'Protest Guerrilla', sans-serif; width: 100%; padding: 15px; box-sizing: border-box; background-color: orange; outline: none; border: none">Yarışmaya Katıl</button>
+        </div>
+    </center>
+    <br style="clear: both">
+    <span style="opacity: 0;">KadroMilyon</span>
+    <script>
+        function searchPlayer(){
+            let search_query = document.getElementById("search-box").value;
+            let searchable_divs = document.getElementsByClassName("searchable-div")
+            for(let i = 0; i < searchable_divs.length; i++){
+                if(search_query.length > 2){
+                    if(!searchable_divs[i].innerHTML.includes(search_query)){
+                        searchable_divs[i].style.display = "none";
+                    }
+                }else{
+                    searchable_divs[i].style.display = "block";
+                }
+            }
+        }
+        let last_choice = 99;
+        let total_cost = 0
+        function switchChoice(new_index, athlete_id, current_element, athlete_cost){
+            if(last_choice !== 99){
+                return;
+            }
+            document.getElementById("search-box").scrollIntoView({block: 'center'})
+            document.getElementById("search-box").focus()
+            for(let i = 0; i < 11; i++){
+                document.getElementById("draft-div-"+i).style.opacity = 1;
+            }
+
+            document.getElementById("athlete-selection-"+athlete_id).style.display = "block";
+            document.getElementById("athlete-selection-"+athlete_id).className = "searchable-div";
+            last_choice = new_index;
+            total_cost-=athlete_cost
+            current_element.style.opacity = 0.5;
+        }
+        function addToDraft(athlete_id, athlete_name, athlete_choice, athlete_cost){
+            document.getElementById("search-box").value = ""
+            searchPlayer();
+            total_cost+=athlete_cost
+            if(last_choice === 99){
+                return;
+            }
+            if(total_cost > 50000){
+                alert("Bütçeyi Aştınız");
+                total_cost-=athlete_cost
+                return;
+            }
+            for(let i = 0; i < 11; i++){
+                document.getElementById("draft-div-"+i).style.opacity = 1;
+            }
+
+            document.getElementById("draft-div-"+last_choice).scrollIntoView({block: 'center'});
+            document.getElementById("athlete-"+last_choice).innerText = athlete_name;
+            document.getElementById("athlete-cost-"+last_choice).innerText = athlete_cost;
+            document.getElementById("team-img-"+last_choice).style.backgroundImage = `url('/athlete/image/${athlete_id}')`;
+            document.getElementById("team-img-"+last_choice).style.backgroundSize = "80%";
+            document.getElementById("team-img-"+last_choice).style.backgroundRepeat = "no-repeat";
+            document.getElementById("draft-div-"+last_choice).setAttribute("onclick", `switchChoice(${last_choice}, ${athlete_id}, this, ${athlete_cost})`)
+            document.getElementsByName("athlete-"+last_choice)[0].value = athlete_id;
+            athlete_choice.style.display = "none";
+            athlete_choice.className = "disabled-athlete"
+            document.getElementById("athlete-cost-wrapper-" + last_choice).style.display = "block";
+            last_choice = 99;
+            document.getElementById("money-spent").innerText = total_cost;
+            document.getElementById("remaining-budget").innerText = 50000 - total_cost;
+        }
+        function resetDraft(){
+            document.location.reload();
+        }
+    </script>
+</body>
+</html>
