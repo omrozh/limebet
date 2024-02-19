@@ -79,7 +79,6 @@ if argv[1] == "add-points":
         team = Team.query.filter_by(team_name=argv[3]).first()
         athlete = None
         for i in Athlete.query.filter_by(team_fk=team.id).all():
-            print(i.athlete_name)
             if argv[4] in i.athlete_name:
                 athlete = i
                 break
