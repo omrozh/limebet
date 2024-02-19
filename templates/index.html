@@ -33,9 +33,9 @@
             }
         </script>
     </center>
-    <div style="width: 100%; box-sizing: border-box; height: 220px">
+    <div style="width: 100%; box-sizing: border-box; height: 220px; ">
         <img src="/static/kadromilyon.png" alt="" style="width: 75px; padding: 20px; float: left">
-        <div style="float: left;">
+        <div style="float: left;" id="hid-mob">
             <p style="color: white; font-size: 1rem; margin-top: 35px; font-family: 'Protest Guerrilla', sans-serif">
                 KadroMilyon
             </p>
@@ -43,13 +43,16 @@
                 Fantezi Spor
             </p>
         </div>
-        <div style="float: right; margin-top: 50px">
+        <div style="float: right; margin-top: 50px;o">
             {% if current_user.is_authenticated %}
                 <div style="background-color: rgba(0,134,255,0.38); border-left: dodgerblue 3px solid; color: white; padding: 10px; box-sizing: border-box; margin-right: 20px; margin-top: -10px; float: right">
                     <span id="balance">{{'%0.2f'| format(current_user.balance|float)}}</span>₺
                 </div>
                 <span onclick="refreshBalance()" style="margin-right: 25px; font-size: 2rem; float: right; color: white; margin-top: -13px">&#x21ba;</span>
                 <script>
+                    if(window.innerHeight > window.innerWidth){
+                        document.getElementById("hid-mob").style.display = "none";
+                    }
                     function updateBalance(balance){
                         document.getElementById("balance").innerText = balance;
                     }
@@ -99,7 +102,7 @@
         </div>
     </div>
     <center>
-        <div style="background-image: url('/static/player-bg.jpg'); background-size: cover; width: 90%; height: 200px; text-align: left; box-sizing: border-box; padding: 20px 50px; min-height: fit-content">
+        <div style="background-image: url('/static/player-bg.jpg'); background-size: cover; width: 90%; min-height: 200px; text-align: left; box-sizing: border-box; padding: 20px 50px; min-height: fit-content">
             <h1 style="font-family: 'Protest Guerrilla', sans-serif; color: white">
                 Kadronu Kur
             </h1>
