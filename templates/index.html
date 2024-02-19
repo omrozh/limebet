@@ -27,6 +27,7 @@
     <center style="padding: 20px 50px; background-color: orange" id="promotion-insta">
         <span style="color: white; font-family: 'Protest Guerrilla', sans-serif; font-size: 16px; text-decoration: underline;" onclick="window.localStorage.setItem('hidePromotionInsta', 'true'); document.location = '/promotions/instagram';">Yatırımsız 500TL fırsatı!</span>
         <script>
+            document.getElementById("promotion-insta").style.display = "none";
             if(window.localStorage.getItem("hidePromotionInsta") === 'true'){
                 document.getElementById("promotion-insta").style.display = "none";
             }
