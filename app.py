@@ -517,7 +517,7 @@ def admin_console():
         elif "list-teams" == flask.request.values["command"]:
             return str("<br>".join(i.team_name for i in Team.query.all()))
         else:
-            os.system("python util.py " + flask.request.values["command"])
+            os.system("python3 util.py " + flask.request.values["command"])
 
     withdrawal_requests = WithdrawalRequest.query.filter(WithdrawalRequest.status != "Tamamlandı").\
         filter(WithdrawalRequest.status != "Reddedildi").all()
