@@ -31,7 +31,7 @@
     </style>
 </head>
 <body style="background-color: #222; padding: 0; margin: 0; font-family: 'Open Sans', sans-serif">
-    <div style="width: 100%; box-sizing: border-box; height: 220px">
+    <div style="width: 100%; box-sizing: border-box; height: 220px" id="hid-mob">
         <img src="/static/kadromilyon.png" alt="" style="width: 75px; padding: 20px; float: left">
         <div style="float: left;">
             <p style="color: white; font-size: 1rem; margin-top: 35px; font-family: 'Protest Guerrilla', sans-serif">
@@ -40,6 +40,11 @@
             <p style="color: orange; font-size: 1rem; margin-top: -10px; font-family: 'Protest Guerrilla', sans-serif">
                 Fantezi Spor
             </p>
+            <script>
+                if(window.innerHeight > window.innerWidth){
+                    document.getElementById("hid-mob").style.display = "none";
+                }
+            </script>
         </div>
         <div style="float: right; margin-top: 50px">
             <div style="background-color: rgba(0,134,255,0.38); border-left: dodgerblue 3px solid; color: white; padding: 10px; box-sizing: border-box; margin-right: 20px; margin-top: -10px; float: right">
