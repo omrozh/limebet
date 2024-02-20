@@ -54,6 +54,11 @@ if argv[1] == "list-teams":
         for i in Team.query.all():
             print(i.team_name)
 
+if argv[1] == "add-manual-override":
+    with app.app_context():
+        Competition.query.get(argv[2]).manual_prize_override = argv[3]
+        db.session.commit()
+
 if argv[1] == "add-athlete":
     with app.app_context():
         new_athlete = Athlete(athlete_name=argv[2].replace("-", " "), athlete_cost=float(argv[3]),

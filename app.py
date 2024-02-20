@@ -266,10 +266,10 @@ class Competition(db.Model):
     prize_winners = db.Column(db.Integer)
     prize_decrease_multiplier = db.Column(db.Integer)
     minimum_prize = db.Column(db.Float)
+    manual_prize_override = db.Column(db.String)
 
     @property
     def participant_max(self):
-
         return self.max_number_of_participants if \
             self.max_number_of_participants > self.total_participants else "Yarışma Dolu"
 
@@ -289,6 +289,20 @@ class Competition(db.Model):
     def prize_pool(self):
         total_price = self.highest_prize
         temp_price = self.highest_prize
+
+        manual_override = self.manual_prize_override
+        prize_ranges = {}
+
+        if manual_override is not None:
+            total_price = 0
+            for i in manual_override.split("/"):
+                prize_ranges[i.split(":")[0]] = float(i.split(":")[-1])
+            for i in prize_ranges.keys():
+                number_of_people_in_range = int(i.split("-")[-1]) - int(i.split("-")[0])+1
+                prize_in_range = number_of_people_in_range * int(prize_ranges.get(i))
+                total_price += prize_in_range
+            return total_price
+
         for i in range(self.prize_winners):
             temp_price = temp_price / self.prize_decrease_multiplier if temp_price / self.prize_decrease_multiplier > self.minimum_prize else self.minimum_prize
             total_price += temp_price
@@ -303,6 +317,15 @@ class Competition(db.Model):
     def all_prizes(self):
         all_prizes = {}
         temp_price = self.highest_prize
+        manual_override = self.manual_prize_override
+        prize_ranges = {}
+
+        if manual_override is not None:
+            for i in manual_override.split("/"):
+                prize_ranges[i.split(":")[0]] = float(i.split(":")[-1])
+
+            return prize_ranges
+
         for i in range(self.prize_winners):
             if temp_price in all_prizes.values():
                 all_prizes.pop(i)
@@ -340,6 +363,12 @@ class Competition(db.Model):
         draft_ranking.sort(key=lambda x: x['total_points'], reverse=True)
 
         ranking = next((i + 1 for i, d in enumerate(draft_ranking) if d['total_points'] == point), None)
+        if self.manual_prize_override is not None:
+            for i in self.manual_prize_override.split("/"):
+                prize_range = i.split(":")[0]
+                if int(prize_range.split("-")[1]) >= ranking >= int(prize_range.split("-")[0]):
+                    return float(i.split(":")[-1]) / self.calculate_players_by_point(point)
+
         ranking -= 1
         customer_price = self.highest_prize
 
@@ -783,7 +812,7 @@ def admin_portal():
             prize_winners=int(values["prize_winners"]),
             prize_decrease_multiplier=float(values["prize_decrease_multiplier"]),
             minimum_prize=float(values["minimum_prize"]),
-            allow_multiple_entries=bool(values["allow_multiple_entries"])
+            allow_multiple_entries=bool(values.get("allow_multiple_entries", False))
         )
         db.session.add(new_competition)
         db.session.commit()
