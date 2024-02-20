@@ -581,8 +581,11 @@ def logout():
 async def telegram_bot():
     competitions = Competition.query.filter(
         Competition.start_date >= datetime.datetime.today().date() + datetime.timedelta(days=1))
-    chat_id = dict(flask.request.json).get("message").get("from").get("id")
-    message = dict(flask.request.json).get("message").get("text")
+    try:
+        chat_id = dict(flask.request.json).get("message").get("from").get("id")
+        message = dict(flask.request.json).get("message").get("text")
+    except:
+        return "OK"
     if not message:
         return "OK"
 
