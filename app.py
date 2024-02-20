@@ -583,6 +583,8 @@ async def telegram_bot():
         Competition.start_date >= datetime.datetime.today().date() + datetime.timedelta(days=1))
     chat_id = dict(flask.request.json).get("message").get("from").get("id")
     message = dict(flask.request.json).get("message").get("text")
+    if not message:
+        return "OK"
 
     bot = telegram.Bot("7067705563:AAECNO-7EapKCIvce0xWCR8oIRAlS1N1Uj4")
 
