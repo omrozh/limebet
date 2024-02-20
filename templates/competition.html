@@ -179,7 +179,7 @@
             <div style="background-color: dodgerblue; width: 100%; padding: 20px; color: white; box-sizing: border-box; margin-top: 50px;">
                 Ödüller
             </div>
-            <div style="background-color: white">
+            <div style="background-color: white; height: 400px; overflow-y: auto">
                 {% for index, prize in competition.all_prizes.items() %}
                     <div style="background-color: white; border-top: 1px solid gray; padding: 10px; box-sizing: border-box">
                         <span style="float: left">{{ index }}</span>
