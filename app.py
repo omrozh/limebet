@@ -11,8 +11,7 @@ import requests
 import shortuuid
 import feedparser
 import base64
-import imaplib
-from email import message_from_bytes
+import telegram
 from imap_tools import MailBox
 
 app = flask.Flask(__name__)
@@ -580,7 +579,9 @@ def logout():
 
 @app.route("/telegram/bot", methods=["POST", "GET"])
 def telegram_bot():
-    print(flask.request.json)
+    if dict(flask.request.json).get("message").get("text") == "/bilgi":
+        bot = telegram.Bot("7067705563:AAECNO-7EapKCIvce0xWCR8oIRAlS1N1Uj4")
+        bot.send_message("Selam!")
     return "OK"
 
 
