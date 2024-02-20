@@ -50,9 +50,6 @@
                 </div>
                 <span onclick="refreshBalance()" style="margin-right: 25px; font-size: 2rem; float: right; color: white; margin-top: -13px">&#x21ba;</span>
                 <script>
-                    if(window.innerHeight > window.innerWidth){
-                        document.getElementById("hid-mob").style.display = "none";
-                    }
                     function updateBalance(balance){
                         document.getElementById("balance").innerText = balance;
                     }
@@ -71,6 +68,11 @@
                 <a href="/signup" style="color: dodgerblue; text-decoration: none; margin-right: 25px;">Üye Ol</a>
             {% endif %}
         </div>
+        <script>
+            if(window.innerHeight > window.innerWidth){
+                document.getElementById("hid-mob").style.display = "none";
+            }
+        </script>
         <div style="padding: 20px 50px; overflow-x: auto; float: left; white-space: nowrap; width: 100vw; background-color: #333; box-sizing: border-box">
             <span style="display: inline-block; color: white" onclick="document.location = '/'">
                 Anasayfa
