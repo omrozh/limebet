@@ -14,9 +14,27 @@
             display: none;
             clear: both;
         }
+        .panel{
+             width: 48%
+        }
+        .extra-margin{
+            margin-top: 0;
+        }
+        #panel-rewards{
+            margin-left: 4%;
+        }
         @media screen and (max-width: 1000px) {
             .displaybr{
                 display: block;
+            }
+            .panel{
+                width: 100%;
+            }
+            .extra-margin{
+                margin-top: 50px;
+            }
+            #panel-rewards{
+                margin-left: 0;
             }
         }
 
@@ -115,11 +133,11 @@
                 </span>
                 <br class="displaybr">
             </p>
-            <div style="background-color: white; width: 100%; text-align: left;">
+            <div style="background-color: white; text-align: left; float: left;" class="panel">
             <div style="background-color: dodgerblue; width: 100%; padding: 20px; color: white; box-sizing: border-box">
                 Kurallar
             </div>
-            <div style="width: 100%; overflow-x: auto; white-space: nowrap">
+            <div style="width: 100%; overflow-x: auto; white-space: nowrap; height: 400px">
                 <table>
                     <tr>
                         <th>Eylam</th>
@@ -176,20 +194,23 @@
                 </table>
             </div>
         </div>
-            <div style="background-color: dodgerblue; width: 100%; padding: 20px; color: white; box-sizing: border-box; margin-top: 50px;">
-                Ödüller
+            <div style="float: left;" id="panel-rewards" class="panel">
+                <div style="background-color: dodgerblue; width: 100%; padding: 20px; color: white; box-sizing: border-box;" class="extra-margin">
+                    Ödüller
+                </div>
+                <div style="background-color: white; height: 400px; overflow-y: auto">
+                    {% for index, prize in competition.all_prizes.items() %}
+                        <div style="background-color: white; border-top: 1px solid gray; padding: 10px; box-sizing: border-box">
+                            <span style="float: left">{{ index }}</span>
+                            <span style="float: right">
+                                {{ "{:,.2f}".format(prize) }}₺
+                            </span>
+                        </div>
+                        <br>
+                    {% endfor %}
+                </div>
             </div>
-            <div style="background-color: white; height: 400px; overflow-y: auto">
-                {% for index, prize in competition.all_prizes.items() %}
-                    <div style="background-color: white; border-top: 1px solid gray; padding: 10px; box-sizing: border-box">
-                        <span style="float: left">{{ index }}</span>
-                        <span style="float: right">
-                            {{ "{:,.2f}".format(prize) }}₺
-                        </span>
-                    </div>
-                    <br>
-                {% endfor %}
-            </div>
+            <br style="clear: both">
             <br>
             <button onclick="document.location = '/draft/{{ competition.id }}'" style="color: white; font-family: 'Protest Guerrilla', sans-serif; width: 100%; padding: 15px; box-sizing: border-box; background-color: orange; outline: none; border: none">Yarışmaya Katıl</button>
         </div>
