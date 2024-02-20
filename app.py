@@ -599,7 +599,7 @@ async def telegram_bot():
             chat_id=chat_id)
 
     if message == "/yardım":
-        await bot.send_message(text="\nAktif yarışmaları ve ödül havuzlarını görmek için: /yarismalar yaz\n Bir yarışmaya katılmak için: /katil [yarışma adını buraya yaz] yaz gönder.")
+        await bot.send_message(chat_id=chat_id, text="\nAktif yarışmaları ve ödül havuzlarını görmek için: /yarismalar yaz\n Bir yarışmaya katılmak için: /katil [yarışma adını buraya yaz] yaz gönder.")
 
     return "OK"
 
