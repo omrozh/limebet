@@ -579,9 +579,28 @@ def logout():
 
 @app.route("/telegram/bot", methods=["POST", "GET"])
 async def telegram_bot():
-    if dict(flask.request.json).get("message").get("text") == "/bilgi":
-        bot = telegram.Bot("7067705563:AAECNO-7EapKCIvce0xWCR8oIRAlS1N1Uj4")
-        await bot.send_message(text="Selam!", chat_id=dict(flask.request.json).get("message").get("from").get("id"))
+    competitions = Competition.query.filter(
+        Competition.start_date >= datetime.datetime.today().date() + datetime.timedelta(days=1))
+    chat_id = dict(flask.request.json).get("message").get("from").get("id")
+    message = dict(flask.request.json).get("message").get("text")
+
+    bot = telegram.Bot("7067705563:AAECNO-7EapKCIvce0xWCR8oIRAlS1N1Uj4")
+
+    await bot.send_message(chat_id=chat_id, text="Yardım için /yardım yaz gönder!")
+
+    if message == "/yarismalar":
+        await bot.send_message(
+            text="\n".join([i.competition_name + ": " + str(i.prize_pool) + "₺" for i in competitions]),
+            chat_id=chat_id)
+
+    if "/katil" in message:
+        await bot.send_message(
+            text=f"https://kadromilyon/com/competition/{competitions.filter_by(competition_name=message.replace('/katil ', ''))}",
+            chat_id=chat_id)
+
+    if message == "/yardım":
+        await bot.send_message(text="\nAktif yarışmaları ve ödül havuzlarını görmek için: /yarismalar yaz\n Bir yarışmaya katılmak için: /katil [yarışma adını buraya yaz] yaz gönder.")
+
     return "OK"
 
 
