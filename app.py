@@ -811,7 +811,7 @@ def login():
         user_from_email = User.query.filter_by(email=values["email"]).first()
         if user_from_email:
             if bcrypt.check_password_hash(user_from_email.password, values["password"]):
-                login_user(user_from_email)
+                login_user(user_from_email, remember=True)
                 return flask.redirect("/")
     return flask.render_template("login.html")
 
