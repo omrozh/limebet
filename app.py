@@ -581,7 +581,8 @@ def logout():
 def telegram_bot():
     if dict(flask.request.json).get("message").get("text") == "/bilgi":
         bot = telegram.Bot("7067705563:AAECNO-7EapKCIvce0xWCR8oIRAlS1N1Uj4")
-        bot.send_message("Selam!")
+        async with bot:
+            async bot.send_message("Selam!")
     return "OK"
 
 
