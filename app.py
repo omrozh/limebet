@@ -580,7 +580,7 @@ def logout():
 
 @app.route("/telegram/bot", methods=["POST", "GET"])
 def telegram_bot():
-    print(flask.request.values)
+    print(flask.request)
     return "OK"
 
 
