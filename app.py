@@ -583,6 +583,7 @@ def telegram_bot():
     print(flask.request.values)
     return "OK"
 
+
 @app.route("/profile", methods=["POST", "GET"])
 def profile():
     if not current_user.is_authenticated:
