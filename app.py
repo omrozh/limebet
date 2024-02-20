@@ -593,7 +593,7 @@ async def telegram_bot():
 
     if "/katil" in message:
         await bot.send_message(
-            text=f"https://kadromilyon/com/competition/{competitions.filter_by(competition_name=message.replace('/katil ', '')).first().id}",
+            text=f"https://kadromilyon.com/competition/{competitions.filter_by(competition_name=message.replace('/katil ', '')).first().id}",
             chat_id=chat_id)
 
     if message == "/yardım":
