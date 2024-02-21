@@ -751,6 +751,8 @@ async def telegram_bot():
             await bot.send_message(chat_id=chat_id,
                                    text=f"Bonusunuzu zaten aldınız.")
             return ""
+        if not user.freebet:
+            user.freebet = 0
         user.freebet += user.freebet_usable
         user.freebet_usable = 0
         db.session.commit()
