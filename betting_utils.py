@@ -73,16 +73,17 @@ def register_open_bet():
 
 
 def get_results(match_id):
-    r = requests.get(f'https://www.nosyapi.com/apiv2/service/bettable-result?matchID=148908&apiKey={api_key}')
-    for i in r.json().get("data").get("bettableResult"):
-        game_id = i.get("gameID")
+    for c in range(7):
+        r = requests.get(f'https://www.nosyapi.com/apiv2/service/bettable-result?matchID=148908&apiKey={api_key}&date={str(datetime.datetime.today().date() + datetime.timedelta(days=c))}')
+        for i in r.json().get("data").get("bettableResult"):
+            game_id = i.get("gameID")
 
-        for c in BetOdd.query.filter_by(game_id=game_id).all():
-            c.status = "Başarısız"
+            for c in BetOdd.query.filter_by(game_id=game_id).all():
+                c.status = "Başarısız"
 
-        value = i.get("value")
-        BetOdd.query.filter_by(game_id=game_id).filter_by(value=value).first().status = "Başarılı"
-        db.session.commit()
+            value = i.get("value")
+            BetOdd.query.filter_by(game_id=game_id).filter_by(value=value).first().status = "Başarılı"
+            db.session.commit()
 
 
 if sys.argv[1] == "add-matches":
