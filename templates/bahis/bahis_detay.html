@@ -109,9 +109,9 @@
             {% for c in i.bet_odds %}
 
                 {% if c.user_selected %}
-                    <center style="border-radius: 5px; border-top: dodgerblue 15px solid; color: gray; padding: 10px 20px; background-color: #e0e0e0; width: fit-content; box-sizing: border-box; display: inline-block" class="bet-odd" onclick="document.location = '/remove_bet/{{c.id}}'">
+                    <center style="border-radius: 5px; border-top: dodgerblue 15px solid; color: white; padding: 10px 20px; background-color: #ff4c59; width: fit-content; box-sizing: border-box; display: inline-block" class="bet-odd" onclick="document.location = '/remove_bet/{{c.id}}'">
                         <h2 style="font-family: 'Protest Guerrilla', sans-serif">{{ c.value }}</h2>
-                        <p style="color: gray">Oran: {{ c.odd }}</p>
+                        <p style="color: white">Oran: {{ c.odd }}</p>
                     </center>
                 {% else %}
                     <center style="border-radius: 5px; border-top: dodgerblue 15px solid; color: gray; padding: 10px 20px; width: fit-content; box-sizing: border-box; display: inline-block" class="bet-odd" onclick="document.location = '/take_bet/{{c.id}}'">
