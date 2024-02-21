@@ -7,8 +7,8 @@ import sys
 api_key = "zHMFjNS3bRu7vNgUrtr6JPMwOD5Jcuer7O9yw9pwNZMX4XBFwe2tazdyQLsq"
 
 
-def get_bettable_matches():
-    r = requests.get(f"https://www.nosyapi.com/apiv2/service/bettable-matches?apiKey={api_key}")
+def get_bettable_matches(date):
+    r = requests.get(f"https://www.nosyapi.com/apiv2/service/bettable-matches?apiKey={api_key}&date={date}")
     return r.json()
 
 
@@ -20,22 +20,23 @@ def get_odds(match_id):
 
 def get_bets():
     bet_info = []
-    for i in get_bettable_matches().get("data"):
-        bet_odds = get_odds(i.get("MatchID")).get("data")[0]
-        bets = bet_odds.get("Bets")
-        bet_info.append({
-            "MatchID": bet_odds.get("MatchID"),
-            "DateTime": bet_odds.get("DateTime"),
-            "League": bet_odds.get("League"),
-            "LeagueFlag": bet_odds.get("LeagueFlag"),
-            "Team1": bet_odds.get("Team1"),
-            "Team2": bet_odds.get("Team2"),
-            "Bets": [{
-                    "gameName": i.get("gameName"),
-                    "gameDetails": i.get("gameDetails"),
-                    "odds": i.get("odds")
-                } for i in bets]
-        })
+    for c in range(7)
+        for i in get_bettable_matches(str(datetime.datetime.today().date() + datetime.timedelta(days=c))).get("data"):
+            bet_odds = get_odds(i.get("MatchID")).get("data")[0]
+            bets = bet_odds.get("Bets")
+            bet_info.append({
+                "MatchID": bet_odds.get("MatchID"),
+                "DateTime": bet_odds.get("DateTime"),
+                "League": bet_odds.get("League"),
+                "LeagueFlag": bet_odds.get("LeagueFlag"),
+                "Team1": bet_odds.get("Team1"),
+                "Team2": bet_odds.get("Team2"),
+                "Bets": [{
+                        "gameName": i.get("gameName"),
+                        "gameDetails": i.get("gameDetails"),
+                        "odds": i.get("odds")
+                    } for i in bets]
+            })
     return bet_info
 
 
@@ -58,7 +59,6 @@ def register_open_bet():
                     game_details=bet_option.get("gameDetails"),
                     open_bet_fk=new_open_bet.id
                 )
-                print(new_open_bet.id)
                 db.session.add(new_bet_option)
                 db.session.commit()
                 for bet_odd in bet_option.get("odds"):
@@ -73,17 +73,16 @@ def register_open_bet():
 
 
 def get_results(match_id):
-    for c in range(7):
-        r = requests.get(f'https://www.nosyapi.com/apiv2/service/bettable-result?matchID=148908&apiKey={api_key}&date={str(datetime.datetime.today().date() + datetime.timedelta(days=c))}')
-        for i in r.json().get("data").get("bettableResult"):
-            game_id = i.get("gameID")
+    r = requests.get(f'https://www.nosyapi.com/apiv2/service/bettable-result?matchID=148908&apiKey={api_key}')
+    for i in r.json().get("data").get("bettableResult"):
+        game_id = i.get("gameID")
 
-            for c in BetOdd.query.filter_by(game_id=game_id).all():
-                c.status = "Başarısız"
+        for c in BetOdd.query.filter_by(game_id=game_id).all():
+            c.status = "Başarısız"
 
-            value = i.get("value")
-            BetOdd.query.filter_by(game_id=game_id).filter_by(value=value).first().status = "Başarılı"
-            db.session.commit()
+        value = i.get("value")
+        BetOdd.query.filter_by(game_id=game_id).filter_by(value=value).first().status = "Başarılı"
+        db.session.commit()
 
 
 if sys.argv[1] == "add-matches":
