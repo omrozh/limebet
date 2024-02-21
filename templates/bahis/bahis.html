@@ -164,6 +164,7 @@
         <br>
         <input type="text" oninput="searchBet()" id="search-box" style="padding: 10px 15px; font-family: sans-serif; outline: none; font-size: 1rem; width: 80%; box-sizing: border-box;" placeholder="Bahis Ara">
       <br>
+        <div style="height: 50vw; overflow-y: auto; width: 100%">
         <div style="background-image: url('/static/legend.jpg'); background-size: cover; width: 18%; min-height: 500px; text-align: left; box-sizing: border-box; padding: 20px 50px; float: right; margin-right: 10%; margin-top: 2%" id="promotion-img">
             <h1 style="font-family: 'Protest Guerrilla', sans-serif; color: white">
                 KadroMilyon Ultimate Fantasy
@@ -173,19 +174,20 @@
             </p>
             <p style="color: white">Sezon boyu 0 riskle para kazandıran yarışma, yakında!</p>
         </div>
-        {% for i in open_bets %}
-          <div class="searchable-div">
-            <p style="font-size: 12px; width: 100%; background-color: rgba(120, 120, 120, 0.7); border-radius: 15px 15px 0 0; color: white; padding: 5px; box-sizing: border-box; margin-bottom: 0">{{ i.match_league }}</p>
-            <div style="background-color: white; width: 100%; padding: 15px; box-sizing: border-box; text-align: left; border-radius: 0 0 15px 15px; background-color: rgba(120, 120, 120, 0.5); color: white">
-              <p style="margin-top: 0">{{i.bet_ending_datetime}}</p>
-              <h2 style="font-family: 'Protest Guerrilla', sans-serif;">
-                {{ i.team_1 }} - {{ i.team_2 }}
-              </h2>
+            {% for i in open_bets %}
+              <div class="searchable-div">
+                <p style="font-size: 12px; width: 100%; background-color: rgba(120, 120, 120, 0.7); border-radius: 15px 15px 0 0; color: white; padding: 5px; box-sizing: border-box; margin-bottom: 0">{{ i.match_league }}</p>
+                <div style="background-color: white; width: 100%; padding: 15px; box-sizing: border-box; text-align: left; border-radius: 0 0 15px 15px; background-color: rgba(120, 120, 120, 0.5); color: white">
+                  <p style="margin-top: 0">{{i.bet_ending_datetime}}</p>
+                  <h2 style="font-family: 'Protest Guerrilla', sans-serif;">
+                    {{ i.team_1 }} - {{ i.team_2 }}
+                  </h2>
 
-              <a href="/bahis/mac/{{i.id}}" style="color: white;">Tıkla Detayları Gör</a>
-            </div>
-          </div>
-        {% endfor %}
+                  <a href="/bahis/mac/{{i.id}}" style="color: white;">Tıkla Detayları Gör</a>
+                </div>
+              </div>
+            {% endfor %}
+        </div>
     </center>
     <div style="background-color: red; position: fixed; bottom: 50px; right: 0; border-radius: 15px 0 0 15px; color: white; padding: 10px"  onclick="window.open('/coupon')">
         Kuponum
