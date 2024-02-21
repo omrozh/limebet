@@ -128,6 +128,10 @@
           <button style="color: white; font-family: sans-serif; width: 40%; padding: 10px; box-sizing: border-box; background-color: dodgerblue; outline: none; border: none">Oyna</button>
           </form>
           <h2>
+              <br>
+              {% if current_user.freebet > 0 %}
+                Freebet: {{ current_user.freebet }}
+              {% endif %}
               Toplam Oran: {{ '%0.2f'| format(current_coupon.total_odd) }}
               <br>
               Toplam Kazanç: <span id="total_prize">0</span>₺

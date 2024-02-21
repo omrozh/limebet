@@ -70,6 +70,8 @@ class User(db.Model, UserMixin):
     is_admin = db.Column(db.Boolean, default=False)
     balance = db.Column(db.Float, default=0)
     referred_by = db.Column(db.String)
+    freebet = db.Column(db.Float)
+    freebet_usable = db.Column(db.Float)
 
     @property
     def mybets(self):
@@ -202,6 +204,7 @@ class BetCoupon(db.Model):
     user_fk = db.Column(db.Integer)
     total_value = db.Column(db.Float, default=0)
     status = db.Column(db.String, default="Oluşturuluyor")
+    freebet_amount = db.Column(db.Float)
 
     @property
     def all_selects(self):
@@ -256,7 +259,7 @@ class BetCoupon(db.Model):
             return 0
 
         else:
-            User.query.get(self.user_fk).balance = self.total_value * total_odd
+            User.query.get(self.user_fk).balance = (self.total_value * total_odd) - self.freebet_amount
             db.session.commit()
             self.status = "Başarılı"
             db.session.commit()
@@ -739,6 +742,12 @@ async def telegram_bot():
             text="\n".join([i.competition_name + ": " + str(i.prize_pool) + "₺" for i in competitions]),
             chat_id=chat_id)
 
+    if "/freebet" in message:
+        user = User.query.filter_by(email=message.split(" ")[-1]).first()
+        user.freebet += user.freebet_usable
+        db.session.commit()
+        await bot.send_message(chat_id=chat_id, text=f"{user.freebet_usable}₺ tutarında freebet kazandınız! Tebrikler!")
+
     if "/katil" in message:
         await bot.send_message(
             text=f"https://kadromilyon.com/competition/{competitions.filter_by(competition_name=message.replace('/katil ', '')).first().id}",
@@ -1054,7 +1063,7 @@ def coupon():
         db.session.add(current_coupon)
         db.session.commit()
     if flask.request.method == "POST":
-        if current_user.balance < float(flask.request.values["coupon_value"]):
+        if current_user.balance + current_user.freebet < float(flask.request.values["coupon_value"]):
             return '''
                 <script>
                     alert('Yetersiz bakiye')
@@ -1063,7 +1072,7 @@ def coupon():
             '''
         current_coupon.status = "Oluşturuldu"
         current_coupon.total_value = float(flask.request.values["coupon_value"])
-        current_user.balance -= float(flask.request.values["coupon_value"])
+        current_user.balance -= (float(flask.request.values["coupon_value"]) - current_coupon.freebet)
         db.session.commit()
         return flask.redirect("/profile")
     return flask.render_template("bahis/coupon.html", current_coupon=current_coupon)
