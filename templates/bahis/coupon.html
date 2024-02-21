@@ -104,7 +104,11 @@
             <p>{{i.bet_option.match_name}}</p>
             <p>Seçilen: {{ i.value }} | Oran: {{ i.odd }}</p>
           {% endfor %}
-          <form method="post" enctype="multipart/form-data"><input type="text" id="coupon-val" name="coupon_value" oninput="calculateTotalPrize()" style="padding: 10px 15px; font-family: sans-serif; outline: none; font-size: 1rem; width: 40%; box-sizing: border-box;" placeholder="Kupon Tutarı"><span style="color: white; margin-left: 5px">₺</span></form>
+          <form method="post" enctype="multipart/form-data"><input type="text" id="coupon-val" name="coupon_value" oninput="calculateTotalPrize()" style="padding: 10px 15px; font-family: sans-serif; outline: none; font-size: 1rem; width: 40%; box-sizing: border-box;" placeholder="Kupon Tutarı"><span style="color: white; margin-left: 5px">₺</span>
+              <br>
+              <br>
+          <button style="color: white; font-family: sans-serif; width: 40%; padding: 10px; box-sizing: border-box; background-color: dodgerblue; outline: none; border: none">Oyna</button>
+          </form>
           <h2>
               Toplam Oran: {{ '%0.2f'| format(current_coupon.total_odd) }}
               <br>

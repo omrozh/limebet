@@ -278,7 +278,7 @@ class BetOption(db.Model):
 
     @property
     def match_name(self):
-        open_bet = OpenBet.query.get(self.bet_option_fk)
+        open_bet = OpenBet.query.get(self.open_bet_fk)
         self.match_name_row = open_bet.team_1 + " - " + open_bet.team_2
         db.session.commit()
         return self.match_name_row
@@ -1044,7 +1044,6 @@ def coupon():
     if not current_user.is_authenticated:
         return flask.redirect("/login")
     current_coupon = BetCoupon.query.filter_by(user_fk=current_user.id).filter_by(status="Oluşturuluyor").first()
-
     if flask.request.method == "POST":
         if current_user.balance < float(flask.request.values["coupon_value"]):
             return '''
@@ -1058,5 +1057,4 @@ def coupon():
         current_user.balance -= float(flask.request.values["coupon_value"])
         db.session.commit()
         return flask.redirect("/profile")
-
     return flask.render_template("bahis/coupon.html", current_coupon=current_coupon)
