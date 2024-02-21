@@ -120,7 +120,8 @@
                     document.getElementById("total_prize").innerText = 0;
                     return;
                   }
-                  document.getElementById("total_prize").innerText = parseFloat(document.getElementById('coupon-val').value) * {{ '%0.2f'| format(current_coupon.total_odd) }}
+
+                  document.getElementById("total_prize").innerText = parseFloat(parseFloat(document.getElementById('coupon-val').value) * {{ '%0.2f'| format(current_coupon.total_odd) }}).toFixed(2)
               }
           </script>
       </div>
