@@ -101,7 +101,7 @@
             <h2 style="font-family: 'Protest Guerrilla', sans-serif">
                 {{ i.bet_option.game_name }}
             </h2>
-            <p>{{i.match_name}}</p>
+            <p>{{i.bet_option.match_name}}</p>
             <p>Seçilen: {{ i.value }} | Oran: {{ i.odd }}</p>
           {% endfor %}
           <form method="post" enctype="multipart/form-data"><input type="text" id="coupon-val" name="coupon_value" oninput="calculateTotalPrize()" style="padding: 10px 15px; font-family: sans-serif; outline: none; font-size: 1rem; width: 40%; box-sizing: border-box;" placeholder="Kupon Tutarı"><span style="color: white; margin-left: 5px">₺</span></form>
