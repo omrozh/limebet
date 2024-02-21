@@ -1014,12 +1014,12 @@ def take_bet(odd_id):
     if not current_user.is_authenticated:
         return flask.redirect("/login")
     current_coupon = BetCoupon.query.filter_by(user_fk=current_user.id).filter_by(status="Oluşturuluyor").first()
-    if BetSelectedOption.query.filter_by(bet_odd_fk=odd_id).filter_by(bet_coupon_fk=current_coupon.id).first():
-        return flask.redirect("/bahis")
     if not current_coupon:
         current_coupon = BetCoupon(user_fk=current_user.id, status="Oluşturuluyor", total_value=0)
         db.session.add(current_coupon)
         db.session.commit()
+    if BetSelectedOption.query.filter_by(bet_odd_fk=odd_id).filter_by(bet_coupon_fk=current_coupon.id).first():
+        return flask.redirect("/bahis")
     new_coupon_bet = BetSelectedOption(bet_coupon_fk=current_coupon.id, bet_odd_fk=odd_id)
     db.session.add(new_coupon_bet)
     db.session.commit()
