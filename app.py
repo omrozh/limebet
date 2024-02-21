@@ -1017,7 +1017,7 @@ def take_bet(odd_id):
     if BetSelectedOption.query.filter_by(bet_odd_fk=odd_id).filter_by(bet_coupon_fk=current_coupon.id).first():
         return flask.redirect("/bahis")
     if not current_coupon:
-        current_coupon = BetCoupon(user_fk=current_user.id, total_value=0)
+        current_coupon = BetCoupon(user_fk=current_user.id, status="Oluşturuluyor", total_value=0)
         db.session.add(current_coupon)
         db.session.commit()
     new_coupon_bet = BetSelectedOption(bet_coupon_fk=current_coupon.id, bet_odd_fk=odd_id)
@@ -1044,6 +1044,10 @@ def coupon():
     if not current_user.is_authenticated:
         return flask.redirect("/login")
     current_coupon = BetCoupon.query.filter_by(user_fk=current_user.id).filter_by(status="Oluşturuluyor").first()
+    if not current_coupon:
+        current_coupon = BetCoupon(user_fk=current_user.id, status="Oluşturuluyor", total_value=0)
+        db.session.add(current_coupon)
+        db.session.commit()
     if flask.request.method == "POST":
         if current_user.balance < float(flask.request.values["coupon_value"]):
             return '''
