@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>KadroMilyon | Fantezi Futbol'un Merkezi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Protest+Guerrilla&display=swap" rel="stylesheet">
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+        .bet-odd{
+            background-color: white;
+        }
+        .bet-odd:hover{
+            background-color: #e0e0e0;
+        }
+
+        tr:nth-child(even) {background-color: #f2f2f2;}
+    </style>
+</head>
+<body style="background-color: #222; padding: 0; margin: 0; font-family: 'Open Sans', sans-serif">
+    <center style="padding: 20px 50px; background-color: orange" id="promotion-insta">
+        <span style="color: white; font-family: 'Protest Guerrilla', sans-serif; font-size: 16px; text-decoration: underline;" onclick="window.localStorage.setItem('hidePromotionInsta', 'true'); document.location = '/promotions/instagram';">Yatırımsız 500TL fırsatı!</span>
+        <script>
+            document.getElementById("promotion-insta").style.display = "none";
+            if(window.localStorage.getItem("hidePromotionInsta") === 'true'){
+                document.getElementById("promotion-insta").style.display = "none";
+            }
+        </script>
+    </center>
+    <div style="width: 100%; box-sizing: border-box; height: 220px; ">
+        <img src="/static/kadromilyon.png" alt="" style="width: 75px; padding: 20px; float: left">
+        <div style="float: left;" id="hid-mob">
+            <p style="color: white; font-size: 1rem; margin-top: 35px; font-family: 'Protest Guerrilla', sans-serif">
+                KadroMilyon
+            </p>
+            <p style="color: orange; font-size: 1rem; margin-top: -10px; font-family: 'Protest Guerrilla', sans-serif">
+                Fantezi Spor
+            </p>
+        </div>
+        <div style="float: right; margin-top: 50px;">
+            {% if current_user.is_authenticated %}
+                <div style="background-color: rgba(0,134,255,0.38); border-left: dodgerblue 3px solid; color: white; padding: 10px; box-sizing: border-box; margin-right: 20px; margin-top: -10px; float: right">
+                    <span id="balance">{{'%0.2f'| format(current_user.balance|float)}}</span>₺
+                </div>
+                <span onclick="refreshBalance()" style="margin-right: 25px; font-size: 2rem; float: right; color: white; margin-top: -13px">&#x21ba;</span>
+                <script>
+                    function updateBalance(balance){
+                        document.getElementById("balance").innerText = balance;
+                    }
+                    function refreshBalance(){
+                        document.getElementById("balance").innerText = "..."
+                        fetch("/refresh-balance")
+                        .then(x => x.text())
+                        .then(y => updateBalance(y));
+                    }
+                </script>
+                <a href="/profile" style="color: dodgerblue; text-decoration: none; margin-right: 25px; float: right">
+                    <img style="width: 25px" src="/profile.png" alt="">
+                </a>
+            {% else %}
+                <a href="/login" style="color: white; text-decoration: none; margin-right: 25px;">Giriş Yap</a>
+                <a href="/signup" style="color: dodgerblue; text-decoration: none; margin-right: 25px;">Üye Ol</a>
+            {% endif %}
+        </div>
+        <script>
+            if(window.innerHeight > window.innerWidth){
+                document.getElementById("hid-mob").style.display = "none";
+            }
+        </script>
+        <div style="padding: 20px 50px; overflow-x: auto; float: left; white-space: nowrap; width: 100vw; background-color: #333; box-sizing: border-box">
+            <span style="display: inline-block; color: white" onclick="document.location = '/'">
+                Anasayfa
+            </span>
+            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/bonuses'">
+                Kampanyalar
+            </span>
+            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/fantasy'">
+                Fantezi Futbol
+            </span>
+            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/ultimate_fantasy'">
+                KadroMilyon Ultimate Fantasy
+            </span>
+        </div>
+    </div>
+    <center style="color: white">
+      <div style="text-align: left; width: 80%">
+          <h1>Kuponum</h1>
+          {% for i in current_coupon.odd_options %}
+            <h2 style="font-family: 'Protest Guerrilla', sans-serif">
+                {{ i.bet_option.game_name }}
+            </h2>
+            <p>Seçilen: {{ i.value }} | Oran: {{ i.odd }}</p>
+          {% endfor %}
+          <form method="post" enctype="multipart/form-data"><input type="text" id="coupon-val" name="coupon_value" oninput="calculateTotalPrize()" style="padding: 10px 15px; font-family: sans-serif; outline: none; font-size: 1rem; width: 40%; box-sizing: border-box;" placeholder="Kupon Tutarı"><span style="color: white; margin-left: 5px">₺</span></form>
+          <h2>
+              Toplam Oran: {{ '%0.2f'| format(current_coupon.total_odd) }}
+              <br>
+              Toplam Kazanç: <span id="total_prize">0</span>₺
+          </h2>
+          <script>
+              function calculateTotalPrize(){
+                  if(isNaN(document.getElementById('coupon-val').value)){
+                    document.getElementById("total_prize").innerText = 0;
+                    return;
+                  }
+                  document.getElementById("total_prize").innerText = parseFloat(document.getElementById('coupon-val').value) * {{ '%0.2f'| format(current_coupon.total_odd) }}
+              }
+          </script>
+      </div>
+    </center>
+</body>
+</html>

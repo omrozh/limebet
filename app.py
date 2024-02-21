@@ -31,7 +31,6 @@ migrate = Migrate(app, db)
 def get_unread_emails(username, password):
     with MailBox('imap.gmail.com').login(username, password, 'INBOX') as mailbox:
         data = [(msg.subject, msg.text) for msg in mailbox.fetch()]
-    print(data)
 
 
 def get_unread_email(username, password):
@@ -174,6 +173,136 @@ class UserInformation(db.Model):
     address = db.Column(db.String)
     date_of_birth = db.Column(db.String)
     tc_kimlik_no = db.Column(db.Integer)
+
+
+class OpenBet(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    api_match_id = db.Column(db.String)
+    bet_ending_datetime = db.Column(db.DateTime)
+    league_icon_url = db.Column(db.String)
+    match_league = db.Column(db.String)
+    team_1 = db.Column(db.String)
+    team_2 = db.Column(db.String)
+
+    def update_results(self):
+        from betting_utils import get_results
+        get_results(self.api_match_id)
+
+    @property
+    def bet_options(self):
+        return BetOption.query.filter_by(open_bet_fk=self.id).all()
+
+
+class BetCoupon(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_fk = db.Column(db.Integer)
+    total_value = db.Column(db.Float, default=0)
+    status = db.Column(db.String, default="Oluşturuluyor")
+
+    @property
+    def all_selects(self):
+        return BetSelectedOption.query.filter_by(bet_coupon_fk=self.id).all()
+
+    @property
+    def total_odd(self):
+        total_odd = 1
+        for i in BetSelectedOption.query.filter_by(bet_coupon_fk=self.id).all():
+            total_odd *= i.odd.odd
+
+        return total_odd
+
+    @property
+    def odd_options(self):
+        if self.status == "Oluşturuluyor":
+            for i in self.all_selects:
+                if i.odd.ended:
+                    db.session.delete(i)
+                    db.session.commit()
+        return [i.odd for i in self.all_selects]
+
+    def is_successful(self):
+        all_success = True
+        for i in BetSelectedOption.query.filter_by(bet_coupon_fk=self.total_value).all():
+            if i.odd.status == "Sonuçlanmadı":
+                self.status = "Sonuçlanmadı"
+                db.session.commit()
+                return 0
+
+            if i.odd.status == "Başarısız":
+                all_success = False
+
+        return all_success
+
+    def give_reward(self):
+        all_success = True
+        total_odd = 1
+        for i in BetSelectedOption.query.filter_by(bet_coupon_fk=self.total_value).all():
+            if i.odd.status == "Sonuçlanmadı":
+                self.status = "Sonuçlanmadı"
+                db.session.commit()
+                return 0
+
+            if i.odd.status == "Başarısız":
+                all_success = False
+
+            total_odd *= i.odd.odd
+        if all_success:
+            self.status = "Başarısız"
+            db.session.commit()
+            return 0
+
+        else:
+            User.query.get(self.user_fk).balance = self.total_value * total_odd
+            db.session.commit()
+            self.status = "Başarılı"
+            db.session.commit()
+            return 0
+
+
+class BetSelectedOption(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    bet_odd_fk = db.Column(db.Integer)
+    bet_coupon_fk = db.Column(db.Integer)
+
+    @property
+    def odd(self):
+        return BetOdd.query.get(self.bet_odd_fk)
+
+
+class BetOption(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    game_name = db.Column(db.String)
+    game_details = db.Column(db.String)
+    open_bet_fk = db.Column(db.Integer)
+
+    @property
+    def bet_odds(self):
+        return BetOdd.query.filter_by(bet_option_fk=self.id).all()
+
+
+class BetOdd(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    game_id = db.Column(db.String)
+    odd = db.Column(db.Float)
+    value = db.Column(db.String)
+    bet_option_fk = db.Column(db.Integer)
+    status = db.Column(db.String, default="Sonuçlanmadı")
+
+    @property
+    def ended(self):
+        return OpenBet.query.get(BetOption.query.get(self.bet_option_fk).open_bet_fk).bet_ending_datetime < datetime.datetime.now()
+
+    @property
+    def bet_option(self):
+        return BetOption.query.get(self.bet_option_fk)
+
+    @property
+    def user_selected(self):
+        current_coupon = BetCoupon.query.filter_by(user_fk=current_user.id).filter_by(status="Oluşturuluyor").first()
+        if not current_coupon:
+            return False
+        selected_odds = [i.bet_odd_fk for i in BetSelectedOption.query.filter_by(bet_coupon_fk=current_coupon.id)]
+        return self.id in selected_odds
 
 
 class TransactionLog(db.Model):
@@ -858,3 +987,68 @@ def admin_portal():
         db.session.commit()
         return flask.redirect("/")
     return flask.render_template("admin.html")
+
+
+@app.route("/bahis")
+def bahis():
+    open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime > datetime.datetime.now()).all()
+    return flask.render_template("bahis/bahis.html", open_bets=open_bets)
+
+
+@app.route("/bahis/mac/<bahis_id>")
+def bahis_mac(bahis_id):
+    open_bet = OpenBet.query.get(bahis_id)
+    return flask.render_template("bahis/bahis_detay.html", open_bet=open_bet)
+
+
+@app.route("/take_bet/<odd_id>")
+def take_bet(odd_id):
+    if not current_user.is_authenticated:
+        return flask.redirect("/login")
+    current_coupon = BetCoupon.query.filter_by(user_fk=current_user.id).filter_by(status="Oluşturuluyor").first()
+    if BetSelectedOption.query.filter_by(bet_odd_fk=odd_id).filter_by(bet_coupon_fk=current_coupon.id).first():
+        return flask.redirect("/bahis")
+    if not current_coupon:
+        current_coupon = BetCoupon(user_fk=current_user.id, total_value=0)
+        db.session.add(current_coupon)
+        db.session.commit()
+    new_coupon_bet = BetSelectedOption(bet_coupon_fk=current_coupon.id, bet_odd_fk=odd_id)
+    db.session.add(new_coupon_bet)
+    db.session.commit()
+    option_fk = BetOdd.query.get(odd_id).bet_option_fk
+    option = BetOption.query.get(option_fk)
+    return flask.redirect(f"/bahis/mac/{option.open_bet_fk}")
+
+
+@app.route("/remove_bet/<odd_id>")
+def remove_bet(odd_id):
+    current_coupon = BetCoupon.query.filter_by(user_fk=current_user.id).filter_by(status="Oluşturuluyor").first()
+    db.session.delete(BetSelectedOption.query.filter_by(bet_odd_fk=odd_id).filter_by(bet_coupon_fk=current_coupon.id).first())
+    db.session.commit()
+    option_fk = BetOdd.query.get(odd_id).bet_option_fk
+    option = BetOption.query.get(option_fk)
+
+    return flask.redirect(f"/bahis/mac/{option.open_bet_fk}")
+
+
+@app.route("/coupon", methods=["POST", "GET"])
+def coupon():
+    if not current_user.is_authenticated:
+        return flask.redirect("/login")
+    current_coupon = BetCoupon.query.filter_by(user_fk=current_user.id).filter_by(status="Oluşturuluyor").first()
+
+    if flask.request.method == "POST":
+        if current_user.balance < float(flask.request.values["coupon_value"]):
+            return '''
+                <script>
+                    alert('Yetersiz bakiye')
+                    document.location = '/coupon'
+                </script>
+            '''
+        current_coupon.status = "Oluşturuldu"
+        current_coupon.total_value = float(flask.request.values["coupon_value"])
+        current_user.balance -= float(flask.request.values["coupon_value"])
+        db.session.commit()
+        return flask.redirect("/profile")
+
+    return flask.render_template("bahis/coupon.html", current_coupon=current_coupon)
