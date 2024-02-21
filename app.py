@@ -757,7 +757,7 @@ async def telegram_bot():
 def profile():
     if not current_user.is_authenticated:
         return flask.redirect("/")
-    current_user.mybets[0].all_selects[0].odd.match_name
+    current_user.mybets[0].all_selects[0].match_name
     if flask.request.method == "POST":
         values = flask.request.values
         if flask.request.values["form-type"] == "user-info":
