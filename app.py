@@ -263,10 +263,18 @@ class BetSelectedOption(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     bet_odd_fk = db.Column(db.Integer)
     bet_coupon_fk = db.Column(db.Integer)
+    match_name_row = db.Column(db.String)
 
     @property
     def odd(self):
         return BetOdd.query.get(self.bet_odd_fk)
+
+    @property
+    def match_name(self):
+        open_bet = OpenBet.query.get(BetOption.query.get(BetOdd.query.get(self.bet_coupon_fk).bet_option_fk).open_bet_fk)
+        self.match_name_row = open_bet.team_1 + " - " + open_bet.team_2
+        db.session.commit()
+        return self.match_name_row
 
 
 class BetOption(db.Model):
