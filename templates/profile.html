@@ -124,6 +124,7 @@
             {% for i in current_user.mybets %}
                 {% if not i.status == "Oluşturuluyor" %}
                 <br style="clear: both">
+                <div style="display: inline-block; width: 400px; max-width: 100%">
                     <div style="background-color: orange; padding: 5px; width: 80%; box-sizing: border-box">
                         <p style="color: white">Kupon - {{ i.id }}</p>
                     </div>
@@ -147,6 +148,7 @@
                             Sonuç: {{ i.status }}
                         </p>
                     </div>
+                </div>
                 {% endif %}
             {% endfor %}
         </div>
