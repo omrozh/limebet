@@ -67,6 +67,9 @@
             <span class="navbar-item" style="display: inline-block; margin-left: 50px; color: white" onclick="changeDivision('withdraw-money', this)">
                 Para Çek
             </span>
+            <span class="navbar-item" style="display: inline-block; margin-left: 50px; color: white" onclick="changeDivision('bets', this)">
+                Bahisler
+            </span>
             <span class="navbar-item" style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/logout'">
                 Çıkış Yap
             </span>
@@ -112,6 +115,39 @@
                         <br>
                     </div>
                 </div>
+            {% endfor %}
+        </div>
+        <div id="bets" style="display: none">
+            <h1 style="font-family: 'Protest Guerrilla', sans-serif; color: white; text-align: left; margin-left: 10%;">
+                Bahislerim
+            </h1>
+            {% for i in current_user.mybets %}
+                {% if not i.status == "Oluşturuluyor" %}
+                    <div style="background-color: orange; padding: 5px; width: 80%; box-sizing: border-box">
+                        <p style="color: white">Kupon - {{ i.id }}</p>
+                    </div>
+                    {% for c in i.all_selects %}
+                    <div style="background-color: white; width: 80%; padding: 5px">
+                        <p style="color: gray">Maç: {{ c.odd.match_name }}</p>
+                        <p style="color: gray">Oran: {{ c.odd.odd }}</p>
+                    </div>
+                    {% endfor %}
+                    <br>
+                    <div style="color: gray; background-color: white; padding: 5px; width: 80%">
+                        <p>
+                            Toplam Oran: {{ i.total_odd }}
+                        </p>
+                        <p>
+                            Yatırım Tutarı: {{ i.total_value }}₺
+                        </p>
+                        <p>
+                            Potansiyel Kazanç: {{ '%0.2f' | format(i.total_value * i.total_odd) }}₺
+                        </p>
+                        <p>
+                            Sonuç: {{ i.status }}
+                        </p>
+                    </div>
+                {% endif %}
             {% endfor %}
         </div>
         <div id="profile-information" class="division-profile" style="display: none">

@@ -71,6 +71,10 @@ class User(db.Model, UserMixin):
     balance = db.Column(db.Float, default=0)
     referred_by = db.Column(db.String)
 
+    @property
+    def mybets(self):
+        return BetCoupon.query.filter_by(user_fk=self.id).all()
+
     def update_balance(self):
         transactions = TransactionLog.query.filter_by(user_fk=self.id).filter_by(transaction_status="initiated").all()
         emails = get_unread_email("omrozh@gmail.com", "hikwdlfeucjrijxe")
