@@ -756,7 +756,7 @@ async def telegram_bot():
         user.freebet += user.freebet_usable
         user.freebet_usable = 0
         db.session.commit()
-        await bot.send_message(chat_id=chat_id, text=f"{user.freebet_usable}₺ tutarında freebet kazandınız! Tebrikler!")
+        await bot.send_message(chat_id=chat_id, text=f"{user.freebet}₺ tutarında freebet kazandınız! Tebrikler!")
 
     if "/katil" in message:
         await bot.send_message(
