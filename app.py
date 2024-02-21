@@ -747,7 +747,7 @@ async def telegram_bot():
         user = User.query.filter_by(email=message.split(" ")[-1]).first()
         telegram_chats = User.query.filter_by(telegram_chat_id=chat_id).all()
         user.telegram_chat_id = chat_id
-        if len(telegram_chats) > 1:
+        if len(telegram_chats) > 0:
             await bot.send_message(chat_id=chat_id,
                                    text=f"Bonusunuzu zaten aldınız.")
             return ""
