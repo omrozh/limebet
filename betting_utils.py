@@ -21,7 +21,7 @@ def get_odds(match_id):
 def get_bets():
     bet_info = []
     for c in range(7):
-        for i in get_bettable_matches(str(datetime.datetime.today().date() + datetime.timedelta(days=c))).get("data"):
+        for i in get_bettable_matches((datetime.datetime.today().date() + datetime.timedelta(days=c)).strftime("%Y-%m-%d")).get("data"):
             bet_odds = get_odds(i.get("MatchID")).get("data")[0]
             bets = bet_odds.get("Bets")
             bet_info.append({
