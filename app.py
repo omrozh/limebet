@@ -283,6 +283,8 @@ class BetOption(db.Model):
     @property
     def match_name(self):
         open_bet = OpenBet.query.get(self.open_bet_fk)
+        if not open_bet:
+            return self.match_name_row
         self.match_name_row = open_bet.team_1 + " - " + open_bet.team_2
         db.session.commit()
         return self.match_name_row
