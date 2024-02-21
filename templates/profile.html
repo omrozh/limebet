@@ -136,7 +136,7 @@
                     <br>
                     <div style="color: gray; background-color: white; padding: 5px; width: 80%; box-sizing: border-box">
                         <p>
-                            Toplam Oran: {{ i.total_odd }}
+                            Toplam Oran: {{ '%0.2f' | format(i.total_odd) }}
                         </p>
                         <p>
                             Yatırım Tutarı: {{ i.total_value }}₺
