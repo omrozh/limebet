@@ -1,14 +1,11 @@
-<!doctype html>
-<html lang="en">
-<head>
+<html lang="en"><head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>KadroMilyon | Fantezi Futbol'un Merkezi</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Protest+Guerrilla&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&amp;family=Protest+Guerrilla&amp;display=swap" rel="stylesheet">
     <style>
         table {
             border-collapse: collapse;
@@ -19,12 +16,49 @@
             text-align: left;
             padding: 8px;
         }
+        .promotion-image{
+            width: 25%; display: inline-block; margin-left: 3%;
+        }
+        .competition-div{
+            background-color: white; width: 72%; text-align: left; display: inline-block; float: left;
+        }
+        .kadro-mil{
+            background-image: url('/static/background-fantasy.jpeg'); background-size: cover; width: 67%; text-align: left; box-sizing: border-box; padding: 20px 50px; min-height: 320px; background-position: right; float: left; margin-left: 5%; margin-bottom: 30px;
+        }
+
+        @media screen and (max-width: 800px){
+            .promotion-image{
+                display: none;
+            }
+            .competition-div{
+                width: 100%;
+                float: none;
+            }
+        }
+        .searchable-div{
+            background-position: center; background-size: cover; border-radius: 15px; width: 60%; margin-left: 10%; margin-top: 1%; float: left;
+        }
+        @media screen and (max-width: 1400px) {
+            .kadro-mil{
+                min-height: fit-content;
+                height: 320px;
+                width: 90%;
+            }
+            #promotion-img{
+                display: none;
+            }
+            .searchable-div{
+                width: 80%;
+                float: none;
+                margin-left: 0;
+            }
+        }
 
         tr:nth-child(even) {background-color: #f2f2f2;}
     </style>
 </head>
-<body style="background-color: #222; padding: 0; margin: 0; font-family: 'Open Sans', sans-serif">
-    <center style="padding: 20px 50px; background-color: orange" id="promotion-insta">
+<body style="background-color: #222; padding: 0; margin: 0; font-family: 'Open Sans', sans-serif; background: url('/static/background.jpeg'); background-attachment: fixed">
+    <center style="padding: 20px 50px; background-color: orange; display: none;" id="promotion-insta">
         <span style="color: white; font-family: 'Protest Guerrilla', sans-serif; font-size: 16px; text-decoration: underline;" onclick="window.localStorage.setItem('hidePromotionInsta', 'true'); document.location = '/promotions/instagram';">Yatırımsız 500TL fırsatı!</span>
         <script>
             document.getElementById("promotion-insta").style.display = "none";
@@ -33,7 +67,7 @@
             }
         </script>
     </center>
-    <div style="width: 100%; box-sizing: border-box; height: 220px; ">
+    <div style="width: 100%; box-sizing: border-box; height: 200px;">
         <img src="/static/kadromilyon.png" alt="" style="width: 75px; padding: 20px; float: left">
         <div style="float: left;" id="hid-mob">
             <p style="color: white; font-size: 1rem; margin-top: 35px; font-family: 'Protest Guerrilla', sans-serif">
@@ -43,7 +77,7 @@
                 Fantezi Spor
             </p>
         </div>
-        <div style="float: right; margin-top: 50px;">
+        <div style="float: right; margin-top: 50px;o">
             {% if current_user.is_authenticated %}
                 <div style="background-color: rgba(0,134,255,0.38); border-left: dodgerblue 3px solid; color: white; padding: 10px; box-sizing: border-box; margin-right: 20px; margin-top: -10px; float: right">
                     <span id="balance">{{'%0.2f'| format(current_user.balance|float)}}</span>₺
@@ -61,7 +95,7 @@
                     }
                 </script>
                 <a href="/profile" style="color: dodgerblue; text-decoration: none; margin-right: 25px; float: right">
-                    <img style="width: 25px" src="/profile.png" alt="">
+                    <img style="width: 25px" src="/static/profile.png" alt="">
                 </a>
             {% else %}
                 <a href="/login" style="color: white; text-decoration: none; margin-right: 25px;">Giriş Yap</a>
@@ -77,17 +111,47 @@
             <span style="display: inline-block; color: white" onclick="document.location = '/'">
                 Anasayfa
             </span>
-            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/bonuses'">
+            <span style="display: inline-block; margin-left: 50px; color: white" onclick="localStorage.clear(); window.location.reload()">
                 Kampanyalar
             </span>
-            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/fantasy'">
-                Fantezi Futbol
+            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/?filter_q=daily'">
+                Günlük Yarışmalar
             </span>
-            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/ultimate_fantasy'">
-                KadroMilyon Ultimate Fantasy
+            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/?filter_q=weekly'">
+                Haftalık Yarışmalar
+            </span>
+            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/?filter_q=daily'">
+                Yüksek Limitli Yarışmalar
+            </span>
+            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/?filter_q=Premier-Lig'">
+                Premier Lig
+            </span>
+            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/?filter_q=Süper-Lig'">
+                Süper Lig
+            </span>
+            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/?filter_q=Bundesliga'">
+                Bundesliga
+            </span>
+            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/?filter_q=LaLiga'">
+                LaLiga
+            </span>
+            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/bahis'">
+                Bahis
             </span>
         </div>
     </div>
+    <center>
+        <img id="promotion-img" src="/static/betting.png" style="float: right; margin-right: 5%; height: 320px">
+    <div class="kadro-mil">
+            <h1 style="font-family: 'Protest Guerrilla', sans-serif; color: white">
+                Kadronu Kur
+            </h1>
+            <p style="font-family: 'Protest Guerrilla', sans-serif; color: white">
+                <span style="color: orange">Milyoner</span> Ol
+            </p>
+            <p style="color: white">Dev ödül havuzlarıyla hayalindeki takımı kur, kazanmaya hemen başla.</p>
+        </div>
+        <br style="clear:both">
     <center>
         <div style="background-image: url('/static/legend.jpg'); background-size: cover; width: 90%; min-height: 200px; text-align: left; box-sizing: border-box; padding: 20px 50px; min-height: fit-content">
             <h1 style="font-family: 'Protest Guerrilla', sans-serif; color: white">
@@ -99,14 +163,23 @@
             <p style="color: white">Sezon boyunca fantezi yarışmalarında kadroya eklendikçe para kazan.</p>
         </div>
         <br>
-        <h1 style="font-family: 'Protest Guerrilla', sans-serif; text-align: left; margin-left: 5%; color: white; width: 90%">Milyoner eden kuponlar burada!</h1>
+        <h1 style="font-family: 'Protest Guerrilla', sans-serif; text-align: left; margin-left: 10%; color: white; width: 90%">Milyoner eden kuponlar burada!</h1>
         <br>
         <input type="text" oninput="searchBet()" id="search-box" style="padding: 10px 15px; font-family: sans-serif; outline: none; font-size: 1rem; width: 80%; box-sizing: border-box;" placeholder="Bahis Ara">
       <br>
+        <div style="background-image: url('/static/legend.jpg'); background-size: cover; width: 18%; min-height: 500px; text-align: left; box-sizing: border-box; padding: 20px 50px; float: right; margin-right: 10%; margin-top: 2%">
+            <h1 style="font-family: 'Protest Guerrilla', sans-serif; color: white">
+                KadroMilyon Ultimate Fantasy
+            </h1>
+            <p style="font-family: 'Protest Guerrilla', sans-serif; color: white">
+                <span style="color: orange">Efsaneleri</span> Kadrona Al
+            </p>
+            <p style="color: white">Sezon boyu 0 riskle para kazandıran yarışma, yakında!</p>
+        </div>
         {% for i in open_bets %}
-          <div style="background-color: white; background-position: center; background-size: cover; border-radius: 15px; width: 80%" class="searchable-div">
-            <p style="font-size: 12px; width: 100%; background-color: rgba(0, 0, 0, 0.7); border-radius: 15px 15px 0 0; color: white; padding: 5px; box-sizing: border-box; margin-bottom: 0">{{ i.match_league }}</p>
-            <div style="background-color: white; width: 100%; padding: 15px; box-sizing: border-box; text-align: left; border-radius: 0 0 15px 15px; background-color: rgba(0, 0, 0, 0.5); color: white">
+          <div class="searchable-div">
+            <p style="font-size: 12px; width: 100%; background-color: rgba(120, 120, 120, 0.7); border-radius: 15px 15px 0 0; color: white; padding: 5px; box-sizing: border-box; margin-bottom: 0">{{ i.match_league }}</p>
+            <div style="background-color: white; width: 100%; padding: 15px; box-sizing: border-box; text-align: left; border-radius: 0 0 15px 15px; background-color: rgba(120, 120, 120, 0.5); color: white">
               <p style="margin-top: 0">{{i.bet_ending_datetime}}</p>
               <h2 style="font-family: 'Protest Guerrilla', sans-serif;">
                 {{ i.team_1 }} - {{ i.team_2 }}
@@ -120,6 +193,7 @@
     <div style="background-color: red; position: fixed; bottom: 50px; right: 0; border-radius: 15px 0 0 15px; color: white; padding: 10px"  onclick="window.open('/coupon')">
         Kuponum
     </div>
+    <br style="clear: both">
     <br>
     <span style="opacity: 0">KadroMilyon</span>
     <script>
