@@ -72,6 +72,7 @@ class User(db.Model, UserMixin):
     referred_by = db.Column(db.String)
     freebet = db.Column(db.Float)
     freebet_usable = db.Column(db.Float)
+    telegram_chat_id = db.Column(db.String)
 
     @property
     def mybets(self):
@@ -744,7 +745,14 @@ async def telegram_bot():
 
     if "/freebet" in message:
         user = User.query.filter_by(email=message.split(" ")[-1]).first()
+        telegram_chats = User.query.filter_by(telegram_chat_id=chat_id).all()
+        user.telegram_chat_id = chat_id
+        if len(telegram_chats) > 1:
+            await bot.send_message(chat_id=chat_id,
+                                   text=f"Bonusunuzu zaten aldınız.")
+            return ""
         user.freebet += user.freebet_usable
+        user.freebet_usable = 0
         db.session.commit()
         await bot.send_message(chat_id=chat_id, text=f"{user.freebet_usable}₺ tutarında freebet kazandınız! Tebrikler!")
 
@@ -975,7 +983,8 @@ def signup():
             username=values["username"],
             email=values["email"],
             password=bcrypt.generate_password_hash(values["password"]),
-            referred_by=flask.request.cookies.get('somecookiename', None)
+            referred_by=flask.request.cookies.get('somecookiename', None),
+            freebet_usable=100
         )
         db.session.add(new_user)
         db.session.commit()
