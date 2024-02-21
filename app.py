@@ -1086,6 +1086,7 @@ def coupon():
         freebet_amount = current_user.freebet if current_user.freebet >= float(flask.request.values["coupon_value"]) else float(flask.request.values["coupon_value"])
         current_user.balance -= (float(flask.request.values["coupon_value"]) - freebet_amount)
         current_coupon.freebet_amount = freebet_amount
+        current_user.freebet -= freebet_amount
         db.session.commit()
         return flask.redirect("/profile")
     return flask.render_template("bahis/coupon.html", current_coupon=current_coupon)
