@@ -41,7 +41,7 @@
                 height: 320px;
                 width: 90%;
             }
-            #promotion-img{
+            .promotion-img{
                 display: none;
             }
             .searchable-div{
@@ -54,8 +54,9 @@
         tr:nth-child(even) {background-color: #f2f2f2;}
     </style>
 </head>
-<body style="background-color: #222; padding: 0; margin: 0; font-family: 'Open Sans', sans-serif; background: url('/static/background.jpeg'); background-attachment: fixed">
-    <center style="padding: 20px 50px; background-color: orange; display: none;" id="promotion-insta">
+<body style="background-color: #222; padding: 0; margin: 0; font-family: 'Open Sans', sans-serif; background: url('/static/background.jpeg'); background-size: 100% 100%">
+    <div style="width: 100%; height: 100vh; overflow-y: auto">
+        <center style="padding: 20px 50px; background-color: orange; display: none;" id="promotion-insta">
         <span style="color: white; font-family: 'Protest Guerrilla', sans-serif; font-size: 16px; text-decoration: underline;" onclick="window.localStorage.setItem('hidePromotionInsta', 'true'); document.location = '/promotions/instagram';">Yatırımsız 500TL fırsatı!</span>
         <script>
             document.getElementById("promotion-insta").style.display = "none";
@@ -138,7 +139,7 @@
         </div>
     </div>
     <center>
-        <img id="promotion-img" src="/static/betting.png" style="float: right; margin-right: 5%; height: 320px">
+        <img class="promotion-img" src="/static/betting.png" style="float: right; margin-right: 5%; height: 320px">
     <div class="kadro-mil">
             <h1 style="font-family: 'Protest Guerrilla', sans-serif; color: white">
                 Kadronu Kur
@@ -164,8 +165,8 @@
         <br>
         <input type="text" oninput="searchBet()" id="search-box" style="padding: 10px 15px; font-family: sans-serif; outline: none; font-size: 1rem; width: 80%; box-sizing: border-box;" placeholder="Bahis Ara">
       <br>
-        <div style="height: 75vw; overflow-y: auto; width: 100%">
-        <div style="background-image: url('/static/legend.jpg'); background-size: cover; width: 18%; min-height: 500px; text-align: left; box-sizing: border-box; padding: 20px 50px; float: right; margin-right: 10%; margin-top: 2%" id="promotion-img">
+        <div>
+        <div style="background-image: url('/static/legend.jpg'); background-size: cover; width: 18%; min-height: 500px; text-align: left; box-sizing: border-box; padding: 20px 50px; float: right; margin-right: 10%; margin-top: 2%" class="promotion-img">
             <h1 style="font-family: 'Protest Guerrilla', sans-serif; color: white">
                 KadroMilyon Ultimate Fantasy
             </h1>
@@ -209,6 +210,7 @@
                 }
             }
         }
-    </script>
+    </script></center>
+    </div>
 </body>
 </html>
