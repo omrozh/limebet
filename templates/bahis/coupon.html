@@ -129,8 +129,10 @@
           </form>
           <h2>
               <br>
-              {% if current_user.freebet > 0 %}
-                Freebet: {{ current_user.freebet }}
+              {% if current_user.freebet %}
+                {% if current_user.freebet > 0 %}
+                  Freebet: {{ current_user.freebet }}
+                {% endif %}
               {% endif %}
               Toplam Oran: {{ '%0.2f'| format(current_coupon.total_odd) }}
               <br>
