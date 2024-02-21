@@ -123,8 +123,7 @@
             </h1>
             {% for i in current_user.mybets %}
                 {% if not i.status == "Oluşturuluyor" %}
-                <br style="clear: both">
-                <div style="display: inline-block; width: 400px; max-width: 100%">
+                <div style="display: inline-block; width: 400px; max-width: 100%; margin-top: 15px; vertical-align: top">
                     <div style="background-color: orange; padding: 5px; width: 80%; box-sizing: border-box">
                         <p style="color: white">Kupon - {{ i.id }}</p>
                     </div>
