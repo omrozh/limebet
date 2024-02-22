@@ -40,6 +40,7 @@ def deposit_start(customer_id, customer_name, transaction_id):
         "session_id": session_id, "id": amount, "description": "test", "customerId": customer_id,
         "customerName": customer_name, "transactionId": transaction_id, "bankCode": banks
     })
+    return r.json()
 
 
 print(deposit_start("1234", "Ömer Özhan", "32"))
