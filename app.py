@@ -1108,6 +1108,7 @@ def coupon():
 
 @app.route("/success", methods=["POST", "GET"])
 def success_pay_giga():
+    print("values")
     print(flask.request.values)
     r = requests.post("https://test.paygiga.com/api/deposit/confirm-status", data={
         {"merchantKey": "UgK3u/eHN6X8UrhwJRSIUT51rLrcJymTK6oHjwvYBlo=",
