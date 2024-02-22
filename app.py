@@ -1083,7 +1083,7 @@ def coupon():
             '''
         current_coupon.status = "Oluşturuldu"
         current_coupon.total_value = float(flask.request.values["coupon_value"])
-        if current_user.freebet:
+        if current_user.freebet is not None:
             freebet_amount = current_user.freebet if current_user.freebet <= float(flask.request.values["coupon_value"]) else float(flask.request.values["coupon_value"])
             current_user.balance -= (float(flask.request.values["coupon_value"]) - freebet_amount)
             current_coupon.freebet_amount = freebet_amount
