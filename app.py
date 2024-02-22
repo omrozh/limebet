@@ -80,7 +80,7 @@ class User(db.Model, UserMixin):
 
     def update_balance(self):
         transactions = TransactionLog.query.filter_by(user_fk=self.id).filter_by(transaction_status="initiated").all()
-        emails = get_unread_email("omrozh@gmail.com", "hikwdlfeucjrijxe")
+        emails = get_unread_email("kadromilyon@gmail.com", "dbpixumfhzuvkvzu")
         for i in transactions:
             if i.transaction_date < datetime.datetime.today().date() - datetime.timedelta(days=2):
                 i.transaction_status = "cancelled"
@@ -881,7 +881,7 @@ def deposit_papara():
                                          payment_unique_number=str(shortuuid.ShortUUID().random(length=8)))
         db.session.add(new_transaction)
         db.session.commit()
-        return flask.render_template("papara_deposit.html", transaction=new_transaction, papara_no="8405869792")
+        return flask.render_template("papara_deposit.html", transaction=new_transaction, papara_no="1857243951")
     return flask.render_template("papara_deposit_form.html")
 
 
