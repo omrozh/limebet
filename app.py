@@ -855,6 +855,7 @@ def refresh_balance():
 
 @app.route("/deposit/bank", methods=["POST", "GET"])
 def deposit_bank():
+    return "Geçici olarak kullanıma kapalı."
     if flask.request.method == "POST":
         values = flask.request.values
         if float(values["transaction_amount"]) < 500:
