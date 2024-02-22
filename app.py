@@ -1083,10 +1083,14 @@ def coupon():
             '''
         current_coupon.status = "Oluşturuldu"
         current_coupon.total_value = float(flask.request.values["coupon_value"])
-        freebet_amount = 0 if not current_user else current_user.freebet if current_user.freebet <= float(flask.request.values["coupon_value"]) else float(flask.request.values["coupon_value"])
-        current_user.balance -= (float(flask.request.values["coupon_value"]) - freebet_amount)
-        current_coupon.freebet_amount = freebet_amount
-        current_user.freebet -= freebet_amount
+        if current_user.freebet:
+            freebet_amount = current_user.freebet if current_user.freebet <= float(flask.request.values["coupon_value"]) else float(flask.request.values["coupon_value"])
+            current_user.balance -= (float(flask.request.values["coupon_value"]) - freebet_amount)
+            current_coupon.freebet_amount = freebet_amount
+            current_user.freebet -= freebet_amount
+        else:
+            current_user.balance -= float(flask.request.values["coupon_value"])
+            current_coupon.freebet_amount = 0
         db.session.commit()
         return flask.redirect("/profile")
     return flask.render_template("bahis/coupon.html", current_coupon=current_coupon)
