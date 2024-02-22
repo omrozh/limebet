@@ -36,7 +36,7 @@ def deposit_start(customer_id, customer_name, transaction_id):
     session_id = authenticate(customer_id).get("session_id")
     banks = get_bank_list("1234", session_id).get("banks")[0].get("bankCode")
     print(get_bank_list("1234", session_id))
-    print(get_available_amounts("1234", banks).get("amounts"))
+    print(get_available_amounts("1234", banks))
     amount = get_available_amounts("1234", banks).get("amounts")[1].get("id")
     r = requests.post("https://test.paygiga.com/api/deposit/start", data={
         "session_id": session_id, "id": amount, "description": "test", "customerId": customer_id,
