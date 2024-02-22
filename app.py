@@ -1106,13 +1106,18 @@ def coupon():
     return flask.render_template("bahis/coupon.html", current_coupon=current_coupon)
 
 
-@app.route("/success")
+@app.route("/success", methods=["POST"])
 def success_pay_giga():
-    print("Success PayGiga")
+    print(flask.request.values)
+    r = requests.post("https://test.paygiga.com/api/deposit/confirm-status", data={
+        {"merchantKey": "UgK3u/eHN6X8UrhwJRSIUT51rLrcJymTK6oHjwvYBlo=",
+         "merchantPassword": "d_yTqtIfhn]g7V5A[v==Vp", "id": 45687,
+         "transactionId": "954546"}
+    })
     return "OK"
 
 
-@app.route("/fail")
+@app.route("/fail", methods=["POST"])
 def fail_pay_giga():
     print("Fail PayGiga")
     return "OK"
