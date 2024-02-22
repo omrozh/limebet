@@ -34,12 +34,8 @@ def get_available_amounts(customer_id, bank_code):
 
 def deposit_start(customer_id, customer_name, transaction_id):
     session_id = authenticate(customer_id).get("session_id")
-    banks = get_bank_list("1234", session_id).get("banks")
-    for i in banks:
-        amount = get_available_amounts("1234", i.get("bankCode")).get("amounts")
-        if len(amount) > 0:
-            amount = amount[0]
-            break
+    banks = get_bank_list("1234", session_id).get("banks")[0].get("bankCode")
+    amount = get_available_amounts("1234", "akbank").get("amounts")[0].get("id")
     r = requests.post("https://test.paygiga.com/api/deposit/start", data={
         "session_id": session_id, "id": amount, "description": "test", "customerId": customer_id,
         "customerName": customer_name, "transactionId": transaction_id, "bankCode": banks
