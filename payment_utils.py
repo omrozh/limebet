@@ -40,4 +40,4 @@ def deposit_start(customer_id):
     })
 
 
-print(get_available_amounts("akbank"))
+print(get_available_amounts("1234", "akbank"))
