@@ -13,8 +13,7 @@ def authenticate(customer_id):
     return r.json()
 
 
-def get_bank_list(customer_id):
-    session_id = authenticate(customer_id).get("session_id")
+def get_bank_list(customer_id, session_id):
     r = requests.post("https://test.paygiga.com/api/getBankList", data={
         "session_id": session_id,
         "aim": "deposit"
@@ -22,4 +21,23 @@ def get_bank_list(customer_id):
     return r.json()
 
 
-print(get_bank_list("12345"))
+def get_available_amounts(customer_id, bank_code):
+    session_id = authenticate(customer_id).get("session_id")
+
+    r = requests.post("https://test.paygiga.com/api/getAvailableAmounts", data={
+        "session_id": session_id, "minAmount": 100, "maxAmount": 50000,
+        "bankCode": bank_code, "customerId": customer_id, "approvalRowShowType": 2
+    })
+    return r.json()
+
+
+def deposit_start(customer_id):
+    session_id = authenticate(customer_id).get("session_id")
+    banks = get_bank_list("1234", session_id).get("banks")[0].get("bankCode")
+    r = requests.post("https://test.paygiga.com/api/deposit/start", data={
+        "session_id": session_id, "id": 8, "description": "test", "customerId": "15",
+        "customerName": "CUSTOMER NAME", "transactionId": "20", "bankCode": "isbank"
+    })
+
+
+print(get_available_amounts("akbank"))

@@ -1104,3 +1104,16 @@ def coupon():
         db.session.commit()
         return flask.redirect("/profile")
     return flask.render_template("bahis/coupon.html", current_coupon=current_coupon)
+
+
+@app.route("/success")
+def success_pay_giga():
+    print("Success PayGiga")
+    return "OK"
+
+
+@app.route("/fail")
+def fail_pay_giga():
+    print("Fail PayGiga")
+    return "OK"
+
