@@ -19,6 +19,7 @@ def get_bank_list(customer_id):
         "session_id": session_id,
         "aim": "deposit"
     })
+    return r.json()
 
 
 print(get_bank_list("12345"))
