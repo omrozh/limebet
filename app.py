@@ -1074,16 +1074,26 @@ def coupon():
         db.session.add(current_coupon)
         db.session.commit()
     if flask.request.method == "POST":
-        if current_user.balance + current_user.freebet < float(flask.request.values["coupon_value"]):
-            return '''
-                <script>
-                    alert('Yetersiz bakiye')
-                    document.location = '/coupon'
-                </script>
-            '''
+        if current_user.freebet:
+            if current_user.balance + current_user.freebet < float(flask.request.values["coupon_value"]):
+                return '''
+                    <script>
+                        alert('Yetersiz bakiye')
+                        document.location = '/coupon'
+                    </script>
+                '''
+        else:
+            if current_user.balance < float(flask.request.values["coupon_value"]):
+                return '''
+                    <script>
+                        alert('Yetersiz bakiye')
+                        document.location = '/coupon'
+                    </script>
+                '''
+
         current_coupon.status = "Oluşturuldu"
         current_coupon.total_value = float(flask.request.values["coupon_value"])
-        if current_user.freebet is not None:
+        if current_user.freebet:
             freebet_amount = current_user.freebet if current_user.freebet <= float(flask.request.values["coupon_value"]) else float(flask.request.values["coupon_value"])
             current_user.balance -= (float(flask.request.values["coupon_value"]) - freebet_amount)
             current_coupon.freebet_amount = freebet_amount
