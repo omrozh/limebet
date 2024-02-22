@@ -26,7 +26,7 @@ def get_available_amounts(customer_id, bank_code):
     banks = get_bank_list("1234", session_id).get("banks")[0].get("bankCode")
 
     r = requests.post("https://test.paygiga.com/api/getAvailableAmounts", data={
-        "session_id": session_id, "minAmount": 10000, "maxAmount": 11000,
+        "session_id": session_id, "minAmount": 10000, "maxAmount": 100000,
         "bankCode": banks, "customerId": customer_id, "approvalRowShowType": 2
     })
     return r.json()
