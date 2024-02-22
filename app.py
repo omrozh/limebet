@@ -1106,7 +1106,7 @@ def coupon():
     return flask.render_template("bahis/coupon.html", current_coupon=current_coupon)
 
 
-@app.route("/success", methods=["POST"])
+@app.route("/success", methods=["POST", "GET"])
 def success_pay_giga():
     print(flask.request.values)
     r = requests.post("https://test.paygiga.com/api/deposit/confirm-status", data={
