@@ -21,6 +21,22 @@ super_lig_teams = ['Hatayspor', 'Beşiktaş', 'Antalyaspor', 'Alanyaspor', 'Rize
                    'Kasımpaşa', 'Ankaragücü', 'Kayserispor', 'Başakşehir', 'Pendikspor',
                    'Trabzonspor', 'Konyaspor', 'Karagümrük', 'Samsunspor', 'AdanaDemirspor']
 
+premier_lig_teams = ['Arsenal', 'AstonVilla', 'Bournemouth', 'Brentford', 'Brighton',
+                     'Burnley', 'Chelsea', 'CrystalPalace', 'Everton', 'Fulham', 'Liverpool',
+                     'Luton', 'ManchesterCity', 'ManchesterUnited', 'NewcastleUnited',
+                     'NotthinghamForest', 'NotthinghamForest', 'SheffieldUnited', 'TottenhamHotspur',
+                     'WestHamUnited', 'WolverhamptonWanderers']
+
+laliga_teams = ['AthleticBilbao', 'AtleticoMadrid', 'Osasuna', 'Cadiz',
+                'DeportivoAlaves', 'Barcelona', 'Getafe', 'Girona', 'Granada',
+                'RayoVallecano', 'CeltaVigo', 'Mallorca', 'RealBetis', 'RealMadrid',
+                'RealSociedad', 'Sevilla', 'Almeria', 'LasPalmas', 'Valencia', 'Villareal']
+
+bundesliga_teams = ['BayernMünih', 'BorussiaDortmund', 'Leipzig', 'UnionBerlin',
+                    'Freiburg', 'BayerLeverkusen', 'EintrachtFrankfurt', 'Wolfsburg',
+                    'Mainz', 'BorussiaMönchengladbach', 'Köln', 'Hoffenheim', 'WederBremen',
+                    'Bochum', 'Augsburg', 'Stuttgart', 'Darmstadt', 'Heidenheim']
+
 
 app.config["SECRET_KEY"] = "ksjf-sjc-wsf12-sac"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///site.db"
@@ -433,6 +449,21 @@ class Competition(db.Model):
         if not self.end_date == self.start_date:
             if self.competition_type == "Süper Lig":
                 for c in super_lig_teams:
+                    for i in Athlete.query.filter_by(team_fk=Team.query.filter_by(team_name=c).first().id).all():
+                        all_available_athletes.append(i)
+
+            if self.competition_type == "Premier Lig":
+                for c in premier_lig_teams:
+                    for i in Athlete.query.filter_by(team_fk=Team.query.filter_by(team_name=c).first().id).all():
+                        all_available_athletes.append(i)
+
+            if self.competition_type == "LaLiga":
+                for c in laliga_teams:
+                    for i in Athlete.query.filter_by(team_fk=Team.query.filter_by(team_name=c).first().id).all():
+                        all_available_athletes.append(i)
+
+            if self.competition_type == "Bundesliga":
+                for c in bundesliga_teams:
                     for i in Athlete.query.filter_by(team_fk=Team.query.filter_by(team_name=c).first().id).all():
                         all_available_athletes.append(i)
 
