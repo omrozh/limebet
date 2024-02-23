@@ -237,7 +237,8 @@ class BetCoupon(db.Model):
     def total_odd(self):
         total_odd = 1
         for i in BetSelectedOption.query.filter_by(bet_coupon_fk=self.id).all():
-            total_odd *= i.odd.odd
+            if i.odd:
+                total_odd *= i.odd.odd
 
         return total_odd
 
