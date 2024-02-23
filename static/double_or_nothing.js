@@ -28,7 +28,7 @@ function doubleDoubleOrNothing() {
             if(this.responseText === "Double"){
                 confetti()
                 document.getElementById("offer").innerText =
-                    (parseFloat(document.getElementById("offer").innerText) * 2).toString() + "PLT"
+                    (parseFloat(document.getElementById("offer").innerText) * 2).toString() + "TRY"
             }
         }
     }
