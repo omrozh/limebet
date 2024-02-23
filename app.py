@@ -160,9 +160,11 @@ class User(db.Model, UserMixin):
     def active_drafts(self):
         drafts_for_user = Draft.query.filter_by(user_fk=self.id).all()
         active_drafts = []
+        print(drafts_for_user)
         for i in drafts_for_user:
             if i.competition.end_date >= datetime.datetime.today().date():
                 active_drafts.append(i)
+        print(active_drafts)
         active_drafts.reverse()
         return active_drafts
 
