@@ -55,16 +55,3 @@ function initiateDoubleOrNothing() {
     }
     xhr.send("&bet_amount=" + document.getElementById("betting_amount").value);
 }
-
-function getBalance(){
-    function reqListenerMoney () {
-      document.getElementById("account_balance").innerHTML = this.responseText
-    }
-
-    var oReqMoney = new XMLHttpRequest();
-    oReqMoney.addEventListener("load", reqListenerMoney);
-    oReqMoney.open("GET", "/refresh-balance");
-    oReqMoney.send();
-}
-
-getBalance();
