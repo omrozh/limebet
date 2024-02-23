@@ -19,6 +19,41 @@ from imap_tools import MailBox
 
 app = flask.Flask(__name__)
 
+
+games_and_descriptions = {
+    "wheel": "In this Plutus original you place a  bet and turn the wheel. "
+             "You either double your money or leave empty handed.",
+    "up_or_down": "In this Plutus original you try to guess if the next number is going to be higher or "
+                  "lower then the displayed number. For every correct guess get 50% compounded every time. In this "
+                  "game we do not have a statistical edge a correct strategy and a strong will can even give you the "
+                  "advantage.",
+    "limbo": "In this Plutus original you try to guess the multiplier of your bet. If you guess it too low "
+             "you lose on your potential earnings since you will only receive the multiplier you anticipated however "
+             "if you guess higher then the actual multiplier you lose it all.",
+    "slots-egyptian": "Plutus Slots has the lowest house edge in "
+                      "any slot game ever with only 0.015% (99.985% RTP). 1000x Jackpot",
+    "slots-jungle": "A slot game build solely for adventure seekers. 13250x Jackpot and 500x if you match all 5 slots "
+                    "but nothing else! Only 0.34% House Edge(99.66% RTP)",
+    "slots-knight": "The least risky slot game! You win something in almost every condition!",
+    "multiplier": "In this Plutus original you choose one of the five cards and receive the multiplier"
+                  " written on their front. Four of them are going to make you lose money and one will triple it",
+    "hit_or_pass": "In this Plutus original player decides to get a new multiplier or withdraw with the "
+                   "existing ones. One you open a new card there is no going back when you withdraw all of your "
+                   "multipliers are multiplied and your wins are calculated. ",
+    "max_money": "Drawn daily and the player that bets the highest amount wins all the money",
+    "double": "Double is a Plutus original with high adrenalin. "
+              "In this high stakes game you either lose all your money or double it in each round you can go"
+              "as long as you want and there is unlimited earnings potential.",
+    "divo": "In this Plutus original you divide your bet into different sections and only one of them wins. "
+            "Create your own play style according to your risk tolerance.",
+    "horse_races": "In Plutus version of the horse race betting all the bets are pooled into a prize pool "
+                   "and "
+                   "distributed equally between winners. Each bet is 5PLT,"
+                   " make riskier bets to split the prize with fewer people.",
+    "steal_hub": "In this Plutus original, you decide if you want to steal the "
+                 "reward from the other person or 1.5x it and go for another round."
+}
+
 super_lig_teams = ['Hatayspor', 'Beşiktaş', 'Antalyaspor', 'Alanyaspor', 'Rizespor',
                    'Sivasspor', 'Fenerbahçe', 'Galatasaray', 'Gaziantep', 'İstanbulspor',
                    'Kasımpaşa', 'Ankaragücü', 'Kayserispor', 'Başakşehir', 'Pendikspor',
@@ -1194,6 +1229,13 @@ def double_double_or_nothing():
             return "Nothing"
 
 
+@app.route("/game/<game_title>")
+@login_required
+def play_game(game_title):
+    return flask.render_template("game.html", game_title=str.capitalize(game_title.replace("_", " ").replace("-", " ")),
+                                 game_description=games_and_descriptions.get(game_title), game_url=game_title)
+
+
 @app.route("/win_double_or_nothing/<game_id>")
 @login_required
 def win_double_or_nothing(game_id):
@@ -1201,6 +1243,7 @@ def win_double_or_nothing(game_id):
     current_user.balance += current_game.current_offer
     db.session.commit()
     return flask.render_template("win_double_or_nothing.html", winnings=current_game.current_offer)
+
 
 @app.route("/lose_double_or_nothing")
 def lose_double_or_nothing():
