@@ -6,7 +6,6 @@ function stopConfetti(){
 }
 
 function confetti(){
-    win.play()
     document.getElementById("confetti-wrapper").style.display = "block"
     setTimeout(stopConfetti, 1500)
 }
