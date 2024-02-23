@@ -1202,6 +1202,10 @@ def win_double_or_nothing(game_id):
     db.session.commit()
     return flask.render_template("win_double_or_nothing.html", winnings=current_game.current_offer)
 
+@app.route("/lose_double_or_nothing")
+def lose_double_or_nothing():
+    return flask.render_template("lose_double_or_nothing.html")
+
 
 @app.route("/success", methods=["POST", "GET"])
 def success_pay_giga():
