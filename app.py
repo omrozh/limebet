@@ -433,7 +433,7 @@ class Competition(db.Model):
         if not self.end_date == self.start_date:
             if self.competition_type == "Süper Lig":
                 for c in super_lig_teams:
-                    for i in Athlete.query.filter_by(team_fk=c).all()
+                    for i in Athlete.query.filter_by(team_fk=c).all():
                         all_available_athletes.append(i)
 
         for i in matches_between_dates:
