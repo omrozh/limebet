@@ -1249,6 +1249,50 @@ def lose_double_or_nothing():
     return flask.render_template("lose_double_or_nothing.html")
 
 
+@app.route("/limbo")
+@login_required
+def limbo():
+    return flask.render_template("limbo.html")
+
+
+@app.route("/limbo_guess_multiplier", methods=["POST", "GET"])
+@login_required
+def limbo_guess_multiplier():
+    if flask.request.method == "POST":
+        values = flask.request.values
+        if current_user.balance < float(values["bet_amount"]):
+            return "Inadequate Balance"
+        options = generate_limbo_options()
+
+        multiplier_choice = random.choice(options)
+
+        if float(values["multiplier"]) <= multiplier_choice:
+
+            current_user.balance -= float(values["bet_amount"])
+            if not current_user.received_first_time_bonus:
+                current_user.balance += float(values["bet_amount"]) * \
+                                                ((float(values["multiplier"]) - 1) * 5) + 1
+            else:
+                current_user.balance += float(values["bet_amount"]) * float(values["multiplier"])
+        else:
+            current_user.balance -= float(values["bet_amount"])
+
+        current_user.received_first_time_bonus = True
+
+        db.session.commit()
+
+        return str(multiplier_choice)
+
+
+def generate_limbo_options():
+    options = []
+    for i in range(100, 5000):
+        for c in range(int(((100 / i) ** 2) * 100)):
+            options.append(i / 100)
+
+    return options
+
+
 @app.route("/success", methods=["POST", "GET"])
 def success_pay_giga():
     print("values")
