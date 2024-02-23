@@ -847,7 +847,6 @@ def profile():
 
 @app.route("/")
 def index():
-    print(current_user.active_drafts)
     competitions = Competition.query.filter(
         Competition.start_date >= datetime.datetime.today().date()+datetime.timedelta(days=1))
     filter_q = flask.request.args.get("filter_q", False)
