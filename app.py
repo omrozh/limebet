@@ -163,7 +163,6 @@ class User(db.Model, UserMixin):
         for i in drafts_for_user:
             if i.competition.end_date >= datetime.datetime.today().date():
                 active_drafts.append(i)
-        print(active_drafts)
         active_drafts.reverse()
         return active_drafts
 
