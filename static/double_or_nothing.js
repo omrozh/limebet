@@ -50,7 +50,7 @@ function initiateDoubleOrNothing() {
             document.getElementById("betting").style.display = "none"
             window.gameID = this.responseText
             document.getElementById("game").style.display = "block";
-            document.getElementById("offer").innerText = document.getElementById("betting_amount").value + "PLT"
+            document.getElementById("offer").innerText = document.getElementById("betting_amount").value + "TRY"
         }
     }
     xhr.send("&bet_amount=" + document.getElementById("betting_amount").value);
