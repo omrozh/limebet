@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 browser = webdriver.Chrome()
-browser.get("https://www.mackolik.com/mac/mke-ankaragücü-vs-galatasaray/istatistik/m9jc1yj7k2s1zu412jnwikus")
+browser.get(input("Maçkolik Link: "))
 input("proceed")
 
 table_general = browser.find_elements(By.CLASS_NAME, 'Opta-Striped')
@@ -11,7 +11,7 @@ table_general = browser.find_elements(By.CLASS_NAME, 'Opta-Striped')
 
 players_and_points = {}
 
-teams = ["Ankaragücü", "Galatasaray"]
+teams = [input("Team 1: "), input("Team 2: ")]
 team_index = -1
 
 for i in table_general:

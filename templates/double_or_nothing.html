@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Double or Nothing | Plutus</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/limbo-effects.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bungee+Inline&display=swap');
+        body{
+            font-family: 'Bungee Inline', sans-serif;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="confetti-wrapper" style="display: none">
+    </div>
+    <div style="background-color: #FEC61D; opacity: 0.9; width: 100%; position: absolute; top: 0; right: 0; padding: 5px; text-align: right">
+        <span id="account_balance"  style="color: white">500</span>
+        <span style="color: white; border-radius: 450px; float: right; margin-right: 15px">&nbsp;PLT</span>
+    </div>
+    <div style="position: absolute; top: 0; bottom: 0; left: 0; height: fit-content; width: fit-content; right: 0; margin: auto" id="betting">
+        <input type="text" placeholder="Bet Amount" style="background-color: #444444; color: white; outline: none; font-size: 100%; height: 40px; float: left; text-indent: 5px" id="betting_amount">
+        <button style="border: none; height: 46px; background-color: rgb(52, 196, 117)" onclick="initiateDoubleOrNothing()">Start Game</button>
+    </div>
+    <div id="game" style="position: absolute; margin: auto; top: 0; bottom: 0; left: 0; right: 0; width: fit-content; height: fit-content; display: none">
+        <h1><span style="color: #3ddc84">Double</span> or <span style="color: #f44336">Nothing</span>?</h1>
+        <center>
+            <h1 style="font-size: 4rem" id="offer">1000PLT</h1>
+        </center>
+        <button onclick="doubleDoubleOrNothing()" style="width: 150px; font-size: 1.5rem; border: none; color: white; background-color: #3ddc84; border-radius: 5px">Double</button>
+        <button onclick="endGame()" style="width: 150px; font-size: 1.5rem; border: none; color: white; background-color: #f44336; border-radius: 5px">Withdraw</button>
+    </div>
+    <script src="/static/limbo-effects.js"></script>
+    <script src="/static/double_or_nothing.js"></script>
+</body>
+</html>

@@ -1,6 +1,9 @@
 import datetime
 import os.path
 
+import random
+from uuid import uuid4
+
 import flask
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
@@ -82,6 +85,11 @@ class Referrer(db.Model):
     @property
     def user(self):
         return User.query.get(self.user_fk)
+
+
+class DoubleOrNothing(db.Model):
+    id = db.Column(db.String, primary_key=True)
+    current_offer = db.Column(db.Float)
 
 
 class User(db.Model, UserMixin):
@@ -1149,6 +1157,50 @@ def coupon():
         db.session.commit()
         return flask.redirect("/profile")
     return flask.render_template("bahis/coupon.html", current_coupon=current_coupon)
+
+
+@app.route("/double")
+@login_required
+def double_or_nothing():
+    return flask.render_template("double_or_nothing.html")
+
+
+@app.route("/create_double_or_nothing", methods=["POST", "GET"])
+@login_required
+def create_double_or_nothing():
+    if flask.request.method == "POST":
+        new_game = DoubleOrNothing(id=str(uuid4()), current_offer=float(flask.request.values["bet_amount"]))
+        if current_user.balance >= new_game.current_offer:
+            current_user.balance -= new_game.current_offer
+            db.session.add(new_game)
+        else:
+            return "Inadequate Balance"
+        db.session.commit()
+        return new_game.id
+
+
+@app.route("/double_double_or_nothing", methods=["POST", "GET"])
+@login_required
+def double_double_or_nothing():
+    if flask.request.method == "POST":
+        current_dn_game = DoubleOrNothing.query.get(flask.request.values["game_id"])
+        if random.randint(0, 100) > 52:
+            current_dn_game.current_offer *= 2
+            db.session.commit()
+            return "Double"
+        else:
+            db.session.delete(current_dn_game)
+            db.session.commit()
+            return "Nothing"
+
+
+@app.route("/win_double_or_nothing/<game_id>")
+@login_required
+def win_double_or_nothing(game_id):
+    current_game = DoubleOrNothing.query.get(game_id)
+    current_user.balance += current_game.current_offer
+    db.session.commit()
+    return flask.render_template("win_double_or_nothing.html", winnings=current_game.current_offer)
 
 
 @app.route("/success", methods=["POST", "GET"])
