@@ -27,9 +27,7 @@ games_and_descriptions = {
                   "lower then the displayed number. For every correct guess get 50% compounded every time. In this "
                   "game we do not have a statistical edge a correct strategy and a strong will can even give you the "
                   "advantage.",
-    "limbo": "In this Plutus original you try to guess the multiplier of your bet. If you guess it too low "
-             "you lose on your potential earnings since you will only receive the multiplier you anticipated however "
-             "if you guess higher then the actual multiplier you lose it all.",
+    "limbo": "Limbo seçtiğiniz çarpanın üzerinde mi yoksa altında mı çarpan geleceğini tahmin ettiğiniz bir KadroMilyon özel oyunudur.",
     "slots-egyptian": "Plutus Slots has the lowest house edge in "
                       "any slot game ever with only 0.015% (99.985% RTP). 1000x Jackpot",
     "slots-jungle": "A slot game build solely for adventure seekers. 13250x Jackpot and 500x if you match all 5 slots "
