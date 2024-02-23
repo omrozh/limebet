@@ -41,8 +41,7 @@ games_and_descriptions = {
                    "existing ones. One you open a new card there is no going back when you withdraw all of your "
                    "multipliers are multiplied and your wins are calculated. ",
     "max_money": "Drawn daily and the player that bets the highest amount wins all the money",
-    "double": "Double is a Plutus original with high adrenalin. "
-              "In this high stakes game you either lose all your money or double it in each round you can go"
+    "double": "Double paranızı ikiye katlayabileceğiniz yüksek adrenelinli bir KadroMilyon orijinal oyunudur."
               "as long as you want and there is unlimited earnings potential.",
     "divo": "In this Plutus original you divide your bet into different sections and only one of them wins. "
             "Create your own play style according to your risk tolerance.",
