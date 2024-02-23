@@ -28,10 +28,9 @@ function playLimbo(){
     xhr.onreadystatechange = function() {
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
             if(this.responseText === "Inadequate Balance"){
-                alert("Your balance is insufficient you will be redirected to the deposit page.")
-                document.location = "/make-deposit"
+                alert("Bakiyeniz yetersiz")
+                document.location = "/limbo"
             }
-            getBalance();
             if(!window.timeout_play){
                 choosen_num = this.responseText;
                 window.setNumberInterval = setInterval(setToNumber, 10);
