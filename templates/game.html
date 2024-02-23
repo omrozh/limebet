@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ game_title }} | Plutus</title>
+    <title>{{ game_title }} | KadroMilyon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&amp;family=Protest+Guerrilla&amp;display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Anek+Malayalam:wght@400;600;700&display=swap');
@@ -22,10 +25,80 @@
         }
     </style>
 </head>
-<body>
-    <div style="border-bottom: 1px solid lightgray; box-shadow: 0 1px 2px 0 rgba(60,64,67,.3),0 2px 6px 2px rgba(60,64,67,.15);background: white">
-        <img onclick="document.location = '/'" style="padding-left: 50px; width: 250px; padding-top: 5px" src="/static/kadromilyon.png" alt=""/>
-    </div>
+<body style="background-color: #191a1f; padding: 0; margin: 0; font-family: 'Open Sans', sans-serif;">
+    <div style="width: 100%; box-sizing: border-box; height: 200px;">
+            <img src="/static/kadromilyon.png" alt="" style="width: 75px; padding: 20px; float: left">
+            <div style="float: left;" id="hid-mob">
+                <p style="color: white; font-size: 1rem; margin-top: 35px; font-family: 'Protest Guerrilla', sans-serif">
+                    KadroMilyon
+                </p>
+                <p style="color: orange; font-size: 1rem; margin-top: -10px; font-family: 'Protest Guerrilla', sans-serif">
+                    Fantezi Spor
+                </p>
+            </div>
+            <div style="float: right; margin-top: 50px;">
+                {% if current_user.is_authenticated %}
+                    <div style="background-color: rgba(0,134,255,0.38); border-left: dodgerblue 3px solid; color: white; padding: 10px; box-sizing: border-box; margin-right: 20px; margin-top: -10px; float: right">
+                        <span id="balance">{{'%0.2f'| format(current_user.balance|float)}}</span>₺
+                    </div>
+                    <span onclick="refreshBalance()" style="margin-right: 25px; font-size: 2rem; float: right; color: white; margin-top: -13px">&#x21ba;</span>
+                    <script>
+                        function updateBalance(balance){
+                            document.getElementById("balance").innerText = balance;
+                        }
+                        function refreshBalance(){
+                            document.getElementById("balance").innerText = "..."
+                            fetch("/refresh-balance")
+                            .then(x => x.text())
+                            .then(y => updateBalance(y));
+                        }
+                    </script>
+                    <a href="/profile" style="color: dodgerblue; text-decoration: none; margin-right: 25px; float: right">
+                        <img style="width: 25px" src="/static/profile.png" alt="">
+                    </a>
+                {% else %}
+                    <a href="/login" style="color: white; text-decoration: none; margin-right: 25px;">Giriş Yap</a>
+                    <a href="/signup" style="color: dodgerblue; text-decoration: none; margin-right: 25px;">Üye Ol</a>
+                {% endif %}
+            </div>
+            <script>
+                if(window.innerHeight > window.innerWidth){
+                    document.getElementById("hid-mob").style.display = "none";
+                }
+            </script>
+            <div style="padding: 20px 50px; overflow-x: auto; float: left; white-space: nowrap; width: 100vw; background-color: #0f1012; box-sizing: border-box">
+                <span style="display: inline-block; color: white; font-family: 'Protest Guerrilla', sans-serif" onclick="document.location = '/'">
+                    Anasayfa
+                </span>
+                <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif" onclick="localStorage.clear(); window.location.reload()">
+                    Kampanyalar
+                </span>
+                <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif" onclick="document.location = '/?filter_q=daily'">
+                    Günlük Yarışmalar
+                </span>
+                <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif" onclick="document.location = '/?filter_q=weekly'">
+                    Haftalık Yarışmalar
+                </span>
+                <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif" onclick="document.location = '/?filter_q=daily'">
+                    Yüksek Limitli Yarışmalar
+                </span>
+                <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif" onclick="document.location = '/?filter_q=Premier-Lig'">
+                    Premier Lig
+                </span>
+                <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif" onclick="document.location = '/?filter_q=Süper-Lig'">
+                    Süper Lig
+                </span>
+                <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif" onclick="document.location = '/?filter_q=Bundesliga'">
+                    Bundesliga
+                </span>
+                <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif" onclick="document.location = '/?filter_q=LaLiga'">
+                    LaLiga
+                </span>
+                <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif" onclick="document.location = '/bahis'">
+                    Bahis
+                </span>
+            </div>
+        </div>
     <br>
     <center>
         <iframe class="game-div" src="/{{ game_url }}" frameborder="0"></iframe>
