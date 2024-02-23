@@ -16,6 +16,12 @@ from imap_tools import MailBox
 
 app = flask.Flask(__name__)
 
+super_lig_teams = ['Hatayspor', 'Beşiktaş', 'Antalyaspor', 'Alanyaspor', 'Rizespor',
+                   'Sivasspor', 'Fenerbahçe', 'Galatasaray', 'Gaziantep', 'İstanbulspor',
+                   'Kasımpaşa', 'Ankaragücü', 'Kayserispor', 'Başakşehir', 'Pendikspor',
+                   'Trabzonspor', 'Konyaspor', 'Karagümrük', 'Samsunspor', 'AdanaDemirspor']
+
+
 app.config["SECRET_KEY"] = "ksjf-sjc-wsf12-sac"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///site.db"
 
@@ -424,6 +430,12 @@ class Competition(db.Model):
         matches_between_dates = Match.query.filter(self.start_date <= Match.date).filter(
             self.end_date >= Match.date).filter_by(match_league=self.competition_type).all()
         all_available_athletes = []
+        if not self.end_date == self.start_date:
+            if self.competition_type == "Süper Lig":
+                for c in super_lig_teams:
+                    for i in Athlete.query.filter_by(team_fk=c).all()
+                        all_available_athletes.append(i)
+
         for i in matches_between_dates:
             for c in Athlete.query.filter_by(team_fk=i.team1_fk).all():
                 all_available_athletes.append(c)
