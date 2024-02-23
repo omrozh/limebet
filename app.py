@@ -1260,6 +1260,8 @@ def limbo():
 def limbo_guess_multiplier():
     if flask.request.method == "POST":
         values = flask.request.values
+        if current_user.balance < float(values["bet_amount"]):
+            return "Inadequate Balance"
         options = generate_limbo_options()
 
         multiplier_choice = random.choice(options)
@@ -1267,11 +1269,7 @@ def limbo_guess_multiplier():
         if float(values["multiplier"]) <= multiplier_choice:
 
             current_user.balance -= float(values["bet_amount"])
-            if not current_user.received_first_time_bonus:
-                current_user.balance += float(values["bet_amount"]) * \
-                                                ((float(values["multiplier"]) - 1) * 5) + 1
-            else:
-                current_user.balance += float(values["bet_amount"]) * float(values["multiplier"])
+            current_user.balance += float(values["bet_amount"]) * float(values["multiplier"])
         else:
             current_user.balance -= float(values["bet_amount"])
 
