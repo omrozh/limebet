@@ -44,7 +44,8 @@ function initiateDoubleOrNothing() {
     xhr.onreadystatechange = function () {
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
             if(this.responseText === "Inadequate Balance"){
-                alert("Your balance is insufficient you will be redirected to the deposit page.")
+                alert("Yetersiz bakiye")
+                document.location = '/double'
             }
             document.getElementById("betting_amount").style.display = "none"
             document.getElementById("betting").style.display = "none"
