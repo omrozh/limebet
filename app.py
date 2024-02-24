@@ -1304,3 +1304,8 @@ def fail_pay_giga():
     print("Fail PayGiga")
     return "OK"
 
+
+@app.route("/license")
+def license_curucao():
+    return flask.render_template("license.html", generated_on=datetime.datetime.now())
+
