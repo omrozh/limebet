@@ -1307,5 +1307,5 @@ def fail_pay_giga():
 
 @app.route("/license")
 def license_curucao():
-    return flask.render_template("license.html", generated_on=datetime.datetime.now())
+    return flask.render_template("license.html", generated_on=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
