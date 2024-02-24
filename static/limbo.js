@@ -1,11 +1,15 @@
 var index = 0.0;
 var choosen_num = 0;
 
+var spin = new Audio("/static/spin.wav")
+var win = new Audio("/static/win.wav")
+
 function setToNumber(){
     var number = parseFloat(choosen_num);
     if(index.toFixed(2) === number.toFixed(2)){
         clearInterval(window.setNumberInterval);
         index = 0;
+        spin.pause()
         if(number >= document.getElementById("anticipated_multiplier").value) {
             document.getElementById("multiplier").style.color = "green"
         }else{
@@ -33,6 +37,8 @@ function playLimbo(){
             }
             if(!window.timeout_play){
                 choosen_num = this.responseText;
+                spin.play()
+                spin.loop = true;
                 window.setNumberInterval = setInterval(setToNumber, 10);
             }else{
                 document.getElementById("multiplier").innerHTML = this.responseText + "x"
