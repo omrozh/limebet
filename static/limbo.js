@@ -11,6 +11,7 @@ function setToNumber(){
         index = 0;
         spin.pause()
         if(number >= document.getElementById("anticipated_multiplier").value) {
+            win.play()
             document.getElementById("multiplier").style.color = "green"
         }else{
             document.getElementById("multiplier").style.color = "red"
