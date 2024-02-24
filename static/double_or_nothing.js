@@ -1,11 +1,12 @@
 window.gameID = ""
-
+var win = new Audio("/static/win.wav")
 
 function stopConfetti(){
     document.getElementById("confetti-wrapper").style.display = "none"
 }
 
 function confetti(){
+    win.play()
     document.getElementById("confetti-wrapper").style.display = "block"
     setTimeout(stopConfetti, 1500)
 }
