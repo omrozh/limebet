@@ -1309,3 +1309,13 @@ def fail_pay_giga():
 def license_curucao():
     return flask.render_template("license.html", generated_on=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
+
+@app.route("/provider-assets/<file_name>")
+def provider_assets(file_name):
+    return flask.send_file("provider-assets/" + file_name)
+
+
+@app.route("/kmultimate")
+def kmultimate():
+    return flask.render_template("provider/index.html")
+
