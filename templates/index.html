@@ -23,7 +23,7 @@
             background-color: white; width: 72%; text-align: left; display: inline-block; float: left;
         }
         .kadro-mil{
-            background-image: url('/static/bg-new.webp'); background-size: cover; width: 67%; text-align: left; box-sizing: border-box; padding: 20px 50px; min-height: 320px; background-position: bottom; float: left;
+            background-image: url('/static/km-fantasy-slider.png'); background-size: cover; width: 67%; text-align: left; box-sizing: border-box; padding: 20px 50px; min-height: 320px; background-position: bottom; float: left;
             border-radius: 15px;
         }
 
@@ -73,8 +73,9 @@
             </div>
             <div style="float: right; margin-top: 50px;">
                 {% if current_user.is_authenticated %}
-                    <div style="background-color: rgba(0,134,255,0.38); border-left: dodgerblue 3px solid; color: white; padding: 10px; box-sizing: border-box; margin-right: 20px; margin-top: -10px; float: right">
-                        <span id="balance">{{'%0.2f'| format(current_user.balance|float)}}</span>₺
+                    <div style="background-color: #292d30; border-radius: 50px; color: white; padding: 10px; box-sizing: border-box; margin-right: 20px; margin-top: -10px; float: right">
+                        <span style="background-color: #212226; padding: 5px; padding-left: 12px; padding-right: 12px; border-radius: 50px; box-sizing: border-box">₺</span>
+                        <span id="balance">{{'%0.2f'| format(current_user.balance|float)}}</span>
                     </div>
                     <span onclick="refreshBalance()" style="margin-right: 25px; font-size: 2rem; float: right; color: white; margin-top: -13px">&#x21ba;</span>
                     <script>
@@ -136,7 +137,7 @@
         </div>
         <center>
             <center>
-                <div style="background-color: #0f1012; border-radius: 15px; padding: 10px; overflow: auto; width: 87%; box-sizing: border-box">
+                <div style="background-color: #0f1012; border-radius: 40px; padding: 10px; overflow: auto; width: 87%; box-sizing: border-box">
                     <div id="promotion-img" style="float: right; text-align: center; width: 400px;">
                         <br>
                         <span style="color: #dfdfe1; border-bottom: 1px solid #ffc362" id="weekly_winners_option" onclick="document.getElementById('daily-winners').style.display = 'none'; document.getElementById('weekly-winners').style.display = 'block'; this.style.borderBottom = '1px solid #ffc362'; document.getElementById('daily_winners_option').style.borderBottom = 'none'">Haftanın Kazananları</span>
@@ -283,13 +284,7 @@
                         </div>
                     </div>
                     <div class="kadro-mil">
-                        <h1 style="font-family: 'Protest Guerrilla', sans-serif; color: white">
-                            Kadronu Kur
-                        </h1>
-                        <p style="font-family: 'Protest Guerrilla', sans-serif; color: white">
-                            <span style="color: orange">Milyoner</span> Ol
-                        </p>
-                        <p style="color: white">Dev ödül havuzlarıyla hayalindeki takımı kur, kazanmaya hemen başla.</p>
+
                     </div>
                 </div>
             </center>
