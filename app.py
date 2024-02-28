@@ -1505,3 +1505,10 @@ def provider_assets(file_name):
 @app.route("/provider")
 def kmultimate():
     return flask.render_template("provider/index.html")
+
+
+@app.before_request
+def reroute_page():
+    if "m2betting" in flask.request.headers['Host']:
+        if "provider" not in flask.request.path:
+            return flask.redirect("/provider")
