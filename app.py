@@ -118,7 +118,7 @@ class Referrer(db.Model):
 
 
 class PartnerSession(db.Model):
-    id = db.Column(db.String)
+    id = db.Column(db.String, primary_key=True)
     balance = db.Column(db.Float)
     api_key = db.Column(db.String)
 
