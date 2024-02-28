@@ -1510,5 +1510,5 @@ def kmultimate():
 @app.before_request
 def reroute_page():
     if "m2betting" in flask.request.headers['Host']:
-        if "provider" not in flask.request.path:
+        if "provider" not in flask.request.path or "static" not in flask.request.path:
             return flask.redirect("/provider")
