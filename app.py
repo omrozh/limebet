@@ -19,7 +19,6 @@ from imap_tools import MailBox
 
 app = flask.Flask(__name__)
 
-
 games_and_descriptions = {
     "wheel": "In this Plutus original you place a  bet and turn the wheel. "
              "You either double your money or leave empty handed.",
@@ -72,7 +71,6 @@ bundesliga_teams = ['BayernMünih', 'BorussiaDortmund', 'Leipzig', 'UnionBerlin'
                     'Mainz', 'BorussiaMönchengladbach', 'Köln', 'Hoffenheim', 'WederBremen',
                     'Bochum', 'Augsburg', 'Stuttgart', 'Darmstadt', 'Heidenheim']
 
-
 app.config["SECRET_KEY"] = "ksjf-sjc-wsf12-sac"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///site.db"
 
@@ -119,9 +117,172 @@ class Referrer(db.Model):
         return User.query.get(self.user_fk)
 
 
+class PartnerSession(db.Model):
+    id = db.Column(db.String)
+    balance = db.Column(db.Float)
+    api_key = db.Column(db.String)
+
+    def trigger_balance_operation(self, balance_change, reason):
+        casino_partner = CasinoPartner.query.filter_by(api_key=self.api_key).first()
+        new_bet_transaction = BetTransaction(type=reason, api_key=self.api_key, amount=balance_change,
+                                             transaction_date=datetime.date.today())
+        db.session.add(new_bet_transaction)
+        requests.post(casino_partner.callback_url, data={
+            "balance_change": balance_change,
+            "reason": reason,
+            "session_id": self.id
+        })
+        db.session.commit()
+
+
 class DoubleOrNothing(db.Model):
     id = db.Column(db.String, primary_key=True)
     current_offer = db.Column(db.Float)
+
+
+class CasinoPartner(db.Model):
+    id = db.Column(db.String)
+    api_key = db.Column(db.String)
+    callback_url = db.Column(db.String)
+
+
+class OpenUserBet(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    creator_user_id = db.Column(db.String)
+    creator_partner_api_key = db.Column(db.String)
+    bet_description = db.Column(db.String)
+    bet_amount = db.Column(db.Float)
+    opp_amount = db.Column(db.Float)
+    offer_expiration_datetime = db.Column(db.DateTime)
+
+    def take_bet(self, user_2, user_2_api_key):
+        if self.is_taken:
+            return 0
+
+        new_taken_bet = TakenBet(
+            user_1_id=self.user_id, user_2_id=user_2, open_user_bet_fk=self.id,
+            user_1_partner_api_key=self.creator_partner_api_key,
+            user_2_partner_api_key=user_2_api_key
+        )
+        new_bet_transaction = BetTransaction(
+            type="bet_taken",
+            api_key=new_taken_bet.user_1_partner_api_key,
+            amount=-1*self.bet_amount + (-1*self.bet_amount)/100*0.14,
+            transaction_date=datetime.date.today()
+        )
+        db.session.add(new_bet_transaction)
+
+        new_bet_transaction_2 = BetTransaction(
+            type="bet_taken",
+            api_key=new_taken_bet.user_1_partner_api_key,
+            amount=-1*self.opp_amount + (-1*self.bet_amount)/100*0.14,
+            transaction_date=datetime.date.today()
+        )
+        db.session.add(new_bet_transaction_2)
+
+        db.session.add(new_taken_bet)
+        db.session.commit()
+
+        return new_taken_bet
+
+    @property
+    def is_taken(self):
+        return len(TakenBet.query.filter_by(open_user_bet_fk=self.id).all()) > 0
+
+    def submit_bet_claim(self, submitting_user):
+        taken_bet = TakenBet.query.filter_by(open_user_bet_fk=self.id).first()
+        taken_bet.status = "Claim Made"
+        taken_bet.winner = submitting_user
+        db.session.commit()
+
+    def check_bet_claim_status(self, user_to_check_for):
+        taken_bet = TakenBet.query.filter_by(open_user_bet_fk=self.id).first()
+        if taken_bet is None:
+            return "Pending Acceptance"
+        if taken_bet.status == "Taken":
+            return "Taken"
+        if taken_bet.status == "Claim Made":
+            if taken_bet.winner == user_to_check_for:
+                return "Claim Made By You"
+            else:
+                return "Claim Made By Opposing"
+        if taken_bet.status == "Disputed":
+            return "Disputed"
+        return "Unavailable"
+
+    def dispute_bet_claim(self, disputing_user):
+        taken_bet = TakenBet.query.filter_by(open_user_bet_fk=self.id).first()
+
+        if taken_bet.status == "Claim Made" and not disputing_user == taken_bet.winner and \
+                disputing_user in [taken_bet.user_1_id, taken_bet.user_2_id]:
+            taken_bet.status = "Disputed"
+            db.session.commit()
+
+            partner_1 = CasinoPartner.query.filter_by(api_key=taken_bet.user_1_partner_api_key).first()
+            partner_2 = CasinoPartner.query.filter_by(api_key=taken_bet.user_2_partner_api_key).first()
+
+            requests.post(partner_1.callback_url, data={
+                "reason": "Bet Disputed",
+                "bet_id": taken_bet.open_user_bet_fk,
+                "disputer": disputing_user
+            })
+
+            requests.post(partner_2.callback_url, data={
+                "reason": "Bet Disputed",
+                "bet_id": taken_bet.open_user_bet_fk,
+                "disputer": disputing_user
+            })
+
+    def accept_bet_claim(self, accepting_user):
+        taken_bet = TakenBet.query.filter_by(open_user_bet_fk=self.id).first()
+        if taken_bet.status == "Claim Made" and not accepting_user == taken_bet.winner and \
+                accepting_user in [taken_bet.user_1_id, taken_bet.user_2_id]:
+            taken_bet.status = "Bet Completed"
+            db.session.commit()
+
+            partner_1 = CasinoPartner.query.filter_by(api_key=taken_bet.user_1_partner_api_key).first()
+            partner_2 = CasinoPartner.query.filter_by(api_key=taken_bet.user_2_partner_api_key).first()
+
+            requests.post(partner_1.callback_url, data={
+                "reason": "Bet Completed",
+                "bet_id": taken_bet.open_user_bet_fk,
+                "winner": taken_bet.winner
+            })
+
+            requests.post(partner_2.callback_url, data={
+                "reason": "Bet Completed",
+                "bet_id": taken_bet.open_user_bet_fk,
+                "winner": taken_bet.winner
+            })
+
+            # TO DO: Create API endpoint to create OpenUserBet
+
+            return {
+                "status": "Bet Completed",
+                "winner": taken_bet.winner
+            }
+        return {
+            "status": "Permission Denied, user cannot accept this bet."
+        }
+
+
+class TakenBet(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    status = db.Column(db.String, default="Taken")
+    user_1_id = db.Column(db.String)
+    user_1_partner_api_key = db.Column(db.String)
+    user_2_id = db.Column(db.String)
+    user_2_partner_api_key = db.Column(db.String)
+    winner = db.Column(db.String, default="To Be Determined")
+    open_user_bet_fk = db.Column(db.String)
+
+
+class BetTransaction(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    type = db.Column(db.String)
+    api_key = db.Column(db.String)
+    amount = db.Column(db.Float)
+    transaction_date = db.Column(db.Date)
 
 
 class User(db.Model, UserMixin):
@@ -165,14 +326,17 @@ class User(db.Model, UserMixin):
                     if email.get("subject") == "Akıllı Asistan-Gelen FAST":
                         for c in email.get("summary").split(" "):
                             if c == "tarihinde,":
-                                start_index = email.get("summary").split(" ").index(c)+1
+                                start_index = email.get("summary").split(" ").index(c) + 1
                             if c == "isimli/unvanlı":
                                 end_index = email.get("summary").split(" ").index(c)
                         if i.transaction_amount == float(".".join(str(email.get("summary").split(" ")[15]).split(","))):
-                            if i.payment_unique_number.upper().upper() == " ".join(email.get("summary").split(" ")[start_index:end_index]):
+                            if i.payment_unique_number.upper().upper() == " ".join(
+                                    email.get("summary").split(" ")[start_index:end_index]):
                                 i.transaction_status = "completed"
-                                i.payment_unique_number = email.get("summary").split(" ")[8] + " " + email.get("summary").split(" ")[9] + "-" + str(self.id)
-                                if not len(TransactionLog.query.filter_by(payment_unique_number=i.payment_unique_number).all()) == 1:
+                                i.payment_unique_number = email.get("summary").split(" ")[8] + " " + \
+                                                          email.get("summary").split(" ")[9] + "-" + str(self.id)
+                                if not len(TransactionLog.query.filter_by(
+                                        payment_unique_number=i.payment_unique_number).all()) == 1:
                                     continue
                                 else:
                                     self.balance += i.transaction_amount
@@ -371,7 +535,8 @@ class BetOdd(db.Model):
 
     @property
     def ended(self):
-        return OpenBet.query.get(BetOption.query.get(self.bet_option_fk).open_bet_fk).bet_ending_datetime < datetime.datetime.now()
+        return OpenBet.query.get(
+            BetOption.query.get(self.bet_option_fk).open_bet_fk).bet_ending_datetime < datetime.datetime.now()
 
     @property
     def bet_option(self):
@@ -529,7 +694,7 @@ class Competition(db.Model):
                 prize_ranges[i.split(":")[0]] = float(i.split(":")[-1])
             for i in prize_ranges.keys():
                 try:
-                    number_of_people_in_range = int(i.split("-")[-1]) - int(i.split("-")[0])+1
+                    number_of_people_in_range = int(i.split("-")[-1]) - int(i.split("-")[0]) + 1
                 except IndexError:
                     number_of_people_in_range = 1
                 prize_in_range = number_of_people_in_range * int(prize_ranges.get(i))
@@ -605,7 +770,6 @@ class Competition(db.Model):
                 except IndexError:
                     if ranking == int(prize_range):
                         return float(i.split(":")[-1]) / self.calculate_players_by_point(point)
-
 
         ranking -= 1
         customer_price = self.highest_prize
@@ -782,18 +946,35 @@ def admin_console():
             db.session.commit()
             new_team.add_image(flask.request.values["command"].split(" ")[2])
         elif "add-image" in flask.request.values["command"]:
-            Athlete.query.filter_by(athlete_name=flask.request.values["command"].split(" ")[1].replace("-", " ")).first().add_image(flask.request.values["command"].split(" ")[2])
+            Athlete.query.filter_by(
+                athlete_name=flask.request.values["command"].split(" ")[1].replace("-", " ")).first().add_image(
+                flask.request.values["command"].split(" ")[2])
             db.session.commit()
         elif "list-players" == flask.request.values["command"]:
-            return str("<br>".join(i.athlete_name + " / Görsel Eklendi: " + i.image_is_set for i in Athlete.query.all()))
+            return str(
+                "<br>".join(i.athlete_name + " / Görsel Eklendi: " + i.image_is_set for i in Athlete.query.all()))
         elif "list-teams" == flask.request.values["command"]:
             return str("<br>".join(i.team_name for i in Team.query.all()))
         else:
             os.system("python3 util.py " + flask.request.values["command"])
 
-    withdrawal_requests = WithdrawalRequest.query.filter(WithdrawalRequest.status != "Tamamlandı").\
+    withdrawal_requests = WithdrawalRequest.query.filter(WithdrawalRequest.status != "Tamamlandı"). \
         filter(WithdrawalRequest.status != "Reddedildi").all()
     return flask.render_template("admin_console.html", withdrawal_requests=reversed(withdrawal_requests))
+
+
+@app.route("/create/session", methods=["POST"])
+def create_iframe_session():
+    if flask.request.values["api_key"] not in [i.api_key for i in CasinoPartner.query.all()]:
+        return "Unauthorized"
+    new_session = PartnerSession(id=str(uuid4()), balance=float(flask.request.values["balance"]), api_key=flask.request.values["api_key"])
+    db.session.add(new_session)
+    db.session.commit()
+
+    return flask.jsonify({
+        "status": "Session Created",
+        "session_id": new_session.id
+    })
 
 
 @app.route("/howtoplay")
@@ -848,7 +1029,8 @@ async def telegram_bot():
             chat_id=chat_id)
 
     if message == "/yardım":
-        await bot.send_message(chat_id=chat_id, text="\nAktif yarışmaları ve ödül havuzlarını görmek için: /yarismalar yaz\n Bir yarışmaya katılmak için: /katil [yarışma adını buraya yaz] yaz gönder.")
+        await bot.send_message(chat_id=chat_id,
+                               text="\nAktif yarışmaları ve ödül havuzlarını görmek için: /yarismalar yaz\n Bir yarışmaya katılmak için: /katil [yarışma adını buraya yaz] yaz gönder.")
 
     else:
         await bot.send_message(chat_id=chat_id, text="Yardım için /yardım yaz gönder!")
@@ -881,13 +1063,14 @@ def profile():
             db.session.add(new_wr)
             db.session.commit()
 
-    return flask.render_template("profile.html", current_user=current_user, withdrawal_requests=reversed(WithdrawalRequest.query.filter_by(user_fk=current_user.id).all()))
+    return flask.render_template("profile.html", current_user=current_user, withdrawal_requests=reversed(
+        WithdrawalRequest.query.filter_by(user_fk=current_user.id).all()))
 
 
 @app.route("/")
 def index():
     competitions = Competition.query.filter(
-        Competition.start_date >= datetime.datetime.today().date()+datetime.timedelta(days=1))
+        Competition.start_date >= datetime.datetime.today().date() + datetime.timedelta(days=1))
     filter_q = flask.request.args.get("filter_q", False)
     if filter_q:
         if filter_q == "daily":
@@ -950,7 +1133,8 @@ def deposit_bank():
                                          payment_unique_number=flask.request.values["name"])
         db.session.add(new_transaction)
         db.session.commit()
-        return flask.render_template("bank_deposit.html", fullname="Ömer Özhan", iban="TR91 0006 7010 0000 0096 8371 49")
+        return flask.render_template("bank_deposit.html", fullname="Ömer Özhan",
+                                     iban="TR91 0006 7010 0000 0096 8371 49")
     return flask.render_template("bank_deposit_form.html")
 
 
@@ -986,7 +1170,7 @@ def draft(competition_id):
 
     current_competition = Competition.query.get(competition_id)
 
-    if not current_competition.start_date >= datetime.datetime.today().date()+datetime.timedelta(days=1):
+    if not current_competition.start_date >= datetime.datetime.today().date() + datetime.timedelta(days=1):
         return "Unauthorized"
 
     if flask.request.method == "POST":
@@ -1035,7 +1219,8 @@ def draft(competition_id):
         return flask.render_template("completed_draft.html")
 
     return flask.render_template("draft.html", competition=current_competition,
-                                 desktop=flask.request.args.get("desktop", False), mobile=flask.request.args.get("mobile", False))
+                                 desktop=flask.request.args.get("desktop", False),
+                                 mobile=flask.request.args.get("mobile", False))
 
 
 @app.route("/static/<filename>")
@@ -1141,7 +1326,8 @@ def take_bet(odd_id):
 @app.route("/remove_bet/<odd_id>")
 def remove_bet(odd_id):
     current_coupon = BetCoupon.query.filter_by(user_fk=current_user.id).filter_by(status="Oluşturuluyor").first()
-    db.session.delete(BetSelectedOption.query.filter_by(bet_odd_fk=odd_id).filter_by(bet_coupon_fk=current_coupon.id).first())
+    db.session.delete(
+        BetSelectedOption.query.filter_by(bet_odd_fk=odd_id).filter_by(bet_coupon_fk=current_coupon.id).first())
     db.session.commit()
     option_fk = BetOdd.query.get(odd_id).bet_option_fk
     option = BetOption.query.get(option_fk)
@@ -1179,7 +1365,8 @@ def coupon():
         current_coupon.status = "Oluşturuldu"
         current_coupon.total_value = float(flask.request.values["coupon_value"])
         if current_user.freebet:
-            freebet_amount = current_user.freebet if current_user.freebet <= float(flask.request.values["coupon_value"]) else float(flask.request.values["coupon_value"])
+            freebet_amount = current_user.freebet if current_user.freebet <= float(
+                flask.request.values["coupon_value"]) else float(flask.request.values["coupon_value"])
             current_user.balance -= (float(flask.request.values["coupon_value"]) - freebet_amount)
             current_coupon.freebet_amount = freebet_amount
             current_user.freebet -= freebet_amount
@@ -1315,7 +1502,6 @@ def provider_assets(file_name):
     return flask.send_file("provider-assets/" + file_name)
 
 
-@app.route("/kmultimate")
+@app.route("/provider")
 def kmultimate():
     return flask.render_template("provider/index.html")
-
