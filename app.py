@@ -141,7 +141,7 @@ class DoubleOrNothing(db.Model):
 
 
 class CasinoPartner(db.Model):
-    id = db.Column(db.String)
+    id = db.Column(db.String, primary_key=True)
     api_key = db.Column(db.String)
     callback_url = db.Column(db.String)
 
