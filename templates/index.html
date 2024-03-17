@@ -191,15 +191,17 @@
                 </span>
 
 
-                <span style="display: inline-block; margin-left: 50px; font-family: 'Protest Guerrilla', sans-serif; color: dodgerblue;"
-                  onclick="document.location = '/login'">
-                    Giriş Yap
-                </span>
+                {% if not current_user.is_authenticated %}
+                    <span style="display: inline-block; margin-left: 50px; font-family: 'Protest Guerrilla', sans-serif; color: dodgerblue;" class="hid-desktop"
+                      onclick="document.location = '/login'">
+                        Giriş Yap
+                    </span>
 
-                <span style="display: inline-block; margin-left: 50px; color: #7b00ff; font-family: 'Protest Guerrilla', sans-serif;"
-                  onclick="document.location = '/signup'">
-                    Kayıt Ol
-                </span>
+                    <span style="display: inline-block; margin-left: 50px; color: #7b00ff; font-family: 'Protest Guerrilla', sans-serif;" class="hid-desktop"
+                      onclick="document.location = '/signup'">
+                        Kayıt Ol
+                    </span>
+                {% endif %}
 
         </div>
     </div>
@@ -522,6 +524,10 @@
     <script>
         if (window.innerWidth < window.innerHeight) {
             document.getElementById("desktop-join").style.display = "none";
+        }
+        else{
+            document.getElementsByClassName("hid-desktop")[0].style.display = "none";
+            document.getElementsByClassName("hid-desktop")[1].style.display = "none";
         }
     </script>
 </div>
