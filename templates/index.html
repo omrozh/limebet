@@ -1,12 +1,15 @@
-<html lang="en"><head>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>KadroMilyon | Fantezi Futbol'un Merkezi</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <script src="https://kit.fontawesome.com/a6c8be30d8.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&amp;family=Protest+Guerrilla&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&amp;family=Protest+Guerrilla&amp;display=swap"
+          rel="stylesheet">
     <style>
         table {
             border-collapse: collapse;
@@ -17,187 +20,286 @@
             text-align: left;
             padding: 8px;
         }
-        .promotion-image{
-            width: 25%; display: inline-block; margin-left: 3%;
+
+        .promotion-image {
+            width: 25%;
+            display: inline-block;
+            margin-left: 3%;
         }
 
-        .competition-div{
-            background-color: white; width: 72%; text-align: left; display: inline-block; float: left;
+        .competition-div {
+            background-color: white;
+            width: 72%;
+            text-align: left;
+            display: inline-block;
+            float: left;
         }
-        .kadro-mil{
-            background-image: url('/static/km-fantasy-slider.png'); background-size: 100% auto; background-repeat: no-repeat; width: 60%; text-align: left; box-sizing: border-box; padding: 20px 50px; min-height: 320px; background-position: center; float: left;
+
+        .kadro-mil {
+            background-image: url('/static/km-fantasy-slider.png');
+            background-size: 100% auto;
+            background-repeat: no-repeat;
+            width: 60%;
+            text-align: left;
+            box-sizing: border-box;
+            padding: 20px 50px;
+            min-height: 320px;
+            background-position: center;
+            float: left;
             border-radius: 40px;
         }
+        #main-content-wrapper{
+            width: 95%; float:right; margin-left: -70px
+        }
+        #side-bar{
+            display: block;
+        }
 
-        @media screen and (max-width: 800px){
-            .promotion-image{
+        @media screen and (max-width: 800px) {
+            .promotion-image {
                 display: none;
             }
-            .competition-div{
+
+            .competition-div {
                 width: 100%;
                 float: none;
             }
         }
+
+
         @media screen and (max-width: 1400px) {
-            .kadro-mil{
+            #main-content-wrapper{
+                width: 100%; float: none; margin-left: 0;
+            }
+            #side-bar{
+                display: none;
+            }
+            .kadro-mil {
                 min-height: fit-content;
                 height: 320px;
                 width: 100%;
             }
-            #promotion-img{
+
+            #promotion-img {
                 display: none;
             }
         }
 
-        tr:nth-child(even) {background-color: #f2f2f2;}
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
     </style>
 </head>
 <body style="background-color: #191a1f; padding: 0; margin: 0; font-family: 'Open Sans', sans-serif;">
-    <div style="width: 100%; height: 100vh; overflow-y: auto">
-        <center style="padding: 20px 50px; background-color: orange; display: none;" id="promotion-insta">
-            <span style="color: white; font-family: 'Protest Guerrilla', sans-serif; font-size: 16px; text-decoration: underline;" onclick="window.localStorage.setItem('hidePromotionInsta', 'true'); document.location = '/promotions/instagram';">Yatırımsız 500TL fırsatı!</span>
-            <script>
+<div style="width: 100%; height: 100vh; overflow-y: auto">
+    <center style="padding: 20px 50px; background-color: orange; display: none;" id="promotion-insta">
+        <span style="color: white; font-family: 'Protest Guerrilla', sans-serif; font-size: 16px; text-decoration: underline;"
+              onclick="window.localStorage.setItem('hidePromotionInsta', 'true'); document.location = '/promotions/instagram';">Yatırımsız 500TL fırsatı!</span>
+        <script>
+            document.getElementById("promotion-insta").style.display = "none";
+            if (window.localStorage.getItem("hidePromotionInsta") === 'true') {
                 document.getElementById("promotion-insta").style.display = "none";
-                if(window.localStorage.getItem("hidePromotionInsta") === 'true'){
-                    document.getElementById("promotion-insta").style.display = "none";
+            }
+        </script>
+    </center>
+    <div style="width: 100%; box-sizing: border-box; height: 200px;">
+        <img src="/static/kadromilyon.png" alt="" style="width: 200px; padding: 20px; float: left">
+        <div style="float: left;" id="hid-mob">
+
+        </div>
+        <div style="float: right; margin-top: 50px;">
+            {% if current_user.is_authenticated %}
+            <div style="background-color: #292d30; border-radius: 50px; color: white; padding: 10px; box-sizing: border-box; margin-right: 20px; margin-top: -10px; float: right">
+                <span style="background-color: #212226; padding: 5px; padding-left: 12px; padding-right: 12px; border-radius: 50px; box-sizing: border-box">₺</span>
+                <span id="balance" style="padding-right: 5px; padding-left: 5px">{{'%0.2f'| format(current_user.balance|float)}}</span>
+            </div>
+            <span onclick="refreshBalance()"
+                  style="margin-right: 25px; font-size: 2rem; float: right; color: white; margin-top: -13px">&#x21ba;</span>
+            <script>
+                function updateBalance(balance) {
+                    document.getElementById("balance").innerText = balance;
+                }
+
+                function refreshBalance() {
+                    document.getElementById("balance").innerText = "..."
+                    fetch("/refresh-balance")
+                        .then(x => x.text())
+                        .then(y => updateBalance(y));
                 }
             </script>
-        </center>
-        <div style="width: 100%; box-sizing: border-box; height: 200px;">
-            <img src="/static/kadromilyon.png" alt="" style="width: 200px; padding: 20px; float: left">
-            <div style="float: left;" id="hid-mob">
-
+            <a href="/profile" style="color: dodgerblue; text-decoration: none; margin-right: 25px; float: right">
+                <img style="width: 25px" src="/static/profile.png" alt="">
+            </a>
+            {% else %}
+            <div id="mobile-join" style="display: none; margin-top: -15px">
+                <a href="/login" style="color: white; text-decoration: none; margin-right: 25px;">Giriş Yap</a>
+                <a href="/signup" style="color: dodgerblue; text-decoration: none; margin-right: 25px;">Üye Ol</a>
             </div>
-            <div style="float: right; margin-top: 50px;">
-                {% if current_user.is_authenticated %}
-                    <div style="background-color: #292d30; border-radius: 50px; color: white; padding: 10px; box-sizing: border-box; margin-right: 20px; margin-top: -10px; float: right">
-                        <span style="background-color: #212226; padding: 5px; padding-left: 12px; padding-right: 12px; border-radius: 50px; box-sizing: border-box">₺</span>
-                        <span id="balance" style="padding-right: 5px; padding-left: 5px">{{'%0.2f'| format(current_user.balance|float)}}</span>
-                    </div>
-                    <span onclick="refreshBalance()" style="margin-right: 25px; font-size: 2rem; float: right; color: white; margin-top: -13px">&#x21ba;</span>
-                    <script>
-                        function updateBalance(balance){
-                            document.getElementById("balance").innerText = balance;
-                        }
-                        function refreshBalance(){
-                            document.getElementById("balance").innerText = "..."
-                            fetch("/refresh-balance")
-                            .then(x => x.text())
-                            .then(y => updateBalance(y));
-                        }
-                    </script>
-                    <a href="/profile" style="color: dodgerblue; text-decoration: none; margin-right: 25px; float: right">
-                        <img style="width: 25px" src="/static/profile.png" alt="">
-                    </a>
-                {% else %}
-                    <div id="mobile-join" style="display: none; margin-top: -15px">
-                        <a href="/login" style="color: white; text-decoration: none; margin-right: 25px;">Giriş Yap</a>
-                        <a href="/signup" style="color: dodgerblue; text-decoration: none; margin-right: 25px;">Üye Ol</a>
-                    </div>
-                    <div id="desktop-join">
-                        <div onclick="document.location = '/login'" style="background-color: #292d30; border-radius: 50px; color: white; padding: 10px; box-sizing: border-box; margin-right: 20px; margin-top: -20px; float: right">
-                        <span style="background-color: #212226; padding: 5px; padding-left: 12px; padding-right: 12px; border-radius: 50px; box-sizing: border-box"><i class="fa-solid fa-right-to-bracket"></i></span>
-                            <span style="padding-right: 5px; padding-left: 5px">Giriş Yap</span>
-                        </div>
-                        <div onclick="document.location = '/signup'" style="background-color: #7b00ff; border-radius: 50px; color: white; padding: 10px; box-sizing: border-box; margin-right: 20px; margin-top: -20px; float: right">
-                            <span style="background-color: #6000c0; padding: 5px; padding-left: 12px; padding-right: 12px; border-radius: 50px; box-sizing: border-box"><i class="fa-solid fa-user-plus"></i></span>
-                            <span style="padding-right: 5px; padding-left: 5px">Kayıt Ol</span>
-                        </div>
-                    </div>
-                    <script>
-                        if(window.innerWidth < window.innerHeight){
-                            document.getElementById("mobile-join").style.display = "block";
-                            document.getElementById("desktop-join").style.display = "none";
-                        }
-                    </script>
-                {% endif %}
+            <div id="desktop-join">
+                <div onclick="document.location = '/login'"
+                     style="background-color: #292d30; border-radius: 50px; color: white; padding: 10px; box-sizing: border-box; margin-right: 20px; margin-top: -20px; float: right">
+                    <span style="background-color: #212226; padding: 5px; padding-left: 12px; padding-right: 12px; border-radius: 50px; box-sizing: border-box"><i
+                            class="fa-solid fa-right-to-bracket"></i></span>
+                    <span style="padding-right: 5px; padding-left: 5px">Giriş Yap</span>
+                </div>
+                <div onclick="document.location = '/signup'"
+                     style="background-color: #7b00ff; border-radius: 50px; color: white; padding: 10px; box-sizing: border-box; margin-right: 20px; margin-top: -20px; float: right">
+                    <span style="background-color: #6000c0; padding: 5px; padding-left: 12px; padding-right: 12px; border-radius: 50px; box-sizing: border-box"><i
+                            class="fa-solid fa-user-plus"></i></span>
+                    <span style="padding-right: 5px; padding-left: 5px">Kayıt Ol</span>
+                </div>
             </div>
             <script>
-                if(window.innerHeight > window.innerWidth){
-                    document.getElementById("hid-mob").style.display = "none";
+                if (window.innerWidth < window.innerHeight) {
+                    document.getElementById("mobile-join").style.display = "block";
+                    document.getElementById("desktop-join").style.display = "none";
                 }
             </script>
-            <div style="padding: 20px 50px; overflow-x: auto; float: left; white-space: nowrap; width: 100vw; background-color: #0f1012; box-sizing: border-box">
-                <span style="display: inline-block; color: white; font-family: 'Protest Guerrilla', sans-serif" onclick="document.location = '/'">
+            {% endif %}
+        </div>
+        <script>
+            if (window.innerHeight > window.innerWidth) {
+                document.getElementById("hid-mob").style.display = "none";
+            }
+        </script>
+        <div style="padding: 20px 50px; overflow-x: auto; float: left; white-space: nowrap; width: 100vw; background-color: #0f1012; box-sizing: border-box">
+                <span style="display: inline-block; color: white; font-family: 'Protest Guerrilla', sans-serif"
+                      onclick="document.location = '/'">
                     Anasayfa
                 </span>
-                <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif" onclick="localStorage.clear(); window.location.reload()">
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+                  onclick="localStorage.clear(); window.location.reload()">
                     Kampanyalar
                 </span>
-                <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif" onclick="document.location = '/?filter_q=daily'">
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+                  onclick="document.location = '/?filter_q=daily'">
                     Günlük Yarışmalar
                 </span>
-                <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif" onclick="document.location = '/?filter_q=weekly'">
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+                  onclick="document.location = '/?filter_q=weekly'">
                     Haftalık Yarışmalar
                 </span>
-                <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif" onclick="document.location = '/?filter_q=daily'">
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+                  onclick="document.location = '/?filter_q=daily'">
                     Yüksek Limitli Yarışmalar
                 </span>
-                <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif" onclick="document.location = '/?filter_q=Premier-Lig'">
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+                  onclick="document.location = '/?filter_q=Premier-Lig'">
                     Premier Lig
                 </span>
-                <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif" onclick="document.location = '/?filter_q=Süper-Lig'">
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+                  onclick="document.location = '/?filter_q=Süper-Lig'">
                     Süper Lig
                 </span>
-                <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif" onclick="document.location = '/?filter_q=Bundesliga'">
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+                  onclick="document.location = '/?filter_q=Bundesliga'">
                     Bundesliga
                 </span>
-                <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif" onclick="document.location = '/?filter_q=LaLiga'">
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+                  onclick="document.location = '/?filter_q=LaLiga'">
                     LaLiga
                 </span>
-                <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif" onclick="document.location = '/bahis'">
-                    Bahis
-                </span>
+        </div>
+    </div>
+    <center style="width: 5%; margin-right: 1%; float: left; height: 600px; background: #0f1012; margin-left: 25px; border-radius: 15px; border: 1px solid rgba(255, 255, 255, .3)" id="side-bar">
+        <div style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 10px; color: white; position: relative">
+            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
+                <i class="fa-solid fa-magnifying-glass"></i>
             </div>
         </div>
+
+        <div style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 10px; color: white; position: relative; background: #7b00ff">
+            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
+                <i class="fa-solid fa-house"></i>
+            </div>
+        </div>
+
+        <div onclick="document.location = '/bahis'" style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 40px; color: white; position: relative;">
+            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
+                <i class="fa-solid fa-futbol"></i>
+            </div>
+        </div>
+
+        <div style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 10px; color: white; position: relative;">
+            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
+                <i class="fa-regular fa-calendar"></i>
+            </div>
+        </div>
+
+        <div onclick="document.location = '/logout'" style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 40px; color: white; position: relative;">
+            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </div>
+        </div>
+
+        <div onclick="document.location = 'mailto:destek@m2betting.com'" style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 10px; color: lawngreen; position: relative;">
+            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
+                <i class="fa-solid fa-envelope"></i>
+            </div>
+        </div>
+
+        <div onclick="document.location = '/howtoplay'" style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 10px; color: white; position: relative;">
+            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+        </div>
+
+    </center>
+    <div id="main-content-wrapper">
         <center>
             <center>
                 <div style="background-color: #0f1012; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 40px; padding: 10px; overflow: auto; width: 90%; box-sizing: border-box">
                     <div id="promotion-img" style="float: right; text-align: center; width: 500px;">
                         <br>
-                        <span style="color: #dfdfe1; border-bottom: 1px solid #ffc362" id="weekly_winners_option" onclick="document.getElementById('daily-winners').style.display = 'none'; document.getElementById('weekly-winners').style.display = 'block'; this.style.borderBottom = '1px solid #ffc362'; document.getElementById('daily_winners_option').style.borderBottom = 'none'">En Yüksek Kazançlar</span>
-                        <span style="color: #a2a3a5; margin-left: 25px" id="daily_winners_option" onclick="document.getElementById('weekly-winners').style.display = 'none'; document.getElementById('daily-winners').style.display = 'block'; this.style.borderBottom = '1px solid #ffc362'; document.getElementById('weekly_winners_option').style.borderBottom = 'none'">Yatırım/Çekim Rekortmenleri</span>
+                        <span style="color: #dfdfe1; border-bottom: 1px solid #ffc362" id="weekly_winners_option"
+                              onclick="document.getElementById('daily-winners').style.display = 'none'; document.getElementById('weekly-winners').style.display = 'block'; this.style.borderBottom = '1px solid #ffc362'; document.getElementById('daily_winners_option').style.borderBottom = 'none'">En Yüksek Kazançlar</span>
+                        <span style="color: #a2a3a5; margin-left: 25px" id="daily_winners_option"
+                              onclick="document.getElementById('weekly-winners').style.display = 'none'; document.getElementById('daily-winners').style.display = 'block'; this.style.borderBottom = '1px solid #ffc362'; document.getElementById('weekly_winners_option').style.borderBottom = 'none'">Yatırım/Çekim Rekortmenleri</span>
                         <br>
                         <br>
                         <div style="background-color: #ffc362; width: 90%; height: 100px; border-radius: 15px; background-image: url('/static/km-background1.jpg'); background-size: cover; background-position: center">
-                                <div style="width: 100%; height: 100%; padding: 5px; box-sizing: border-box">
-                                    <img src="/static/km-laliga.jpg" style="height: 100%; border-radius: 15px; float: left" alt="">
-                                    <div style="float: left; margin-left: 5px">
-                                        <p style="color: white; margin-top: 5px; margin-left: 5px; font-size: 12px">
-                                            Haftalık LaLiga
-                                        </p>
-                                        <h2 style="color: white; margin-top: -15px; margin-left: 10px; font-size: 2rem">
-                                            20.000₺
-                                        </h2>
-                                        <p style="color: white; margin-top: -20px; margin-left: -50px; font-size: 12px">
-                                            @a*****
-                                        </p>
-                                    </div>
+                            <div style="width: 100%; height: 100%; padding: 5px; box-sizing: border-box">
+                                <img src="/static/km-laliga.jpg" style="height: 100%; border-radius: 15px; float: left"
+                                     alt="">
+                                <div style="float: left; margin-left: 5px">
+                                    <p style="color: white; margin-top: 5px; margin-left: 5px; font-size: 12px">
+                                        Haftalık LaLiga
+                                    </p>
+                                    <h2 style="color: white; margin-top: -15px; margin-left: 10px; font-size: 2rem">
+                                        20.000₺
+                                    </h2>
+                                    <p style="color: white; margin-top: -20px; margin-left: -50px; font-size: 12px">
+                                        @a*****
+                                    </p>
                                 </div>
                             </div>
-                            <br>
-                            <div style="background-color: #ffc362; width: 90%; height: 100px; border-radius: 15px; background-image: url('/static/km-background1.jpg'); background-size: cover; background-position: center">
-                                <div style="width: 100%; height: 100%; padding: 5px; box-sizing: border-box">
-                                    <img src="/static/km-bundesliga.jpg" style="height: 100%; border-radius: 15px; float: left" alt="">
-                                    <div style="float: left; margin-left: 5px">
-                                        <p style="color: white; margin-top: 5px; margin-left: 5px; font-size: 12px">
-                                            Haftalık Bundesliga
-                                        </p>
-                                        <h2 style="color: white; margin-top: -15px; margin-left: 10px; font-size: 2rem">
-                                            20.000₺
-                                        </h2>
-                                        <p style="color: white; margin-top: -20px; margin-left: -50px; font-size: 12px">
-                                            @y*****
-                                        </p>
-                                    </div>
+                        </div>
+                        <br>
+                        <div style="background-color: #ffc362; width: 90%; height: 100px; border-radius: 15px; background-image: url('/static/km-background1.jpg'); background-size: cover; background-position: center">
+                            <div style="width: 100%; height: 100%; padding: 5px; box-sizing: border-box">
+                                <img src="/static/km-bundesliga.jpg"
+                                     style="height: 100%; border-radius: 15px; float: left" alt="">
+                                <div style="float: left; margin-left: 5px">
+                                    <p style="color: white; margin-top: 5px; margin-left: 5px; font-size: 12px">
+                                        Haftalık Bundesliga
+                                    </p>
+                                    <h2 style="color: white; margin-top: -15px; margin-left: 10px; font-size: 2rem">
+                                        20.000₺
+                                    </h2>
+                                    <p style="color: white; margin-top: -20px; margin-left: -50px; font-size: 12px">
+                                        @y*****
+                                    </p>
                                 </div>
                             </div>
-                            <br>
+                        </div>
+                        <br>
 
-                        <div id="daily-winners" style="margin-left: 10%; overflow-y: auto; height: 230px; display: none">
+                        <div id="daily-winners"
+                             style="margin-left: 10%; overflow-y: auto; height: 230px; display: none">
                             <div style="background-color: #ffc362; width: 90%; height: 100px; border-radius: 15px; background-image: url('/static/ball.jpg'); background-size: cover; background-position: center">
                                 <div style="width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); padding: 5px; box-sizing: border-box">
-                                    <img src="/static/ball-burning.jpg" style="height: 100%; border-radius: 15px; float: left" alt="">
+                                    <img src="/static/ball-burning.jpg"
+                                         style="height: 100%; border-radius: 15px; float: left" alt="">
                                     <div style="float: left; margin-left: 5px">
                                         <p style="color: white; margin-top: 5px">
                                             Günlük Süper Lig
@@ -214,7 +316,8 @@
                             <br>
                             <div style="background-color: #ffc362; width: 90%; height: 100px; border-radius: 15px; background-image: url('/static/ball.jpg'); background-size: cover; background-position: center">
                                 <div style="width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); padding: 5px; box-sizing: border-box">
-                                    <img src="/static/ball-burning.jpg" style="height: 100%; border-radius: 15px; float: left" alt="">
+                                    <img src="/static/ball-burning.jpg"
+                                         style="height: 100%; border-radius: 15px; float: left" alt="">
                                     <div style="float: left; margin-left: 5px">
                                         <p style="color: white; margin-top: 5px">
                                             Günlük Premier Lig
@@ -231,7 +334,8 @@
                             <br>
                             <div style="background-color: #ffc362; width: 90%; height: 100px; border-radius: 15px; background-image: url('/static/ball.jpg'); background-size: cover; background-position: center">
                                 <div style="width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); padding: 5px; box-sizing: border-box">
-                                    <img src="/static/ball-burning.jpg" style="height: 100%; border-radius: 15px; float: left" alt="">
+                                    <img src="/static/ball-burning.jpg"
+                                         style="height: 100%; border-radius: 15px; float: left" alt="">
                                     <div style="float: left; margin-left: 5px">
                                         <p style="color: white; margin-top: 5px">
                                             Günlük Bundesliga
@@ -248,7 +352,8 @@
                             <br>
                             <div style="background-color: #ffc362; width: 90%; height: 100px; border-radius: 15px; background-image: url('/static/ball.jpg'); background-size: cover; background-position: center">
                                 <div style="width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); padding: 5px; box-sizing: border-box">
-                                    <img src="/static/ball-burning.jpg" style="height: 100%; border-radius: 15px; float: left" alt="">
+                                    <img src="/static/ball-burning.jpg"
+                                         style="height: 100%; border-radius: 15px; float: left" alt="">
                                     <div style="float: left; margin-left: 5px">
                                         <p style="color: white; margin-top: 5px">
                                             Günlük LaLiga
@@ -268,105 +373,122 @@
 
                     </div>
                     <script>
-                        if(window.innerHeight > window.innerWidth){
+                        if (window.innerHeight > window.innerWidth) {
                             document.getElementsByClassName("kadro-mil")[0].style.height = "120px";
                         }
                     </script>
                 </div>
             </center>
-            <br style="clear:both">
-        <h1 style="font-size: 3rem; font-family: 'Protest Guerrilla', sans-serif; text-align: left; margin-left: 7%; color: white">Popüler Oyunlar</h1>
-        <div style="box-sizing: border-box; padding: 15px; width: 90%; border-radius: 15px; min-height: fit-content; overflow: auto">
-            <div style="width: 100%; text-align: left; overflow-x: auto; white-space: nowrap; background-color: #0f1012; border: 1px solid rgba(255, 255, 255, 0.3); padding: 10px; box-sizing: border-box; border-radius: 15px; font-family: 'Protest Guerrilla', sans-serif;">
-                <center onclick="window.location = '/?filter_q=daily'" style="display: inline-block; border-radius: 15px; box-sizing: content-box; background-size: cover; padding: 5px; padding-bottom: 20px; position:relative; width: 250px">
-                    <div style="height: 250px; width: 200px;  background-image: url('/static/km-popular1.jpg'); background-position: center; background-size: cover; border-radius: 15px">
-                    </div>
-                    <br style="clear: both">
-                    <span style="color: white;">Günlük Yarışma</span>
-                    <div style="width: 50px; height: 50px; border-radius: 100px; background: #292D30FF; position: absolute; bottom: 40px; right: 10px">
-                        <i class="fa-solid fa-play" style="position: absolute; top: 0; right: 0; left: 0; bottom: 0; color: white; margin: auto; width: fit-content; height: fit-content"></i>
-                    </div>
-                </center>
-                <center onclick="window.location = '/?filter_q=weekly'" style="display: inline-block; border-radius: 15px; box-sizing: content-box; background-size: cover; padding: 5px; padding-bottom: 20px; position:relative; width: 250px">
-                    <div style="height: 250px; width: 200px;  background-image: url('/static/km-popular2.jpg'); background-position: center; background-size: cover; border-radius: 15px">
-                    </div>
-                    <br style="clear: both">
-                    <span style="color: white;">Haftalık Yarışma</span>
-                    <div style="width: 50px; height: 50px; border-radius: 100px; background: #292D30FF; position: absolute; bottom: 40px; right: 10px">
-                        <i class="fa-solid fa-play" style="position: absolute; top: 0; right: 0; left: 0; bottom: 0; color: white; margin: auto; width: fit-content; height: fit-content"></i>
-                    </div>
-                </center>
-                <center onclick="window.location = '/?filter_q=high_limit'" style="display: inline-block; border-radius: 15px; box-sizing: content-box; background-size: cover; padding: 5px; padding-bottom: 20px; position:relative; width: 250px">
-                    <div style="height: 250px; width: 200px;  background-image: url('/static/km-popular3.jpg'); background-position: center; background-size: cover; border-radius: 15px">
-                    </div>
-                    <br style="clear: both">
-                    <span style="color: white;">Yüksek Limit</span>
-                    <div style="width: 50px; height: 50px; border-radius: 100px; background: #292D30FF; position: absolute; bottom: 40px; right: 10px">
-                        <i class="fa-solid fa-play" style="position: absolute; top: 0; right: 0; left: 0; bottom: 0; color: white; margin: auto; width: fit-content; height: fit-content"></i>
-                    </div>
-                </center>
-                <center onclick="window.location = '/?filter_q=low_participants'" style="display: inline-block; border-radius: 15px; box-sizing: content-box; background-size: cover; padding: 5px; padding-bottom: 20px; position:relative; width: 250px">
-                    <div style="height: 250px; width: 200px;  background-image: url('/static/km-popular4.jpg'); background-position: center; background-size: cover; border-radius: 15px">
-                    </div>
-                    <br style="clear: both">
-                    <span style="color: white;">Az Katılımcı</span>
-                    <div style="width: 50px; height: 50px; border-radius: 100px; background: #292D30FF; position: absolute; bottom: 40px; right: 10px">
-                        <i class="fa-solid fa-play" style="position: absolute; top: 0; right: 0; left: 0; bottom: 0; color: white; margin: auto; width: fit-content; height: fit-content"></i>
-                    </div>
-                </center>
-                <center onclick="window.location = '/?filter_q=single_participation'" style="display: inline-block; border-radius: 15px; box-sizing: content-box; background-size: cover; padding: 5px; padding-bottom: 20px; position:relative; width: 250px">
-                    <div style="height: 250px; width: 200px;  background-image: url('/static/km-popular5.jpg'); background-position: center; background-size: cover; border-radius: 15px">
-                    </div>
-                    <br style="clear: both">
-                    <span style="color: white;">Tek Katılımlı</span>
-                    <div style="width: 50px; height: 50px; border-radius: 100px; background: #292D30FF; position: absolute; bottom: 40px; right: 10px">
-                        <i class="fa-solid fa-play" style="position: absolute; top: 0; right: 0; left: 0; bottom: 0; color: white; margin: auto; width: fit-content; height: fit-content"></i>
-                    </div>
-                </center>
-                <center onclick="window.location = '/?filter_q=multiple_participation'" style="display: inline-block; border-radius: 15px; box-sizing: content-box; background-size: cover; padding: 5px; padding-bottom: 20px; position:relative; width: 250px">
-                    <div style="height: 250px; width: 200px;  background-image: url('/static/km-popular6.jpg'); background-position: center; background-size: cover; border-radius: 15px">
-                    </div>
-                    <br style="clear: both">
-                    <span style="color: white;">Çok Katılımlı</span>
-                    <div style="width: 50px; height: 50px; border-radius: 100px; background: #292D30FF; position: absolute; bottom: 40px; right: 10px">
-                        <i class="fa-solid fa-play" style="position: absolute; top: 0; right: 0; left: 0; bottom: 0; color: white; margin: auto; width: fit-content; height: fit-content"></i>
-                    </div>
-                </center>
-            </div>
-            <br>
-            <div onclick="document.location = '/howtoplay'" style="width: 100%; text-align: left; background-color: #0f1012; padding: 20px; height: 85px; border-radius: 10px; box-sizing: border-box;">
-               <div style="border-radius: 500px; border: 1px solid white; width: fit-content; height: fit-content; padding: 10px 18px; color: white; float: left; box-sizing: border-box">
-                   ?
-               </div>
-                <span style="color: white; float: left; margin: 10px">Nasıl oynanır?</span>
-            </div>
-            <br>
 
-        <div class="competition-div">
-                <div style="background-color: dodgerblue; width: 100%; padding: 20px; color: white; box-sizing: border-box">
-                    Açık Yarışmalar
+            <h1 style="font-size: 3rem; font-family: 'Protest Guerrilla', sans-serif; text-align: left; margin-left: 7%; color: white; margin-bottom: 0; margin-top: 20px">
+                Popüler Oyunlar
+            </h1>
+            <div style="box-sizing: border-box; padding: 15px; width: 90%; border-radius: 15px; min-height: fit-content; overflow: auto">
+                <div style="width: 100%; text-align: left; overflow-x: auto; white-space: nowrap; background-color: #0f1012; border: 1px solid rgba(255, 255, 255, 0.3); padding: 10px; box-sizing: border-box; border-radius: 15px; font-family: 'Protest Guerrilla', sans-serif;">
+                    <center onclick="window.location = '/?filter_q=daily'"
+                            style="display: inline-block; border-radius: 15px; box-sizing: content-box; background-size: cover; padding: 5px; padding-bottom: 20px; position:relative; width: 250px">
+                        <div style="height: 250px; width: 200px;  background-image: url('/static/km-popular1.jpg'); background-position: center; background-size: cover; border-radius: 15px">
+                        </div>
+                        <br style="clear: both">
+                        <span style="color: white;">Günlük Yarışma</span>
+                        <div style="width: 50px; height: 50px; border-radius: 100px; background: #292D30FF; position: absolute; bottom: 40px; right: 10px">
+                            <i class="fa-solid fa-play"
+                               style="position: absolute; top: 0; right: 0; left: 0; bottom: 0; color: white; margin: auto; width: fit-content; height: fit-content"></i>
+                        </div>
+                    </center>
+                    <center onclick="window.location = '/?filter_q=weekly'"
+                            style="display: inline-block; border-radius: 15px; box-sizing: content-box; background-size: cover; padding: 5px; padding-bottom: 20px; position:relative; width: 250px">
+                        <div style="height: 250px; width: 200px;  background-image: url('/static/km-popular2.jpg'); background-position: center; background-size: cover; border-radius: 15px">
+                        </div>
+                        <br style="clear: both">
+                        <span style="color: white;">Haftalık Yarışma</span>
+                        <div style="width: 50px; height: 50px; border-radius: 100px; background: #292D30FF; position: absolute; bottom: 40px; right: 10px">
+                            <i class="fa-solid fa-play"
+                               style="position: absolute; top: 0; right: 0; left: 0; bottom: 0; color: white; margin: auto; width: fit-content; height: fit-content"></i>
+                        </div>
+                    </center>
+                    <center onclick="window.location = '/?filter_q=high_limit'"
+                            style="display: inline-block; border-radius: 15px; box-sizing: content-box; background-size: cover; padding: 5px; padding-bottom: 20px; position:relative; width: 250px">
+                        <div style="height: 250px; width: 200px;  background-image: url('/static/km-popular3.jpg'); background-position: center; background-size: cover; border-radius: 15px">
+                        </div>
+                        <br style="clear: both">
+                        <span style="color: white;">Yüksek Limit</span>
+                        <div style="width: 50px; height: 50px; border-radius: 100px; background: #292D30FF; position: absolute; bottom: 40px; right: 10px">
+                            <i class="fa-solid fa-play"
+                               style="position: absolute; top: 0; right: 0; left: 0; bottom: 0; color: white; margin: auto; width: fit-content; height: fit-content"></i>
+                        </div>
+                    </center>
+                    <center onclick="window.location = '/?filter_q=low_participants'"
+                            style="display: inline-block; border-radius: 15px; box-sizing: content-box; background-size: cover; padding: 5px; padding-bottom: 20px; position:relative; width: 250px">
+                        <div style="height: 250px; width: 200px;  background-image: url('/static/km-popular4.jpg'); background-position: center; background-size: cover; border-radius: 15px">
+                        </div>
+                        <br style="clear: both">
+                        <span style="color: white;">Az Katılımcı</span>
+                        <div style="width: 50px; height: 50px; border-radius: 100px; background: #292D30FF; position: absolute; bottom: 40px; right: 10px">
+                            <i class="fa-solid fa-play"
+                               style="position: absolute; top: 0; right: 0; left: 0; bottom: 0; color: white; margin: auto; width: fit-content; height: fit-content"></i>
+                        </div>
+                    </center>
+                    <center onclick="window.location = '/?filter_q=single_participation'"
+                            style="display: inline-block; border-radius: 15px; box-sizing: content-box; background-size: cover; padding: 5px; padding-bottom: 20px; position:relative; width: 250px">
+                        <div style="height: 250px; width: 200px;  background-image: url('/static/km-popular5.jpg'); background-position: center; background-size: cover; border-radius: 15px">
+                        </div>
+                        <br style="clear: both">
+                        <span style="color: white;">Tek Katılımlı</span>
+                        <div style="width: 50px; height: 50px; border-radius: 100px; background: #292D30FF; position: absolute; bottom: 40px; right: 10px">
+                            <i class="fa-solid fa-play"
+                               style="position: absolute; top: 0; right: 0; left: 0; bottom: 0; color: white; margin: auto; width: fit-content; height: fit-content"></i>
+                        </div>
+                    </center>
+                    <center onclick="window.location = '/?filter_q=multiple_participation'"
+                            style="display: inline-block; border-radius: 15px; box-sizing: content-box; background-size: cover; padding: 5px; padding-bottom: 20px; position:relative; width: 250px">
+                        <div style="height: 250px; width: 200px;  background-image: url('/static/km-popular6.jpg'); background-position: center; background-size: cover; border-radius: 15px">
+                        </div>
+                        <br style="clear: both">
+                        <span style="color: white;">Çok Katılımlı</span>
+                        <div style="width: 50px; height: 50px; border-radius: 100px; background: #292D30FF; position: absolute; bottom: 40px; right: 10px">
+                            <i class="fa-solid fa-play"
+                               style="position: absolute; top: 0; right: 0; left: 0; bottom: 0; color: white; margin: auto; width: fit-content; height: fit-content"></i>
+                        </div>
+                    </center>
                 </div>
-                <div style="width: 100%; overflow-x: auto; white-space: nowrap">
-                    <table>
-                        <tr>
-                            <th>Yarışma İsmi</th>
-                            <th>Yarışma Türü</th>
-                            <th>Yarışma Tarihleri</th>
-                            <th>Ödül Havuzu</th>
-                            <th>Katılım Ücreti</th>
-                            <th>Birden Fazla Katılım</th>
-                            <th>Maks. Katılımcı Sayısı</th>
-                        </tr>
-                        {% for competition in competitions %}
+                <br>
+                <div onclick="document.location = '/howtoplay'"
+                     style="width: 100%; text-align: left; background-color: #0f1012; padding: 20px; height: 85px; border-radius: 10px; box-sizing: border-box;">
+                    <div style="border-radius: 500px; border: 1px solid white; width: fit-content; height: fit-content; padding: 10px 18px; color: white; float: left; box-sizing: border-box">
+                        ?
+                    </div>
+                    <span style="color: white; float: left; margin: 10px">Nasıl oynanır?</span>
+                </div>
+                <br>
+
+                <div class="competition-div">
+                    <div style="background-color: dodgerblue; width: 100%; padding: 20px; color: white; box-sizing: border-box">
+                        Açık Yarışmalar
+                    </div>
+                    <div style="width: 100%; overflow-x: auto; white-space: nowrap">
+                        <table>
                             <tr>
-                                <td onclick="document.location = '/competition/{{ competition.id }}'" style="text-decoration: underline">
+                                <th>Yarışma İsmi</th>
+                                <th>Yarışma Türü</th>
+                                <th>Yarışma Tarihleri</th>
+                                <th>Ödül Havuzu</th>
+                                <th>Katılım Ücreti</th>
+                                <th>Birden Fazla Katılım</th>
+                                <th>Maks. Katılımcı Sayısı</th>
+                            </tr>
+                            {% for competition in competitions %}
+                            <tr>
+                                <td onclick="document.location = '/competition/{{ competition.id }}'"
+                                    style="text-decoration: underline">
                                     {{ competition.competition_name }}
                                 </td>
                                 <td>
                                     {{ competition.competition_type }}
                                 </td>
                                 <td>
-                                    {{ competition.start_date.strftime('%d/%m/%Y') }} - {{ competition.end_date.strftime('%d/%m/%Y') }}
+                                    {{ competition.start_date.strftime('%d/%m/%Y') }} - {{
+                                    competition.end_date.strftime('%d/%m/%Y') }}
                                 </td>
                                 <td>
                                     {{"{:,.2f}".format(competition.prize_pool|float)}}₺
@@ -374,20 +496,20 @@
                                 <td>{{ competition.entry_fee }}₺</td>
                                 <td>
                                     {% if competition.allow_multiple_entries %}
-                                        Evet
+                                    Evet
                                     {% else %}
-                                        Hayır
+                                    Hayır
                                     {% endif %}
                                 </td>
                                 <td>
                                     {{ competition.participant_max }}
                                 </td>
                             </tr>
-                        {% endfor %}
-                    </table>
+                            {% endfor %}
+                        </table>
+                    </div>
                 </div>
-            </div>
-        <img src="/static/fantasyim.jpeg" class="promotion-image"></div>
+                <img src="/static/fantasyim.jpeg" class="promotion-image"></div>
 
         </center>
         <br>
@@ -395,4 +517,6 @@
         <br>
         <span style="opacity: 0">KadroMilyon</span>
     </div>
-</body></html>
+</div>
+</body>
+</html>
