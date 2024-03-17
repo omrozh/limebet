@@ -190,15 +190,17 @@
                     LaLiga
                 </span>
 
-            <span style="display: inline-block; margin-left: 50px; font-family: 'Protest Guerrilla', sans-serif; color: dodgerblue;"
-              onclick="document.location = '/login'">
-                Giriş Yap
-            </span>
+            <div id="mobile-join" style="display: none">
+                <span style="display: inline-block; margin-left: 50px; font-family: 'Protest Guerrilla', sans-serif; color: dodgerblue;"
+                  onclick="document.location = '/login'">
+                    Giriş Yap
+                </span>
 
-            <span style="display: inline-block; margin-left: 50px; color: #7b00ff; font-family: 'Protest Guerrilla', sans-serif;"
-              onclick="document.location = '/signup'">
-                Üye Ol
-            </span>
+                <span style="display: inline-block; margin-left: 50px; color: #7b00ff; font-family: 'Protest Guerrilla', sans-serif;"
+                  onclick="document.location = '/signup'">
+                    Kayıt Ol
+                </span>
+            </div>
         </div>
     </div>
     <center style="width: 5%; margin-right: 1%; float: left; height: 600px; background: #0f1012; margin-left: 25px; border-radius: 15px; border: 1px solid rgba(255, 255, 255, .3)" id="side-bar">
@@ -519,6 +521,7 @@
     </div>
     <script>
         if (window.innerWidth < window.innerHeight) {
+            document.getElementById("mobile-join").style.display = "block";
             document.getElementById("desktop-join").style.display = "none";
         }
     </script>
