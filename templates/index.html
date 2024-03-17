@@ -131,10 +131,6 @@
                 <img style="width: 25px" src="/static/profile.png" alt="">
             </a>
             {% else %}
-            <div id="mobile-join" style="display: none; margin-top: -15px">
-                <a href="/login" style="color: white; text-decoration: none; margin-right: 25px;">Giriş Yap</a>
-                <a href="/signup" style="color: dodgerblue; text-decoration: none; margin-right: 25px;">Üye Ol</a>
-            </div>
             <div id="desktop-join">
                 <div onclick="document.location = '/login'"
                      style="background-color: #292d30; border-radius: 50px; color: white; padding: 10px; box-sizing: border-box; margin-right: 20px; margin-top: -20px; float: right">
@@ -199,6 +195,11 @@
                   onclick="document.location = '/?filter_q=LaLiga'">
                     LaLiga
                 </span>
+
+            <div id="mobile-join" style="display: none; margin-top: -15px">
+                <a href="/login" style="color: white; text-decoration: none; margin-right: 25px;">Giriş Yap</a>
+                <a href="/signup" style="color: dodgerblue; text-decoration: none; margin-right: 25px;">Üye Ol</a>
+            </div>
         </div>
     </div>
     <center style="width: 5%; margin-right: 1%; float: left; height: 600px; background: #0f1012; margin-left: 25px; border-radius: 15px; border: 1px solid rgba(255, 255, 255, .3)" id="side-bar">
