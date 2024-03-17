@@ -81,6 +81,16 @@ bcrypt = Bcrypt(app)
 migrate = Migrate(app, db)
 
 
+def user_on_mobile() -> bool:
+    user_agent = flask.request.headers.get("User-Agent")
+    user_agent = user_agent.lower()
+    phones = ["android", "iphone"]
+
+    if any(x in user_agent for x in phones):
+        return True
+    return False
+
+
 # TEST APP PASSWORD for kadromilyon@gmail.com: dbpixumfhzuvkvzu
 
 def get_unread_emails(username, password):
@@ -1225,6 +1235,9 @@ def draft(competition_id):
 
 @app.route("/static/<filename>")
 def static_file(filename):
+    if filename == "kadromilyon.png":
+        if user_on_mobile():
+            return flask.send_file("static/kadromilyon_mobile.png")
     return flask.send_file("static/" + filename)
 
 
