@@ -40,7 +40,12 @@
         </script>
     </center>
     <div style="width: 100%; box-sizing: border-box; height: 220px; ">
-        <img src="/static/kadromilyon.png" alt="" style="width: 200px; padding: 20px; float: left">
+        <img id="iconmain" src="/static/kadromilyon.png" alt="" style="width: 200px; padding: 20px; float: left">
+    <script>
+        if(window.innerWidth < window.innerHeight){
+            document.getElementById("iconmain").style.width = "50px";
+        }
+    </script>
         <div style="float: left;" id="hid-mob">
 
         </div>

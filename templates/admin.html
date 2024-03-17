@@ -11,7 +11,12 @@
     <title>Admin Portalı - KadroMilyon</title>
 </head>
 <body style="background-color: #222">
-  <img src="/static/kadromilyon.png" alt="" style="width: 200px; padding: 20px; float: left">
+  <img id="iconmain" src="/static/kadromilyon.png" alt="" style="width: 200px; padding: 20px; float: left">
+    <script>
+        if(window.innerWidth < window.innerHeight){
+            document.getElementById("iconmain").style.width = "50px";
+        }
+    </script>
   <form method="post" enctype="multipart/form-data" style="background-color: rgba(0,134,255,0.38); border-top: dodgerblue 5px solid; color: white; padding: 20px; box-sizing: border-box; position: absolute; top: 0; bottom: 0; right: 0; left: 0; margin: auto; width: fit-content; height: 500px; overflow-y: auto">
     <h1 style="color: white; font-family: 'Protest Guerrilla', sans-serif">
         Admin

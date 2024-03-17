@@ -30,7 +30,12 @@
 </head>
 <body style="background-color: #191a1f; padding: 0; margin: 0; font-family: 'Open Sans', sans-serif;">
     <div style="width: 100%; box-sizing: border-box; height: 200px;">
-            <img src="/static/kadromilyon.png" alt="" style="width: 200px; padding: 20px; float: left">
+            <img id="iconmain" src="/static/kadromilyon.png" alt="" style="width: 200px; padding: 20px; float: left">
+            <script>
+                if(window.innerWidth < window.innerHeight){
+                    document.getElementById("iconmain").style.width = "50px";
+                }
+            </script>
             <div style="float: right; margin-top: 40px;">
                 {% if current_user.is_authenticated %}
                     <div style="background-color: rgba(0,134,255,0.38); border-left: dodgerblue 3px solid; color: white; padding: 10px; box-sizing: border-box; margin-right: 20px; margin-top: -10px; float: right">
