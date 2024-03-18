@@ -21,6 +21,14 @@
             padding: 8px;
         }
 
+        .menu-main{
+            width: 100%; box-sizing: border-box; height: 200px;
+        }
+
+        .slider-wrapper{
+            background-color: #0f1012; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 40px; padding: 10px; overflow: auto; width: 90%; box-sizing: border-box
+        }
+
         .promotion-image {
             width: 25%;
             display: inline-block;
@@ -60,7 +68,23 @@
         }
 
         @media screen and (max-width: 800px) {
+            .slider-wrapper{
+                border: none;
+                background: transparent;
+            }
+            .menu-main{
+                height: 100px;
+            }
+            .kadro-mil{
+                border-radius: 0;
+                width: 90%;
+                height: 350px;
+                background-size: cover;
+            }
             .promotion-image {
+                display: none;
+            }
+            #navbar-main{
                 display: none;
             }
 
@@ -110,7 +134,7 @@
             }
         </script>
     </center>
-    <div style="width: 100%; box-sizing: border-box; height: 200px;">
+    <div class="menu-main">
         <img id="iconmain" src="/static/kadromilyon.png" alt="" style="width: 200px; padding: 20px; float: left">
         <script>
             if(window.innerWidth < window.innerHeight){
@@ -165,7 +189,7 @@
                 document.getElementById("hid-mob").style.display = "none";
             }
         </script>
-        <div style="padding: 20px 50px; overflow-x: auto; float: left; white-space: nowrap; width: 100vw; background-color: #0f1012; box-sizing: border-box">
+        <div style="padding: 20px 50px; overflow-x: auto; float: left; white-space: nowrap; width: 100vw; background-color: #0f1012; box-sizing: border-box" id="navbar-main">
                 <span style="display: inline-block; color: white; font-family: 'Protest Guerrilla', sans-serif"
                       onclick="document.location = '/'">
                     Anasayfa
@@ -280,7 +304,7 @@
     <div id="main-content-wrapper">
         <center>
             <center>
-                <div style="background-color: #0f1012; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 40px; padding: 10px; overflow: auto; width: 90%; box-sizing: border-box">
+                <div class="slider-wrapper">
                     <div id="promotion-img" style="float: right; text-align: center; width: 450px;">
                         <br>
                         <span style="color: #dfdfe1; border-bottom: 1px solid #ffc362" id="weekly_winners_option"
@@ -563,7 +587,7 @@
     </div>
     <script>
         if (window.innerWidth < window.innerHeight) {
-            document.getElementById("desktop-join").style.display = "none";
+            document.getElementById("desktop-join").style.marginTop = "5px";
         } else {
             document.getElementsByClassName("hid-desktop")[0].style.display = "none";
             document.getElementsByClassName("hid-desktop")[1].style.display = "none";

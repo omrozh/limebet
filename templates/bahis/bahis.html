@@ -43,6 +43,40 @@
             float: left;
             border-radius: 40px;
         }
+        .slider-wrapper{
+            background-color: #0f1012; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 40px; padding: 10px; overflow: auto; width: 90%; box-sizing: border-box;
+        }
+
+        .menu-main{
+            width: 100%; box-sizing: border-box; height: 200px;
+        }
+
+        @media screen and (max-width: 800px) {
+            .slider-wrapper{
+                border: none;
+                background: transparent;
+            }
+            .menu-main{
+                height: 100px;
+            }
+            .kadro-mil{
+                border-radius: 0;
+                width: 90%;
+                height: 350px;
+                background-size: cover;
+            }
+            .promotion-image {
+                display: none;
+            }
+            #navbar-main{
+                display: none;
+            }
+
+            .competition-div {
+                width: 100%;
+                float: none;
+            }
+        }
 
         @media screen and (max-width: 800px){
             .promotion-image{
@@ -97,7 +131,7 @@
                 }
             </script>
         </center>
-        <div style="width: 100%; box-sizing: border-box; height: 200px;">
+        <div class="menu-main">
             <img id="iconmain" src="/static/kadromilyon.png" alt="" style="width: 200px; padding: 20px; float: left">
     <script>
         if(window.innerWidth < window.innerHeight){
@@ -129,10 +163,7 @@
                         <img style="width: 25px" src="/static/profile.png" alt="">
                     </a>
                 {% else %}
-                    <div id="mobile-join" style="display: none; margin-top: -15px">
-                        <a href="/login" style="color: white; text-decoration: none; margin-right: 25px;">Giriş Yap</a>
-                        <a href="/signup" style="color: dodgerblue; text-decoration: none; margin-right: 25px;">Üye Ol</a>
-                    </div>
+
                     <div id="desktop-join">
                         <div onclick="document.location = '/login'" style="background-color: #292d30; border-radius: 50px; color: white; padding: 10px; box-sizing: border-box; margin-right: 20px; margin-top: -20px; float: right">
                         <span style="background-color: #212226; padding: 5px; padding-left: 12px; padding-right: 12px; border-radius: 50px; box-sizing: border-box"><i class="fa-solid fa-right-to-bracket"></i></span>
@@ -156,7 +187,7 @@
                     document.getElementById("hid-mob").style.display = "none";
                 }
             </script>
-            <div style="padding: 20px 50px; overflow-x: auto; float: left; white-space: nowrap; width: 100vw; background-color: #0f1012; box-sizing: border-box">
+            <div style="padding: 20px 50px; overflow-x: auto; float: left; white-space: nowrap; width: 100vw; background-color: #0f1012; box-sizing: border-box" id="navbar-main">
                 <span style="display: inline-block; color: white; font-family: 'Protest Guerrilla', sans-serif" onclick="document.location = '/'">
                     Anasayfa
                 </span>
@@ -249,7 +280,7 @@
         <div id="main-content-wrapper">
         <center>
             <center>
-                <div style="background-color: #0f1012; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 40px; padding: 10px; overflow: auto; width: 90%; box-sizing: border-box">
+                <div class="slider-wrapper">
                     <div id="promotion-img" style="float: right; text-align: center; width: 450px;">
                         <br>
                         <span style="color: #dfdfe1; border-bottom: 1px solid #ffc362" id="weekly_winners_option"
@@ -393,6 +424,7 @@
                 </div>
 
         <br style="clear:both">
+                <br style="clear:both">
     <center style="background-color: #0f1012; width: 87%; border-radius: 15px">
 
         <br>
@@ -448,6 +480,14 @@
             }
         }
     </script></center>
+            <script>
+        if (window.innerWidth < window.innerHeight) {
+            document.getElementById("desktop-join").style.marginTop = "5px";
+        } else {
+            document.getElementsByClassName("hid-desktop")[0].style.display = "none";
+            document.getElementsByClassName("hid-desktop")[1].style.display = "none";
+        }
+    </script>
     </div></div>
 </body>
 </html>
