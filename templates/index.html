@@ -579,7 +579,9 @@
                     </div>
                 </div>
                 <img src="/static/fantasyim.jpeg" class="promotion-image"></div>
-
+            <div id="mobile-home" style="color: white; position: fixed; bottom: 50px; right: 20px; background-color: #7b00ff; padding: 15px; border-radius: 50px" onclick="document.location = '/'">
+                <i class="fa-solid fa-house"></i>
+            </div>
         </center>
         <br>
         <span style="opacity: 0">KadroMilyon</span>
@@ -588,9 +590,11 @@
     </div>
     <script>
         if (window.innerWidth < window.innerHeight) {
+            document.getElementById("mobile-home").style.display = "block";
             document.getElementById("desktop-join").style.marginTop = "5px";
             document.getElementById("desktop-join").style += "; float: right; width: 300px; overflow-x: auto; white-space: nowrap; padding-top: 10px; margin-top: -13px"
         } else {
+            document.getElementById("mobile-home").style.display = "none";
             document.getElementsByClassName("hid-desktop")[0].style.display = "none";
             document.getElementsByClassName("hid-desktop")[1].style.display = "none";
         }
