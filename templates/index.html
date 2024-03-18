@@ -588,7 +588,9 @@
     <script>
         if (window.innerWidth < window.innerHeight) {
             document.getElementById("desktop-join").style.marginTop = "5px";
-            document.getElementById("desktop-join").style.float = "left";
+            document.getElementById("desktop-join").style.whiteSpace = "nowrap";
+            document.getElementById("desktop-join").style.width = "50%";
+            document.getElementById("desktop-join").style.overflowX = "auto";
         } else {
             document.getElementsByClassName("hid-desktop")[0].style.display = "none";
             document.getElementsByClassName("hid-desktop")[1].style.display = "none";
