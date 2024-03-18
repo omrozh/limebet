@@ -63,11 +63,36 @@
             margin-left: -70px
         }
 
+        .play-select{
+            width: 50px; height: 50px; border-radius: 100px; background: #292D30FF; position: absolute; bottom: 40px; right: 10px
+        }
+
+        .select-wrapper{
+            display: inline-block; border-radius: 15px; box-sizing: content-box; background-size: cover; padding: 5px; padding-bottom: 20px; position:relative; width: 250px
+        }
+
+        .picture-select{
+            height: 250px; width: 200px;  background-image: url('/static/km-popular1.jpg'); background-position: center; background-size: cover; border-radius: 15px
+        }
+
         #side-bar {
             display: block;
         }
 
         @media screen and (max-width: 800px) {
+            .play-select{
+                width: 30px;
+                height: 30px;
+                bottom: 50px;
+                right: 15px;
+            }
+            .picture-select{
+                height: 150px;
+                width: 100px;
+            }
+            .select-wrapper{
+                width: 150px
+            }
             .slider-wrapper{
                 border: none;
                 background: transparent;
@@ -455,67 +480,67 @@
             <div style="box-sizing: border-box; padding: 15px; width: 90%; border-radius: 15px; min-height: fit-content; overflow: auto">
                 <div style="width: 100%; text-align: left; overflow-x: auto; white-space: nowrap; background-color: #0f1012; border: 1px solid rgba(255, 255, 255, 0.3); padding: 10px; box-sizing: border-box; border-radius: 15px; font-family: 'Protest Guerrilla', sans-serif;">
                     <center onclick="window.location = '/?filter_q=daily'"
-                            style="display: inline-block; border-radius: 15px; box-sizing: content-box; background-size: cover; padding: 5px; padding-bottom: 20px; position:relative; width: 250px">
-                        <div style="height: 250px; width: 200px;  background-image: url('/static/km-popular1.jpg'); background-position: center; background-size: cover; border-radius: 15px">
+                            class="select-wrapper">
+                        <div class="picture-select">
                         </div>
                         <br style="clear: both">
                         <span style="color: white;">Günlük Yarışma</span>
-                        <div style="width: 50px; height: 50px; border-radius: 100px; background: #292D30FF; position: absolute; bottom: 40px; right: 10px">
+                        <div class="play-select">
                             <i class="fa-solid fa-play"
                                style="position: absolute; top: 0; right: 0; left: 0; bottom: 0; color: white; margin: auto; width: fit-content; height: fit-content"></i>
                         </div>
                     </center>
                     <center onclick="window.location = '/?filter_q=weekly'"
-                            style="display: inline-block; border-radius: 15px; box-sizing: content-box; background-size: cover; padding: 5px; padding-bottom: 20px; position:relative; width: 250px">
-                        <div style="height: 250px; width: 200px;  background-image: url('/static/km-popular2.jpg'); background-position: center; background-size: cover; border-radius: 15px">
+                            class="select-wrapper">
+                        <div style="background-image: url('/static/km-popular2.jpg');" class="picture-select">
                         </div>
                         <br style="clear: both">
                         <span style="color: white;">Haftalık Yarışma</span>
-                        <div style="width: 50px; height: 50px; border-radius: 100px; background: #292D30FF; position: absolute; bottom: 40px; right: 10px">
+                        <div class="play-select">
                             <i class="fa-solid fa-play"
                                style="position: absolute; top: 0; right: 0; left: 0; bottom: 0; color: white; margin: auto; width: fit-content; height: fit-content"></i>
                         </div>
                     </center>
                     <center onclick="window.location = '/?filter_q=high_limit'"
-                            style="display: inline-block; border-radius: 15px; box-sizing: content-box; background-size: cover; padding: 5px; padding-bottom: 20px; position:relative; width: 250px">
-                        <div style="height: 250px; width: 200px;  background-image: url('/static/km-popular3.jpg'); background-position: center; background-size: cover; border-radius: 15px">
+                            class="select-wrapper">
+                        <div style="background-image: url('/static/km-popular3.jpg');" class="picture-select">
                         </div>
                         <br style="clear: both">
                         <span style="color: white;">Yüksek Limit</span>
-                        <div style="width: 50px; height: 50px; border-radius: 100px; background: #292D30FF; position: absolute; bottom: 40px; right: 10px">
+                        <div class="play-select">
                             <i class="fa-solid fa-play"
                                style="position: absolute; top: 0; right: 0; left: 0; bottom: 0; color: white; margin: auto; width: fit-content; height: fit-content"></i>
                         </div>
                     </center>
                     <center onclick="window.location = '/?filter_q=low_participants'"
-                            style="display: inline-block; border-radius: 15px; box-sizing: content-box; background-size: cover; padding: 5px; padding-bottom: 20px; position:relative; width: 250px">
-                        <div style="height: 250px; width: 200px;  background-image: url('/static/km-popular4.jpg'); background-position: center; background-size: cover; border-radius: 15px">
+                            class="select-wrapper">
+                        <div style="background-image: url('/static/km-popular4.jpg');" class="picture-select">
                         </div>
                         <br style="clear: both">
                         <span style="color: white;">Az Katılımcı</span>
-                        <div style="width: 50px; height: 50px; border-radius: 100px; background: #292D30FF; position: absolute; bottom: 40px; right: 10px">
+                        <div class="play-select">
                             <i class="fa-solid fa-play"
                                style="position: absolute; top: 0; right: 0; left: 0; bottom: 0; color: white; margin: auto; width: fit-content; height: fit-content"></i>
                         </div>
                     </center>
                     <center onclick="window.location = '/?filter_q=single_participation'"
-                            style="display: inline-block; border-radius: 15px; box-sizing: content-box; background-size: cover; padding: 5px; padding-bottom: 20px; position:relative; width: 250px">
-                        <div style="height: 250px; width: 200px;  background-image: url('/static/km-popular5.jpg'); background-position: center; background-size: cover; border-radius: 15px">
+                            class="select-wrapper">
+                        <div style="background-image: url('/static/km-popular5.jpg');" class="picture-select">
                         </div>
                         <br style="clear: both">
                         <span style="color: white;">Tek Katılımlı</span>
-                        <div style="width: 50px; height: 50px; border-radius: 100px; background: #292D30FF; position: absolute; bottom: 40px; right: 10px">
+                        <div class="play-select">
                             <i class="fa-solid fa-play"
                                style="position: absolute; top: 0; right: 0; left: 0; bottom: 0; color: white; margin: auto; width: fit-content; height: fit-content"></i>
                         </div>
                     </center>
                     <center onclick="window.location = '/?filter_q=multiple_participation'"
-                            style="display: inline-block; border-radius: 15px; box-sizing: content-box; background-size: cover; padding: 5px; padding-bottom: 20px; position:relative; width: 250px">
-                        <div style="height: 250px; width: 200px;  background-image: url('/static/km-popular6.jpg'); background-position: center; background-size: cover; border-radius: 15px">
+                            class="select-wrapper">
+                        <div style="background-image: url('/static/km-popular6.jpg');" class="picture-select">
                         </div>
                         <br style="clear: both">
                         <span style="color: white;">Çok Katılımlı</span>
-                        <div style="width: 50px; height: 50px; border-radius: 100px; background: #292D30FF; position: absolute; bottom: 40px; right: 10px">
+                        <div class="play-select">
                             <i class="fa-solid fa-play"
                                style="position: absolute; top: 0; right: 0; left: 0; bottom: 0; color: white; margin: auto; width: fit-content; height: fit-content"></i>
                         </div>
