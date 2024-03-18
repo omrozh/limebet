@@ -9,57 +9,69 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Protest+Guerrilla&display=swap" rel="stylesheet">
     <title>Üye Ol - KadroMilyon</title>
+    <style>
+        .form-main{
+            background-color: #32353a; color: white; padding: 20px; box-sizing: border-box; position: absolute; top: 0; bottom: 0; right: 0; left: 0; margin: auto; width: 750px; height: 550px; max-width: 100vw; overflow-y: auto; border-radius: 15px;
+        }
+    </style>
 </head>
-<body style="background-color: #222; padding: 0; margin: 0;">
+<body style="background-color: #222; padding: 0; margin: 0; font-family: 'Open Sans', sans-serif">
     <div style="width: 100vw; height: 100vh; background-image: url('/static/be-signup.jpeg'); background-size: cover">
-        <img src="/static/kadromilyon.png" alt="" style="width: 75px; padding: 20px; float: left; z-index: 999">
+        <img src="/static/kadromilyon.png" alt="" style="width: 200px; padding: 20px; float: left; z-index: 999">
         <div style="width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5)">
 
         </div>
     </div>
-  <form method="post" enctype="multipart/form-data" style="background-color: rgba(0,134,255,0.38); border-top: dodgerblue 5px solid; color: white; padding: 20px; box-sizing: border-box; position: absolute; top: 0; bottom: 0; right: 0; left: 0; margin: auto; width: fit-content; height: fit-content">
+  <form method="post" enctype="multipart/form-data" class="form-main">
     <h1 style="color: white; font-family: 'Protest Guerrilla', sans-serif">
       Üye Ol
     </h1>
 
     <div id="step-1">
-        <p style="font-family: sans-serif">Adım 1/2</p>
-        <label for="username" style="font-family: sans-serif; font-size: 12px">Kullanıcı Adı</label>
-        <br>
-        <input id="username" name="username" type="text" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem">
-        <br>
-        <br>
-        <label for="email" style="font-family: sans-serif; font-size: 12px">E-Posta</label>
-        <br>
-        <input id="email" name="email" type="text" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem">
-        <br>
-        <br>
-        <label for="password" style="font-family: sans-serif; font-size: 12px">Şifre</label>
-        <br>
-        <input id="password" name="password" type="password" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem">
-        <br>
-        <br>
+        <div style="display: inline-block; margin-left: 5%">
+            <label for="username" style="font-family: sans-serif; font-size: 12px">Kullanıcı Adı</label>
+            <br>
+            <input id="username" name="username" type="text" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1.2rem; border-radius: 5px; border: none;">
+            <br>
+            <label for="email" style="font-family: sans-serif; font-size: 12px;">E-Posta</label>
+            <br>
+            <input id="email" name="email" type="text" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1.2rem; border-radius: 5px; border: none;">
+            <br>
+            <label for="password" style="font-family: sans-serif; font-size: 12px">Şifre</label>
+            <br>
+            <input id="password" name="password" type="password" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1.2rem; border-radius: 5px; border: none;">
+            <br>
+            <label for="tel_no" style="font-family: sans-serif; font-size: 12px">Telefon Numarası</label>
+            <br>
+            <input id="tel_no" name="tel_no" type="text" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1.2rem; border-radius: 5px; border: none;">
+            <br>
+            <br>
+        </div>
+        <div style="display: inline-block; width: 300px; vertical-align: top; margin-left: 5%">
+            <label for="id_no" style="font-family: sans-serif; font-size: 12px">TC Kimlik No</label>
+            <br>
+            <input id="id_no" name="id_no" type="text" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1.2rem; border-radius: 5px; border: none;">
+            <br>
+            <label for="dob" style="font-family: sans-serif; font-size: 12px">Doğum Tarihi</label>
+            <br>
+            <input id="dob" name="dob" type="date" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1.2rem; border-radius: 5px; border: none;">
+            <br>
+            <br>
+            <input type="checkbox">
+            <span style="font-size: 12px">
+                Yukarida verdigim bilgilerin dogru oldugunu
+                teyit ederim. Ayrica tüm kurallar, sartlar,
+                kosullar, politikalan ve ilgili diger site kurallari
+                okudugumu ve kabul ettigimi onayliyorum.
+            </span>
+        </div>
     </div>
+      <br>
+    <center><button style="color: white; font-family: sans-serif; width: 90%; padding: 10px; box-sizing: border-box; background-color: #6a4898; outline: none; border: none" type="submit">Kayıt Ol</button></center>
+      <br>
+      <br>
+      <center>All right reserved. © KadroMilyon<p>2024</p></center>
 
-    <div id="step-2" style="display: none">
-        <p style="font-family: sans-serif">Adım 2/2</p>
-        <label for="tel_no" style="font-family: sans-serif; font-size: 12px">Telefon Numarası</label>
-        <br>
-        <input id="tel_no" name="tel_no" type="text" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem">
-        <br>
-        <br>
-        <label for="id_no" style="font-family: sans-serif; font-size: 12px">TC Kimlik No</label>
-        <br>
-        <input id="id_no" name="id_no" type="text" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem">
-        <br>
-        <br>
-        <label for="dob" style="font-family: sans-serif; font-size: 12px">Doğum Tarihi</label>
-        <br>
-        <input id="dob" name="dob" type="date" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem">
-        <br>
-        <br>
-    </div>
-    <button style="color: white; font-family: sans-serif; width: 100%; padding: 10px; box-sizing: border-box; background-color: dodgerblue; outline: none; border: none" onclick="proceedForm()" type="button">Üye Ol</button>
       <script>
           let step = 1
           function proceedForm(){
