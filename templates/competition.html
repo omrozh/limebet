@@ -378,37 +378,66 @@
             </div>
             <br style="clear: both">
         <div style="background-color: #0f1012; border-radius: 15px; border: 1px solid rgba(255, 255, 255, .3); width: 80%; height: fit-content; text-align: left; padding: 25px; box-sizing: border-box; min-height: fit-content">
-            <span style="font-size: 1rem; float: right; color: white">
-                {{ competition.start_date.strftime('%d/%m/%Y') }} - {{ competition.end_date.strftime('%d/%m/%Y') }}
-            </span>
             <br class="displaybr">
             <br class="displaybr">
-            <p style="clear: both; color: white;">
-                <span style="margin-left: 25px">
-                    Giriş Ücreti: {{ competition.entry_fee }}₺
-                </span>
-                <br class="displaybr">
-                <span style="margin-left: 25px;">
-                    Maks. Katılımcı Sayısı: {{ competition.participant_max }}
-                </span>
-                <br class="displaybr">
-                <span style="margin-left: 25px">
-                    Ödül Havuzu: {{"{:,.2f}".format(competition.prize_pool|float)}}₺
-                </span>
-                <br class="displaybr">
-                <span style="margin-left: 25px">
-                    Birden Fazla Kere Katılım:
-                    {% if competition.allow_multiple_entries %}
-                        Evet
-                    {% else %}
-                        Hayır
-                    {% endif %}
-                </span>
-                <br class="displaybr">
-            </p>
-            <div style="background-color: transparent; text-align: left; float: left;" class="panel">
+            <div style="background-color: transparent; text-align: left; float: left; width: 100%" class="panel">
             <div style="border-radius: 15px 15px 0 0; background-color: #7b00ff; width: 100%; padding: 20px; color: white; box-sizing: border-box">
                 Kurallar
+            </div>
+            <div style="width: 100%; overflow-x: auto; white-space: nowrap; height: 200px; background-color: #1a1c1f">
+                <table>
+                        <tr>
+                            <td>
+                                Giriş Ücreti
+                            </td>
+                            <td>
+                                {{ competition.entry_fee }}₺
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Maksimum Katılımcı Sayısı
+                            </td>
+                            <td>
+                                {{ competition.participant_max }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Ödül Havuzu
+                            </td>
+                            <td>
+                                {{"{:,.2f}".format(competition.prize_pool|float)}} TRY
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Birden Fazla Kere Katılım
+                            </td>
+                            <td>
+                                {% if competition.allow_multiple_entries %}
+                                    Evet
+                                {% else %}
+                                    Hayır
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Yarışma Tarihleri
+                            </td>
+                            <td>
+                                {{ competition.start_date.strftime('%d/%m/%Y') }} - {{ competition.end_date.strftime('%d/%m/%Y') }}
+                            </td>
+                        </tr>
+                </table>
+            </div>
+                </div>
+            <br style="clear: both">
+            <br>
+            <div style="background-color: transparent; text-align: left; float: left;" class="panel">
+            <div style="border-radius: 15px 15px 0 0; background-color: #7b00ff; width: 100%; padding: 20px; color: white; box-sizing: border-box">
+                Puanlama
             </div>
             <div style="width: 100%; overflow-x: auto; white-space: nowrap; height: 400px; background-color: #1a1c1f">
                 <table>
