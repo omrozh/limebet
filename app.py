@@ -1226,7 +1226,7 @@ def draft(competition_id):
             return "Hatalı Seçim"
 
         db.session.commit()
-        return flask.render_template("completed_draft.html")
+        return flask.render_template("completed_draft.html", competition_id=current_competition.id)
 
     return flask.render_template("draft.html", competition=current_competition,
                                  desktop=flask.request.args.get("desktop", False),
