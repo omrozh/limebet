@@ -11,6 +11,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&amp;family=Protest+Guerrilla&amp;display=swap"
           rel="stylesheet">
     <script>
+        var url_string = window.location;
+        var url = new URL(url_string);
+        var c = url.searchParams.get("desktop");
         if(window.innerWidth < window.innerHeight && !c){
             document.location = window.location+"?desktop=true&mobile=true"
         }
