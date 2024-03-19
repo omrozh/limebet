@@ -18,10 +18,17 @@
     </script>
     <br style="clear: both">
     <center>
-        <i style="position: absolute; top: 0; bottom: 0; right: 0; left: 0; margin: auto; color: #3eb655; width: fit-content; height: fit-content; font-size: 10rem" class="fa-solid fa-gear"></i>
-        <i style="position: absolute; top: 0; bottom: 0; right: 0; left: 0; margin: auto; color: #8cd399; width: fit-content; height: fit-content; font-size: 6rem" class="fa-solid fa-circle"></i>
-        <i style="position: absolute; top: 0; bottom: 0; right: 0; left: 0; margin: auto; color: white; width: fit-content; height: fit-content; font-size: 4rem" class="fa-solid fa-check"></i>
-        <p style="color: white; font-size: 2rem; margin-top: 5%">Yarışmaya Katılımınız Başarılı!</p>
+        <div id="check-box">
+            <i style="position: absolute; top: 0; bottom: 0; right: 0; left: 0; margin: auto; color: #3eb655; width: fit-content; height: fit-content; font-size: 10rem" class="fa-solid fa-gear"></i>
+            <i style="position: absolute; top: 0; bottom: 0; right: 0; left: 0; margin: auto; color: #8cd399; width: fit-content; height: fit-content; font-size: 6rem" class="fa-solid fa-circle"></i>
+            <i style="position: absolute; top: 0; bottom: 0; right: 0; left: 0; margin: auto; color: white; width: fit-content; height: fit-content; font-size: 4rem" class="fa-solid fa-check"></i>
+        </div>
+        <script>
+            if(window.innerWidth < window.innerHeight){
+                document.getElementById("check-box").style.display = "none";
+            }
+        </script>
+        <p style="color: white; font-size: 2rem; margin-top: 5%;">Yarışmaya Katılımınız Başarılı!</p>
         <p style="width: 50%; color: white">Hazırlamış olduğunuz kadro sistem tarafından kayıt edilmiştir.</p>
         <p style="width: 50%; color: white">Bol şans, bol kazançlar.</p>
         <button onclick="document.location = '/'" style="background-color: transparent; color: white; border: 1px solid white; border-radius: 5px; margin-top: 250px; font-size: 1rem; padding: 10px; width: 250px; box-sizing: border-box; display: inline-block">
