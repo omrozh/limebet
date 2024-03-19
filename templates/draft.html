@@ -16,10 +16,11 @@
         var c = url.searchParams.get("desktop");
         if(window.innerWidth < window.innerHeight && !c){
             document.location = window.location+"?desktop=true&mobile=true"
-        }
-        {% if not desktop %}
+        }else{
+            {% if not desktop %}
             window.location = window.location + "?desktop=true"
-        {% endif %}
+            {% endif %}
+        }
     </script>
     <style>
         table {
@@ -686,7 +687,6 @@
             }
         }
         if (window.innerWidth < window.innerHeight) {
-            document.getElementById("mobile-home").style.display = "block";
             document.getElementById("desktop-join").style.marginTop = "5px";
             document.getElementById("desktop-join").style += "; float: right; width: 300px; overflow-x: auto; white-space: nowrap; padding-top: 10px; margin-top: -13px"
         } else {
