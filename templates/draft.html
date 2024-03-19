@@ -340,9 +340,10 @@
 
     <center>
         <div style="width: 80%; white-space: nowrap; overflow-x: auto;">
-            <h1 style="font-family: 'Protest Guerrilla', sans-serif; color: white; margin-top: 5px; display: inline-block; position: relative; right: 25%">Kadronu Seç</h1>
-            <h3 style="font-family: 'Protest Guerrilla', sans-serif; color: white; display: inline-block; margin-left: 15px; position: relative; left: 25%"><span style="font-size: 12px">Kalan Bütçe: </span> <span style="color: limegreen" id="remaining-budget">50.000</span><span style="display: inline-block; vertical-align: top; font-size: 8px; color: limegreen">TRY</span></h3>
-            <h3 style="font-family: 'Protest Guerrilla', sans-serif; color: white; display: inline-block; margin-left: 15px; position: relative; left: 25%"><span style="font-size: 12px">Kadro Maliyeti: </span> <span style="color: red" id="money-spent">0</span><span style="display: inline-block; vertical-align: top; font-size: 8px; color: red">TRY</span></h3>
+            <h1 style="font-family: 'Protest Guerrilla', sans-serif; color: white; margin-top: 5px; display: inline-block; position: relative;">Kadronu Seç</h1>
+            <br>
+            <h3 style="font-family: 'Protest Guerrilla', sans-serif; color: white; display: inline-block; margin-left: 15px; position: relative;"><span style="font-size: 12px">Kalan Bütçe: </span> <span style="color: limegreen" id="remaining-budget">50.000</span><span style="display: inline-block; vertical-align: top; font-size: 8px; color: limegreen">TRY</span></h3>
+            <h3 style="font-family: 'Protest Guerrilla', sans-serif; color: white; display: inline-block; margin-left: 15px; position: relative;"><span style="font-size: 12px">Kadro Maliyeti: </span> <span style="color: red" id="money-spent">0</span><span style="display: inline-block; vertical-align: top; font-size: 8px; color: red">TRY</span></h3>
 
         </div>
         <br style="clear: both">
@@ -553,6 +554,11 @@
             <div style="background-color: #16191e; padding: 10px; box-sizing: border-box; border-radius: 15px">
                 <input type="text" oninput="searchPlayer()" id="search-box" style="width: 40%; border-radius: 10px; outline: none; border: none; padding: 10px 15px; font-family: sans-serif; outline: none; font-size: 1rem; box-sizing: border-box" placeholder="Oyuncu Ara">
             <br>
+                <script>
+                    if(window.innerHeight > window.innerWidth){
+                        document.getElementById("search-box").style.width = "100%";
+                    }
+                </script>
 
             <div style="overflow-y: auto; max-height: 310px; background-color: #16191e">
                 {% for i in competition.available_athletes %}
