@@ -83,8 +83,8 @@
             .play-select{
                 width: 30px;
                 height: 30px;
-                bottom: 50px;
-                right: 15px;
+                bottom: 0;
+                right: 10px;
             }
             .picture-select{
                 height: 150px;
@@ -496,9 +496,17 @@
             <br style="clear: both">
             <span style="opacity: 0;">KadroMilyon</span>
         </div>
+            <br style="clear: both">
+            <span style="opacity: 0;">KadroMilyon</span>
+            <br style="clear: both">
+            <span style="opacity: 0;">KadroMilyon</span>
     </center>
     </div>
     <script>
+
+        if(window.innerHeight > window.innerWidth){
+            document.getElementById("join-button").style.marginBottom = "50px"
+        }
         function openMobileMenu(){
             let mobile_menu = document.getElementById("mobile-menu");
             if(mobile_menu.style.display === "block"){

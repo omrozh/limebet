@@ -89,8 +89,8 @@
             .play-select{
                 width: 30px;
                 height: 30px;
-                bottom: 50px;
-                right: 15px;
+                bottom: 0;
+                right: 10px;
             }
             .picture-select{
                 height: 150px;
@@ -585,20 +585,22 @@
             </div>
             </div>
             <br>
-            <button onclick="document.getElementsByTagName('form')[0].submit()" style="position: relative; color: white; font-family: 'Protest Guerrilla', sans-serif; width: 100%; padding: 15px; box-sizing: border-box; background-color: #7b00ff; outline: none; border: none">Yarışmaya Katıl
+            <button onclick="document.getElementsByTagName('form')[0].submit()" style="position: relative; color: white; font-family: 'Protest Guerrilla', sans-serif; width: 100%; padding: 15px; box-sizing: border-box; background-color: #7b00ff; outline: none; border: none;" id="join-button">Yarışmaya Katıl
             <div class="play-select">
                 <i class="fa-solid fa-play"
                    style="position: absolute; top: 0; right: 0; left: 0; bottom: 0; color: white; margin: auto; width: fit-content; height: fit-content"></i>
             </div>
             </button>
+            <br style="clear: both">
+            <span style="opacity: 0;">KadroMilyon</span>
         </div>
-
-        <br style="clear: both">
-        <span style="opacity: 0;">KadroMilyon</span>
     </center>
     <br style="clear: both">
     <span style="opacity: 0;">KadroMilyon</span>
     <script>
+        if(window.innerHeight > window.innerWidth){
+            document.getElementById("join-button").style.marginBottom = "50px"
+        }
         function searchPlayer(){
             let search_query = document.getElementById("search-box").value;
             let searchable_divs = document.getElementsByClassName("searchable-div")
