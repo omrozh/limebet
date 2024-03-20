@@ -1336,7 +1336,7 @@ def take_bet(odd_id):
         return f'''
             <script>
                 alert('Aynı bahiste iki farklı seçenek kupona eklenemez.')
-                document.location = '/bahis/mac/{odd_id}'
+                document.location = '/bahis/mac/{bet_odd.bet_option.open_bet_fk}'
             </script>
         '''
 
