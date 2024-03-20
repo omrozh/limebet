@@ -1322,6 +1322,7 @@ def bahis_mac(bahis_id):
 def take_bet(odd_id):
     if not current_user.is_authenticated:
         return flask.redirect("/login")
+    bet_odd = BetOdd.query.get(odd_id)
     current_coupon = BetCoupon.query.filter_by(user_fk=current_user.id).filter_by(status="Oluşturuluyor").first()
     if not current_coupon:
         current_coupon = BetCoupon(user_fk=current_user.id, status="Oluşturuluyor", total_value=0)
@@ -1329,9 +1330,8 @@ def take_bet(odd_id):
         db.session.commit()
     if BetSelectedOption.query.filter_by(bet_odd_fk=odd_id).filter_by(bet_coupon_fk=current_coupon.id).first():
         return flask.redirect("/bahis")
-    new_coupon_bet = BetSelectedOption(bet_coupon_fk=current_coupon.id, bet_odd_fk=odd_id)
+    new_coupon_bet = BetSelectedOption(bet_coupon_fk=current_coupon.id, bet_odd_fk=odd_id, bet_option_fk=bet_odd.bet_option_fk)
 
-    bet_odd = BetOdd.query.get(odd_id)
     if len(BetSelectedOption.query.filter_by(bet_coupon_fk=current_coupon.id).filter_by(bet_option_fk=bet_odd.bet_option_fk).all()) > 0:
         return '''
             <script>
