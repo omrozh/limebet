@@ -508,6 +508,7 @@ class BetSelectedOption(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     bet_odd_fk = db.Column(db.Integer)
     bet_coupon_fk = db.Column(db.Integer)
+    bet_option_fk = db.Column(db.Integer)
 
     @property
     def odd(self):
@@ -1329,6 +1330,15 @@ def take_bet(odd_id):
     if BetSelectedOption.query.filter_by(bet_odd_fk=odd_id).filter_by(bet_coupon_fk=current_coupon.id).first():
         return flask.redirect("/bahis")
     new_coupon_bet = BetSelectedOption(bet_coupon_fk=current_coupon.id, bet_odd_fk=odd_id)
+
+    bet_odd = BetOdd.query.get(odd_id)
+    if len(BetSelectedOption.query.filter_by(bet_coupon_fk=current_coupon.id).filter_by(bet_option_fk=bet_odd.bet_option_fk).all()) > 0:
+        return '''
+            <script>
+                Aynı bahiste iki farklı seçenek kupona eklenemez.
+            </script>
+        '''
+
     db.session.add(new_coupon_bet)
     db.session.commit()
     option_fk = BetOdd.query.get(odd_id).bet_option_fk
