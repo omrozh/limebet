@@ -1161,7 +1161,12 @@ def deposit_papara():
                                          payment_unique_number=str(shortuuid.ShortUUID().random(length=8)))
         db.session.add(new_transaction)
         db.session.commit()
-        return flask.render_template("papara_deposit.html", transaction=new_transaction, papara_no="1857243951")
+        if float(values["transaction_amount"]) > 7000:
+            return flask.render_template("papara_deposit.html", transaction=new_transaction, papara_no="1857243951",
+                                         papara_name="Çağatay Burhan Aydoğdu")
+        else:
+            return flask.render_template("papara_deposit.html", transaction=new_transaction, papara_no="1964943663",
+                                         papara_name="Eray Efe Sakarya")
     return flask.render_template("papara_deposit_form.html")
 
 
