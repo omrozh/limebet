@@ -1,3 +1,4 @@
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -5,119 +6,304 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>KadroMilyon | Fantezi Futbol'un Merkezi</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Protest+Guerrilla&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a6c8be30d8.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&amp;family=Protest+Guerrilla&amp;display=swap"
+          rel="stylesheet">
     <style>
         table {
             border-collapse: collapse;
             width: 100%;
+        }
+        iframe{
+            max-width: 500px; width: 100%; height: 300px; display: inline-block; margin-left: 15px;
         }
 
         th, td {
             text-align: left;
             padding: 8px;
         }
+        .how-to-play-text{
+            display: inline-block; vertical-align: top; margin-left: 15px; max-width: 50%;
+        }
 
-        tr:nth-child(even) {background-color: #f2f2f2;}
+        .menu-main{
+            width: 100%; box-sizing: border-box; height: 200px;
+        }
+        #main-content-wrapper {
+            width: 90%;
+            float: right;
+            margin-left: -70px
+        }
+
+        #side-bar {
+            display: block;
+        }
+
+        @media screen and (max-width: 800px) {
+            iframe{
+                margin-left: 0;
+            }
+            .how-to-play-text{
+                max-width: 90%;
+                margin-top: 15px;
+            }
+            .menu-main{
+                height: 100px;
+            }
+            #navbar-main{
+                display: none;
+            }
+        }
+
+
+        @media screen and (max-width: 1400px) {
+            #main-content-wrapper {
+                width: 100%;
+                float: none;
+                margin-left: 0;
+            }
+
+            #side-bar {
+                display: none;
+            }
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
     </style>
 </head>
-<body style="background-color: #222; padding: 0; margin: 0; font-family: 'Open Sans', sans-serif">
-  <div style="width: 100%; box-sizing: border-box; height: 220px">
+<body style="background-color: #191a1f; padding: 0; margin: 0; font-family: 'Open Sans', sans-serif;">
+<div style="width: 100%; height: 100vh; overflow-y: auto">
+    <center style="padding: 20px 50px; background-color: orange; display: none;" id="promotion-insta">
+        <span style="color: white; font-family: 'Protest Guerrilla', sans-serif; font-size: 16px; text-decoration: underline;"
+              onclick="window.localStorage.setItem('hidePromotionInsta', 'true'); document.location = '/promotions/instagram';">Yatırımsız 500TL fırsatı!</span>
+        <script>
+            document.getElementById("promotion-insta").style.display = "none";
+            if (window.localStorage.getItem("hidePromotionInsta") === 'true') {
+                document.getElementById("promotion-insta").style.display = "none";
+            }
+        </script>
+    </center>
+    <div class="menu-main">
         <img id="iconmain" src="/static/kadromilyon.png" alt="" style="width: 200px; padding: 20px; float: left">
-    <script>
-        if(window.innerWidth < window.innerHeight){
-            document.getElementById("iconmain").style.width = "50px";
-        }
-    </script>
-        <div id="hid-mob" style="float: left;">
+        <script>
+            if(window.innerWidth < window.innerHeight){
+                document.getElementById("iconmain").style.width = "50px";
+            }
+        </script>
+        <div style="float: left;" id="hid-mob">
 
-            <script>
-                if(window.innerHeight > window.innerWidth){
-                    document.getElementById("hid-mob").style.display = "none";
-                }
-            </script>
         </div>
-        <div style="float: right; margin-top: 40px">
+        <div style="float: right; margin-top: 40px;">
             {% if current_user.is_authenticated %}
-                <div style="background-color: #292d30; border-radius: 50px; color: white; padding: 10px; box-sizing: border-box; margin-right: 20px; margin-top: -10px; float: right">
-                    <span style="background-color: #212226; padding: 5px; padding-left: 12px; padding-right: 12px; border-radius: 50px; box-sizing: border-box">₺</span>
-                    <span id="balance" style="padding-right: 5px; padding-left: 5px">{{'%0.2f'| format(current_user.balance|float)}}</span>
-                </div>
-                <span onclick="refreshBalance()" style="margin-right: 25px; font-size: 2rem; float: right; color: white; margin-top: -13px">&#x21ba;</span>
-                <script>
-                    function updateBalance(balance){
-                        document.getElementById("balance").innerText = balance;
-                    }
-                    function refreshBalance(){
-                        document.getElementById("balance").innerText = "..."
-                        fetch("/refresh-balance")
+            <div style="background-color: #292d30; border-radius: 50px; color: white; padding: 10px; box-sizing: border-box; margin-right: 20px; margin-top: -10px; float: right">
+                <span style="background-color: #212226; padding: 5px; padding-left: 12px; padding-right: 12px; border-radius: 50px; box-sizing: border-box">₺</span>
+                <span id="balance" style="padding-right: 5px; padding-left: 5px">{{'%0.2f'| format(current_user.balance|float)}}</span>
+            </div>
+            <span onclick="refreshBalance()"
+                  style="margin-right: 25px; font-size: 2rem; float: right; color: white; margin-top: -13px">&#x21ba;</span>
+            <script>
+                function updateBalance(balance) {
+                    document.getElementById("balance").innerText = balance;
+                }
+
+                function refreshBalance() {
+                    document.getElementById("balance").innerText = "..."
+                    fetch("/refresh-balance")
                         .then(x => x.text())
                         .then(y => updateBalance(y));
-                    }
-                </script>
-                <a href="/profile" style="color: dodgerblue; text-decoration: none; margin-right: 25px; float: right">
-                    <img style="width: 25px" src="/static/profile.png" alt="">
-                </a>
+                }
+            </script>
+            <a href="/profile" style="color: dodgerblue; text-decoration: none; margin-right: 25px; float: right">
+                <img style="width: 25px" src="/static/profile.png" alt="">
+            </a>
             {% else %}
-                <a href="/login" style="color: white; text-decoration: none; margin-right: 25px;">Giriş Yap</a>
-                <a href="/signup" style="color: dodgerblue; text-decoration: none; margin-right: 25px;">Üye Ol</a>
+            <div id="desktop-join">
+                <div onclick="document.location = '/login'"
+                     style="background-color: #292d30; border-radius: 50px; color: white; padding: 10px; box-sizing: border-box; margin-right: 5px; margin-top: -20px; display: inline-block">
+                    <span style="background-color: #212226; padding: 5px; padding-left: 12px; padding-right: 12px; border-radius: 50px; box-sizing: border-box"><i
+                            class="fa-solid fa-right-to-bracket"></i></span>
+                    <span style="padding-right: 5px; padding-left: 5px; font-size: 16px">Giriş Yap</span>
+                </div>
+                <div onclick="document.location = '/signup'"
+                     style="background-color: #7b00ff; border-radius: 50px; color: white; padding: 10px; box-sizing: border-box; margin-right: 20px; margin-top: -20px; display: inline-block">
+                    <span style="background-color: #6000c0; padding: 5px; padding-left: 12px; padding-right: 12px; border-radius: 50px; box-sizing: border-box"><i
+                            class="fa-solid fa-user-plus"></i></span>
+                    <span style="padding-right: 5px; padding-left: 5px">Kayıt Ol</span>
+                </div>
+            </div>
             {% endif %}
         </div>
-        <div style="padding: 20px 50px; overflow-x: auto; float: left; white-space: nowrap; width: 100vw; background-color: #333; box-sizing: border-box">
-            <span style="display: inline-block; color: white" onclick="document.location = '/'">
-                Anasayfa
-            </span>
-            <span style="display: inline-block; margin-left: 50px; color: white" onclick="localStorage.clear(); window.location.reload()">
-                Kampanyalar
-            </span>
-            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/?filter_q=daily'">
-                Günlük Yarışmalar
-            </span>
-            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/?filter_q=weekly'">
-                Haftalık Yarışmalar
-            </span>
-            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/?filter_q=daily'">
-                Yüksek Limitli Yarışmalar
-            </span>
-            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/?filter_q=Premier-Lig'">
-                Premier Lig
-            </span>
-            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/?filter_q=Süper-Lig'">
-                Süper Lig
-            </span>
-            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/?filter_q=Bundesliga'">
-                Bundesliga
-            </span>
-            <span style="display: inline-block; margin-left: 50px; color: white" onclick="document.location = '/?filter_q=LaLiga'">
-                LaLiga
-            </span>
+        <script>
+            if (window.innerHeight > window.innerWidth) {
+                document.getElementById("hid-mob").style.display = "none";
+            }
+        </script>
+        <div style="padding: 20px 50px; overflow-x: auto; float: left; white-space: nowrap; width: 100vw; background-color: #0f1012; box-sizing: border-box" id="navbar-main">
+                <span style="display: inline-block; color: white; font-family: 'Protest Guerrilla', sans-serif"
+                      onclick="document.location = '/'">
+                    Anasayfa
+                </span>
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+                  onclick="localStorage.clear(); window.location.reload()">
+                    Kampanyalar
+                </span>
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+                  onclick="document.location = '/?filter_q=daily'">
+                    Günlük Yarışmalar
+                </span>
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+                  onclick="document.location = '/?filter_q=weekly'">
+                    Haftalık Yarışmalar
+                </span>
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+                  onclick="document.location = '/?filter_q=daily'">
+                    Yüksek Limitli Yarışmalar
+                </span>
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+                  onclick="document.location = '/?filter_q=Premier-Lig'">
+                    Premier Lig
+                </span>
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+                  onclick="document.location = '/?filter_q=Süper-Lig'">
+                    Süper Lig
+                </span>
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+                  onclick="document.location = '/?filter_q=Bundesliga'">
+                    Bundesliga
+                </span>
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+                  onclick="document.location = '/?filter_q=LaLiga'">
+                    LaLiga
+                </span>
+
+
+            {% if not current_user.is_authenticated %}
+            <span style="display: inline-block; margin-left: 50px; font-family: 'Protest Guerrilla', sans-serif; color: dodgerblue;"
+                  class="hid-desktop"
+                  onclick="document.location = '/login'">
+                        Giriş Yap
+                    </span>
+
+            <span style="display: inline-block; margin-left: 50px; color: #7b00ff; font-family: 'Protest Guerrilla', sans-serif;"
+                  class="hid-desktop"
+                  onclick="document.location = '/signup'">
+                        Kayıt Ol
+                    </span>
+            {% endif %}
+
         </div>
     </div>
-  <div style="color: white; margin-left: 10%; width: 80%">
-    <h1>Bir zamanlar hepimiz acemiydik, işte adım adım KadroMilyon!</h1>
-    <h2 style="font-family: 'Protest Guerrilla', sans-serif">Aşama 1: Kayıt Ol</h2>
-    <img src="/static/guide-signup.png" style="width: 100%; border-radius: 15px" alt="">
-    <p>Gerekli bilgileri sağlayarak bir hesap oluştur.</p>
-    <h2 style="font-family: 'Protest Guerrilla', sans-serif">Aşama 2: Yarışmaları Keşfet</h2>
-      <img src="/static/guide-competitions.png" style="width: 100%; border-radius: 15px" alt="">
-    <p>Platformdaki mevcut yarışmaları veya ligleri gözden geçir.
-      Her yarışmanın belirli kuralları, giriş ücretleri ve ödülleri olacak, tercihlerine uygun olanı seç.</p>
-    <h2 style="font-family: 'Protest Guerrilla', sans-serif">Aşama 3: Takımını Kur</h2>
-      <img src="/static/guide-draft.png" style="width: 100%; border-radius: 15px" alt="">
-    <p>Her yarışmada takımını kurman için sana 50.000TL bütçe vereceğiz. Bütçeni en iyi şekilde değerlendirerek oyun planınını yap ve hayalindeki ilk 11'i kur.</p>
-    <h2 style="font-family: 'Protest Guerrilla', sans-serif">Aşama 4: Puan Topla</h2>
-      <img src="/static/guide-point.png" style="width: 100%; border-radius: 15px" alt="">
-    <p>Kadrondaki oyuncuların yarışma tarihleri arasında gerçek hayatta çıktıkları maçlardaki performanslarına göre puan topla.</p>
-    <h2 style="font-family: 'Protest Guerrilla', sans-serif">Aşama 5: Diğer Oyuncularla Yarış</h2>
-      <img src="/static/guide-ranking.png" style="width: 100%; border-radius: 15px" alt="">
-    <p>Aynı yarışmada diğer fantezi futbol oyuncuları ile yarış.
-      Toplam puanların, yarışmanın liderlik tablosundaki sıralamanı belirler.</p>
-    <h2 style="font-family: 'Protest Guerrilla', sans-serif">Aşama 6: Ve MİLYONER Ol!</h2>
-      <img src="/static/guide-prize.png" style="width: 100%; border-radius: 15px" alt="">
-    <p>Ödüller, yarışmadaki sıralamana bağlı olarak verilir. Sıralamana bağlı olarak 5.000.000₺'ye kadar ödül kazanabilirsin!</p>
-  </div>
-    <br>
-    <span style="opacity: 0">KadroMilyon</span>
+    <center style="width: 5%; margin-right: 1%; float: left; height: 600px; background: #0f1012; margin-left: 25px; border-radius: 15px; border: 1px solid rgba(255, 255, 255, .3)"
+            id="side-bar">
+        <div style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 10px; color: white; position: relative">
+            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+        </div>
 
+        <div onclick="document.location = '/'" style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 10px; color: white; position: relative;">
+            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
+                <i class="fa-solid fa-house"></i>
+            </div>
+        </div>
+
+        <div onclick="document.location = '/bahis'"
+             style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 40px; color: white; position: relative;">
+            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
+                <i class="fa-solid fa-futbol"></i>
+            </div>
+        </div>
+
+        <div onclick="document.location = '/casino'" style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 10px; color: white; position: relative;">
+            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
+                <i class="fa-solid fa-dice"></i>
+            </div>
+        </div>
+
+        <div onclick="document.location = '/profile'"
+             style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 40px; color: white; position: relative;">
+            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
+                <i class="fa-solid fa-user"></i>
+            </div>
+        </div>
+
+        <div onclick="document.location = '/logout'"
+             style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 40px; color: white; position: relative;">
+            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </div>
+        </div>
+
+        <div onclick="document.location = 'mailto:destek@m2betting.com'"
+             style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 10px; color: lawngreen; position: relative;">
+            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
+                <i class="fa-solid fa-envelope"></i>
+            </div>
+        </div>
+
+        <div onclick="document.location = '/howtoplay'"
+             style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 10px; color: white; position: relative; background-color: #7b00ff">
+            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+        </div>
+
+    </center>
+    <div id="main-content-wrapper">
+        <div style="color: white">
+            <h1 style="margin-left: 15px; margin-top: 0">Nasıl Oynanır?</h1>
+            <p>
+                <iframe src="https://www.youtube.com/embed/6C0Gll4VFbs" title="Fear Factor: Boyfriend&#39;s platonic female friend edition" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <span class="how-to-play-text">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    <br>
+                    <br>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </span>
+                <br>
+                <br>
+                <span class="how-to-play-text" style="max-width: 90%">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </span>
+                <br>
+                <br>
+                <span class="how-to-play-text" style="max-width: 90%">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </span>
+                <br>
+                <br>
+                <span class="how-to-play-text" style="max-width: 90%">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </span>
+            </p>
+        </div>
+        <br>
+        <span style="opacity: 0">KadroMilyon</span>
+        <br>
+        <span style="opacity: 0">KadroMilyon</span>
+    </div>
+    <script>
+        function openMobileMenu(){
+            let mobile_menu = document.getElementById("mobile-menu");
+            if(mobile_menu.style.display === "block"){
+                mobile_menu.style.display = "none";
+                document.getElementById("mobile-home").innerHTML = "<i class=\"fa-solid fa-bars\"></i>"
+            }else{
+                mobile_menu.style.display = "block"
+                document.getElementById("mobile-home").innerHTML = "<i class=\"fa-solid fa-circle-chevron-down\"></i>"
+            }
+        }
+        if (window.innerWidth < window.innerHeight) {
+            document.getElementById("mobile-home").style.display = "block";
+            document.getElementById("desktop-join").style.marginTop = "5px";
+            document.getElementById("desktop-join").style += "; float: right; width: 300px; overflow-x: auto; white-space: nowrap; padding-top: 10px; margin-top: -13px"
+        } else {
+           document.getElementById("mobile-home").style.display = "none";
+        }
+    </script>
+</div>
 </body>
 </html>
