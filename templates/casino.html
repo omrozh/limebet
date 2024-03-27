@@ -46,6 +46,9 @@
         .games-div{
           width: 95%; text-align: left; background-color: #0f1012; border: 1px solid rgba(255, 255, 255, 0.3); box-sizing: border-box; border-radius: 15px; font-family: 'Protest Guerrilla', sans-serif;
         }
+        #search-box{
+          width: 40%; border-radius: 10px; outline: none; border: none; padding: 10px 15px; font-family: sans-serif; outline: none; font-size: 1rem; box-sizing: border-box; background: transparent; color: white; border: 1px solid white
+        }
 
         .kadro-mil {
             background-image: url('/static/km-fantasy-slider.png');
@@ -91,8 +94,13 @@
           .game-img{
             width: 35vw;
           }
+          #search-box{
+            width: 95%;
+            margin-left: 2.5%;
+          }
           .games-div{
-            width: 100%;
+            width: 95%;
+            margin-left: 2.5%;
           }
             .play-select{
                 width: 30px;
@@ -340,7 +348,7 @@
 
     </center>
     <div id="main-content-wrapper">
-            <input type="text" oninput="searchPlayer()" id="search-box" style="width: 40%; border-radius: 10px; outline: none; border: none; padding: 10px 15px; font-family: sans-serif; outline: none; font-size: 1rem; box-sizing: border-box; background: transparent; color: white; border: 1px solid white" placeholder="Oyun Ara">
+            <input type="text" oninput="searchPlayer()" id="search-box" placeholder="Oyun Ara">
             <br>
             <br>
             <div class="games-div">
@@ -407,9 +415,6 @@
               </div>
             </div>
             <script>
-                if(window.innerHeight > window.innerWidth){
-                    document.getElementById("search-box").style.width = "100%";
-                }
                 function searchPlayer(){
                 let search_query = document.getElementById("search-box").value;
                 let searchable_divs = document.getElementsByClassName("searchable-div")
