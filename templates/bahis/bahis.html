@@ -91,11 +91,12 @@
             }
         }
 
-        .searchable-div{
-            background-position: center; background-size: cover; border-radius: 15px; width: 60%; margin-left: 10%; margin-top: 1%; float: left;
-        }
         #side-bar {
                 display: block;
+        }
+
+        table{
+            width: 80%;
         }
 
         @media screen and (max-width: 1400px) {
@@ -111,7 +112,7 @@
             .promotion-img{
                 display: none;
             }
-            .searchable-div{
+            table{
                 width: 80%;
                 float: none;
                 margin-left: 0;
@@ -121,7 +122,9 @@
             }
         }
 
-        tr:nth-child(even) {background-color: #f2f2f2;}
+        tr:nth-child(even) {
+            background-color: #22252a;
+        }
     </style>
 </head>
 <body style="background-color: #191a1f; padding: 0; margin: 0; font-family: 'Open Sans', sans-serif;">
@@ -418,28 +421,22 @@
         <input type="text" oninput="searchBet()" id="search-box" style="padding: 10px 15px; font-family: sans-serif; outline: none; font-size: 1rem; width: 80%; box-sizing: border-box;" placeholder="Bahis Ara">
       <br>
         <div>
-        <div style="background-image: url('/static/legend.jpg'); background-size: cover; width: 18%; min-height: 500px; text-align: left; box-sizing: border-box; padding: 20px 50px; float: right; margin-right: 10%; margin-top: 2%" class="promotion-img">
-            <h1 style="font-family: 'Protest Guerrilla', sans-serif; color: white">
-                M2Game
-            </h1>
-            <p style="font-family: 'Protest Guerrilla', sans-serif; color: white">
-                <span style="color: orange">Kendi</span> Oyununu Geliştir
-            </p>
-            <p style="color: white">Kendi casino oyunlarını geliştirerek para kazandıran platform, yakında!</p>
-        </div>
-            {% for i in open_bets %}
-              <div class="searchable-div">
-                <p style="font-size: 12px; width: 100%; background-color: rgba(120, 120, 120, 0.7); border-radius: 15px 15px 0 0; color: white; padding: 5px; box-sizing: border-box; margin-bottom: 0">{{ i.match_league }}</p>
-                <div style="background-color: white; width: 100%; padding: 15px; box-sizing: border-box; text-align: left; border-radius: 0 0 15px 15px; background-color: rgba(120, 120, 120, 0.5); color: white">
-                  <p style="margin-top: 0">{{i.bet_ending_datetime}}</p>
-                  <h2 style="font-family: 'Protest Guerrilla', sans-serif;">
-                    {{ i.team_1 }} - {{ i.team_2 }}
-                  </h2>
-
-                  <a href="/bahis/mac/{{i.id}}" style="color: white;">Tıkla Detayları Gör</a>
-                </div>
-              </div>
-            {% endfor %}
+            <table>
+                <tr style="color: white">
+                    <th>Lig</th>
+                    <th>Tarih/Saat</th>
+                    <th>Maç Adı</th>
+                    <th>Oranlar</th>
+                </tr>
+                {% for i in open_bets %}
+                  <tr class="searchable-div" style="color: white;">
+                    <td>{{ i.match_league }}</td>
+                    <td>{{i.bet_ending_datetime}}</td>
+                    <td>{{ i.team_1 }} - {{ i.team_2 }}</td>
+                    <td><a href="/bahis/mac/{{i.id}}" style="color: white;">Detaylar</a></td>
+                  </tr>
+                {% endfor %}
+            </table>
 
             <br style="clear: both">
             <br>
