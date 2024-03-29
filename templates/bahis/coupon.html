@@ -283,7 +283,7 @@
 
         <br>
         <h1 style="font-family: 'Protest Guerrilla', sans-serif; text-align: left; color: white; width: 80%">Kuponum</h1>
-        <div style="text-align: left">
+        <div style="text-align: left; margin-left: 10%; color: white">
             <h2>
             <br>
             {% if current_user.freebet %}
@@ -294,7 +294,7 @@
               {% endif %}
               Toplam Oran: <span style="color: limegreen" id="money-spent">{{ '%0.2f'| format(current_coupon.total_odd) }}</span>
               <br>
-              Toplam Kazanç: <span style="color: limegreen" id="total_prize">0</span><span style="display: inline-block; vertical-align: top; font-size: 8px; color: red">TRY</span></h3>
+              Toplam Kazanç: <span style="color: limegreen" id="total_prize">0</span><span style="display: inline-block; vertical-align: top; font-size: 8px; color: limegreen">TRY</span></h3>
           </h2>
         </div>
       <br>
