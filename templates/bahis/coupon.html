@@ -283,6 +283,20 @@
 
         <br>
         <h1 style="font-family: 'Protest Guerrilla', sans-serif; text-align: left; color: white; width: 80%">Kuponum</h1>
+        <div style="text-align: left">
+            <h2>
+            <br>
+            {% if current_user.freebet %}
+                {% if current_user.freebet > 0 %}
+                  Freebet: {{ current_user.freebet }}₺
+              <br>
+                {% endif %}
+              {% endif %}
+              Toplam Oran: <span style="color: limegreen" id="money-spent">{{ '%0.2f'| format(current_coupon.total_odd) }}</span>
+              <br>
+              Toplam Kazanç: <span style="color: limegreen" id="total_prize">0</span><span style="display: inline-block; vertical-align: top; font-size: 8px; color: red">TRY</span></h3>
+          </h2>
+        </div>
       <br>
         <div style="width: 100%; overflow-x: auto; white-space: nowrap; color: white">
             <table>
@@ -302,18 +316,6 @@
                     {% endfor %}
                 </tbody>
             </table>
-            <h2>
-                      <br>
-                      {% if current_user.freebet %}
-                        {% if current_user.freebet > 0 %}
-                          Freebet: {{ current_user.freebet }}₺
-                      <br>
-                        {% endif %}
-                      {% endif %}
-                      Toplam Oran: {{ '%0.2f'| format(current_coupon.total_odd) }}
-                      <br>
-                      Toplam Kazanç: <span id="total_prize">0</span>₺
-                  </h2>
 
           <div style="text-align: left">
                   <form method="post" enctype="multipart/form-data"><input type="text" id="coupon-val" name="coupon_value" oninput="calculateTotalPrize()" style="padding: 10px 15px; font-family: sans-serif; outline: none; font-size: 1rem; width: 80%; box-sizing: border-box; margin-left: 10%" placeholder="Kupon Tutarı"><span style="color: white; margin-left: 5px">₺</span>
