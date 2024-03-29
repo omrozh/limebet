@@ -303,15 +303,17 @@
                 <tbody>
 
                     <tr style="color: white">
-                        <th>Maç</th>
                         <th>Olay</th>
+                        <th>Maç</th>
                         <th>Oran</th>
+                        <th>Seçilen</th>
                     </tr>
                     {% for i in current_coupon.odd_options %}
                       <tr class="searchable-div" style="color: white;">
                         <td>{{ i.bet_option.game_name }}</td>
                         <td>{{i.bet_option.match_name}}</td>
-                        <td>Seçilen: {{ i.value }} | Oran: {{ i.odd }}</td>
+                        <td> {{ i.odd }}</td>
+                        <td>{{ i.value }}</td>
                       </tr>
                     {% endfor %}
                 </tbody>
