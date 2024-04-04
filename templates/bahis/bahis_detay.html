@@ -294,17 +294,18 @@
         </p>
         <div style="white-space: nowrap; overflow-x: auto;">
             {% for c in i.bet_odds %}
-
-                {% if c.user_selected %}
-                    <center style="border-radius: 5px; color: white; padding: 10px 20px; background-color: #ff4c59; width: fit-content; box-sizing: border-box; display: inline-block" class="bet-odd" onclick="document.location = '/remove_bet/{{c.id}}'">
-                        <span style="font-family: 'Open Sans', sans-serif">{{ c.value }}</span>
-                        <span style="color: white; margin-left: 15px">Oran: {{ c.odd }}</span>
-                    </center>
-                {% else %}
-                    <center style="border-radius: 5px; color: white; padding: 10px 20px; background-color: #1a1c1f; width: fit-content; box-sizing: border-box; display: inline-block" class="bet-odd" onclick="document.location = '/take_bet/{{c.id}}'">
-                        <span style="font-family: 'Open Sans', sans-serif">{{ c.value }}</span>
-                        <span style="color: white; margin-left: 15px">Oran: {{ c.odd }}</span>
-                    </center>
+                {% if c.odd %}
+                    {% if c.user_selected %}
+                        <center style="border-radius: 5px; color: white; padding: 10px 20px; background-color: #ff4c59; width: fit-content; box-sizing: border-box; display: inline-block" class="bet-odd" onclick="document.location = '/remove_bet/{{c.id}}'">
+                            <span style="font-family: 'Open Sans', sans-serif">{{ c.value }}</span>
+                            <span style="color: white; margin-left: 15px">Oran: {{ c.odd }}</span>
+                        </center>
+                    {% else %}
+                        <center style="border-radius: 5px; color: white; padding: 10px 20px; background-color: #1a1c1f; width: fit-content; box-sizing: border-box; display: inline-block" class="bet-odd" onclick="document.location = '/take_bet/{{c.id}}'">
+                            <span style="font-family: 'Open Sans', sans-serif">{{ c.value }}</span>
+                            <span style="color: white; margin-left: 15px">Oran: {{ c.odd }}</span>
+                        </center>
+                    {% endif %}
                 {% endif %}
             {% endfor %}
         </div>
