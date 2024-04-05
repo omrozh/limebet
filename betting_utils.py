@@ -104,4 +104,6 @@ if sys.argv[1] == "distribute-rewards":
                 i.status = "Tamamlandı"
                 db.session.commit()
         except:
+            print(i.team_1)
+            print(i.team_2)
             pass
