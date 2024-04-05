@@ -75,7 +75,7 @@ def register_open_bet():
 def get_results(match_id):
     r = requests.get(f'https://www.nosyapi.com/apiv2/service/bettable-result?matchID={match_id}&apiKey={api_key}')
     print(r.json())
-    for i in r.json().get("data").get("bettableResult"):
+    for i in r.json().get("data")[0].get("bettableResult", []):
         game_id = i.get("gameID")
 
         for c in BetOdd.query.filter_by(game_id=game_id).all():
