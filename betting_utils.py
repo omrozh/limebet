@@ -94,7 +94,6 @@ if sys.argv[1] == "distribute-rewards":
         try:
             for i in OpenBet.query.all():
                 print(i.id)
-                i.update_results()
 
         except Exception as e:
             print(e)
