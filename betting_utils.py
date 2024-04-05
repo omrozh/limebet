@@ -91,5 +91,15 @@ if sys.argv[1] == "add-matches":
 
 if sys.argv[1] == "distribute-rewards":
     with app.app_context():
-        for i in OpenBet.query.all():
-            print(i.id)
+        try:
+            for i in OpenBet.query.all():
+                i.update_results()
+                db.session.delete(i)
+                db.session.commit()
+
+            for i in BetCoupon.query.filter_by(status="Oluşturuldu"):
+                i.give_reward()
+                i.status = "Tamamlandı"
+                db.session.commit()
+        except Exception as e:
+            print(e)
