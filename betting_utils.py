@@ -74,8 +74,6 @@ def register_open_bet():
 
 def get_results(match_id):
     r = requests.get(f'https://www.nosyapi.com/apiv2/service/bettable-result?matchID={match_id}&apiKey={api_key}')
-    print(match_id)
-    print(r.json())
     for i in r.json().get("data").get("bettableResult"):
         game_id = i.get("gameID")
 
@@ -92,12 +90,15 @@ if sys.argv[1] == "add-matches":
 
 if sys.argv[1] == "distribute-rewards":
     with app.app_context():
-        for i in OpenBet.query.all():
-            i.update_results()
-            db.session.delete(i)
-            db.session.commit()
+        try:
+            for i in OpenBet.query.all():
+                i.update_results()
+                db.session.delete(i)
+                db.session.commit()
 
-        for i in BetCoupon.query.filter_by(status="Oluşturuldu"):
-            i.give_reward()
-            i.status = "Tamamlandı"
-            db.session.commit()
+            for i in BetCoupon.query.filter_by(status="Oluşturuldu"):
+                i.give_reward()
+                i.status = "Tamamlandı"
+                db.session.commit()
+        except:
+            pass
