@@ -88,13 +88,14 @@ def get_results(match_id):
 if sys.argv[1] == "add-matches":
     register_open_bet()
 
-if sys.argv[1] == "distribute_rewards":
-    for i in OpenBet.query.all():
-        i.update_results()
-        db.session.delete(i)
-        db.session.commit()
+if sys.argv[1] == "distribute-rewards":
+    with app.app_context():
+        for i in OpenBet.query.all():
+            i.update_results()
+            db.session.delete(i)
+            db.session.commit()
 
-    for i in BetCoupon.query.filter_by(status="Oluşturuldu"):
-        i.give_reward()
-        i.status = "Tamamlandı"
-        db.session.commit()
+        for i in BetCoupon.query.filter_by(status="Oluşturuldu"):
+            i.give_reward()
+            i.status = "Tamamlandı"
+            db.session.commit()
