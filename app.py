@@ -429,9 +429,6 @@ class OpenBet(db.Model):
 
     def update_results(self):
         from betting_utils import get_results
-        print(self.team_1)
-        print(self.team_2)
-
         get_results(self.api_match_id)
 
     @property

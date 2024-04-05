@@ -93,6 +93,8 @@ if sys.argv[1] == "distribute-rewards":
     with app.app_context():
         try:
             for i in OpenBet.query.all():
+                print(i.team_1)
+                print(i.team_2)
                 i.update_results()
                 db.session.delete(i)
                 db.session.commit()
