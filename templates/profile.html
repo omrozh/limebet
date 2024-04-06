@@ -320,24 +320,24 @@
                 </div>
             </center>
             <div style="background-color: #0f1012; width: fit-content; padding: 20px; box-sizing: border-box;  margin-top: 50px">
-                <form method="post" enctype="multipart/form-data" style="background-color: #292d30; border-radius: 5px; color: white; padding: 20px; box-sizing: border-box; width: fit-content; height: fit-content; max-width: 100%">
+                <form method="post" enctype="multipart/form-data" style="background-color: #292d30; border-radius: 5px; color: white; padding: 20px; box-sizing: border-box; width: fit-content; height: fit-content; max-width: 300px">
                     <h1 style="color: white; font-family: 'Protest Guerrilla', sans-serif">
                       Kişisel Bilgiler
                     </h1>
                     <input type="text" name="form-type" value="user-info" style="display: none">
                     <label for="name" style="font-family: sans-serif; font-size: 12px">İsim</label>
                     <br>
-                    <input id="name" value="{{ current_user.user_information.name }}" name="name" type="text" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem">
+                    <input id="name" value="{{ current_user.user_information.name }}" name="name" type="text" style="width: 300px; max-width: 90%; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem">
                     <br>
                     <br>
                     <label for="address" style="font-family: sans-serif; font-size: 12px">Adres</label>
                     <br>
-                    <textarea id="address" name="address"  style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem; height: 80px">{{ current_user.user_information.address }}</textarea>
+                    <textarea id="address" name="address"  style="width: 300px; max-width: 90%; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem; height: 80px">{{ current_user.user_information.address }}</textarea>
                     <br>
                     <br>
                     <label for="telno" style="font-family: sans-serif; font-size: 12px">Telefon No</label>
                     <br>
-                    <input id="telno" value="{{ current_user.user_information.tel_no }}" name="telno" type="text" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem">
+                    <input id="telno" value="{{ current_user.user_information.tel_no }}" name="telno" type="text" style="width: 300px; max-width: 90%; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem">
                     <br>
                     <br>
                     <button style="color: white; font-family: sans-serif; width: 100%; padding: 10px; box-sizing: border-box; background-color: #7b00ff; outline: none; border: none">Bilgileri Kaydet</button>
@@ -353,23 +353,23 @@
                 </div>
             </center>
             <div style="background-color: #0f1012; width: fit-content; padding: 20px; box-sizing: border-box;  margin-top: 50px">
-                <form method="post" enctype="multipart/form-data" style="background-color: #292d30; border-radius: 5px; color: white; padding: 20px; box-sizing: border-box; width: fit-content; height: fit-content; max-width: 100%">
+                <form method="post" enctype="multipart/form-data" style="background-color: #292d30; border-radius: 5px; color: white; padding: 20px; box-sizing: border-box; width: fit-content; height: fit-content; max-width: 300px">
                     <h1 style="color: white; font-family: 'Protest Guerrilla', sans-serif">
                       Para Çek
                     </h1>
                     <input type="text" name="form-type" value="withdraw-money" style="display: none">
                     <label for="amount" style="font-family: sans-serif; font-size: 12px">Çekmek İstenen Miktar</label>
                     <br>
-                    <input id="amount" name="amount" type="text" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem">
+                    <input id="amount" name="amount" type="text" style="width: 300px; max-width: 90%; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem">
                     <br>
                     <br>
                     <label for="iban" style="font-family: sans-serif; font-size: 12px">IBAN/Papara No/BTC Cüzdan Adresi</label>
                     <br>
-                    <textarea id="iban" name="iban"  style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem; height: 80px"></textarea>
+                    <textarea id="iban" name="iban"  style="width: 300px; max-width: 90%; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem; height: 80px"></textarea>
                     <br>
                     <br>
-                    <p style="width: 300px">Önemli Not! 50.000₺ üzeri para çekim işlemlerinde kripto para ile çekim yapmak zorunludur.</p>
-                    <p style="width: 300px">Kullanıcı Bilgileri sekmesinden kişisel bilgilerini tamamlamayan kullanıcıların para çekme istekleri reddedilecektir.</p>
+                    <p style="width: 300px; max-width: 90%;">Önemli Not! 50.000₺ üzeri para çekim işlemlerinde kripto para ile çekim yapmak zorunludur.</p>
+                    <p style="width: 300px; max-width: 90%;">Kullanıcı Bilgileri sekmesinden kişisel bilgilerini tamamlamayan kullanıcıların para çekme istekleri reddedilecektir.</p>
                     <br>
                     <br>
                     <button style="color: white; font-family: sans-serif; width: 100%; padding: 10px; box-sizing: border-box; background-color: #7b00ff; outline: none; border: none">Para Çek</button>
