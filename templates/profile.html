@@ -338,7 +338,7 @@
             <br>
             <label for="gender" style="font-family: sans-serif; font-size: 12px">Cinsiyet</label>
             <br>
-            <input id="gender" name="gender" type="text" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1.2rem; border-radius: 5px; border: none;">
+            <input id="gender" value="{{ current_user.user_information.gender }}" name="gender" type="text" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1.2rem; border-radius: 5px; border: none;">
             <br>
             <label for="tel_no" style="font-family: sans-serif; font-size: 12px">Telefon Numarası</label>
             <br>

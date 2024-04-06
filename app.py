@@ -416,6 +416,7 @@ class UserInformation(db.Model):
     address = db.Column(db.String)
     date_of_birth = db.Column(db.String)
     tc_kimlik_no = db.Column(db.Integer)
+    gender = db.Column(db.String)
 
 
 class OpenBet(db.Model):
@@ -1062,6 +1063,7 @@ def profile():
             user_info.address = values["address"]
             user_info.tel_no = values["tel_no"]
             user_info.tc_kimlik_no = values["id_no"]
+            user_info.gender = values["gender"]
             user_info.date_of_birth = str(values["dob"])
 
             db.session.commit()
