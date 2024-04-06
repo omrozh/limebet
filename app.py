@@ -1084,6 +1084,11 @@ def profile():
 
 @app.route("/")
 def index():
+    return flask.render_template("anasayfa.html")
+
+
+@app.route("/fantezi")
+def fantezi():
     competitions = Competition.query.filter(
         Competition.start_date >= datetime.datetime.today().date() + datetime.timedelta(days=1))
     filter_q = flask.request.args.get("filter_q", False)
