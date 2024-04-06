@@ -25,19 +25,19 @@
       <h1 class="main-header">
         HANGİ ALANDA BAHİS YAPMAK İSTERSİN?
       </h1>
-      <div onclick="document.location = '/casino'" style="display: inline-block; vertical-align: top">
+      <div onmouseleave="removeEffect()" onmouseover="glowEffectSelect(this)" class="selection-menu-main" onclick="document.location = '/casino'" style="display: inline-block; vertical-align: top">
           <div style="padding: 5px; border-radius: 15px; background-color: #0f1012; border: 1px solid rgba(255, 255, 255, 0.1)">
               <img src="/static/casino.jpg" style="width: 200px; border-radius: 15px; margin-bottom: -5px" alt="">
           </div>
           <h1 style="color: white">CASINO</h1>
       </div>
-      <div onclick="document.location = '/fantezi'" style="display: inline-block; vertical-align: top">
+      <div onmouseleave="removeEffect()" onmouseover="glowEffectSelect(this)" class="selection-menu-main" onclick="document.location = '/fantezi'" style="display: inline-block; vertical-align: top">
           <div style="padding: 5px; border-radius: 15px; background-color: #0f1012; border: 1px solid rgba(255, 255, 255, 0.1)">
               <img src="/static/fantezi.jpg" style="width: 200px; border-radius: 15px; margin-bottom: -5px" alt="">
           </div>
           <h1 style="color: white; width: 150px">FANTEZİ FUTBOL</h1>
       </div>
-      <div onclick="document.location = '/bahis'" style="display: inline-block; vertical-align: top">
+      <div onmouseleave="removeEffect()" onmouseover="glowEffectSelect(this)" class="selection-menu-main" onclick="document.location = '/bahis'" style="display: inline-block; vertical-align: top">
           <div style="padding: 5px; border-radius: 15px; background-color: #0f1012; border: 1px solid rgba(255, 255, 255, 0.1)">
               <img src="/static/bahis.jpg" style="width: 200px; border-radius: 15px; margin-bottom: -5px" alt="">
           </div>
@@ -48,6 +48,21 @@
           <br>
           2024
       </p>
+      <script>
+          function glowEffectSelect(elem){
+              let all_selections = document.getElementsByClassName("selection-menu-main")
+              for(let i = 0 ; i < all_selections.length; i++){
+                  all_selections[i].style.opacity = 0.5
+              }
+              elem.style.opacity = 1
+          }
+          function removeEffect(){
+              let all_selections = document.getElementsByClassName("selection-menu-main")
+              for(let i = 0 ; i < all_selections.length; i++){
+                  all_selections[i].style.opacity = 1
+              }
+          }
+      </script>
   </center>
 </body>
 </html>
