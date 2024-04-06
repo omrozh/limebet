@@ -283,17 +283,17 @@
             </h1>
             {% for i in current_user.mybets %}
                 {% if not i.status == "Oluşturuluyor" %}
-                <div style="display: inline-block; width: 300px; max-width: 100%; margin-top: 15px; vertical-align: top">
+                <div style="display: inline-block; width: 320px; max-width: 100%; margin-top: 15px; vertical-align: top">
                     <div style="background-color: #7b00ff; padding: 5px; width: 100%; box-sizing: border-box; border-radius: 15px 15px 0 0">
                         <p style="color: white">Kupon - {{ i.id }}</p>
                     </div>
                     {% for c in i.all_selects %}
-                    <div style="background-color: white; width: 100%; padding: 5px; box-sizing: border-box; border-top: 1px solid gray;">
+                    <div style="background-color: white; width: 95%; padding: 5px; box-sizing: border-box; border-top: 1px solid gray;">
                         <p style="color: gray">Maç: {{ c.odd.bet_option.match_name }}</p>
                         <p style="color: gray">Oran: {{ c.odd.odd }}</p>
                     </div>
                     {% endfor %}
-                    <div style="color: gray; background-color: white; padding: 5px; width: 100%; box-sizing: border-box; border-top: 1px solid gray">
+                    <div style="color: gray; background-color: white; padding: 5px; width: 95%; box-sizing: border-box; border-top: 1px solid gray">
                         <p>
                             Toplam Oran: {{ '%0.2f' | format(i.total_odd) }}
                         </p>
