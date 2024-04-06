@@ -1060,7 +1060,9 @@ def profile():
 
             user_info.name = values["name"]
             user_info.address = values["address"]
-            user_info.tel_no = values["telno"]
+            user_info.tel_no = values["tel_no"]
+            user_info.tc_kimlik_no = values["id_no"]
+            user_info.date_of_birth = str(values["dob"])
 
             db.session.commit()
 
