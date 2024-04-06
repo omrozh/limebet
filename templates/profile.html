@@ -284,7 +284,7 @@
             {% for i in current_user.mybets %}
                 {% if not i.status == "Oluşturuluyor" %}
                 <div style="display: inline-block; width: 320px; max-width: 100%; margin-top: 15px; vertical-align: top">
-                    <div style="background-color: #7b00ff; padding: 5px; width: 100%; box-sizing: border-box; border-radius: 15px 15px 0 0">
+                    <div style="background-color: #7b00ff; padding: 5px; width: 95%; box-sizing: border-box; border-radius: 15px 15px 0 0">
                         <p style="color: white">Kupon - {{ i.id }}</p>
                     </div>
                     {% for c in i.all_selects %}
