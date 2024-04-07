@@ -439,8 +439,8 @@ class OpenBet(db.Model):
         unique_game_names = []
         for i in options:
             if i.game_name not in unique_game_names:
-            unique_games.append(i)
-            unique_game_names.append(i.game_name)
+                unique_games.append(i)
+                unique_game_names.append(i.game_name)
         return unique_games
 
 
