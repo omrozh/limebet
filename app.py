@@ -549,7 +549,7 @@ class BetOption(db.Model):
         for i in bet_odds:
             if i.value not in unique_bet_odd_names:
                 unique_bet_odds.append(i)
-                if "skor" not in self.game_name.lower() and "yarıda" not in self.game_name.lower() and "toplam" not in self.game_name.lower() and "fark" not in self.game_name.lower() and :
+                if "skor" not in self.game_name.lower() and "yarıda" not in self.game_name.lower() and "toplam" not in self.game_name.lower() and "fark" not in self.game_name.lower() :
                     i.value = i.value.replace("1", open_bet.team_1).replace("2", open_bet.team_2).replace("0", "Berabere")
                 db.session.commit()
                 unique_bet_odd_names.append(i.value)
