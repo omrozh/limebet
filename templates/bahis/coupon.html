@@ -314,6 +314,7 @@
                         <td>{{i.bet_option.match_name}}</td>
                         <td> {{ i.odd }}</td>
                         <td>{{ i.value }}</td>
+                        <td onclick="document.location = '/remove_bet/{{ i.odd.id }}'">X</td>
                       </tr>
                     {% endfor %}
                 </tbody>
