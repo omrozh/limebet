@@ -1037,8 +1037,7 @@ def profile():
             current_user.freebet_usable = 0
 
             from tc_dogrulama import verify_id
-            print(verify_id(int(values["id_no"]), " ".join(values["name"].split(" ")[0:-1]), values["name"].split(" ")[-1], int(str(values["dob"]).split("-")[0])))
-            if verify_id(int(values["id_no"]), " ".join(values["name"].split(" ")[0:-1]), values["name"].split(" ")[-1], int(str(values["dob"]).split("-")[-1])):
+            if verify_id(int(values["id_no"]), " ".join(values["name"].split(" ")[0:-1]), values["name"].split(" ")[-1], int(str(values["dob"]).split("-")[0])):
                 db.session.commit()
 
             return flask.redirect("/profile")
