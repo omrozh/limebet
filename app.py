@@ -1030,7 +1030,7 @@ def profile():
                     <script>
                         alert('Kullanıcı mevcut')
                         document.location = '/profile'
-                    <script>
+                    </script>
                 '''
 
             user_info = UserInformation.query.filter_by(user_fk=current_user.id).first()
