@@ -288,13 +288,13 @@
             <br>
             {% if current_user.freebet %}
                 {% if current_user.freebet > 0 %}
-                  Freebet: <span style="color: limegreen">{{ current_user.freebet }}</span><span style="display: inline-block; vertical-align: top; font-size: 8px; color: limegreen">TRY</span></h3>
+                Freebet: <span style="color: limegreen">{{ current_user.freebet }}</span><span style="display: inline-block; vertical-align: top; font-size: 8px; color: limegreen">TRY</span>
               <br>
                 {% endif %}
               {% endif %}
               Toplam Oran: <span style="color: limegreen" id="money-spent">{{ '%0.2f'| format(current_coupon.total_odd) }}</span>
               <br>
-              Toplam Kazanç: <span style="color: limegreen" id="total_prize">0</span><span style="display: inline-block; vertical-align: top; font-size: 8px; color: limegreen">TRY</span></h3>
+              Toplam Kazanç: <span style="color: limegreen" id="total_prize">0</span><span style="display: inline-block; vertical-align: top; font-size: 8px; color: limegreen">TRY</span>
           </h2>
         </div>
       <br>
