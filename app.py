@@ -414,7 +414,7 @@ class UserInformation(db.Model):
     user_fk = db.Column(db.Integer)
     address = db.Column(db.String)
     date_of_birth = db.Column(db.String)
-    tc_kimlik_no = db.Column(db.Integer)
+    tc_kimlik_no = db.Column(db.Integer, unique=True)
     gender = db.Column(db.String)
     id_verified = db.Column(db.Boolean)
 
