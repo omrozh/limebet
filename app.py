@@ -538,12 +538,26 @@ class BetOption(db.Model):
         unique_bet_odds = []
         unique_bet_odd_names = []
 
+        w_bet_odds = []
+
         for i in bet_odds:
             if i.value not in unique_bet_odd_names:
                 unique_bet_odds.append(i)
                 unique_bet_odd_names.append(i.value)
 
-        return unique_bet_odds
+        if "1" in unique_bet_odd_names and "2" in unique_bet_odds and "0" in unique_bet_odd_names and len(unique_bet_odd_names) == 3:
+            for i in unique_bet_odds:
+                if i.value == "1":
+                    w_bet_odds.append("")
+                    w_bet_odds[0] = i
+                elif i.value["0"]:
+                    w_bet_odds.append("")
+                    w_bet_odds[1] = i
+                else:
+                    w_bet_odds.append("")
+                    w_bet_odds[2] = i
+
+        return w_bet_odds if len(w_bet_odds) > 0 else unique_bet_odds
 
 
 class BetOdd(db.Model):
