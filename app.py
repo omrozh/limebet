@@ -416,6 +416,7 @@ class UserInformation(db.Model):
     date_of_birth = db.Column(db.String)
     tc_kimlik_no = db.Column(db.Integer)
     gender = db.Column(db.String)
+    id_verified = db.Column(db.Boolean)
 
 
 class OpenBet(db.Model):
@@ -1038,6 +1039,7 @@ def profile():
 
             from tc_dogrulama import verify_id
             if verify_id(int(values["id_no"]), " ".join(values["name"].split(" ")[0:-1]), values["name"].split(" ")[-1], int(str(values["dob"]).split("-")[0])):
+                user_info.id_verified = True
                 db.session.commit()
 
             return flask.redirect("/profile")
@@ -1262,7 +1264,8 @@ def signup():
         db.session.commit()
         new_user.user_information.tel_no = flask.request.values["tel_no"]
         db.session.commit()
-        return flask.redirect("/login")
+        login_user(new_user)
+        return flask.redirect("/profile")
     return flask.render_template("signup.html")
 
 

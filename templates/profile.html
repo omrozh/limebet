@@ -159,10 +159,10 @@
             <span style="display: inline-block; color: white" onclick="document.location = '/'">
                 Anasayfa
             </span>
-            <span class="navbar-item" onclick="changeDivision('current-competitions', this)" style="display: inline-block; margin-left: 50px; color: white; text-decoration: underline">
+            <span class="navbar-item" onclick="changeDivision('current-competitions', this)" style="display: inline-block; margin-left: 50px; color: white;">
                 Katıldığım Yarışmalar
             </span>
-            <span class="navbar-item" onclick="changeDivision('profile-information', this)" style="display: inline-block; margin-left: 50px; color: white">
+            <span class="navbar-item" onclick="changeDivision('profile-information', this)" style="display: inline-block; margin-left: 50px; color: white; text-decoration: underline">
                 Kullanıcı Bilgileri
             </span>
             <span onclick="changeDivision('previous-competitions', this)" class="navbar-item" style="display: inline-block; margin-left: 50px; color: white">
@@ -239,7 +239,7 @@
     </center>
     <div id="main-content-wrapper">
     <center>
-        <div id="current-competitions" class="division-profile">
+        <div id="current-competitions" class="division-profile" style="display: none">
             <h1 style="color: white; text-align: left; font-family: 'Protest Guerrilla', sans-serif; width: 80%">Aktif Kadrolar</h1>
             {% if current_user.active_drafts|length == 0%}
                 <p style="color: white; text-align: left; margin-left: 10%">Henüz aktif bir kadronuz yok</p>
@@ -314,7 +314,7 @@
                 {% endif %}
             {% endfor %}
         </div>
-        <div id="profile-information" class="division-profile" style="display: none">
+        <div id="profile-information" class="division-profile" style="display: block">
             <center>
                 <div style="background-color: #7b00ff; font-family: 'Protest Guerrilla', sans-serif; color: white; padding: 10px; width: 90%; text-align: left; margin-top: 25px" id="fill-profile-box">
                     <p>
