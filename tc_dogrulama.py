@@ -6,6 +6,3 @@ def verify_id(tc_kimlik_no, isim, soyisim, dogum_yili):
     client = Client(wsdl)
     result = client.service.TCKimlikNoDogrula(tc_kimlik_no, isim, soyisim, dogum_yili)
     return result
-
-
-print(verify_id(28538570086, "ÖMER", "ÖZHAN", 2004))
