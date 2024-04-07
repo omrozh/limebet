@@ -288,7 +288,7 @@
             <br>
             {% if current_user.freebet %}
                 {% if current_user.freebet > 0 %}
-                  Freebet: {{ current_user.freebet }}₺
+                  Freebet: <span style="color: limegreen">{{ current_user.freebet }}</span><span style="display: inline-block; vertical-align: top; font-size: 8px; color: limegreen">TRY</span></h3>
               <br>
                 {% endif %}
               {% endif %}

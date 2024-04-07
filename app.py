@@ -1386,7 +1386,7 @@ def coupon():
             current_coupon.freebet_amount = 0
         db.session.commit()
         return flask.redirect("/profile")
-    return flask.render_template("bahis/coupon.html", current_coupon=current_coupon)
+    return flask.render_template("bahis/coupon.html", current_coupon=current_coupon, current_user=current_user)
 
 
 @app.route("/double")
