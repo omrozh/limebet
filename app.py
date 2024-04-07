@@ -550,7 +550,7 @@ class BetOption(db.Model):
                 if i.value == "1":
                     w_bet_odds.append("")
                     w_bet_odds[0] = i
-                elif i.value["0"]:
+                elif i.value == "0":
                     w_bet_odds.append("")
                     w_bet_odds[1] = i
                 else:
