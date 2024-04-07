@@ -1025,25 +1025,25 @@ def profile():
     if flask.request.method == "POST":
         values = flask.request.values
         if flask.request.values["form-type"] == "user-info":
-            if len(UserInformation.query.filter_by(tc_kimlik_no=int(values["id_no"])).all()) > 0:
+            try:
+                user_info = UserInformation.query.filter_by(user_fk=current_user.id).first()
+
+                user_info.name = values["name"]
+                user_info.address = values["address"]
+                user_info.tel_no = values["tel_no"]
+                user_info.tc_kimlik_no = values["id_no"]
+                user_info.gender = values["gender"]
+                user_info.date_of_birth = str(values["dob"])
+
+                current_user.freebet += current_user.freebet_usable
+                current_user.freebet_usable = 0
+            except Exception as e:
                 return '''
                     <script>
                         alert('Kullanıcı mevcut')
                         document.location = '/profile'
                     </script>
                 '''
-
-            user_info = UserInformation.query.filter_by(user_fk=current_user.id).first()
-
-            user_info.name = values["name"]
-            user_info.address = values["address"]
-            user_info.tel_no = values["tel_no"]
-            user_info.tc_kimlik_no = values["id_no"]
-            user_info.gender = values["gender"]
-            user_info.date_of_birth = str(values["dob"])
-
-            current_user.freebet += current_user.freebet_usable
-            current_user.freebet_usable = 0
 
 
             from tc_dogrulama import verify_id
