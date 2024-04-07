@@ -1037,6 +1037,14 @@ def profile():
             current_user.freebet += current_user.freebet_usable
             current_user.freebet_usable = 0
 
+            if len(UserInformation.query.filter_by(tc_kimlik_no=int(values["id_no"])).all()) > 0:
+                return '''
+                    <script>
+                        alert('Kullanıcı mevcut.')
+                        document.location = '/profile'
+                    <script>
+                '''
+
             from tc_dogrulama import verify_id
             if verify_id(int(values["id_no"]), " ".join(values["name"].split(" ")[0:-1]), values["name"].split(" ")[-1], int(str(values["dob"]).split("-")[0])):
                 user_info.id_verified = True
