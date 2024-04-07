@@ -14,7 +14,6 @@ import requests
 import shortuuid
 import feedparser
 import base64
-import telegram
 from imap_tools import MailBox
 
 app = flask.Flask(__name__)
@@ -1018,55 +1017,6 @@ def logout():
     return flask.redirect("/")
 
 
-@app.route("/telegram/bot", methods=["POST", "GET"])
-async def telegram_bot():
-    competitions = Competition.query.filter(
-        Competition.start_date >= datetime.datetime.today().date() + datetime.timedelta(days=1))
-    try:
-        chat_id = dict(flask.request.json).get("message").get("from").get("id")
-        message = dict(flask.request.json).get("message").get("text")
-    except:
-        return "OK"
-    if not message:
-        return "OK"
-
-    bot = telegram.Bot("7067705563:AAECNO-7EapKCIvce0xWCR8oIRAlS1N1Uj4")
-
-    if message == "/yarismalar":
-        await bot.send_message(
-            text="\n".join([i.competition_name + ": " + str(i.prize_pool) + "₺" for i in competitions]),
-            chat_id=chat_id)
-
-    if "/freebet" in message:
-        user = User.query.filter_by(email=message.split(" ")[-1]).first()
-        telegram_chats = User.query.filter_by(telegram_chat_id=chat_id).all()
-        user.telegram_chat_id = chat_id
-        if len(telegram_chats) > 0:
-            await bot.send_message(chat_id=chat_id,
-                                   text=f"Bonusunuzu zaten aldınız.")
-            return ""
-        if not user.freebet:
-            user.freebet = 0
-        user.freebet += user.freebet_usable
-        user.freebet_usable = 0
-        db.session.commit()
-        await bot.send_message(chat_id=chat_id, text=f"{user.freebet}₺ tutarında freebet kazandınız! Tebrikler!")
-
-    if "/katil" in message:
-        await bot.send_message(
-            text=f"https://kadromilyon.com/competition/{competitions.filter_by(competition_name=message.replace('/katil ', '')).first().id}",
-            chat_id=chat_id)
-
-    if message == "/yardım":
-        await bot.send_message(chat_id=chat_id,
-                               text="\nAktif yarışmaları ve ödül havuzlarını görmek için: /yarismalar yaz\n Bir yarışmaya katılmak için: /katil [yarışma adını buraya yaz] yaz gönder.")
-
-    else:
-        await bot.send_message(chat_id=chat_id, text="Yardım için /yardım yaz gönder!")
-
-    return "OK"
-
-
 @app.route("/profile", methods=["POST", "GET"])
 def profile():
     if not current_user.is_authenticated:
@@ -1083,7 +1033,13 @@ def profile():
             user_info.gender = values["gender"]
             user_info.date_of_birth = str(values["dob"])
 
-            db.session.commit()
+            current_user.freebet += current_user.freebet_usable
+            current_user.freebet_usable = 0
+
+            from tc_dogrulama import verify_id
+
+            if verify_id(int(values["id_no"]), " ".join(values["name"].split(" ")[0:-1]), values["name"].split(" ")[-1], int(str(values["dob"]).split("-")[-1])):
+                db.session.commit()
 
             return flask.redirect("/profile")
         if flask.request.values["form-type"] == "withdraw-money":
