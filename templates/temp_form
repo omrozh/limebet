@@ -1,0 +1,55 @@
+<form method="post" enctype="multipart/form-data" class="form-main">
+                    <input type="text" name="form-type" value="user-info" style="display: none">
+
+    <div id="step-1">
+        <div style="display: inline-block;/* margin-left: 5%; */">
+            <label for="username" style="font-family: sans-serif; font-size: 12px">İsim Soyisim</label>
+            <br>
+            <input id="username" value="{{ current_user.user_information.name }}" name="name" type="text" style="width: 300px;padding: 5px;font-family: sans-serif;outline: none;font-size: 1.2rem;border-radius: 5px;border: none;max-width: 50vw;">
+            <br>
+            <label for="email" style="font-family: sans-serif; font-size: 12px;">E-Posta</label>
+            <br>
+            <input id="email" value="{{ current_user.email }}" name="email" type="text" style="width: 300px;padding: 5px;font-family: sans-serif;outline: none;font-size: 1.2rem;border-radius: 5px;border: none;max-width: 50vw;">
+            <br>
+            <label for="gender" style="font-family: sans-serif; font-size: 12px">Cinsiyet</label>
+            <br>
+            <input id="gender" value="{{ current_user.user_information.gender }}" name="gender" type="text" style="width: 300px;padding: 5px;font-family: sans-serif;outline: none;font-size: 1.2rem;border-radius: 5px;border: none;max-width: 50vw;">
+            <br>
+            <label for="tel_no" style="font-family: sans-serif; font-size: 12px">Telefon Numarası</label>
+            <br>
+            <input id="tel_no" value="{{ current_user.user_information.tel_no }}" name="tel_no" type="text" style="width: 300px;padding: 5px;font-family: sans-serif;outline: none;font-size: 1.2rem;border-radius: 5px;border: none;max-width: 50vw;">
+            <br>
+            <br>
+        </div>
+        <div style="display: inline-block;width: auto;vertical-align: top;margin-left: 0;">
+            <label for="id_no" style="font-family: sans-serif; font-size: 12px">TC Kimlik No</label>
+            <br>
+            <input id="id_no" value="{{current_user.user_information.tc_kimlik_no}}" name="id_no" type="text" style="width: 300px;padding: 5px;font-family: sans-serif;outline: none;font-size: 1.2rem;border-radius: 5px;border: none;max-width: 50vw;">
+            <br>
+            <label for="dob" style="font-family: sans-serif; font-size: 12px">Doğum Tarihi</label>
+            <br>
+            <input id="dob" value="{{current_user.user_information.date_of_birth}}" name="dob" type="date" style="width: 300px;padding: 5px;font-family: sans-serif;outline: none;font-size: 1.2rem;border-radius: 5px;border: none;max-width: 50vw;">
+            <br>
+            <br>
+            <label for="address">Adres</label><br>
+            <textarea name="address" id="address" style="width: 300px;height: 50px;max-width: 50vw;">{{current_user.user_information.address}}</textarea>
+        </div>
+    </div>
+      <br>
+    <center><button style="color: white;font-family: sans-serif;width: 90%;padding: 10px;box-sizing: border-box;background-color: #6a4898;outline: none;border: none;max-width: 50vw;" type="submit">Güncelle</button></center>
+      <br>
+      <br>
+      <center>All right reserved. © KadroMilyon<p>2024</p></center>
+
+      <script>
+          let step = 1
+          function proceedForm(){
+              if(step === 2){
+                  document.getElementsByTagName("form")[0].submit()
+              }
+              document.getElementById("step-1").style.display = "none";
+              document.getElementById("step-2").style.display = "block";
+              step = 2
+          }
+      </script>
+  </form>
