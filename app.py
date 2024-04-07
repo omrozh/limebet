@@ -1025,25 +1025,17 @@ def profile():
     if flask.request.method == "POST":
         values = flask.request.values
         if flask.request.values["form-type"] == "user-info":
-            try:
-                user_info = UserInformation.query.filter_by(user_fk=current_user.id).first()
+            user_info = UserInformation.query.filter_by(user_fk=current_user.id).first()
 
-                user_info.name = values["name"]
-                user_info.address = values["address"]
-                user_info.tel_no = values["tel_no"]
-                user_info.tc_kimlik_no = values["id_no"]
-                user_info.gender = values["gender"]
-                user_info.date_of_birth = str(values["dob"])
+            user_info.name = values["name"]
+            user_info.address = values["address"]
+            user_info.tel_no = values["tel_no"]
+            user_info.tc_kimlik_no = values["id_no"]
+            user_info.gender = values["gender"]
+            user_info.date_of_birth = str(values["dob"])
 
-                current_user.freebet += current_user.freebet_usable
-                current_user.freebet_usable = 0
-            except Exception as e:
-                return '''
-                    <script>
-                        alert('Kullanıcı mevcut')
-                        document.location = '/profile'
-                    </script>
-                '''
+            current_user.freebet += current_user.freebet_usable
+            current_user.freebet_usable = 0
 
 
             from tc_dogrulama import verify_id
@@ -1540,3 +1532,8 @@ def reroute_page():
 @app.route("/casino")
 def casino():
     return flask.render_template("casino.html", current_user=current_user)
+
+
+@app.errorhandler(500)
+def error_500(e):
+    return flask.render_template("iserror.html")

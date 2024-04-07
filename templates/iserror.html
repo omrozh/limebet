@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>KadroMilyon | Lisanslı Bahis Sitesi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&amp;family=Protest+Guerrilla&amp;display=swap" rel="stylesheet">
+    <style>
+      .main-header{
+        margin-top: 50px; width: 600px; color: white; font-size: 5rem
+      }
+      @media screen and (max-width: 800px) {
+        .main-header{
+          width: 90%;
+          font-size: 1.5rem;
+        }
+      }
+    </style>
+</head>
+<body style="font-family: 'Open Sans', sans-serif; background-color: #191a1f">
+  <center style="margin-top: 50px">
+      <img style="width: 150px" src="/static/kadromilyon.png" alt="">
+      <h1 class="main-header">
+        HATA
+      </h1>
+      <p style="color: white">
+        İstediğin işlemi maalesef gerçekleştiremiyoruz.
+      </p>
+      <div onmouseleave="removeEffect()" onmouseover="glowEffectSelect(this)" class="selection-menu-main" onclick="document.location = '/casino'" style="display: inline-block; vertical-align: top">
+          <div style="padding: 5px; border-radius: 15px; background-color: #0f1012; border: 1px solid rgba(255, 255, 255, 0.1)">
+              <img src="/static/casino.jpg" style="width: 200px; border-radius: 15px; margin-bottom: -5px" alt="">
+          </div>
+          <h1 style="color: white">CASINO</h1>
+      </div>
+      <div onmouseleave="removeEffect()" onmouseover="glowEffectSelect(this)" class="selection-menu-main" onclick="document.location = '/fantezi'" style="display: inline-block; vertical-align: top">
+          <div style="padding: 5px; border-radius: 15px; background-color: #0f1012; border: 1px solid rgba(255, 255, 255, 0.1)">
+              <img src="/static/fantezi.jpg" style="width: 200px; border-radius: 15px; margin-bottom: -5px" alt="">
+          </div>
+          <h1 style="color: white; width: 150px">FANTEZİ FUTBOL</h1>
+      </div>
+      <div onmouseleave="removeEffect()" onmouseover="glowEffectSelect(this)" class="selection-menu-main" onclick="document.location = '/bahis'" style="display: inline-block; vertical-align: top">
+          <div style="padding: 5px; border-radius: 15px; background-color: #0f1012; border: 1px solid rgba(255, 255, 255, 0.1)">
+              <img src="/static/bahis.jpg" style="width: 200px; border-radius: 15px; margin-bottom: -5px" alt="">
+          </div>
+          <h1 style="color: white;">BAHİS</h1>
+      </div>
+      <p style="color: white; margin-top: 50px;">
+          All rights reserved. ®KadroMilyon
+          <br>
+          2024
+      </p>
+      <script>
+          function glowEffectSelect(elem){
+              let all_selections = document.getElementsByClassName("selection-menu-main")
+              for(let i = 0 ; i < all_selections.length; i++){
+                  all_selections[i].style.opacity = 0.5
+              }
+              elem.style.opacity = 1
+          }
+          function removeEffect(){
+              let all_selections = document.getElementsByClassName("selection-menu-main")
+              for(let i = 0 ; i < all_selections.length; i++){
+                  all_selections[i].style.opacity = 1
+              }
+          }
+      </script>
+  </center>
+</body>
+</html>
