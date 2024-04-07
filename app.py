@@ -1258,7 +1258,8 @@ def signup():
             email=values["email"],
             password=bcrypt.generate_password_hash(values["password"]),
             referred_by=flask.request.cookies.get('somecookiename', None),
-            freebet_usable=100
+            freebet_usable=100,
+            freebet=0
         )
         db.session.add(new_user)
         db.session.commit()
