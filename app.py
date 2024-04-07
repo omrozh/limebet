@@ -1025,6 +1025,14 @@ def profile():
     if flask.request.method == "POST":
         values = flask.request.values
         if flask.request.values["form-type"] == "user-info":
+            if len(UserInformation.query.filter_by(tc_kimlik_no=int(values["id_no"])).all()) > 0:
+                return '''
+                    <script>
+                        alert('Kullanıcı mevcut')
+                        document.location = '/profile'
+                    <script>
+                '''
+
             user_info = UserInformation.query.filter_by(user_fk=current_user.id).first()
 
             user_info.name = values["name"]
@@ -1037,13 +1045,6 @@ def profile():
             current_user.freebet += current_user.freebet_usable
             current_user.freebet_usable = 0
 
-            if len(UserInformation.query.filter_by(tc_kimlik_no=int(values["id_no"])).all()) > 0:
-                return '''
-                    <script>
-                        alert('Kullanıcı mevcut.')
-                        document.location = '/profile'
-                    <script>
-                '''
 
             from tc_dogrulama import verify_id
             if verify_id(int(values["id_no"]), " ".join(values["name"].split(" ")[0:-1]), values["name"].split(" ")[-1], int(str(values["dob"]).split("-")[0])):
