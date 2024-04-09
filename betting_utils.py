@@ -4,7 +4,8 @@ import requests
 from app import app, db, OpenBet, BetOdd, BetOption, BetCoupon
 import sys
 
-api_key = "zHMFjNS3bRu7vNgUrtr6JPMwOD5Jcuer7O9yw9pwNZMX4XBFwe2tazdyQLsq"
+#api_key = "zHMFjNS3bRu7vNgUrtr6JPMwOD5Jcuer7O9yw9pwNZMX4XBFwe2tazdyQLsq"
+api_key = "na"
 
 
 def get_bettable_matches(date):
