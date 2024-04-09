@@ -21,15 +21,21 @@ def new_odds():
             odds = []
 
             for j in c.get("odds"):
-                for a in j.get("bookmakers")[0].get("odds"):
-                    odds.append({
-                            "gameName": a.get("name"),
-                            "gameDetails": "",
-                            "odds": a.get("value", "1.00")
+                odds.append({
+                    "value": j.get("name"),
+                    "gameDetails": "",
+                    "odds": [
+                        {
+                            "gameID": "n/a",
+                            "odd": a.get("name"),
+                            "value": a.get("value")
                         }
-                    )
+                        for a in j.get("bookmakers")[0].get("odds")
+                    ]
+                })
 
             match_dictionary["Bets"] = odds
+
             print(match_dictionary)
 
             matches.append(match_dictionary)
