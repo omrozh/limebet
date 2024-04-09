@@ -13,7 +13,7 @@ def new_odds():
 
     for i in data.get("scores").get("categories"):
         for c in i.get("matches"):
-            match_dictionary = {"Team1": c.get("localteam").get("name"), "Team2": c.get("visitorteam").get("name"),
+            match_dictionary = {"MatchID": c.get("id"), "Team1": c.get("localteam").get("name"), "Team2": c.get("visitorteam").get("name"),
                                 "League": i.get("name"), "LeagueFlag": "n/a",
                                 "DateTime": datetime.datetime.strptime(c.get("formatted_date") + " " + c.get("time"),
                                                                        '%d.%m.%Y %H:%M')}
