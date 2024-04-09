@@ -17,7 +17,7 @@ import base64
 from imap_tools import MailBox
 
 import schedule
-from betting_utils import distribute_rewards
+# from betting_utils import distribute_rewards
 
 # schedule.every(10).minutes.do(distribute_rewards)
 
