@@ -26,7 +26,7 @@ def new_odds():
                     "gameDetails": "",
                     "odds": [
                         {
-                            "gameID": "n/a",
+                            "gameID": 1,
                             "odd": a.get("name"),
                             "value": a.get("value")
                         }
