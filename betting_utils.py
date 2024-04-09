@@ -89,9 +89,10 @@ def get_results(match_id):
 if sys.argv[1] == "add-matches":
     register_open_bet()
 
-if sys.argv[1] == "distribute-rewards":
+
+def distribute_rewards():
     with app.app_context():
-        for i in OpenBet.query.all():
+        for i in OpenBet.query.filter(OpenBet.bet_ending_datetime < datetime.datetime.now() + datetime.timedelta(hours=3)).all():
             try:
                 i.update_results()
                 db.session.delete(i)
