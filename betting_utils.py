@@ -19,6 +19,9 @@ def get_odds(match_id):
 
 
 def get_bets():
+    from new_betting import new_odds
+    return new_odds()
+
     bet_info = []
     for c in range(1):
         for i in get_bettable_matches((datetime.datetime.today().date() + datetime.timedelta(days=c)).strftime("%Y-%m-%d")).get("data"):
