@@ -28,7 +28,7 @@ def new_odds():
                         {
                             "gameID": "n/a",
                             "value": a.get("name"),
-                            "odd": float(a.get("value"))
+                            "odd": float(a.get("value", "1.00"))
                         }
                         for a in j.get("bookmakers")[0].get("odds")
                     ]
