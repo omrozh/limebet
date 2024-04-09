@@ -48,7 +48,7 @@ def register_open_bet():
         with app.app_context():
             new_open_bet = OpenBet(
                 api_match_id=i.get("MatchID"),
-                bet_ending_datetime=datetime.datetime.strptime(i.get("DateTime"), "%Y-%m-%d %H:%M:%S"),
+                bet_ending_datetime=i.get("DateTime"),
                 match_league=i.get("League"),
                 league_icon_url=i.get("LeagueFlag"),
                 team_1=i.get("Team1"),
