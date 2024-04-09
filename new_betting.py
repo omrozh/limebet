@@ -29,7 +29,6 @@ def new_odds():
                 )
 
             match_dictionary["Bets"] = odds
-            print(match_dictionary)
 
             matches.append(match_dictionary)
 
