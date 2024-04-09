@@ -57,6 +57,7 @@ def register_open_bet():
             db.session.add(new_open_bet)
             db.session.commit()
             for bet_option in i.get("Bets"):
+                print(bet_option.get("gameName"))
                 new_bet_option = BetOption(
                     game_name=bet_option.get("gameName"),
                     game_details=bet_option.get("gameDetails"),
