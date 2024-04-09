@@ -19,9 +19,6 @@ def get_odds(match_id):
 
 
 def get_bets():
-    from new_betting import new_odds
-    return new_odds()
-
     bet_info = []
     for c in range(1):
         for i in get_bettable_matches((datetime.datetime.today().date() + datetime.timedelta(days=c)).strftime("%Y-%m-%d")).get("data"):
@@ -48,7 +45,7 @@ def register_open_bet():
         with app.app_context():
             new_open_bet = OpenBet(
                 api_match_id=i.get("MatchID"),
-                bet_ending_datetime=i.get("DateTime"),
+                bet_ending_datetime=datetime.datetime.strptime(i.get("DateTime"), "%Y-%m-%d %H:%M:%S"),
                 match_league=i.get("League"),
                 league_icon_url=i.get("LeagueFlag"),
                 team_1=i.get("Team1"),
