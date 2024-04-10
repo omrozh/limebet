@@ -4,6 +4,8 @@ import requests
 from app import app, db, OpenBet, BetOdd, BetOption, BetCoupon
 import sys
 
+from cloudbet import get_odds_cloudbet
+
 #api_key = "zHMFjNS3bRu7vNgUrtr6JPMwOD5Jcuer7O9yw9pwNZMX4XBFwe2tazdyQLsq"
 api_key = "na"
 
@@ -21,6 +23,7 @@ def get_odds(match_id):
 
 def get_bets():
     bet_info = []
+    return get_odds_cloudbet()
     for c in range(1):
         for i in get_bettable_matches((datetime.datetime.today().date() + datetime.timedelta(days=c)).strftime("%Y-%m-%d")).get("data"):
             bet_odds = get_odds(i.get("MatchID")).get("data")[0]
