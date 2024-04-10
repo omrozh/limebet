@@ -53,7 +53,7 @@ def get_odds_cloudbet():
                         "gameDetails": "",
                         "odds": [{
                             "gameID": "tbd",
-                            "value": selection.get("outcome").replace("_", "/").replace("=", ": ") + " | " if len(selection.get("params").replace("=", ": ")) > 3 else "" + selection.get("params").replace("=", ": "),
+                            "value": selection.get("outcome").replace("_", "/").replace("=", ": ").capitalize() + " | " if len(selection.get("params").replace("=", ": ")) > 3 else "" + selection.get("params").replace("=", ": "),
                             "odd": float(selection.get("price"))
                         } for selection in selections]
                     }
