@@ -439,7 +439,7 @@ class OpenBet(db.Model):
 
     @property
     def has_odds(self):
-        return len(BetOdd.query.filter_by(open_bet_fk=self.id).all()) > 0
+        return len(BetOption.query.filter_by(open_bet_fk=self.id).all()) > 0
 
     @property
     def bet_options(self):
