@@ -3,6 +3,8 @@ import time
 import requests
 import json
 
+import datetime
+
 
 def get_odds_cloudbet():
     event_url = f"https://sports-api.cloudbet.com/pub/v2/odds/events?sport=soccer&live=false&limit=10&from={int(time.time())}&to={int(time.time()+3600*3)}"
@@ -25,12 +27,11 @@ def get_odds_cloudbet():
     except requests.exceptions.RequestException as e:
         print("Error:", e)
 
-
     for competition in event_data.get("competitions"):
         for event in competition.get("events"):
             match = {
                 "MatchID": event.get("id"),
-                "DateTime": event.get("cutoffTime"),
+                "DateTime": datetime.datetime.strptime(event.get("cutoffTime"), "%Y-%m-%dT%H:%M:%SZ") + datetime.timedelta(hours=3),
                 "League": competition.get("name"),
                 "LeagueFlag": "n/a",
                 "Team1": event.get("home").get("name"),
