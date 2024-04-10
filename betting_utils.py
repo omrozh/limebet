@@ -74,6 +74,7 @@ def register_open_bet():
                         bet_option_fk=new_bet_option.id
                     )
                     db.session.add(new_bet_odd)
+                    new_open_bet.has_odds = True
                     db.session.commit()
 
 
