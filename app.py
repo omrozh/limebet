@@ -1308,7 +1308,10 @@ def admin_portal():
 
 @app.route("/bahis")
 def bahis():
-    open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime > datetime.datetime.now()).filter(OpenBet.has_odds).all()
+    open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime > datetime.datetime.now()).all()
+    for i in open_bets:
+        if not open_bets.has_odds:
+            open_bets.remove(i)
     return flask.render_template("bahis/bahis.html", open_bets=open_bets)
 
 
