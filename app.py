@@ -438,6 +438,10 @@ class OpenBet(db.Model):
         get_results(self.api_match_id)
 
     @property
+    def has_odds(self):
+        return len(BetOdd.query.filter_by(open_bet_fk=self.id).all()) > 0
+
+    @property
     def bet_options(self):
         options = BetOption.query.filter_by(open_bet_fk=self.id).all()
         unique_games = []
@@ -1304,7 +1308,7 @@ def admin_portal():
 
 @app.route("/bahis")
 def bahis():
-    open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime > datetime.datetime.now()).all()
+    open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime > datetime.datetime.now()).filter(OpenBet.has_odds).all()
     return flask.render_template("bahis/bahis.html", open_bets=open_bets)
 
 
