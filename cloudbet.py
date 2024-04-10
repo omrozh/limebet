@@ -49,11 +49,11 @@ def get_odds_cloudbet():
                         selections.append(selection)
                 odds.append(
                     {
-                        "gameName": language_dictionary.get(market).get("Name"),
+                        "gameName": language_dictionary.get(market).get("Name").replace("{{team}}", ""),
                         "gameDetails": "",
                         "odds": [{
                             "gameID": "tbd",
-                            "value": selection.get("outcome").replace("_", "/").replace("=", ": ").capitalize() + str(" | " if len(selection.get("params").replace("=", ": ")) > 3 else "") + selection.get("params").replace("=", ": "),
+                            "value": selection.get("outcome").replace("_", "/").replace("=", ": ").capitalize() + str(" | " if len(selection.get("params").replace("=", ": ")) > 3 else "") + selection.get("params").replace("=", ": ").replace("&", " "),
                             "odd": float(selection.get("price"))
                         } for selection in selections]
                     }
