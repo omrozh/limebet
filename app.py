@@ -432,14 +432,11 @@ class OpenBet(db.Model):
     match_league = db.Column(db.String)
     team_1 = db.Column(db.String)
     team_2 = db.Column(db.String)
+    has_odds = db.Column(db.Boolean)
 
     def update_results(self):
         from betting_utils import get_results
         get_results(self.api_match_id)
-
-    @property
-    def has_odds(self):
-        return len(BetOption.query.filter_by(open_bet_fk=self.id).all()) > 0
 
     @property
     def bet_options(self):
@@ -1308,10 +1305,7 @@ def admin_portal():
 
 @app.route("/bahis")
 def bahis():
-    open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime > datetime.datetime.now()).all()
-    for i in open_bets:
-        if not i.has_odds:
-            open_bets.remove(i)
+    open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime > datetime.datetime.now()).filter_by(has_odds=True).all()
     return flask.render_template("bahis/bahis.html", open_bets=open_bets)
 
 
