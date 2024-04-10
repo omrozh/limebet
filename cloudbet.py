@@ -50,8 +50,8 @@ def get_odds_cloudbet():
                         "gameDetails": "",
                         "odds": [{
                             "gameID": "tbd",
-                            "odd": selection.get("outcome") + "&params&" + selection.get("params"),
-                            "value": selection.get("price")
+                            "value": selection.get("outcome") + "&params&" + selection.get("params"),
+                            "odd": float(selection.get("price"))
                         } for selection in selections]
                     }
                 )
