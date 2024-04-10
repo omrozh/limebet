@@ -49,7 +49,7 @@ def get_odds_cloudbet():
                         selections.append(selection)
                 odds.append(
                     {
-                        "gameName": language_dictionary.get(market, market).replace("{", "").replace("}", "").capitalize(),
+                        "gameName": language_dictionary.get(market, market),
                         "gameDetails": "",
                         "odds": [{
                             "gameID": "tbd",
