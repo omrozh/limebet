@@ -439,7 +439,10 @@ class OpenBet(db.Model):
 
     @property
     def has_odds(self):
-        return len(BetOption.query.filter_by(open_bet_fk=self.id).all()) > 0
+        total_odds = 0
+        for i in BetOption.query.filter_by(open_bet_fk=self.id).all():
+            total_odds += len(i.bet_odds)
+        return total_odds > 1
 
     @property
     def bet_options(self):
