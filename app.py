@@ -1310,7 +1310,7 @@ def admin_portal():
 def bahis():
     open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime > datetime.datetime.now()).all()
     for i in open_bets:
-        if not open_bets.has_odds:
+        if not i.has_odds:
             open_bets.remove(i)
     return flask.render_template("bahis/bahis.html", open_bets=open_bets)
 
