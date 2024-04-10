@@ -63,7 +63,6 @@ def register_open_bet():
                     game_details=bet_option.get("gameDetails"),
                     open_bet_fk=new_open_bet.id
                 )
-                print(bet_option)
                 db.session.add(new_bet_option)
                 db.session.commit()
                 for bet_odd in bet_option.get("odds"):
