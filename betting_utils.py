@@ -127,9 +127,7 @@ def live_betting():
 
     db.session.commit()
 
-# Integrate live betting with the UI and scheduler for every 10-15 seconds.
-# For filters BetOdd should be bettable=True OpenBet should be live_betting_expired=False
-# Use odd_locked_in_rate for rewards.
+# Integrate distribute_rewards for cloudbet and make it so people should click on the coupon to claim rewards.
 
 
 if sys.argv[1] == "add-matches":
