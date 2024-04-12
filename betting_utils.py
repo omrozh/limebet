@@ -130,10 +130,6 @@ def live_betting():
 # Integrate distribute_rewards for cloudbet and make it so people should click on the coupon to claim rewards.
 
 
-if sys.argv[1] == "add-matches":
-    register_open_bet()
-
-
 def distribute_rewards():
     with app.app_context():
         for i in OpenBet.query.filter(OpenBet.bet_ending_datetime < datetime.datetime.now() + datetime.timedelta(hours=3)).all():
