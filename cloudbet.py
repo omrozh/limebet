@@ -4,14 +4,19 @@ import requests
 import json
 
 import datetime
+from app import BetOdd, OpenBet, app, db
+
+api_key = "eyJhbGciOiJSUzI1NiIsImtpZCI6IkhKcDkyNnF3ZXBjNnF3LU9rMk4zV05pXzBrRFd6cEdwTzAxNlRJUjdRWDAiLCJ0eXAiOiJKV1QifQ.eyJhY2Nlc3NfdGllciI6InRyYWRpbmciLCJleHAiOjIwMjgwNDU1ODksImlhdCI6MTcxMjY4NTU4OSwianRpIjoiYjIxZGRjZGYtZjZmNy00NTg1LWFlZDItOTVhNTkwMmU2YmUxIiwic3ViIjoiMzEyMTg1NDgtY2U3MS00NWJiLTlmNTctNmE4YmI3NTI5NjY2IiwidGVuYW50IjoiY2xvdWRiZXQiLCJ1dWlkIjoiMzEyMTg1NDgtY2U3MS00NWJiLTlmNTctNmE4YmI3NTI5NjY2In0.1e8o2kkX_UEccVndkKZDUS0IER6pFJPaSpIR3dzb486PyfpbFq82UggU6goIj9g7hns8sB1HNV__9U6XXLStE_x2qWDd2ZoFwMTeZeuGyMBFqdUK3Z-GGAg-_uYr3wqRB9QbhHHrS_BXEyTpRoxuGLncY8Yq87XuyfH0KbTAjexJOqd6RoseKGLnkex2mAaCc53CrLJh2ysq8wvLtRAYDxCQQN7eCbhRm58TDjTFZKU49u3kokNy4JuwLgjubcqC7F1ibYXwLMGPYH6kSN2zkApje_kmw3SSpJ3HqXptfdy1bIsV-GvlSXStpFnz7btp2Jj2Dhv4E4Hqclt8bRQRng"
 
 
-def get_odds_cloudbet():
+def get_odds_cloudbet(is_live=False):
     with open("cloudbets_readable_json", "r") as language_data:
         language_dictionary = json.loads(language_data.read())
 
-    event_url = f"https://sports-api.cloudbet.com/pub/v2/odds/events?sport=soccer&live=false&limit=1000&from={int(time.time())}&to={int(time.time()+3600*24)}"
-    api_key = "eyJhbGciOiJSUzI1NiIsImtpZCI6IkhKcDkyNnF3ZXBjNnF3LU9rMk4zV05pXzBrRFd6cEdwTzAxNlRJUjdRWDAiLCJ0eXAiOiJKV1QifQ.eyJhY2Nlc3NfdGllciI6InRyYWRpbmciLCJleHAiOjIwMjgwNDU1ODksImlhdCI6MTcxMjY4NTU4OSwianRpIjoiYjIxZGRjZGYtZjZmNy00NTg1LWFlZDItOTVhNTkwMmU2YmUxIiwic3ViIjoiMzEyMTg1NDgtY2U3MS00NWJiLTlmNTctNmE4YmI3NTI5NjY2IiwidGVuYW50IjoiY2xvdWRiZXQiLCJ1dWlkIjoiMzEyMTg1NDgtY2U3MS00NWJiLTlmNTctNmE4YmI3NTI5NjY2In0.1e8o2kkX_UEccVndkKZDUS0IER6pFJPaSpIR3dzb486PyfpbFq82UggU6goIj9g7hns8sB1HNV__9U6XXLStE_x2qWDd2ZoFwMTeZeuGyMBFqdUK3Z-GGAg-_uYr3wqRB9QbhHHrS_BXEyTpRoxuGLncY8Yq87XuyfH0KbTAjexJOqd6RoseKGLnkex2mAaCc53CrLJh2ysq8wvLtRAYDxCQQN7eCbhRm58TDjTFZKU49u3kokNy4JuwLgjubcqC7F1ibYXwLMGPYH6kSN2zkApje_kmw3SSpJ3HqXptfdy1bIsV-GvlSXStpFnz7btp2Jj2Dhv4E4Hqclt8bRQRng"
+    if not is_live:
+        event_url = f"https://sports-api.cloudbet.com/pub/v2/odds/events?sport=soccer&live=false&limit=1000&from={int(time.time())}&to={int(time.time() + 3600 * 24)}"
+    else:
+        event_url = f"https://sports-api.cloudbet.com/pub/v2/odds/events?sport=soccer&live=true&limit=1000"
 
     event_id = 123456
     headers = {
@@ -27,6 +32,7 @@ def get_odds_cloudbet():
         response.raise_for_status()  # Raise an exception for HTTP errors
         event_data = response.json()
         data = (json.dumps(event_data, indent=4))
+
     except requests.exceptions.RequestException as e:
         print("Error:", e)
 
@@ -52,9 +58,10 @@ def get_odds_cloudbet():
                         "gameName": language_dictionary.get(market).get("Name").replace("{{team}}", ""),
                         "gameDetails": "",
                         "odds": [{
-                            "gameID": "tbd",
+                            "gameID": f'{event.get("id")}-{market}-{str(selection.get("outcome").replace("_", "/").replace("=", ": ").capitalize() + str(" | " if len(selection.get("params").replace("=", ": ")) > 3 else "") + selection.get("params").replace("=", ": ").replace("&", " ")).replace("%2b", "+")}',
                             "value": str(selection.get("outcome").replace("_", "/").replace("=", ": ").capitalize() + str(" | " if len(selection.get("params").replace("=", ": ")) > 3 else "") + selection.get("params").replace("=", ": ").replace("&", " ")).replace("%2b", "+"),
-                            "odd": float(selection.get("price"))
+                            "odd": float(selection.get("price")),
+                            "market_url": f"{market}/{selection.get('outcome')}?{selection.get('params')}"
                         } for selection in selections]
                     }
                 )
@@ -63,5 +70,45 @@ def get_odds_cloudbet():
             bets.append(match)
 
     return bets
-# TO DO: Test bets and odds. FYI, change timestamps for end and start tomorrow.
-# TO DO: Implement submarkets.
+
+
+def place_bet(bet_odd: BetOdd, reference_id):
+    trading_url = f"https://sports-api.cloudbet.com/pub/v3/bets/place"
+    headers = {
+        "accept": "application/json",
+        "X-API-Key": api_key,
+        "Content-Type": "application/json"
+    }
+    open_bet = OpenBet.query.get(bet_odd.bet_option.open_bet_fk)
+    data = {
+        "acceptPriceChange": "BETTER",
+        "currency": "PLAY_EUR",
+        "eventId": open_bet.api_match_id,
+        "marketUrl": bet_odd.market_url,
+        "price": "1.00",
+        "referenceId": reference_id,
+        "stake": "0.1"
+
+    }
+    response = requests.post(trading_url, headers=headers, data=data)
+    return response.json().get("status") == "ACCEPTED" or response.json().get("status") == "PENDING_ACCEPTANCE"
+
+
+def cloudbet_instant_odd_update(bet_odd: BetOdd):
+    with app.app_context():
+        odd_url = f"https://sports-api.cloudbet.com/pub/v2/odds/lines"
+        headers = {
+            "accept": "application/json",
+            "X-API-Key": api_key,
+            "Content-Type": "application/json"
+        }
+        open_bet = OpenBet.query.get(bet_odd.bet_option.open_bet_fk)
+        data = {
+            "eventId": open_bet.api_match_id,
+            "marketUrl": bet_odd.market_url,
+
+        }
+        response = requests.post(odd_url, headers=headers, data=data)
+        bet_odd.bettable = response.json().get("status") == "SELECTION_ENABLED"
+        bet_odd.odd = float(response.json().get("price"))
+        db.session.commit()

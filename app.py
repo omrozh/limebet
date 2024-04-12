@@ -17,9 +17,12 @@ import base64
 from imap_tools import MailBox
 
 import schedule
-# from betting_utils import distribute_rewards
+
+# from betting_utils import distribute_rewards, live_betting, instant_odds_update
 
 # schedule.every(10).minutes.do(distribute_rewards)
+# schedule.every(5).minutes.do(live_betting)
+# schedule.every(5).seconds.do(instant_odds_update)
 
 app = flask.Flask(__name__)
 
@@ -181,7 +184,7 @@ class OpenUserBet(db.Model):
         new_bet_transaction = BetTransaction(
             type="bet_taken",
             api_key=new_taken_bet.user_1_partner_api_key,
-            amount=-1*self.bet_amount + (-1*self.bet_amount)/100*0.14,
+            amount=-1 * self.bet_amount + (-1 * self.bet_amount) / 100 * 0.14,
             transaction_date=datetime.date.today()
         )
         db.session.add(new_bet_transaction)
@@ -189,7 +192,7 @@ class OpenUserBet(db.Model):
         new_bet_transaction_2 = BetTransaction(
             type="bet_taken",
             api_key=new_taken_bet.user_1_partner_api_key,
-            amount=-1*self.opp_amount + (-1*self.bet_amount)/100*0.14,
+            amount=-1 * self.opp_amount + (-1 * self.bet_amount) / 100 * 0.14,
             transaction_date=datetime.date.today()
         )
         db.session.add(new_bet_transaction_2)
@@ -433,6 +436,7 @@ class OpenBet(db.Model):
     team_1 = db.Column(db.String)
     team_2 = db.Column(db.String)
     has_odds = db.Column(db.Boolean)
+    live_betting_expired = db.Column(db.Boolean)
 
     def update_results(self):
         from betting_utils import get_results
@@ -466,7 +470,7 @@ class BetCoupon(db.Model):
         total_odd = 1
         for i in BetSelectedOption.query.filter_by(bet_coupon_fk=self.id).all():
             if i.odd:
-                total_odd *= i.odd.odd
+                total_odd *= i.odd_locked_in_rate
 
         return total_odd
 
@@ -474,7 +478,7 @@ class BetCoupon(db.Model):
     def odd_options(self):
         if self.status == "Oluşturuluyor":
             for i in self.all_selects:
-                if i.odd.ended:
+                if not i.odd.bettable:
                     db.session.delete(i)
                     db.session.commit()
         return [i.odd for i in self.all_selects]
@@ -504,7 +508,7 @@ class BetCoupon(db.Model):
             if i.odd.status == "Başarısız":
                 all_success = False
 
-            total_odd *= i.odd.odd
+            total_odd *= i.odd_locked_in_rate
         if all_success:
             self.status = "Başarısız"
             db.session.commit()
@@ -523,6 +527,8 @@ class BetSelectedOption(db.Model):
     bet_odd_fk = db.Column(db.Integer)
     bet_coupon_fk = db.Column(db.Integer)
     bet_option_fk = db.Column(db.Integer)
+    odd_locked_in_rate = db.Column(db.Float)
+    reference_id = db.Column(db.String)
 
     @property
     def odd(self):
@@ -547,7 +553,7 @@ class BetOption(db.Model):
 
     @property
     def bet_odds(self):
-        bet_odds = BetOdd.query.filter_by(bet_option_fk=self.id).all()
+        bet_odds = BetOdd.query.filter_by(bet_option_fk=self.id).filter_by(bettable=True).all()
         unique_bet_odds = []
         unique_bet_odd_names = []
 
@@ -567,6 +573,8 @@ class BetOdd(db.Model):
     value = db.Column(db.String)
     bet_option_fk = db.Column(db.Integer)
     status = db.Column(db.String, default="Sonuçlanmadı")
+    bettable = db.Column(db.Boolean)
+    market_url = db.Column(db.String)
 
     @property
     def ended(self):
@@ -1002,7 +1010,8 @@ def admin_console():
 def create_iframe_session():
     if flask.request.values["api_key"] not in [i.api_key for i in CasinoPartner.query.all()]:
         return "Unauthorized"
-    new_session = PartnerSession(id=str(uuid4()), balance=float(flask.request.values["balance"]), api_key=flask.request.values["api_key"])
+    new_session = PartnerSession(id=str(uuid4()), balance=float(flask.request.values["balance"]),
+                                 api_key=flask.request.values["api_key"])
     db.session.add(new_session)
     db.session.commit()
 
@@ -1043,9 +1052,9 @@ def profile():
             current_user.freebet += current_user.freebet_usable
             current_user.freebet_usable = 0
 
-
             from tc_dogrulama import verify_id
-            if verify_id(int(values["id_no"]), " ".join(values["name"].split(" ")[0:-1]), values["name"].split(" ")[-1], int(str(values["dob"]).split("-")[0])):
+            if verify_id(int(values["id_no"]), " ".join(values["name"].split(" ")[0:-1]), values["name"].split(" ")[-1],
+                         int(str(values["dob"]).split("-")[0])):
                 user_info.id_verified = True
                 db.session.commit()
 
@@ -1305,7 +1314,16 @@ def admin_portal():
 
 @app.route("/bahis")
 def bahis():
-    open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime > datetime.datetime.now()).filter_by(has_odds=True).all()
+    open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime > datetime.datetime.now()).filter_by(
+        has_odds=True).all()
+    return flask.render_template("bahis/bahis.html", open_bets=open_bets)
+
+
+@app.route("/canli_bahis")
+def canli_bahis():
+    open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime < datetime.datetime.now(),
+                                     not OpenBet.live_betting_expired).filter_by(has_odds=True).all()
+
     return flask.render_template("bahis/bahis.html", open_bets=open_bets)
 
 
@@ -1320,6 +1338,13 @@ def take_bet(odd_id):
     if not current_user.is_authenticated:
         return flask.redirect("/login")
     bet_odd = BetOdd.query.get(odd_id)
+    if not bet_odd.bettable:
+        return '''
+            <script>
+                alert('Bahis kapandı')
+                document.location = '/bahis/mac/{bet_odd.bet_option.open_bet_fk}'
+            </script>
+        '''
     current_coupon = BetCoupon.query.filter_by(user_fk=current_user.id).filter_by(status="Oluşturuluyor").first()
     if not current_coupon:
         current_coupon = BetCoupon(user_fk=current_user.id, status="Oluşturuluyor", total_value=0)
@@ -1327,9 +1352,11 @@ def take_bet(odd_id):
         db.session.commit()
     if BetSelectedOption.query.filter_by(bet_odd_fk=odd_id).filter_by(bet_coupon_fk=current_coupon.id).first():
         return flask.redirect("/bahis")
-    new_coupon_bet = BetSelectedOption(bet_coupon_fk=current_coupon.id, bet_odd_fk=odd_id, bet_option_fk=bet_odd.bet_option_fk)
+    new_coupon_bet = BetSelectedOption(bet_coupon_fk=current_coupon.id, bet_odd_fk=odd_id,
+                                       bet_option_fk=bet_odd.bet_option_fk, reference_id=str(uuid4()))
 
-    if len(BetSelectedOption.query.filter_by(bet_coupon_fk=current_coupon.id).filter_by(bet_option_fk=bet_odd.bet_option_fk).all()) > 0:
+    if len(BetSelectedOption.query.filter_by(bet_coupon_fk=current_coupon.id).filter_by(
+            bet_option_fk=bet_odd.bet_option_fk).all()) > 0:
         return f'''
             <script>
                 alert('Aynı bahiste iki farklı seçenek kupona eklenemez.')
@@ -1361,6 +1388,13 @@ def coupon():
     if not current_user.is_authenticated:
         return flask.redirect("/login")
     current_coupon = BetCoupon.query.filter_by(user_fk=current_user.id).filter_by(status="Oluşturuluyor").first()
+    for i in BetSelectedOption.query.filter_by(bet_coupon_fk=current_coupon.id):
+        if not i.odd.bettable:
+            db.session.delete(i)
+            db.session.commit()
+            return flask.redirect("/coupon")
+        else:
+            i.odd_locked_in_rate = i.odd.odd
     if not current_coupon:
         current_coupon = BetCoupon(user_fk=current_user.id, status="Oluşturuluyor", total_value=0)
         db.session.add(current_coupon)
@@ -1385,6 +1419,12 @@ def coupon():
 
         current_coupon.status = "Oluşturuldu"
         current_coupon.total_value = float(flask.request.values["coupon_value"])
+
+        from cloudbet import place_bet
+        for i in current_coupon.all_selects:
+            if not place_bet(i.odd, i.reference_id):
+                raise ValueError
+
         if current_user.freebet:
             freebet_amount = current_user.freebet if current_user.freebet <= float(
                 flask.request.values["coupon_value"]) else float(flask.request.values["coupon_value"])
