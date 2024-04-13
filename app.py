@@ -26,15 +26,17 @@ from betting_utils import distribute_rewards, live_betting, instant_odds_update,
 schedule.clear()
 
 # schedule.every(3).hours.do(distribute_rewards)
-schedule.every(5).minutes.do(live_betting)
-schedule.every(5).seconds.do(instant_odds_update)
-schedule.every(24).hours.do(register_open_bet)
+# schedule.every(5).minutes.do(live_betting)
+# schedule.every(5).seconds.do(instant_odds_update)
+# schedule.every(24).hours.do(register_open_bet)
 
 
+'''
 def run_pending_jobs():
     while True:
         schedule.run_pending()
         time.sleep(1)
+'''
 
 
 # threading.Thread(target=run_pending_jobs).start()
@@ -1342,7 +1344,6 @@ def bahis():
 @app.route("/canli_bahis")
 def canli_bahis():
     open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime <= datetime.datetime.now()).filter_by(live_betting_expired=False).filter_by(has_odds=True).all()
-
     return flask.render_template("bahis/bahis.html", open_bets=open_bets)
 
 
@@ -1414,12 +1415,14 @@ def coupon():
         db.session.commit()
 
     for i in BetSelectedOption.query.filter_by(bet_coupon_fk=current_coupon.id):
+        if i.odd.bettable:
+            from cloudbet import cloudbet_instant_odd_update
+            cloudbet_instant_odd_update(i)
+            i.odd_locked_in_rate = i.odd.odd
         if not i.odd.bettable:
             db.session.delete(i)
             db.session.commit()
             return flask.redirect("/coupon")
-        else:
-            i.odd_locked_in_rate = i.odd.odd
     if flask.request.method == "POST":
         if current_user.freebet:
             if current_user.balance + current_user.freebet < float(flask.request.values["coupon_value"]):
