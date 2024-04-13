@@ -20,7 +20,7 @@ import schedule
 
 # from betting_utils import distribute_rewards, live_betting, instant_odds_update, register_open_bet
 
-# schedule.every(10).minutes.do(distribute_rewards)
+# schedule.every(3).hours.do(distribute_rewards)
 # schedule.every(5).minutes.do(live_betting)
 # schedule.every(5).seconds.do(instant_odds_update)
 # schedule.every(24).hours.do(register_open_bet)
