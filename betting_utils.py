@@ -40,7 +40,7 @@ def instant_odds_update(specific_match=None):
             for option in open_bet.bet_options:
                 for odd in option.bet_odds:
                     if odd.bettable:
-                        cloudbet_instant_odd_update()
+                        cloudbet_instant_odd_update(odd)
 
 
 def register_open_bet():
