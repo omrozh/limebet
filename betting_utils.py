@@ -85,7 +85,6 @@ def get_results(match_id):
     from app import app, db, OpenBet, BetOdd, BetOption, BetCoupon
     with app.app_context():
         r = requests.get(f'https://www.nosyapi.com/apiv2/service/bettable-result?matchID={match_id}&apiKey={api_key}')
-        print(r.json())
         for i in r.json().get("data")[0].get("bettableResult", []):
             game_id = i.get("gameID")
 
