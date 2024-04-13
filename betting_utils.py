@@ -33,8 +33,7 @@ def instant_odds_update(specific_match=None):
             for open_bet in open_bets:
                 for option in open_bet.bet_options:
                     for odd in option.bet_odds:
-                        if odd.bettable:
-                            cloudbet_instant_odd_update(odd)
+                        cloudbet_instant_odd_update(odd)
         else:
             open_bet = OpenBet.query.get(specific_match)
             for option in open_bet.bet_options:
