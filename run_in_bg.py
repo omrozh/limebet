@@ -1,6 +1,4 @@
-from app import run_pending_jobs, app
+from betting_utils import distribute_rewards, live_betting, instant_odds_update, register_open_bet
 
-with app.app_context():
-    run_pending_jobs()
-
-# latest process id: 1107711
+live_betting()
+instant_odds_update()
