@@ -549,6 +549,8 @@ class BetSelectedOption(db.Model):
     bet_option_fk = db.Column(db.Integer)
     odd_locked_in_rate = db.Column(db.Float)
     reference_id = db.Column(db.String)
+    match_name = db.Column(db.String)
+    game_name = db.Column(db.String)
 
     @property
     def odd(self):
@@ -1417,6 +1419,8 @@ def coupon():
         db.session.commit()
 
     for i in BetSelectedOption.query.filter_by(bet_coupon_fk=current_coupon.id):
+        i.match_name = i.odd.bet_option.match_name
+        i.game_name = i.odd.bet_option.game_name
         if i.odd.bettable:
             from cloudbet import cloudbet_instant_odd_update
             cloudbet_instant_odd_update(i.odd)
