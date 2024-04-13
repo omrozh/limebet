@@ -95,6 +95,7 @@ def live_betting():
                 j.bettable = False
                 j.bet_option_fk = 0
             db.session.delete(c)
+            db.session.commit()
 
     for i in get_bets(is_live=True):
         with app.app_context():
@@ -125,6 +126,7 @@ def live_betting():
                         )
                         db.session.add(new_bet_odd)
                     new_open_bet.live_betting_expired = False
+                db.session.commit()
 
     db.session.commit()
 
