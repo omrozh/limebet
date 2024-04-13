@@ -33,7 +33,6 @@ schedule.every(1).minutes.do(instant_odds_update)
 
 def run_pending_jobs():
     while True:
-        print("test")
         schedule.run_pending()
         time.sleep(1)
 
