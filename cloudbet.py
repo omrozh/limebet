@@ -83,12 +83,13 @@ def place_bet(bet_odd: BetOdd, reference_id):
     data = {
         "acceptPriceChange": "BETTER",
         "currency": "PLAY_EUR",
-        "eventId": open_bet.api_match_id,
-        "marketUrl": bet_odd.market_url,
-        "price": "1.00",
-        "referenceId": reference_id,
-        "stake": "0.1"
+        "eventId": str(open_bet.api_match_id),
+        "marketUrl": str(bet_odd.market_url),
+        "price": "1.02",
+        "referenceId": str(reference_id),
+        "stake": "1.1"
     }
+    print(data)
     response = requests.post(trading_url, headers=headers, data=data)
     print(response.text)
     return response.json().get("status") == "ACCEPTED" or response.json().get("status") == "PENDING_ACCEPTANCE"
