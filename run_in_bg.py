@@ -1,3 +1,6 @@
-from betting_utils import instant_odds_update
+from app import run_pending_jobs, app
 
-instant_odds_update()
+with app.app_context():
+    run_pending_jobs()
+
+# latest process id: 1107711
