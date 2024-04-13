@@ -35,6 +35,7 @@ def run_pending_jobs():
     if not __name__ == "__main__":
         return 0
     while True:
+        print("test")
         schedule.run_pending()
         time.sleep(1)
 
