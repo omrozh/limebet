@@ -27,7 +27,7 @@ schedule.clear()
 
 # schedule.every(3).hours.do(distribute_rewards)
 schedule.every(5).minutes.do(live_betting)
-schedule.every(5).seconds.do(instant_odds_update)
+# schedule.every(5).seconds.do(instant_odds_update)
 schedule.every(24).hours.do(register_open_bet)
 
 
@@ -1351,6 +1351,7 @@ def canli_bahis():
 @app.route("/bahis/mac/<bahis_id>")
 def bahis_mac(bahis_id):
     open_bet = OpenBet.query.get(bahis_id)
+    instant_odds_update(bahis_id)
     return flask.render_template("bahis/bahis_detay.html", open_bet=open_bet)
 
 
