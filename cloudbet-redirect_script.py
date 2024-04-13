@@ -18,7 +18,7 @@ def place_bet():
     data = flask.request.data.decode("utf-8")
     dictionary_out = {}
     for i in data.split("&"):
-        dictionary_out[i.split("=")[0]] = i.split("=")[1].replace("%2F", "/")
+        dictionary_out[i.split("=")[0]] = i.split("=")[1].replace("%2F", "/").replace("%3F", "?").replace("%3D", "=")
 
     dictionary_out = json.dumps(dictionary_out)
 
