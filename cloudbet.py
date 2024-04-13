@@ -108,9 +108,8 @@ def cloudbet_instant_odd_update(bet_odd: BetOdd):
         data = {
             "eventId": open_bet.api_match_id,
             "marketUrl": bet_odd.market_url,
-
         }
-        response = requests.post(odd_url, headers=headers, data=data)
+        response = requests.post(odd_url, headers=headers, data=json.dumps(data))
         for i in range(3):
             try:
                 bet_odd.bettable = response.json().get("status") == "SELECTION_ENABLED"
