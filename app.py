@@ -36,8 +36,6 @@ def run_pending_jobs():
         schedule.run_pending()
         time.sleep(1)
 
-print(__name__)
-
 if __name__ == "__main__":
     threading.Thread(target=run_pending_jobs).start()
 
@@ -1343,6 +1341,7 @@ def admin_portal():
 
 @app.route("/bahis")
 def bahis():
+    print(__name__)
     open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime > datetime.datetime.now()).filter_by(
         has_odds=True).all()
     return flask.render_template("bahis/bahis.html", open_bets=open_bets)
