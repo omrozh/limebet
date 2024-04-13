@@ -73,7 +73,7 @@ def get_odds_cloudbet(is_live=False):
 
 
 def place_bet(bet_odd: BetOdd, reference_id):
-    trading_url = f"https://sports-api.cloudbet.com/pub/v3/bets/place"
+    trading_url = f"https://sports-api.cloudbet.com/v3/bets/place"
     headers = {
         "accept": "application/json",
         "X-API-Key": api_key,
@@ -91,7 +91,6 @@ def place_bet(bet_odd: BetOdd, reference_id):
 
     }
     response = requests.post(trading_url, headers=headers, data=data)
-    print(response.text)
     return response.json().get("status") == "ACCEPTED" or response.json().get("status") == "PENDING_ACCEPTANCE"
 
 
