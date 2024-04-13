@@ -87,7 +87,7 @@ def get_results(match_id):
 
 
 def live_betting():
-    open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime < datetime.datetime.now()).all()
+    open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime < datetime.datetime.now()).filter_by(live_betting_expired=False).all()
     for i in open_bets:
         i.live_betting_expired = True
         for c in BetOption.query.filter_by(open_bet_fk=i.id):
