@@ -112,5 +112,5 @@ def cloudbet_instant_odd_update(bet_odd: BetOdd):
         }
         response = requests.post(odd_url, headers=headers, data=data)
         bet_odd.bettable = response.json().get("status") == "SELECTION_ENABLED"
-        bet_odd.odd = float(response.json().get("price"))
+        bet_odd.odd = float(response.json().get("price", 1))
         db.session.commit()
