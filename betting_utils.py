@@ -26,7 +26,6 @@ def get_bets(is_live=False):
 
 def instant_odds_update(specific_match=None):
     from app import app, db, OpenBet, BetOdd, BetOption, BetCoupon
-    print("running")
     with app.app_context():
         from cloudbet import cloudbet_instant_odd_update
         if not specific_match:
