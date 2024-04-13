@@ -286,7 +286,9 @@
         <div style="width: 80%; padding: 15px; text-align: left; color: white;">
       <h1 style="font-family: 'Open Sans', sans-serif; color: #6a4898">{{ open_bet.team_1 }} - {{ open_bet.team_2 }}</h1>
       {% for i in open_bet.bet_options %}
-        <h1 style="font-family: 'Open Sans', sans-serif">
+
+        {% if i.has_odds %}
+                <h1 style="font-family: 'Open Sans', sans-serif">
           {{ i.game_name }}
         </h1>
         <p>
@@ -309,6 +311,7 @@
                 {% endif %}
             {% endfor %}
         </div>
+        {% endif %}
       {% endfor %}
     </div>
     </center>

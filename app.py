@@ -580,6 +580,13 @@ class BetOption(db.Model):
 
         return unique_bet_odds
 
+    @property
+    def has_odds(self):
+        bet_odds = BetOdd.query.filter_by(bet_option_fk=self.id).filter_by(bettable=True).all()
+        return len(bet_odds) > 0
+
+
+
 
 class BetOdd(db.Model):
     id = db.Column(db.Integer, primary_key=True)
