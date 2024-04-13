@@ -35,6 +35,7 @@ is_thread_running = False
 
 
 def run_pending_jobs():
+    print("we do run")
     while True:
         schedule.run_pending()
         time.sleep(1)
