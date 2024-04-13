@@ -14,7 +14,7 @@ def get_odds_cloudbet(is_live=False):
         language_dictionary = json.loads(language_data.read())
 
     if not is_live:
-        event_url = f"https://sports-api.cloudbet.com/pub/v2/odds/events?sport=soccer&live=true"
+        event_url = f"https://sports-api.cloudbet.com/pub/v2/odds/events?sport=soccer&live=true&limit=1000&from={int(time.time())}&to={int(time.time() + 3600 * 24)}"
     else:
         event_url = f"https://sports-api.cloudbet.com/pub/v2/odds/events?sport=soccer&live=true&limit=1000"
 
