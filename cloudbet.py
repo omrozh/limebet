@@ -82,7 +82,7 @@ def place_bet(bet_odd: BetOdd, reference_id):
     open_bet = OpenBet.query.get(bet_odd.bet_option.open_bet_fk)
     market_url = bet_odd.market_url
     if len(market_url.split("?")[-1]) < 3:
-        market_url.replace("?", "")
+        market_url = market_url.replace("?", "")
     data = {
         "acceptPriceChange": "BETTER",
         "currency": "PLAY_EUR",
