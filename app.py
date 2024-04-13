@@ -18,11 +18,12 @@ from imap_tools import MailBox
 
 import schedule
 
-# from betting_utils import distribute_rewards, live_betting, instant_odds_update
+# from betting_utils import distribute_rewards, live_betting, instant_odds_update, register_open_bet
 
 # schedule.every(10).minutes.do(distribute_rewards)
 # schedule.every(5).minutes.do(live_betting)
 # schedule.every(5).seconds.do(instant_odds_update)
+# schedule.every(24).hours.do(register_open_bet)
 
 app = flask.Flask(__name__)
 
@@ -1387,6 +1388,11 @@ def coupon():
     if not current_user.is_authenticated:
         return flask.redirect("/login")
     current_coupon = BetCoupon.query.filter_by(user_fk=current_user.id).filter_by(status="Oluşturuluyor").first()
+    if not current_coupon:
+        current_coupon = BetCoupon(user_fk=current_user.id, status="Oluşturuluyor", total_value=0)
+        db.session.add(current_coupon)
+        db.session.commit()
+
     for i in BetSelectedOption.query.filter_by(bet_coupon_fk=current_coupon.id):
         if not i.odd.bettable:
             db.session.delete(i)
@@ -1394,10 +1400,6 @@ def coupon():
             return flask.redirect("/coupon")
         else:
             i.odd_locked_in_rate = i.odd.odd
-    if not current_coupon:
-        current_coupon = BetCoupon(user_fk=current_user.id, status="Oluşturuluyor", total_value=0)
-        db.session.add(current_coupon)
-        db.session.commit()
     if flask.request.method == "POST":
         if current_user.freebet:
             if current_user.balance + current_user.freebet < float(flask.request.values["coupon_value"]):
