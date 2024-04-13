@@ -92,11 +92,8 @@ def place_bet(bet_odd: BetOdd, reference_id):
         "referenceId": str(reference_id),
         "stake": "1.1"
     }
-    print(data)
-    raise ValueError
-    # response = requests.post(trading_url, headers=headers, data=data)
-    # print(response.text)
-    # return response.json().get("status") == "ACCEPTED" or response.json().get("status") == "PENDING_ACCEPTANCE"
+    response = requests.post(trading_url, headers=headers, data=data)
+    return response.json().get("status") == "ACCEPTED" or response.json().get("status") == "PENDING_ACCEPTANCE"
 
 
 def cloudbet_instant_odd_update(bet_odd: BetOdd):
