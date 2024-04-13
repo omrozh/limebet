@@ -81,7 +81,7 @@ def place_bet(bet_odd: BetOdd, reference_id):
     }
     open_bet = OpenBet.query.get(bet_odd.bet_option.open_bet_fk)
     market_url = bet_odd.market_url
-    print(market_url)
+    print(market_url.split("?"))
     if len(market_url.split("?")) == 1:
         market_url.replace("?", "")
     data = {
