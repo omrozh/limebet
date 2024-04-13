@@ -27,7 +27,7 @@ schedule.clear()
 
 # schedule.every(3).hours.do(distribute_rewards)
 schedule.every(5).minutes.do(live_betting)
-schedule.every(5).seconds.do(instant_odds_update)
+schedule.every(1).minutes.do(instant_odds_update)
 # schedule.every(24).hours.do(register_open_bet)
 
 
@@ -36,6 +36,7 @@ def run_pending_jobs():
         schedule.run_pending()
         time.sleep(1)
 
+print(__name__)
 
 if __name__ == "__main__":
     threading.Thread(target=run_pending_jobs).start()
