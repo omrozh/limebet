@@ -96,7 +96,7 @@ def place_bet(bet_odd: BetOdd, reference_id):
 
 def cloudbet_instant_odd_update(bet_odd: BetOdd):
     with app.app_context():
-        odd_url = f"https://sports-api.cloudbet.com/pub/v2/odds/lines"
+        odd_url = f"http://170.187.185.145/place/bet"
         headers = {
             "accept": "application/json",
             "X-API-Key": api_key,
