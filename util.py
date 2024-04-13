@@ -47,7 +47,6 @@ if argv[1] == "add-team":
         new_team = Team(team_name=argv[2].replace("-", " "))
         db.session.add(new_team)
         db.session.commit()
-        new_team.add_image(argv[3])
 
 if argv[1] == "list-teams":
     with app.app_context():

@@ -45,7 +45,8 @@ def register_open_bet():
                 league_icon_url=i.get("LeagueFlag"),
                 team_1=i.get("Team1"),
                 team_2=i.get("Team2"),
-                has_odds=False
+                has_odds=False,
+                live_betting_expired=False
             )
             db.session.add(new_open_bet)
             db.session.commit()

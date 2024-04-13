@@ -56,8 +56,8 @@ for c in data.split("\n"):
         print(f"{i.get('name')}: {i.get('price')}₺")
     input("Confirm: ")
 
-    os.system(f"python util.py add-team {team_name} {c.split(' ')[-1]}")
+    os.system(f"python util.py add-team {team_name}")
 
     for i in players:
         os.system(f"python util.py add-athlete {i.get('name')} {int(i.get('price'))} {i.get('team')}")
-        os.system(f"python util.py add-image {i.get('name')} {i.get('image_url')}")
+
