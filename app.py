@@ -468,6 +468,13 @@ class OpenBet(db.Model):
                 unique_game_names.append(i.game_name)
         return unique_games
 
+    @property
+    def has_live_odds(self):
+        for i in self.bet_options:
+            if i.has_odds:
+                return True
+        return False
+
 
 class BetCoupon(db.Model):
     id = db.Column(db.Integer, primary_key=True)
