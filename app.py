@@ -32,8 +32,6 @@ schedule.every(1).minutes.do(instant_odds_update)
 
 
 def run_pending_jobs():
-    if not __name__ == "__main__":
-        return 0
     while True:
         print("test")
         schedule.run_pending()
