@@ -37,7 +37,7 @@ def run_pending_jobs():
         time.sleep(1)
 
 
-threading.Thread(target=run_pending_jobs).start()
+# threading.Thread(target=run_pending_jobs).start()
 
 app = flask.Flask(__name__)
 
