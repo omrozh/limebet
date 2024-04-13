@@ -30,20 +30,12 @@ schedule.every(5).minutes.do(live_betting)
 schedule.every(1).minutes.do(instant_odds_update)
 # schedule.every(24).hours.do(register_open_bet)
 
-global is_thread_running
-is_thread_running = False
-
 
 def run_pending_jobs():
-    print("we do run")
     while True:
         schedule.run_pending()
         time.sleep(1)
 
-
-if not is_thread_running:
-    threading.Thread(target=run_pending_jobs).start()
-    is_thread_running = True
 
 app = flask.Flask(__name__)
 
