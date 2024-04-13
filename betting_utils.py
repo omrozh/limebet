@@ -3,8 +3,6 @@ import datetime
 import requests
 import sys
 
-from cloudbet import get_odds_cloudbet
-
 #api_key = "zHMFjNS3bRu7vNgUrtr6JPMwOD5Jcuer7O9yw9pwNZMX4XBFwe2tazdyQLsq"
 api_key = "na"
 
@@ -21,6 +19,7 @@ def get_odds(match_id):
 
 
 def get_bets(is_live=False):
+    from cloudbet import get_odds_cloudbet
     return get_odds_cloudbet(is_live=is_live)
 
 
