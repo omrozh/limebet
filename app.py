@@ -1416,7 +1416,7 @@ def coupon():
     for i in BetSelectedOption.query.filter_by(bet_coupon_fk=current_coupon.id):
         if i.odd.bettable:
             from cloudbet import cloudbet_instant_odd_update
-            cloudbet_instant_odd_update(i)
+            cloudbet_instant_odd_update(i.odd)
             i.odd_locked_in_rate = i.odd.odd
         if not i.odd.bettable:
             db.session.delete(i)
