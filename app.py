@@ -32,11 +32,13 @@ schedule.every(1).minutes.do(instant_odds_update)
 
 
 def run_pending_jobs():
+    print(__name__)
     while True:
         schedule.run_pending()
         time.sleep(1)
 
-if __name__ == "__main__":
+
+if __name__ == "app":
     threading.Thread(target=run_pending_jobs).start()
 
 app = flask.Flask(__name__)
@@ -1341,7 +1343,6 @@ def admin_portal():
 
 @app.route("/bahis")
 def bahis():
-    print(__name__)
     open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime > datetime.datetime.now()).filter_by(
         has_odds=True).all()
     return flask.render_template("bahis/bahis.html", open_bets=open_bets)
