@@ -25,7 +25,6 @@ def get_bets(is_live=False):
 
 def instant_odds_update():
     from app import app, db, OpenBet, BetOdd, BetOption, BetCoupon
-    print("updating odds")
     with app.app_context():
         from cloudbet import cloudbet_instant_odd_update
         open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime < datetime.datetime.now()).all()
