@@ -30,6 +30,16 @@ schedule.clear()
 schedule.every(1).minutes.do(instant_odds_update)
 # schedule.every(24).hours.do(register_open_bet)
 
+
+def run_pending_jobs():
+    return 0
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+
+
+threading.Thread(target=run_pending_jobs).start()
+
 app = flask.Flask(__name__)
 
 games_and_descriptions = {
