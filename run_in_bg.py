@@ -1,4 +1,3 @@
-from betting_utils import distribute_rewards, live_betting, instant_odds_update, register_open_bet
+from betting_utils import instant_odds_update
 
-live_betting()
 instant_odds_update()
