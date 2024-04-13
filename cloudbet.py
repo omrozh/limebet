@@ -80,6 +80,9 @@ def place_bet(bet_odd: BetOdd, reference_id):
         "Content-Type": "application/json"
     }
     open_bet = OpenBet.query.get(bet_odd.bet_option.open_bet_fk)
+    market_url = bet_odd.market_url
+    if len(market_url.split("?")) == 0:
+        market_url.replace("?", "")
     data = {
         "acceptPriceChange": "BETTER",
         "currency": "PLAY_EUR",
@@ -90,9 +93,10 @@ def place_bet(bet_odd: BetOdd, reference_id):
         "stake": "1.1"
     }
     print(data)
-    response = requests.post(trading_url, headers=headers, data=data)
-    print(response.text)
-    return response.json().get("status") == "ACCEPTED" or response.json().get("status") == "PENDING_ACCEPTANCE"
+    raise ValueError
+    # response = requests.post(trading_url, headers=headers, data=data)
+    # print(response.text)
+    # return response.json().get("status") == "ACCEPTED" or response.json().get("status") == "PENDING_ACCEPTANCE"
 
 
 def cloudbet_instant_odd_update(bet_odd: BetOdd):
