@@ -15,12 +15,12 @@ def place_bet():
         "X-API-Key": api_key,
         "Content-Type": "application/json"
     }
-    print("data")
-    print(flask.request.data)
-    print("json")
-    print(flask.request.json)
-    data = flask.request.values
-    print("values")
-    print(data)
-    response = requests.post(trading_url, headers=headers, data=data)
+    data = flask.request.data.decode("utf-8")
+    dictionary_out = {}
+    for i in data.split("&"):
+        dictionary_out[i.split("=")[0]] = i.split("=")[1].replace("%2F", "/")
+
+    dictionary_out = json.dumps(dictionary_out)
+
+    response = requests.post(trading_url, headers=headers, data=dictionary_out)
     return flask.jsonify(response.json())

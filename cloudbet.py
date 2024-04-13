@@ -93,6 +93,7 @@ def place_bet(bet_odd: BetOdd, reference_id):
         "stake": "1.1"
     }
     response = requests.post(trading_url, headers=headers, data=data)
+    print(response.text)
     return response.json().get("status") == "ACCEPTED" or response.json().get("status") == "PENDING_ACCEPTANCE"
 
 
