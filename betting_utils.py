@@ -25,23 +25,23 @@ def get_bets(is_live=False):
 
 
 def instant_odds_update(specific_match=None):
-    print("Updating odds")
     from app import app, db, OpenBet, BetOdd, BetOption, BetCoupon
     with app.app_context():
         from cloudbet import cloudbet_instant_odd_update
         if not specific_match:
+            print("Updating odds")
             open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime < datetime.datetime.now()).all()
             for open_bet in open_bets:
                 for option in open_bet.bet_options:
                     for odd in option.bet_odds:
                         cloudbet_instant_odd_update(odd)
+            print("Updated odds")
         else:
             open_bet = OpenBet.query.get(specific_match)
             for option in open_bet.bet_options:
                 for odd in option.bet_odds:
                     if odd.bettable:
                         cloudbet_instant_odd_update(odd)
-    print("Updated odds")
 
 def register_open_bet():
     from app import app, db, OpenBet, BetOdd, BetOption, BetCoupon
