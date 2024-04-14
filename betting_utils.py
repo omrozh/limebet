@@ -25,6 +25,7 @@ def get_bets(is_live=False):
 
 
 def instant_odds_update(specific_match=None):
+    print("Updating odds")
     from app import app, db, OpenBet, BetOdd, BetOption, BetCoupon
     with app.app_context():
         from cloudbet import cloudbet_instant_odd_update
@@ -97,6 +98,7 @@ def get_results(match_id):
 
 
 def live_betting():
+    print("Live bet update options")
     from app import app, db, OpenBet, BetOdd, BetOption, BetCoupon
 
     with app.app_context():
