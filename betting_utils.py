@@ -41,7 +41,7 @@ def instant_odds_update(specific_match=None):
                 for odd in option.bet_odds:
                     if odd.bettable:
                         cloudbet_instant_odd_update(odd)
-
+    print("Updated odds")
 
 def register_open_bet():
     from app import app, db, OpenBet, BetOdd, BetOption, BetCoupon
