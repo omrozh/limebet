@@ -6,3 +6,4 @@ with app.app_context():
 # latest process id: kmcron
 # tmux attach-session -t
 # tmux ls
+# tmux new -s kmcron
