@@ -43,6 +43,7 @@ def instant_odds_update(specific_match=None):
                     if odd.bettable:
                         cloudbet_instant_odd_update(odd)
 
+
 def register_open_bet():
     from app import app, db, OpenBet, BetOdd, BetOption, BetCoupon
     with app.app_context():
@@ -151,6 +152,7 @@ def live_betting():
                 db.session.commit()
         except:
             pass
+    print("Live bet updated options")
 
 # Integrate distribute_rewards for cloudbet and make it so people should click on the coupon to claim rewards.
 
