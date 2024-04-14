@@ -102,52 +102,55 @@ def live_betting():
     from app import app, db, OpenBet, BetOdd, BetOption, BetCoupon
 
     with app.app_context():
-        open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime < datetime.datetime.now()).filter_by(
-            live_betting_expired=False).all()
-        for i in open_bets:
-            i.live_betting_expired = True
-            for c in BetOption.query.filter_by(open_bet_fk=i.id):
-                for j in BetOdd.query.filter_by(bet_option_fk=c.id):
-                    j.bettable = False
-                    j.bet_option_fk = 0
-                db.session.delete(c)
-                db.session.commit()
+        try:
+            with db.session.no_autoflush:
+                open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime < datetime.datetime.now()).filter_by(
+                    live_betting_expired=False).all()
+                for i in open_bets:
+                    i.live_betting_expired = True
+                    for c in BetOption.query.filter_by(open_bet_fk=i.id):
+                        for j in BetOdd.query.filter_by(bet_option_fk=c.id):
+                            j.bettable = False
+                            j.bet_option_fk = 0
+                        db.session.delete(c)
+                        db.session.commit()
 
-        for i in get_bets(is_live=True):
-            with app.app_context():
-                new_open_bet = OpenBet.query.filter_by(api_match_id=i.get("MatchID")).first()
-                if not new_open_bet:
-                    continue
-                for bet_option in i.get("Bets"):
-                    new_bet_option = BetOption(
-                        game_name=bet_option.get("gameName"),
-                        game_details=bet_option.get("gameDetails"),
-                        open_bet_fk=new_open_bet.id
-                    )
-                    db.session.add(new_bet_option)
-                    for bet_odd in bet_option.get("odds"):
-                        new_bet_odd = BetOdd.query.filter_by(game_id=bet_odd.get("gameID")).first()
-                        if new_bet_odd:
-                            new_bet_odd.odd = bet_odd.get("odd")
-                            new_bet_odd.bettable = True
-                            new_bet_odd.market_url = bet_odd.get("market_url")
-                            new_bet_odd.bet_option_fk = new_bet_option.id
-
-                        else:
-                            new_bet_odd = BetOdd(
-                                game_id=bet_odd.get("gameID"),
-                                odd=bet_odd.get("odd"),
-                                value=bet_odd.get("value"),
-                                bet_option_fk=new_bet_option.id,
-                                bettable=True,
-                                market_url=bet_odd.get("market_url")
+                for i in get_bets(is_live=True):
+                    with app.app_context():
+                        new_open_bet = OpenBet.query.filter_by(api_match_id=i.get("MatchID")).first()
+                        if not new_open_bet:
+                            continue
+                        for bet_option in i.get("Bets"):
+                            new_bet_option = BetOption(
+                                game_name=bet_option.get("gameName"),
+                                game_details=bet_option.get("gameDetails"),
+                                open_bet_fk=new_open_bet.id
                             )
-                            db.session.add(new_bet_odd)
-                        new_open_bet.live_betting_expired = False
-                    db.session.commit()
+                            db.session.add(new_bet_option)
+                            for bet_odd in bet_option.get("odds"):
+                                new_bet_odd = BetOdd.query.filter_by(game_id=bet_odd.get("gameID")).first()
+                                if new_bet_odd:
+                                    new_bet_odd.odd = bet_odd.get("odd")
+                                    new_bet_odd.bettable = True
+                                    new_bet_odd.market_url = bet_odd.get("market_url")
+                                    new_bet_odd.bet_option_fk = new_bet_option.id
 
-        db.session.commit()
+                                else:
+                                    new_bet_odd = BetOdd(
+                                        game_id=bet_odd.get("gameID"),
+                                        odd=bet_odd.get("odd"),
+                                        value=bet_odd.get("value"),
+                                        bet_option_fk=new_bet_option.id,
+                                        bettable=True,
+                                        market_url=bet_odd.get("market_url")
+                                    )
+                                    db.session.add(new_bet_odd)
+                                new_open_bet.live_betting_expired = False
+                            db.session.commit()
 
+                db.session.commit()
+        except:
+            pass
 
 # Integrate distribute_rewards for cloudbet and make it so people should click on the coupon to claim rewards.
 
