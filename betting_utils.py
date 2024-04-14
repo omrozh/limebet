@@ -49,6 +49,8 @@ def register_open_bet():
     with app.app_context():
         for i in get_bets():
             with app.app_context():
+                if len(OpenBet.query.filter_by(api_match_id=i.get("MatchID")).all()) > 0:
+                    continue
                 new_open_bet = OpenBet(
                     api_match_id=i.get("MatchID"),
                     bet_ending_datetime=i.get("DateTime"),
