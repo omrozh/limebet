@@ -321,6 +321,13 @@
                             <td><a href="/bahis/mac/{{i.id}}" style="color: white;">Detaylar</a></td>
                           </tr>
                         {% endif %}
+                    {% else %}
+                        <tr class="searchable-div" style="color: white;">
+                            <td>{{ i.match_league }}</td>
+                            <td>{{i.bet_ending_datetime}}</td>
+                            <td>{{ i.team_1 }} - {{ i.team_2 }}</td>
+                            <td><a href="/bahis/mac/{{i.id}}" style="color: white;">Detaylar</a></td>
+                        </tr>
                     {% endif %}
                     {% endfor %}
                 </tbody>
