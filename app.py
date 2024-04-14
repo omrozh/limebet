@@ -33,8 +33,11 @@ schedule.every(24).hours.do(register_open_bet)
 
 def run_pending_jobs():
     while True:
-        schedule.run_pending()
-        time.sleep(1)
+        try:
+            schedule.run_pending()
+            time.sleep(1)
+        except:
+            pass
 
 
 app = flask.Flask(__name__)
