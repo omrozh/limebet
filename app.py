@@ -1343,13 +1343,13 @@ def admin_portal():
 def bahis():
     open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime > datetime.datetime.now()).filter_by(
         has_odds=True).all()
-    return flask.render_template("bahis/bahis.html", open_bets=open_bets)
+    return flask.render_template("bahis/bahis.html", open_bets=open_bets, canli_bahis=False)
 
 
 @app.route("/canli_bahis")
 def canli_bahis():
     open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime <= datetime.datetime.now()).filter_by(live_betting_expired=False).filter_by(has_odds=True).all()
-    return flask.render_template("bahis/bahis.html", open_bets=open_bets)
+    return flask.render_template("bahis/bahis.html", open_bets=open_bets, canli_bahis=True)
 
 
 @app.route("/bahis/mac/<bahis_id>")

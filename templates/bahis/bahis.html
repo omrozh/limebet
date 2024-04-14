@@ -285,7 +285,18 @@
     <center style="background-color: #0f1012; width: 87%; border-radius: 15px">
 
         <br>
-        <h1 style="font-family: 'Protest Guerrilla', sans-serif; text-align: left; color: white; width: 80%">Bugünün Maçları</h1>
+        <h1 style="font-family: 'Protest Guerrilla', sans-serif; text-align: left; color: white; width: 80%; display: inline-block">Bugünün Maçları</h1>
+        {% if canli_bahis %}
+            <p onclick="document.location = '/bahis'" style="color: indianred; text-align: left; width: 80%; display: inline-block; margin-top: 0;">
+                <span style="height: 10px; width: 10px; background-color: indianred; border-radius: 50%; display: inline-block;"></span>
+                Canlı Bahis
+            </p>
+        {% else %}
+            <p onclick="document.location = '/canli_bahis'" style="color: gray; text-align: left; width: 80%; display: inline-block; margin-top: 0;">
+                <span style="height: 10px; width: 10px; background-color: gray; border-radius: 50%; display: inline-block;"></span>
+                Canlı Bahis
+            </p>
+        {% endif %}
         <br>
         <input type="text" oninput="searchBet()" id="search-box" style="padding: 10px 15px; font-family: sans-serif; outline: none; font-size: 1rem; width: 80%; box-sizing: border-box;" placeholder="Bahis Ara">
       <br>
