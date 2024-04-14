@@ -119,3 +119,14 @@ def cloudbet_instant_odd_update(bet_odd: BetOdd):
             except:
                 time.sleep(0.05)
                 pass
+
+
+def get_status_of_bet(bet_reference_id):
+    odd_url = f"https://sports-api.cloudbet.com/pub/v3/bets/{bet_reference_id}/status"
+    headers = {
+        "accept": "application/json",
+        "X-API-Key": api_key,
+        "Content-Type": "application/json"
+    }
+    response = requests.get(odd_url, headers=headers)
+    return response.json().get("status")

@@ -178,4 +178,3 @@ def distribute_rewards():
             except Exception as e:
                 pass
 
-

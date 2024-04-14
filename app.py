@@ -1104,6 +1104,34 @@ def index():
     return flask.render_template("anasayfa.html")
 
 
+@app.route("/claim/bet/<bet_coupon_id>")
+@login_required
+def coupon_id(bet_coupon_id):
+    from cloudbet import get_status_of_bet
+    bet_coupon = BetCoupon.query.get(bet_coupon_id)
+    total_reward = bet_coupon.total_value
+    for i in bet_coupon.all_selects:
+        bet_status = get_status_of_bet(i.reference_id)
+        if bet_status == "WIN":
+            total_reward *= i.odd_locked_in_rate
+        if bet_status == "HALF_WIN":
+            total_reward *= i.odd_locked_in_rate/2
+        if bet_status == "HALF_LOSS":
+            total_reward *= .5
+        if bet_status == "ACCEPTED" or bet_status == "PENDING_ACCEPTANCE":
+            return flask.redirect("/profile")
+        if bet_status == "PARTIAL":
+            total_reward = 0
+        if bet_status == "LOSS":
+            total_reward = 0
+        else:
+            return flask.redirect("/profile")
+
+    current_user.balance += total_reward
+    db.session.commit()
+    return flask.redirect("/profile")
+
+
 @app.route("/fantezi")
 def fantezi():
     competitions = Competition.query.filter(
