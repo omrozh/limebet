@@ -74,10 +74,10 @@ def register_open_bet():
                     for bet_odd in bet_option.get("odds"):
                         new_bet_odd = BetOdd(
                             game_id=bet_odd.get("gameID"),
-                            odd=bet_odd.get("odd").replace("Home", new_open_bet.team_1).replace(
+                            odd=bet_odd.get("odd"),
+                            value=bet_odd.get("value").replace("Home", new_open_bet.team_1).replace(
                                 "home", new_open_bet.team_1).replace("away", new_open_bet.team_2).replace(
                                 "Away", new_open_bet.team_2).replace("Draw", "Berabere").replace("draw", "berabere"),
-                            value=bet_odd.get("value"),
                             bet_option_fk=new_bet_option.id,
                             bettable=True,
                             market_url=bet_odd.get("market_url")
