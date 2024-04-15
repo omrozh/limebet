@@ -3,8 +3,10 @@ import time
 
 import requests
 import sys
+from googletrans import Translator
+translator = Translator()
 
-#api_key = "zHMFjNS3bRu7vNgUrtr6JPMwOD5Jcuer7O9yw9pwNZMX4XBFwe2tazdyQLsq"
+# api_key = "zHMFjNS3bRu7vNgUrtr6JPMwOD5Jcuer7O9yw9pwNZMX4XBFwe2tazdyQLsq"
 api_key = "na"
 
 
@@ -65,7 +67,7 @@ def register_open_bet():
                 db.session.commit()
                 for bet_option in i.get("Bets"):
                     new_bet_option = BetOption(
-                        game_name=bet_option.get("gameName"),
+                        game_name=translator.translate(bet_option.get("gameName"), dest='tr'),
                         game_details=bet_option.get("gameDetails"),
                         open_bet_fk=new_open_bet.id
                     )
@@ -74,7 +76,9 @@ def register_open_bet():
                     for bet_odd in bet_option.get("odds"):
                         new_bet_odd = BetOdd(
                             game_id=bet_odd.get("gameID"),
-                            odd=bet_odd.get("odd"),
+                            odd=bet_odd.get("odd").replace("Home", new_open_bet.team_1).replace(
+                                "home", new_open_bet.team_1).replace("away", new_open_bet.team_2).replace(
+                                "Away", new_open_bet.team_2).replace("Draw", "Berabere").replace("draw", "berabere"),
                             value=bet_odd.get("value"),
                             bet_option_fk=new_bet_option.id,
                             bettable=True,
@@ -156,13 +160,15 @@ def live_betting():
             pass
     print("Live bet updated options")
 
+
 # Integrate distribute_rewards for cloudbet and make it so people should click on the coupon to claim rewards.
 
 
 def distribute_rewards():
     from app import app, db, OpenBet, BetOdd, BetOption, BetCoupon
     with app.app_context():
-        for i in OpenBet.query.filter(OpenBet.bet_ending_datetime < datetime.datetime.now() + datetime.timedelta(hours=3)).all():
+        for i in OpenBet.query.filter(
+                OpenBet.bet_ending_datetime < datetime.datetime.now() + datetime.timedelta(hours=3)).all():
             try:
                 i.update_results()
                 db.session.delete(i)
@@ -177,4 +183,3 @@ def distribute_rewards():
                 db.session.commit()
             except Exception as e:
                 pass
-
