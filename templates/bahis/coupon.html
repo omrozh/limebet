@@ -315,12 +315,12 @@
                       <tr class="searchable-div" style="color: white;">
                         <td>{{ i.bet_option.game_name }}</td>
                         <td>{{i.bet_option.match_name}}</td>
-                        <td> {{ i.odd }}</td>
-                          {% if i.id in changed_odds %}
-                            <td class="bet-odd">{{ i.value }}</td>
+                        {% if i.id in changed_odds %}
+                            <td class="bet-odd">{{ i.odd }}</td>
                           {% else %}
                             <td>{{ i.value }}</td>
                           {% endif %}
+                          <td>{{ i.value }}</td>
                         <td onclick="document.location = '/remove_bet/{{ i.id }}'">X</td>
                       </tr>
                     {% endfor %}
