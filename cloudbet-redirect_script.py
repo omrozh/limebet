@@ -37,4 +37,4 @@ def check_bet(bet_reference_id):
         "Content-Type": "application/json"
     }
     response = requests.get(odd_url, headers=headers)
-    return flask.jsonify(response)
+    return flask.jsonify(response.json())
