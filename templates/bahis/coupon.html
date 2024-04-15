@@ -327,6 +327,13 @@
                 </tbody>
             </table>
             <br style="clear: both">
+            <div style="background-color: black; box-shadow: rgba(109, 107, 105, 0.2) 0px 8px 24px; position: absolute; bottom: 120px; box-sizing: border-box; color: white; right: 0; display: none;" id="bet-added">
+                <div style="margin: 15px">
+                    Oranlar Güncellendi
+                </div>
+
+                <div id="bet-added-loadbar" style="background-color: #7b00ff; width: 100%; height: 2px; float: right"></div>
+            </div>
           <div style="text-align: left">
                   <form method="post" enctype="multipart/form-data"><input type="text" id="coupon-val" name="coupon_value" oninput="calculateTotalPrize()" style="padding: 10px 15px; font-family: sans-serif; outline: none; font-size: 1rem; width: 80%; box-sizing: border-box; margin-left: 10%" placeholder="Kupon Tutarı"><span style="color: white; margin-left: 5px">₺</span>
                   <br>
@@ -335,6 +342,17 @@
               </form>
           </div>
                   <script>
+                       let decreaseInterval = setInterval(decreaseBetAddedLoadbar, 30)
+                        function decreaseBetAddedLoadbar(){
+                            if(parseInt(document.getElementById("bet-added-loadbar").style.width.replace("%", "")) === 0){
+                                clearInterval(decreaseInterval);
+                            }
+                            document.getElementById("bet-added-loadbar").style.width = parseInt(document.getElementById("bet-added-loadbar").style.width.replace("%", "")) - 1 + "%"
+                        }
+                       {% if odds_did_change %}
+                           document.getElementById("bet-added").style.display = "block";
+                            setTimeout(betAdded, 3000)
+                       {% endif %}
                       setTimeout(updateBetOddStyle, 500)
                       function updateBetOddStyle(){
                           let betOdds = document.getElementsByClassName("bet-odd")
