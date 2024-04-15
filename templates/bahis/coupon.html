@@ -349,6 +349,9 @@
                             }
                             document.getElementById("bet-added-loadbar").style.width = parseInt(document.getElementById("bet-added-loadbar").style.width.replace("%", "")) - 1 + "%"
                         }
+                        function betAdded(){
+                            document.getElementById("bet-added").style.display = "none";
+                        }
                        {% if odds_did_change %}
                            document.getElementById("bet-added").style.display = "block";
                             setTimeout(betAdded, 3000)
