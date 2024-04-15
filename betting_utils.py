@@ -3,8 +3,6 @@ import time
 
 import requests
 import sys
-from googletrans import Translator
-translator = Translator()
 
 # api_key = "zHMFjNS3bRu7vNgUrtr6JPMwOD5Jcuer7O9yw9pwNZMX4XBFwe2tazdyQLsq"
 api_key = "na"
@@ -67,7 +65,7 @@ def register_open_bet():
                 db.session.commit()
                 for bet_option in i.get("Bets"):
                     new_bet_option = BetOption(
-                        game_name=translator.translate(bet_option.get("gameName"), dest='tr'),
+                        game_name=bet_option.get("gameName"),
                         game_details=bet_option.get("gameDetails"),
                         open_bet_fk=new_open_bet.id
                     )
