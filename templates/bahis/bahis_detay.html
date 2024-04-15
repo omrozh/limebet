@@ -369,6 +369,13 @@
         }
     </script></center>
     <script>
+        var url_string = window.location
+        var url = new URL(url_string);
+        var c = url.searchParams.get("added_new");
+        if (c === "True"){
+            document.getElementById("bet-added").style.display = "block";
+            setTimeout(betAdded, 3000)
+        }
         function openMobileMenu(){
             let mobile_menu = document.getElementById("mobile-menu");
             if(mobile_menu.style.display === "block"){
@@ -381,18 +388,13 @@
         }
         if (window.innerWidth < window.innerHeight) {
             document.getElementById("mobile-home").style.display = "block";
+            document.getElementById("desktop-join").style.marginTop = "5px";
+            document.getElementById("desktop-join").style += "; float: right; width: 300px; overflow-x: auto; white-space: nowrap; padding-top: 10px; margin-top: -13px"
         } else {
            document.getElementById("mobile-home").style.display = "none";
         }
         function betAdded(){
             document.getElementById("bet-added").style.display = "none";
-        }
-        var url_string = window.location
-        var url = new URL(url_string);
-        var c = url.searchParams.get("added_new");
-        if (c === "True"){
-            document.getElementById("bet-added").style.display = "block";
-            setTimeout(betAdded, 3000)
         }
     </script>
     </div></div>
