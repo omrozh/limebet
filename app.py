@@ -1450,7 +1450,7 @@ def coupon():
         db.session.commit()
 
     for i in BetSelectedOption.query.filter_by(bet_coupon_fk=current_coupon.id):
-        if not i.bet_option:
+        if not i.odd or not i.odd.bet_option:
             db.session.delete(i)
             db.session.commit()
             continue
