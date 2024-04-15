@@ -26,3 +26,15 @@ def place_bet():
 
     response = requests.post(trading_url, headers=headers, data=dictionary_out)
     return flask.jsonify(response.json())
+
+
+@app.route("/check/bet/<bet_reference_id>")
+def check_bet(bet_reference_id):
+    odd_url = f"https://sports-api.cloudbet.com/pub/v3/bets/{bet_reference_id}/status"
+    headers = {
+        "accept": "application/json",
+        "X-API-Key": api_key,
+        "Content-Type": "application/json"
+    }
+    response = requests.get(odd_url, headers=headers)
+    return flask.jsonify(response)
