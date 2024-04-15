@@ -122,12 +122,11 @@ def cloudbet_instant_odd_update(bet_odd: BetOdd):
 
 
 def get_status_of_bet(bet_reference_id):
-    odd_url = f"http://170.187.185.145/chec/bet/{bet_reference_id}"
+    odd_url = f"http://170.187.185.145/check/bet/{bet_reference_id}"
     headers = {
         "accept": "application/json",
         "X-API-Key": api_key,
         "Content-Type": "application/json"
     }
     response = requests.get(odd_url, headers=headers)
-    print(response.text)
     return response.json().get("status")
