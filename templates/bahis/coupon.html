@@ -319,7 +319,7 @@
                           {% if i.id in changed_odds %}
                             <td class="bet-odd">{{ i.value }}</td>
                           {% else %}
-                            <td class="bet-odd">{{ i.value }}</td>
+                            <td>{{ i.value }}</td>
                           {% endif %}
                         <td onclick="document.location = '/remove_bet/{{ i.id }}'">X</td>
                       </tr>
