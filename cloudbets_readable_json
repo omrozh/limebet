@@ -1016,7 +1016,7 @@
 		}
 	},
 	"beach_soccer.match_odds": {
-		"Name": "Match Odds",
+		"Name": "Kim Kazanır?",
 		"Primary": true,
 		"Variables": [],
 		"Split": "period=ft",
@@ -4131,7 +4131,7 @@
 		}
 	},
 	"soccer.asian_handicap": {
-		"Name": "Asian Handicap",
+		"Name": "Asya Handikap",
 		"Primary": true,
 		"Description": "See our [article on Asian Handicap](/{{locale}}/blog/betting-strategy/what-are-asian-handicaps/)",
 		"Variables": [
@@ -4145,7 +4145,7 @@
 		}
 	},
 	"soccer.asian_handicap_period_extratime": {
-		"Name": "Asian Handicap - Extra Time",
+		"Name": "Asya Handikap - Uzatmalar",
 		"Variables": [
 			"handicap"
 		],
@@ -4156,7 +4156,7 @@
 		}
 	},
 	"soccer.asian_handicap_period_first_half": {
-		"Name": "1st Half Asian Handicap",
+		"Name": "1.Yarı Asya Handikap",
 		"Variables": [
 			"handicap"
 		],
@@ -4167,7 +4167,7 @@
 		}
 	},
 	"soccer.asian_handicap_period_second_half": {
-		"Name": "2nd Half Asian Handicap",
+		"Name": "2.Yarı Asya Handikap",
 		"Variables": [
 			"handicap"
 		],
@@ -4178,7 +4178,7 @@
 		}
 	},
 	"soccer.both_teams_to_score": {
-		"Name": "Both teams to score",
+		"Name": "Karşılıklı gol",
 		"Variables": [],
 		"Split": "period=ft",
 		"Outcomes": {
@@ -4187,7 +4187,7 @@
 		}
 	},
 	"soccer.correct_score": {
-		"Name": "Correct Score",
+		"Name": "Maç Skoru",
 		"Variables": [],
 		"Split": "period=ft",
 		"Outcomes": {
@@ -4196,7 +4196,7 @@
 		}
 	},
 	"soccer.correct_score_period_1st_half": {
-		"Name": "1st half - Correct Score",
+		"Name": "1.Yarı Maç Skoru",
 		"Variables": [],
 		"Split": "period=ft\u0026period=1h\u0026period=2h",
 		"Outcomes": {
@@ -4205,7 +4205,7 @@
 		}
 	},
 	"soccer.correct_score_period_2nd_half": {
-		"Name": "2nd half - correct score",
+		"Name": "2.Yarı Maç Skoru",
 		"Variables": [],
 		"Split": "period=ft\u0026period=1h\u0026period=2h",
 		"Outcomes": {
@@ -4214,7 +4214,7 @@
 		}
 	},
 	"soccer.double_chance": {
-		"Name": "Double chance",
+		"Name": "Çifte Şans",
 		"Variables": [],
 		"Split": "period=ft",
 		"Outcomes": {
@@ -4224,7 +4224,7 @@
 		}
 	},
 	"soccer.draw_no_bet": {
-		"Name": "Draw no bet",
+		"Name": "Beraberliksiz maç sonucu",
 		"Variables": [],
 		"Split": "period=ft",
 		"Outcomes": {
@@ -4233,7 +4233,7 @@
 		}
 	},
 	"soccer.exact_total_goals_period_first_half": {
-		"Name": "1st Half Exact Total Goals",
+		"Name": "1.Yarı Toplam Gol",
 		"Variables": [
 			"goals"
 		],
@@ -4243,7 +4243,7 @@
 		}
 	},
 	"soccer.exact_total_goals_period_second_half": {
-		"Name": "2nd Half Exact Total Goals",
+		"Name": "2.Yarı Toplam Gol",
 		"Variables": [
 			"goals"
 		],
@@ -4253,7 +4253,7 @@
 		}
 	},
 	"soccer.halftime_fulltime_result": {
-		"Name": "Halftime / Fulltime",
+		"Name": "İlk Yarı / Maç Sonucu",
 		"Description": "Market on both the result at half-time and the result at the end of 90 minutes",
 		"Variables": [],
 		"Split": "period=1h\u0026period=ft",
@@ -4270,7 +4270,7 @@
 		}
 	},
 	"soccer.match_odds": {
-		"Name": "Full Time Result",
+		"Name": "Maç Sonucu",
 		"Primary": true,
 		"Description": "The winner at the end of the regulation 90 minutes",
 		"Variables": [
@@ -4284,7 +4284,7 @@
 		}
 	},
 	"soccer.match_odds_period_extratime": {
-		"Name": "Match Odds - Extra Time",
+		"Name": "Maç Sonucu - Uzatmalar",
 		"Variables": [],
 		"Split": "period=et",
 		"Outcomes": {
@@ -4294,7 +4294,7 @@
 		}
 	},
 	"soccer.match_odds_period_first_half": {
-		"Name": "Half Time Result",
+		"Name": "İlk Yarı Sonucu",
 		"Variables": [],
 		"Split": "period=1h",
 		"Outcomes": {
@@ -4304,7 +4304,7 @@
 		}
 	},
 	"soccer.match_odds_period_second_half": {
-		"Name": "Match Odds - 2nd half",
+		"Name": "2.Yarı Sonucu",
 		"Variables": [],
 		"Split": "period=ft\u0026period=2h\u0026period=1h",
 		"Outcomes": {
@@ -4314,7 +4314,7 @@
 		}
 	},
 	"soccer.odd_even.penalty_shootout": {
-		"Name": "Penalty shootout - odd/even",
+		"Name": "Penaltılar Tek/Çift",
 		"Variables": [],
 		"Split": "period=penalty_shootout",
 		"Outcomes": {
@@ -4339,7 +4339,7 @@
 		}
 	},
 	"soccer.penalty_shootout_odd_even": {
-		"Name": "Penalty shootout - odd/even",
+		"Name": "Penaltılar Tek/Çift",
 		"Variables": [],
 		"Split": "period=penalty",
 		"Outcomes": {
@@ -4348,7 +4348,7 @@
 		}
 	},
 	"soccer.team_clean_sheet": {
-		"Name": "{{team}} clean sheet",
+		"Name": "Gol yemez",
 		"Variables": [
 			"team"
 		],
@@ -4359,7 +4359,7 @@
 		}
 	},
 	"soccer.team_total_goals": {
-		"Name": "{{team}} Total Goals",
+		"Name": "Toplam Gol",
 		"Variables": [
 			"total",
 			"team"
@@ -4371,7 +4371,7 @@
 		}
 	},
 	"soccer.team_total_goals_period_first_half": {
-		"Name": "{{team}} 1st Half Total Goals",
+		"Name": "1.Yarı Toplam Gol",
 		"Variables": [
 			"total",
 			"team"
@@ -4383,7 +4383,7 @@
 		}
 	},
 	"soccer.team_total_goals_period_second_half": {
-		"Name": "{{team}} 2nd Half Total Goals",
+		"Name": "2.Yarı Toplam Gol",
 		"Variables": [
 			"total",
 			"team"
@@ -4395,7 +4395,7 @@
 		}
 	},
 	"soccer.team_win_to_nil": {
-		"Name": "{{team}} win to nil",
+		"Name": "Gol yemeden kazanır",
 		"Variables": [
 			"team"
 		],
@@ -4406,7 +4406,7 @@
 		}
 	},
 	"soccer.to_qualify.v2": {
-		"Name": "To Qualify / To Win Final",
+		"Name": "Bir sonraki tura çıkar",
 		"Variables": [],
 		"Split": "period=default\u0026period=ft\u0026period=ot\u0026period=ap",
 		"Outcomes": {
@@ -4415,7 +4415,7 @@
 		}
 	},
 	"soccer.total_goals": {
-		"Name": "Total Goals",
+		"Name": "Toplam Gol",
 		"Primary": true,
 		"Variables": [
 			"total"
@@ -4427,7 +4427,7 @@
 		}
 	},
 	"soccer.total_goals_period_extratime": {
-		"Name": "Total Goals - Extra Time",
+		"Name": "Toplam Gol - Uzatmalar",
 		"Variables": [
 			"total"
 		],
@@ -4438,7 +4438,7 @@
 		}
 	},
 	"soccer.total_goals_period_first_half": {
-		"Name": "1st Half Total Goals",
+		"Name": "1.Yarı Toplam Gol",
 		"Variables": [
 			"total"
 		],
@@ -4449,7 +4449,7 @@
 		}
 	},
 	"soccer.total_goals_period_second_half": {
-		"Name": "2nd Half Total Goals",
+		"Name": "2.Yarı Toplam Gol",
 		"Variables": [
 			"total"
 		],
@@ -4460,7 +4460,7 @@
 		}
 	},
 	"soccer.which_team_wins_the_rest_of_the_match": {
-		"Name": "Which team wins the rest of the match",
+		"Name": "Maçın kalanını kim kazanır?",
 		"Variables": [
 			"score"
 		],
