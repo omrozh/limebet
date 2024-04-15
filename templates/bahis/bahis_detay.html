@@ -307,12 +307,12 @@
             {% for c in i.bet_odds %}
                 {% if c.odd %}
                     {% if c.user_selected %}
-                        <center style="border-radius: 0; color: white; padding: 10px 20px; background-color: #ff4c59; box-sizing: border-box; margin-left: 1%; float: left; width: 49%;" class="bet-odd" onclick="document.location = '/remove_bet/{{c.id}}'">
+                        <center style="border-radius: 0; color: white; padding: 10px 20px; background-color: #ff4c59; box-sizing: border-box; float: left; width: 49.5%; margin-top: 5px; border: #0f1012 2px solid" class="bet-odd" onclick="document.location = '/remove_bet/{{c.id}}'">
                             <span style="font-family: 'Open Sans', sans-serif">{{ c.value }}</span>
                             <span style="color: white; margin-left: 15px">Oran: {{ c.odd }}</span>
                         </center>
                     {% else %}
-                        <center style="border-radius: 0; color: white; padding: 10px 20px; background-color: #1a1c1f; box-sizing: border-box; margin-left: 1%; float: left; width: 49%;" class="bet-odd" onclick="document.location = '/take_bet/{{c.id}}'">
+                        <center style="border-radius: 0; color: white; padding: 10px 20px; background-color: #1a1c1f; box-sizing: border-box; float: left; width: 49.5%; margin-top: 5px; border: #0f1012 2px solid" class="bet-odd" onclick="document.location = '/take_bet/{{c.id}}'">
                             <span style="font-family: 'Open Sans', sans-serif">{{ c.value }}</span>
                             <span style="color: white; margin-left: 15px">Oran: {{ c.odd }}</span>
                         </center>
