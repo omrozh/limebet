@@ -1422,7 +1422,7 @@ def take_bet(odd_id):
     db.session.commit()
     option_fk = BetOdd.query.get(odd_id).bet_option_fk
     option = BetOption.query.get(option_fk)
-    return flask.redirect(f"/bahis/mac/{option.open_bet_fk}")
+    return flask.redirect(f"/bahis/mac/{option.open_bet_fk}?added_new=True")
 
 
 @app.route("/remove_bet/<odd_id>")

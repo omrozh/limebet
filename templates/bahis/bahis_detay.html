@@ -350,6 +350,9 @@
             <div id="mobile-home" style="color: white; position: fixed; bottom: 50px; left: 20px; background-color: #7b00ff; padding: 15px; border-radius: 50px" onclick="openMobileMenu()">
                 <i class="fa-solid fa-bars"></i>
             </div>
+            <div style="background-color: black; box-shadow: rgba(109, 107, 105, 0.2) 0px 8px 24px; position: absolute; bottom: 120px; padding: 15px; box-sizing: border-box; color: white; right: 0; display: none" id="bet-added">
+                Bahis Kupona Eklendi
+            </div>
     <script>
       function searchBet(){
             let search_query = document.getElementById("search-box").value;
@@ -382,6 +385,16 @@
             document.getElementById("desktop-join").style += "; float: right; width: 300px; overflow-x: auto; white-space: nowrap; padding-top: 10px; margin-top: -13px"
         } else {
            document.getElementById("mobile-home").style.display = "none";
+        }
+        function betAdded(){
+            document.getElementById("bet-added").style.display = "none";
+        }
+        var url_string = window.location
+        var url = new URL(url_string);
+        var c = url.searchParams.get("added_new");
+        if (c === "True"){
+            document.getElementById("bet-added").style.display = "block";
+            setTimeout(betAdded, 5000)
         }
     </script>
     </div></div>
