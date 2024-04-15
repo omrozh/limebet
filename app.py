@@ -19,9 +19,8 @@ from imap_tools import MailBox
 import schedule
 import time
 
-import threading
-
 from betting_utils import distribute_rewards, live_betting, instant_odds_update, register_open_bet
+from flask_googletrans import translator
 
 schedule.clear()
 
@@ -38,6 +37,8 @@ def run_pending_jobs():
 
 
 app = flask.Flask(__name__)
+
+ts = translator(app)
 
 games_and_descriptions = {
     "wheel": "In this Plutus original you place a  bet and turn the wheel. "
