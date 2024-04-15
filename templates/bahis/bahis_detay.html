@@ -350,10 +350,21 @@
             <div id="mobile-home" style="color: white; position: fixed; bottom: 50px; left: 20px; background-color: #7b00ff; padding: 15px; border-radius: 50px" onclick="openMobileMenu()">
                 <i class="fa-solid fa-bars"></i>
             </div>
-            <div style="background-color: black; box-shadow: rgba(109, 107, 105, 0.2) 0px 8px 24px; position: absolute; bottom: 120px; padding: 15px; box-sizing: border-box; color: white; right: 0; display: block" id="bet-added">
-                Bahis Kupona Eklendi
+            <div style="background-color: black; box-shadow: rgba(109, 107, 105, 0.2) 0px 8px 24px; position: absolute; bottom: 120px; box-sizing: border-box; color: white; right: 0; display: none;" id="bet-added">
+                <div style="margin: 15px">
+                    Bahis Kupona Eklendi
+                </div>
+
+                <div id="bet-added-loadbar" style="background-color: #7b00ff; width: 100%; height: 2px; float: right"></div>
             </div>
     <script>
+        let decreaseInterval = setInterval(decreaseBetAddedLoadbar, 30)
+        function decreaseBetAddedLoadbar(){
+            if(parseInt(document.getElementById("bet-added-loadbar").style.width.replace("%", "")) === 0){
+                clearInterval(decreaseInterval);
+            }
+            document.getElementById("bet-added-loadbar").style.width = parseInt(document.getElementById("bet-added-loadbar").style.width.replace("%", "")) - 1 + "%"
+        }
       function searchBet(){
             let search_query = document.getElementById("search-box").value;
             let searchable_divs = document.getElementsByClassName("searchable-div")
