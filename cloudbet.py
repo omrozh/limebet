@@ -129,4 +129,5 @@ def get_status_of_bet(bet_reference_id):
         "Content-Type": "application/json"
     }
     response = requests.get(odd_url, headers=headers)
+    print(response.text)
     return response.json().get("status")
