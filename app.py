@@ -1446,7 +1446,7 @@ def coupon():
         current_coupon = BetCoupon(user_fk=current_user.id, status="Oluşturuluyor", total_value=0)
         db.session.add(current_coupon)
         db.session.commit()
-
+    changed_odds = []
     for i in BetSelectedOption.query.filter_by(bet_coupon_fk=current_coupon.id):
         if not i.odd or not i.odd.bet_option:
             db.session.delete(i)
@@ -1456,7 +1456,10 @@ def coupon():
         i.game_name = i.odd.bet_option.game_name
         if i.odd.bettable:
             from cloudbet import cloudbet_instant_odd_update
+            prev_val = i.odd.odd
             cloudbet_instant_odd_update(i.odd)
+            if not i.odd.odd == prev_val:
+                changed_odds.append(i.odd.id)
             i.odd_locked_in_rate = i.odd.odd
         if not i.odd.bettable:
             db.session.delete(i)
@@ -1499,7 +1502,7 @@ def coupon():
             current_coupon.freebet_amount = 0
         db.session.commit()
         return flask.redirect("/profile")
-    return flask.render_template("bahis/coupon.html", current_coupon=current_coupon, current_user=current_user)
+    return flask.render_template("bahis/coupon.html", current_coupon=current_coupon, current_user=current_user, changed_odds=changed_odds)
 
 
 @app.route("/double")

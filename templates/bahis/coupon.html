@@ -19,6 +19,9 @@
             text-align: left;
             padding: 8px;
         }
+        .bet-odd{
+            color: green;
+        }
         .promotion-image{
             width: 25%; display: inline-block; margin-left: 3%;
         }
@@ -313,7 +316,11 @@
                         <td>{{ i.bet_option.game_name }}</td>
                         <td>{{i.bet_option.match_name}}</td>
                         <td> {{ i.odd }}</td>
-                        <td>{{ i.value }}</td>
+                          {% if i.id in changed_odds %}
+                            <td class="bet-odd">{{ i.value }}</td>
+                          {% else %}
+                            <td class="bet-odd">{{ i.value }}</td>
+                          {% endif %}
                         <td onclick="document.location = '/remove_bet/{{ i.id }}'">X</td>
                       </tr>
                     {% endfor %}
@@ -328,6 +335,13 @@
               </form>
           </div>
                   <script>
+                      setTimeout(updateBetOddStyle, 1000)
+                      function updateBetOddStyle(){
+                          let betOdds = document.getElementsByClassName("bet-odd")
+                          for(let i = 0; i < betOdds.length; i++){
+                              betOdds[i].style.color = "white";
+                          }
+                      }
                       function calculateTotalPrize(){
                           if(isNaN(document.getElementById('coupon-val').value)){
                             document.getElementById("total_prize").innerText = 0;
