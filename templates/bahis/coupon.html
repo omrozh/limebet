@@ -341,6 +341,11 @@
               <button style="color: white; font-family: sans-serif; width: 40%; padding: 10px; box-sizing: border-box; background-color: dodgerblue; outline: none; border: none; margin-left: 10%">Oyna</button>
               </form>
           </div>
+            <script>
+                function betAdded(){
+                            document.getElementById("bet-added").style.display = "none";
+                        }
+            </script>
                   <script>
                        let decreaseInterval = setInterval(decreaseBetAddedLoadbar, 30)
                         function decreaseBetAddedLoadbar(){
@@ -349,9 +354,7 @@
                             }
                             document.getElementById("bet-added-loadbar").style.width = parseInt(document.getElementById("bet-added-loadbar").style.width.replace("%", "")) - 1 + "%"
                         }
-                        function betAdded(){
-                            document.getElementById("bet-added").style.display = "none";
-                        }
+
                        {% if odds_did_change %}
                            document.getElementById("bet-added").style.display = "block";
                             setTimeout(betAdded, 3000)
