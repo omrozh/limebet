@@ -301,7 +301,7 @@
 
         {% if i.has_odds %}
                 <div style="font-family: 'Open Sans', sans-serif; width: 100%; background-color: #242425; padding: 5px; padding-left: 15px; box-sizing: border-box">
-          {{ translate(text=i.game_name, src='en', dest=['tr']) }}
+          {{ i.game_name }}
         </div>
         <div style="white-space: nowrap; overflow-x: auto;">
             {% for c in i.bet_odds %}
