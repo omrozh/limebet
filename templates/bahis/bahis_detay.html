@@ -283,14 +283,26 @@
             <center>
     <center style="background-color: #0f1012; width: 87%; border-radius: 15px">
 
-        <div style="width: 80%; padding: 15px; text-align: left; color: white;">
-      <h1 style="font-family: 'Open Sans', sans-serif; color: #6a4898">{{ open_bet.team_1 }} - {{ open_bet.team_2 }}</h1>
+        <div style="width: 100%; box-sizing: border-box; text-align: left; color: white; border-radius: 15px 15px 0 0">
+            <div style="width: 100%; height: fit-content; background-image: url('/static/be-signup.jpeg'); background-size: cover; box-sizing: border-box; border-radius: 15px 15px 0 0;">
+                <div style="width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); box-sizing: border-box; border-radius: 15px 15px 0 0">
+                    <br>
+                    <p style="font-family: 'Open Sans', sans-serif; font-size: 12px; color: white; margin-top: 15px; margin-left: 15px;">{{ open_bet.match_league }}</p>
+                    <p style="font-family: 'Open Sans', sans-serif; color: white; font-size: 12px; margin-top: -10px; margin-left: 15px;">{{ open_bet.bet_ending_datetime }}</p>
+                    <div style="width: 100%; height: fit-content; padding: 15px; background-color: rgba(0, 0, 0, 0.5); box-sizing: border-box">
+                        <p style="font-family: 'Open Sans', sans-serif; color: white; font-size: 14px">Home: {{ open_bet.team_1 }}</p>
+                        <p style="font-family: 'Open Sans', sans-serif; color: white; margin-top: -10px; font-size: 14px">Away: {{ open_bet.team_2 }}</p>
+                    </div>
+                    <br>
+                </div>
+            </div>
+            <p style="margin-left: 15px">Marketler</p>
       {% for i in open_bet.bet_options %}
 
         {% if i.has_odds %}
-                <h1 style="font-family: 'Open Sans', sans-serif">
+                <p style="font-family: 'Open Sans', sans-serif; width: 100%; background-color: #242425; padding: 5px; padding-left: 15px; box-sizing: border-box">
           {{ i.game_name }}
-        </h1>
+        </p>
         <p>
           {{ i.game_details }}
         </p>
@@ -298,12 +310,12 @@
             {% for c in i.bet_odds %}
                 {% if c.odd %}
                     {% if c.user_selected %}
-                        <center style="border-radius: 5px; color: white; padding: 10px 20px; background-color: #ff4c59; width: fit-content; box-sizing: border-box; display: inline-block" class="bet-odd" onclick="document.location = '/remove_bet/{{c.id}}'">
+                        <center style="border-radius: 0; color: white; padding: 10px 20px; background-color: #ff4c59; width: fit-content; box-sizing: border-box; display: inline-block" class="bet-odd" onclick="document.location = '/remove_bet/{{c.id}}'">
                             <span style="font-family: 'Open Sans', sans-serif">{{ c.value }}</span>
                             <span style="color: white; margin-left: 15px">Oran: {{ c.odd }}</span>
                         </center>
                     {% else %}
-                        <center style="border-radius: 5px; color: white; padding: 10px 20px; background-color: #1a1c1f; width: fit-content; box-sizing: border-box; display: inline-block" class="bet-odd" onclick="document.location = '/take_bet/{{c.id}}'">
+                        <center style="border-radius: 0; color: white; padding: 10px 20px; background-color: #1a1c1f; width: fit-content; box-sizing: border-box; display: inline-block" class="bet-odd" onclick="document.location = '/take_bet/{{c.id}}'">
                             <span style="font-family: 'Open Sans', sans-serif">{{ c.value }}</span>
                             <span style="color: white; margin-left: 15px">Oran: {{ c.odd }}</span>
                         </center>
