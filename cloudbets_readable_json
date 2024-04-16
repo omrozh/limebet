@@ -167,7 +167,7 @@
 		}
 	},
 	"american_football.team_odd_even": {
-		"Name": "{{team}} odd/even",
+		"Name": "Odd/even",
 		"Variables": [
 			"team"
 		],
@@ -4803,7 +4803,7 @@
 		}
 	},
 	"tennis.set_correct_score": {
-		"Name": "Set {{set}} - correct score",
+		"Name": "Set - correct score",
 		"Variables": [
 			"set"
 		],
@@ -4824,7 +4824,7 @@
 		}
 	},
 	"tennis.team_to_win_a_set": {
-		"Name": "{{team}} to win a set",
+		"Name": "To win a set",
 		"Description": "Will the named player win at least one set?",
 		"Variables": [
 			"team"
@@ -4881,7 +4881,7 @@
 		}
 	},
 	"tennis.winner_of_set": {
-		"Name": "Winner of set {{set}}",
+		"Name": "Winner of set",
 		"Variables": [
 			"set"
 		],
