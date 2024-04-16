@@ -9,17 +9,14 @@ from app import BetOdd, OpenBet, app, db
 api_key = "eyJhbGciOiJSUzI1NiIsImtpZCI6IkhKcDkyNnF3ZXBjNnF3LU9rMk4zV05pXzBrRFd6cEdwTzAxNlRJUjdRWDAiLCJ0eXAiOiJKV1QifQ.eyJhY2Nlc3NfdGllciI6InRyYWRpbmciLCJleHAiOjIwMjgwNDU1ODksImlhdCI6MTcxMjY4NTU4OSwianRpIjoiYjIxZGRjZGYtZjZmNy00NTg1LWFlZDItOTVhNTkwMmU2YmUxIiwic3ViIjoiMzEyMTg1NDgtY2U3MS00NWJiLTlmNTctNmE4YmI3NTI5NjY2IiwidGVuYW50IjoiY2xvdWRiZXQiLCJ1dWlkIjoiMzEyMTg1NDgtY2U3MS00NWJiLTlmNTctNmE4YmI3NTI5NjY2In0.1e8o2kkX_UEccVndkKZDUS0IER6pFJPaSpIR3dzb486PyfpbFq82UggU6goIj9g7hns8sB1HNV__9U6XXLStE_x2qWDd2ZoFwMTeZeuGyMBFqdUK3Z-GGAg-_uYr3wqRB9QbhHHrS_BXEyTpRoxuGLncY8Yq87XuyfH0KbTAjexJOqd6RoseKGLnkex2mAaCc53CrLJh2ysq8wvLtRAYDxCQQN7eCbhRm58TDjTFZKU49u3kokNy4JuwLgjubcqC7F1ibYXwLMGPYH6kSN2zkApje_kmw3SSpJ3HqXptfdy1bIsV-GvlSXStpFnz7btp2Jj2Dhv4E4Hqclt8bRQRng"
 
 
-def get_odds_cloudbet(is_live=False, prev_bets=None, sport_index=0):
-    if prev_bets is None:
-        prev_bets = []
-    sports = ["soccer", "volleyball", "tennis", "golf", "basketball", "table_tennis", "swimming", "rugby_league", "ice_hockey", "cricket", "american_football"]
+def get_odds_cloudbet(is_live=False):
     with open("cloudbets_readable_json", "r") as language_data:
         language_dictionary = json.loads(language_data.read())
 
     if not is_live:
-        event_url = f"https://sports-api.cloudbet.com/pub/v2/odds/events?sport={sports[sport_index]}&live=false&limit=1000&from={int(time.time())}&to={int(time.time() + 3600 * 24)}"
+        event_url = f"https://sports-api.cloudbet.com/pub/v2/odds/events?sport=soccer&live=false&limit=1000&from={int(time.time())}&to={int(time.time() + 3600 * 24)}"
     else:
-        event_url = f"https://sports-api.cloudbet.com/pub/v2/odds/events?sport={sports[sport_index]}&live=true&limit=1000"
+        event_url = f"https://sports-api.cloudbet.com/pub/v2/odds/events?sport=soccer&live=true&limit=1000"
 
     event_id = 123456
     headers = {
@@ -28,7 +25,7 @@ def get_odds_cloudbet(is_live=False, prev_bets=None, sport_index=0):
         "Content-Type": "application/json"
     }
 
-    bets = prev_bets
+    bets = []
 
     try:
         response = requests.get(event_url.format(event_id), headers=headers)
@@ -71,8 +68,7 @@ def get_odds_cloudbet(is_live=False, prev_bets=None, sport_index=0):
 
             match["Bets"] = odds
             bets.append(match)
-    if sport_index < len(sports):
-        get_odds_cloudbet(sport_index=sport_index+1, prev_bets=bets, is_live=is_live)
+
     return bets
 
 
