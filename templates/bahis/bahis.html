@@ -388,6 +388,8 @@
                 if(search_query.length > 2){
                     if(!searchable_divs[i].innerHTML.includes(search_query)){
                         searchable_divs[i].style.display = "none";
+                    }else{
+                        searchable_divs[i].style.display = "table-row";
                     }
                 }else{
                     searchable_divs[i].style.display = "table-row";
