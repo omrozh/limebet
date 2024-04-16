@@ -301,7 +301,7 @@
         <input type="text" oninput="searchBet()" id="search-box" style="padding: 10px 15px; font-family: sans-serif; outline: none; font-size: 1rem; width: 80%; box-sizing: border-box;" placeholder="Bahis Ara">
         <br>
         <div style="margin-top: 10px; margin-left: -5px">
-            <select style="-webkit-appearance: none; width: 39.75%; padding: 10px; background: transparent; border: 1px solid white; color: white; display: inline-block; outline: none" onchange="document.getElementById('search-box').value = this.value; searchBet()">
+            <select style="-webkit-appearance: none; width: 39.75%; padding: 10px; background: transparent; border: 1px solid white; color: white; display: inline-block; outline: none; border-radius: 5px" onchange="document.getElementById('search-box').value = this.value; searchBet()">
                 <option value="">Sport Seçin</option>
                 <option value="Voleybol">Voleybol</option>
                 <option value="Futbol">Futbol</option>
@@ -310,7 +310,7 @@
                 <option value="Kriket">Kriket</option>
                 <option value="Amerikan Futbolu">Amerikan Futbol</option>
             </select>
-            <select style="-webkit-appearance: none; width: 39.75%; padding: 10px; background: transparent; border: 1px solid white; color: white; display: inline-block; outline: none" onchange="document.getElementById('search-box').value = this.value; searchBet()">
+            <select style="-webkit-appearance: none; width: 39.75%; padding: 10px; background: transparent; border: 1px solid white; color: white; display: inline-block; outline: none; border-radius: 5px" onchange="document.getElementById('search-box').value = this.value; searchBet()">
                 <option value="">Lig Seçin</option>
                 {% for i in sports_leagues %}
                     <option value="{{ i }}">{{ i }}</option>
