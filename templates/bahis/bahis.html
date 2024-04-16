@@ -313,7 +313,7 @@
             <select style="-webkit-appearance: none; width: 39.75%; padding: 10px; background: transparent; border: 1px solid white; color: white; display: inline-block; outline: none" onchange="document.getElementById('search-box').value = this.value; searchBet()">
                 <option value="">Lig Seçin</option>
                 {% for i in sports_leagues %}
-                    <option value="i">{{ i }}</option>
+                    <option value="{{ i }}">{{ i }}</option>
                 {% endfor %}
             </select>
         </div>
