@@ -61,7 +61,8 @@ def register_open_bet():
                         team_1=i.get("Team1"),
                         team_2=i.get("Team2"),
                         has_odds=False,
-                        live_betting_expired=False
+                        live_betting_expired=False,
+                        sport=sport
                     )
                     db.session.add(new_open_bet)
                     db.session.commit()

@@ -305,6 +305,7 @@
                 <tbody>
 
                     <tr style="color: white">
+                        <th>Spor</th>
                         <th>Lig</th>
                         <th>Tarih/Saat</th>
                         <th>Maç Adı</th>
@@ -315,6 +316,7 @@
                     {% if canli_bahis %}
                         {% if i.has_live_odds %}
                           <tr class="searchable-div" style="color: white;">
+                            <td>{{ i.sport }}</td>
                             <td>{{ i.match_league }}</td>
                             <td>{{i.bet_ending_datetime}}</td>
                             <td>{{ i.team_1 }} - {{ i.team_2 }}</td>

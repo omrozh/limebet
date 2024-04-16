@@ -448,6 +448,7 @@ class OpenBet(db.Model):
     team_2 = db.Column(db.String)
     has_odds = db.Column(db.Boolean)
     live_betting_expired = db.Column(db.Boolean)
+    sport = db.Column(db.String)
 
     def update_results(self):
         from betting_utils import get_results
