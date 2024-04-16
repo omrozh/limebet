@@ -1399,7 +1399,7 @@ def canli_bahis():
     for i in open_bets:
         if i.match_league not in sports_leagues:
             sports_leagues.append(i.match_league)
-    return flask.render_template("bahis/bahis.html", open_bets=open_bets, canli_bahis=True)
+    return flask.render_template("bahis/bahis.html", open_bets=open_bets, canli_bahis=True, sports_leagues=sports_leagues)
 
 
 @app.route("/bahis/mac/<bahis_id>")
