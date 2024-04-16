@@ -157,7 +157,9 @@ def live_betting():
                                         )
                                         db.session.add(new_bet_odd)
                                     new_open_bet.live_betting_expired = False
-                db.session.commit()
+                                db.session.commit()
+
+                    db.session.commit()
         except:
             pass
     print("Live bet updated options")
