@@ -455,6 +455,18 @@ class OpenBet(db.Model):
         get_results(self.api_match_id)
 
     @property
+    def sport_readable(self):
+        sports_turkish = {
+            "soccer": "Futbol",
+            "volleyball": "Voleybol",
+            "basketball": "Basketbol",
+            "tennis": "Tennis",
+            "cricket": "Kriket",
+            "american_football": "Amerikan Futbolu"
+        }
+        return sports_turkish.get(self.sport)
+
+    @property
     def bet_options(self):
         options = BetOption.query.filter_by(open_bet_fk=self.id).all()
         unique_games = []
