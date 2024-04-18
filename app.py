@@ -1431,10 +1431,10 @@ def take_bet(odd_id):
                                        bet_option_fk=bet_odd.bet_option_fk, reference_id=str(uuid4()))
 
     if len(BetSelectedOption.query.filter_by(bet_coupon_fk=current_coupon.id).filter_by(
-            bet_option_fk=bet_odd.bet_option_fk).all()) > 0:
+            match_name=bet_odd.bet_option.match_name).all()) > 0:
         return f'''
             <script>
-                alert('Aynı bahiste iki farklı seçenek kupona eklenemez.')
+                alert('Aynı maçta iki farklı seçenek kupona eklenemez.')
                 document.location = '/bahis/mac/{bet_odd.bet_option.open_bet_fk}'
             </script>
         '''
