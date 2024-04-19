@@ -188,3 +188,16 @@ def distribute_rewards():
                 db.session.commit()
             except Exception as e:
                 pass
+
+
+def open_bet_garbage_collector():
+    from app import app, db, OpenBet, BetOption
+    with app.app_context():
+        for i in OpenBet.query.filter(
+                OpenBet.bet_ending_datetime < datetime.datetime.now() + datetime.timedelta(hours=12)).all():
+            for c in i.bet_options:
+                for j in c.bet_odds:
+                    db.session.delete(j)
+                db.session.delete(c)
+            db.session.delete(i)
+
