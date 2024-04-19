@@ -1686,7 +1686,6 @@ def casino():
     for i in get_providers():
         for c in get_games(i.get("id")).get("games"):
             try:
-                print(c)
                 games.append({
                     "img_vertical": c.get("img_vertical"),
                     "name": c.get("name"),
