@@ -9,16 +9,16 @@ def get_providers():
     return r.json()
 
 
-def get_games():
-    r = requests.get(f"{BASE_URL}/gameList?provider=2")
+def get_games(provider_id):
+    r = requests.get(f"{BASE_URL}/gameList?provider={provider_id}")
     return r.json()
 
 
 def get_game_iframe(game_id):
-    r = requests.get(f"{BASE_URL}/start?demo=True&gameId={game_id}")
+    r = requests.get(f"{BASE_URL}/start?demo=true&gameId={game_id}")
     with open("data.html", "w+") as f:
         f.write(r.text)
     return r.content
 
 
-print(get_game_iframe(1000891))
+print(get_providers())

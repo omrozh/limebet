@@ -1681,7 +1681,23 @@ def reroute_page():
 
 @app.route("/casino")
 def casino():
-    return flask.render_template("casino.html", current_user=current_user)
+    from casino_utils import get_games, get_providers
+    games = []
+    for i in get_providers():
+        for c in get_games(i.get("id")):
+            games.append({
+                "img_vertical": c.get("img_vertical"),
+                "name": c.get("name"),
+                "provider_name": i.get("name"),
+                "category": c.get("category"),
+                "id": i.get("id")
+            })
+    return flask.render_template("casino.html", current_user=current_user, games=games)
+
+
+@app.route("/casino/<game_id>")
+def casino_game(game_id):
+    return flask.render_template("casino-game.html", game_id=game_id)
 
 
 @app.errorhandler(500)
