@@ -312,7 +312,28 @@
             <p style="margin-left: 15px">Marketler</p>
       {% for i in open_bet.bet_options %}
 
-
+        {% if True %}
+                <div style="font-family: 'Open Sans', sans-serif; width: 100%; background-color: #242425; padding: 5px; padding-left: 15px; box-sizing: border-box">
+          {{ i.game_name }}
+        </div>
+        <div style="white-space: nowrap; overflow-x: auto;">
+            {% for c in i.bet_odds %}
+                {% if c.odd %}
+                    {% if c.user_selected %}
+                        <center style="border-radius: 0; color: white; padding: 10px 20px; background-color: #ff4c59; box-sizing: border-box; display: inline-block; width: 30%; min-width: fit-content" class="bet-odd" onclick="document.location = '/remove_bet/{{c.id}}'">
+                            <span style="font-family: 'Open Sans', sans-serif">{{ c.value }}</span>
+                            <span style="color: white; margin-left: 15px">Oran: {{ c.odd }}</span>
+                        </center>
+                    {% else %}
+                        <center style="border-radius: 0; color: white; padding: 10px 20px; background-color: #1a1c1f; box-sizing: border-box; display: inline-block; width: 30%; min-width: fit-content" class="bet-odd" onclick="document.location = '/take_bet/{{c.id}}'">
+                            <span style="font-family: 'Open Sans', sans-serif">{{ c.value }}</span>
+                            <span style="color: white; margin-left: 15px">Oran: {{ c.odd }}</span>
+                        </center>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
       {% endfor %}
     </div>
     </center>
