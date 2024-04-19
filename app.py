@@ -1433,7 +1433,7 @@ def take_bet(odd_id):
     if BetSelectedOption.query.filter_by(bet_odd_fk=odd_id).filter_by(bet_coupon_fk=current_coupon.id).first():
         return flask.redirect("/bahis")
     new_coupon_bet = BetSelectedOption(bet_coupon_fk=current_coupon.id, bet_odd_fk=odd_id,
-                                       bet_option_fk=bet_odd.bet_option_fk, reference_id=str(uuid4()))
+                                       bet_option_fk=bet_odd.bet_option_fk, reference_id=str(uuid4()), match_name=bet_odd.bet_option.match_name)
 
     print(bet_odd.bet_option.match_name)
     print(BetSelectedOption.query.filter_by(match_name=bet_odd.bet_option.match_name).all())
