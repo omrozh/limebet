@@ -112,11 +112,17 @@ def live_betting():
 
     with app.app_context():
         try:
-            updated_objects = []
             with db.session.no_autoflush:
                 open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime < datetime.datetime.now()).filter_by(
                     live_betting_expired=False).all()
-
+                for i in open_bets:
+                    i.live_betting_expired = True
+                    for c in BetOption.query.filter_by(open_bet_fk=i.id):
+                        for j in BetOdd.query.filter_by(bet_option_fk=c.id):
+                            j.bettable = False
+                            j.bet_option_fk = 0
+                        db.session.delete(c)
+                        db.session.commit()
                 for sport in sports:
                     for i in get_bets(is_live=True, sport_name=sport):
                         with app.app_context():
@@ -129,7 +135,6 @@ def live_betting():
                                     game_details=bet_option.get("gameDetails"),
                                     open_bet_fk=new_open_bet.id
                                 )
-                                updated_objects.append(new_bet_option)
                                 db.session.add(new_bet_option)
                                 for bet_odd in bet_option.get("odds"):
                                     new_bet_odd = BetOdd.query.filter_by(game_id=bet_odd.get("gameID")).first()
@@ -138,7 +143,6 @@ def live_betting():
                                         new_bet_odd.bettable = True
                                         new_bet_odd.market_url = bet_odd.get("market_url")
                                         new_bet_odd.bet_option_fk = new_bet_option.id
-                                        updated_objects.append(new_bet_odd)
 
                                     else:
                                         new_bet_odd = BetOdd(
@@ -152,26 +156,11 @@ def live_betting():
                                             bettable=True,
                                             market_url=bet_odd.get("market_url")
                                         )
-                                        updated_objects.append(new_bet_odd)
                                         db.session.add(new_bet_odd)
-                                    updated_objects.append(new_open_bet)
                                     new_open_bet.live_betting_expired = False
                                 db.session.commit()
 
                     db.session.commit()
-
-            for i in open_bets:
-                if i not in updated_objects:
-                    i.live_betting_expired = True
-                for c in BetOption.query.filter_by(open_bet_fk=i.id):
-                    for j in BetOdd.query.filter_by(bet_option_fk=c.id):
-                        if j not in updated_objects:
-                            j.bettable = False
-                            j.bet_option_fk = 0
-
-                    if c not in updated_objects:
-                        db.session.delete(c)
-                        db.session.commit()
         except:
             pass
     print("Live bet updated options")
