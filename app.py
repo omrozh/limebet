@@ -588,6 +588,15 @@ class BetOption(db.Model):
     @property
     def bet_odds(self):
         bet_odds = BetOdd.query.filter_by(bet_option_fk=self.id).filter_by(bettable=True).all()
+        unique_bet_odds = []
+        unique_bet_odd_names = []
+
+        print(len(bet_odds))
+        for i in bet_odds:
+            if i.value not in unique_bet_odd_names:
+                unique_bet_odds.append(i)
+                db.session.commit()
+                unique_bet_odd_names.append(i.value)
 
         return bet_odds
 
@@ -618,11 +627,8 @@ class BetOdd(db.Model):
 
     @property
     def user_selected(self):
-        current_coupon = BetCoupon.query.filter_by(user_fk=current_user.id).filter_by(status="Oluşturuluyor").first()
-        if not current_coupon:
-            return False
-        selected_odds = [i.bet_odd_fk for i in BetSelectedOption.query.filter_by(bet_coupon_fk=current_coupon.id)]
-        return self.id in selected_odds
+
+        return False
 
 
 class TransactionLog(db.Model):
