@@ -588,17 +588,8 @@ class BetOption(db.Model):
     @property
     def bet_odds(self):
         bet_odds = BetOdd.query.filter_by(bet_option_fk=self.id).filter_by(bettable=True).all()
-        unique_bet_odds = []
-        unique_bet_odd_names = []
 
-        print(len(bet_odds))
-        for i in bet_odds:
-            if i.value not in unique_bet_odd_names:
-                unique_bet_odds.append(i)
-                db.session.commit()
-                unique_bet_odd_names.append(i.value)
-
-        return unique_bet_odds
+        return bet_odds
 
     @property
     def has_odds(self):
