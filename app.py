@@ -1684,7 +1684,7 @@ def casino():
     from casino_utils import get_games, get_providers
     games = []
     for i in get_providers():
-        print(i.get("id"))
+        print(get_games(i.get("id")))
         for c in get_games(i.get("id")):
             try:
                 games.append({
