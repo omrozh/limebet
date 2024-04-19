@@ -1426,6 +1426,7 @@ def take_bet(odd_id):
     if not current_user.is_authenticated:
         return flask.redirect("/login")
     bet_odd = BetOdd.query.get(odd_id)
+    from_frame = flask.request.args.get("iframe", False) == "True"
     if not bet_odd.bettable:
         return '''
             <script>
@@ -1456,7 +1457,7 @@ def take_bet(odd_id):
     db.session.commit()
     option_fk = BetOdd.query.get(odd_id).bet_option_fk
     option = BetOption.query.get(option_fk)
-    return flask.redirect(f"/bahis/mac/{option.open_bet_fk}?added_new=True")
+    return flask.redirect(f"/bahis/mac/{option.open_bet_fk}?added_new=True&iframe={from_frame}")
 
 
 @app.route("/remove_bet/<odd_id>")
@@ -1468,7 +1469,9 @@ def remove_bet(odd_id):
     option_fk = BetOdd.query.get(odd_id).bet_option_fk
     option = BetOption.query.get(option_fk)
 
-    return flask.redirect(f"/bahis/mac/{option.open_bet_fk}")
+    from_frame = flask.request.args.get("iframe", False) == "True"
+
+    return flask.redirect(f"/bahis/mac/{option.open_bet_fk}?iframe={from_frame}")
 
 
 @app.route("/coupon", methods=["POST", "GET"])
