@@ -1691,7 +1691,7 @@ def casino():
                     "name": c.get("name"),
                     "provider_name": i.get("name"),
                     "category": c.get("category"),
-                    "id": i.get("id")
+                    "id": c.get("id")
                 })
             except AttributeError or KeyError:
                 pass
