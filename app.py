@@ -1392,6 +1392,17 @@ def bahis():
     return flask.render_template("bahis/bahis.html", open_bets=open_bets, canli_bahis=False, sports_leagues=sports_leagues)
 
 
+@app.route("/bahis-mobile")
+def bahis_mobile():
+    open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime > datetime.datetime.now()).filter_by(
+        has_odds=True).all()
+    sports_leagues = []
+    for i in open_bets:
+        if i.match_league not in sports_leagues:
+            sports_leagues.append(i.match_league)
+    return flask.render_template("bahis/bahis-mobile.html", open_bets=open_bets, canli_bahis=False, sports_leagues=sports_leagues)
+
+
 @app.route("/canli_bahis")
 def canli_bahis():
     open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime <= datetime.datetime.now()).filter_by(live_betting_expired=False).filter_by(has_odds=True).all()

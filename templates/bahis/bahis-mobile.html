@@ -141,7 +141,6 @@
     <script>
         if(window.innerWidth < window.innerHeight){
             document.getElementById("iconmain").style.width = "50px";
-            document.location = '/bahis-mobile'
         }
     </script>
             <div style="float: left;" id="hid-mob">
@@ -283,61 +282,7 @@
         <div id="main-content-wrapper">
         <center>
             <center>
-    <center style="background-color: #0f1012; width: 29%; border-radius: 15px; display: inline-block; vertical-align: top; padding: 10px; box-sizing: border-box">
-            <input type="text" oninput="searchBet(this.value, false)" id="search-box" style="padding: 10px 15px; font-family: sans-serif; outline: none; font-size: 1rem; width: 100%; box-sizing: border-box; border-radius: 5px; border: none" placeholder="Bahis Ara">
-            <br>
-            <br>
-            <div onclick="changeCategory('Futbol', this)" class="sport-selector" style="color: white; box-sizing: border-box; width: 100%; height: fit-content; padding: 10px; text-align: left; border-radius: 5px; border: 0.2px solid white">
-                <div>
-                    <i class="fa-solid fa-futbol"></i>
-                    Futbol
-                </div>
-            </div>
-
-            <div onclick="changeCategory('Basketbol', this)" class="sport-selector" style="color: white; box-sizing: border-box; width: 100%; height: fit-content; padding: 10px; text-align: left; border-radius: 5px; border: 0.2px solid white; margin-top: 5px">
-                <div>
-                    <i class="fa-solid fa-basketball"></i>
-                    Basketbol
-                </div>
-            </div>
-            <div onclick="changeCategory('Voleybol', this)" class="sport-selector" style="color: white; box-sizing: border-box; width: 100%; height: fit-content; padding: 10px; text-align: left; border-radius: 5px; border: 0.2px solid white; margin-top: 5px">
-                <div>
-                    <i class="fa-solid fa-volleyball"></i>
-                    Voleybol
-                </div>
-            </div>
-            <div onclick="changeCategory('Tennis', this)" class="sport-selector" style="color: white; box-sizing: border-box; width: 100%; height: fit-content; padding: 10px; text-align: left; border-radius: 5px; border: 0.2px solid white; margin-top: 5px">
-                <div>
-                    <i class="fa-solid fa-table-tennis-paddle-ball"></i>
-                    Tennis
-                </div>
-            </div>
-            <div onclick="changeCategory('Kriket', this)" class="sport-selector" style="color: white; box-sizing: border-box; width: 100%; height: fit-content; padding: 10px; text-align: left; border-radius: 5px; border: 0.2px solid white; margin-top: 5px">
-                <div>
-                    <i class="fa-solid fa-baseball-bat-ball"></i>
-                    Kriket
-                </div>
-            </div>
-            <div onclick="changeCategory('Amerikan Futbolu', this)" class="sport-selector" style="color: white; box-sizing: border-box; width: 100%; height: fit-content; padding: 10px; text-align: left; border-radius: 5px; border: 0.2px solid white; margin-top: 5px">
-                <div>
-                    <i class="fa-solid fa-football"></i>
-                    NFL
-                </div>
-            </div>
-
-            <script>
-                function changeCategory(sport, elem){
-                    searchBet(sport, true);
-                    let sport_selectors = document.getElementsByClassName("sport-selector")
-                    for(let i = 0; i < sport_selectors.length; i++){
-                        sport_selectors[i].style.backgroundColor = 'transparent'
-                    }
-                    elem.style.backgroundColor = '#7b00ff'
-                }
-            </script>
-
-    </center>
-    <center style="background-color: #0f1012; width: 29%; border-radius: 15px; display: inline-block; height: 70vh; overflow-y: auto">
+    <center style="background-color: #0f1012; width: 87%; border-radius: 15px">
 
         <br>
         <h1 style="font-family: 'Open Sans', sans-serif; text-align: left; color: white; width: 80%; display: inline-block">Karşılaşmalar</h1>
@@ -352,6 +297,67 @@
                 Canlı Bahis
             </p>
         {% endif %}
+        <br>
+        <input type="text" oninput="searchBet()" id="search-box" style="padding: 10px 15px; font-family: sans-serif; outline: none; font-size: 1rem; width: 80%; box-sizing: border-box;" placeholder="Bahis Ara">
+        <br>
+        <div style="margin-top: 10px">
+            <div style="width: 80%; overflow-x: auto; white-space: nowrap">
+                <div onclick="changeCategory('Futbol', this)" class="sport-selector" style="display: inline-block; color: white; box-shadow: rgba(109, 107, 105, 0.1) 0px 8px 24px; box-sizing: border-box; height: 100px; width: 100px; position: relative">
+                    <div style="position: absolute; top: 0;  bottom: 0; right: 0; left: 0; margin: auto; width: fit-content; height: fit-content">
+                        <i class="fa-solid fa-futbol"></i>
+                        <br>
+                        Futbol
+                    </div>
+                </div>
+                <div onclick="changeCategory('Basketbol', this)" class="sport-selector" style="display: inline-block; color: white; box-shadow: rgba(109, 107, 105, 0.1) 0px 8px 24px; box-sizing: border-box; height: 100px; width: 100px; position: relative">
+                    <div style="position: absolute; top: 0;  bottom: 0; right: 0; left: 0; margin: auto; width: fit-content; height: fit-content">
+                        <i class="fa-solid fa-basketball"></i>
+                        <br>
+                        Basketbol
+                    </div>
+                </div>
+                <div onclick="changeCategory('Voleybol', this)" class="sport-selector" style="display: inline-block; color: white; box-shadow: rgba(109, 107, 105, 0.1) 0px 8px 24px; box-sizing: border-box; height: 100px; width: 100px; position: relative">
+                    <div style="position: absolute; top: 0;  bottom: 0; right: 0; left: 0; margin: auto; width: fit-content; height: fit-content">
+                        <i class="fa-solid fa-volleyball"></i>
+                        <br>
+                        Voleybol
+                    </div>
+                </div>
+                <div onclick="changeCategory('Tennis', this)" class="sport-selector" style="display: inline-block; color: white; box-shadow: rgba(109, 107, 105, 0.1) 0px 8px 24px; box-sizing: border-box; height: 100px; width: 100px; position: relative">
+                    <div style="position: absolute; top: 0;  bottom: 0; right: 0; left: 0; margin: auto; width: fit-content; height: fit-content">
+                        <i class="fa-solid fa-table-tennis-paddle-ball"></i>
+                        <br>
+                        Tennis
+                    </div>
+                </div>
+                <div onclick="changeCategory('Kriket', this)" class="sport-selector" style="display: inline-block; color: white; box-shadow: rgba(109, 107, 105, 0.1) 0px 8px 24px; box-sizing: border-box; height: 100px; width: 100px; position: relative">
+                    <div style="position: absolute; top: 0;  bottom: 0; right: 0; left: 0; margin: auto; width: fit-content; height: fit-content">
+                        <i class="fa-solid fa-baseball-bat-ball"></i>
+                        <br>
+                        Kriket
+                    </div>
+                </div>
+                <div onclick="changeCategory('Amerikan Futbolu', this)" class="sport-selector" style="display: inline-block; color: white; box-shadow: rgba(109, 107, 105, 0.1) 0px 8px 24px; box-sizing: border-box; height: 100px; width: 100px; position: relative">
+                    <div style="position: absolute; top: 0;  bottom: 0; right: 0; left: 0; margin: auto; width: fit-content; height: fit-content">
+                        <i class="fa-solid fa-football"></i>
+                        <br>
+                        NFL
+                    </div>
+                </div>
+            </div>
+            <script>
+                function changeCategory(sport, elem){
+                    document.getElementById('search-box').value = sport;
+                    searchBet();
+                    let sport_selectors = document.getElementsByClassName("sport-selector")
+                    for(let i = 0; i < sport_selectors.length; i++){
+                        sport_selectors[i].style.backgroundColor = 'transparent'
+                    }
+                    elem.style.backgroundColor = '#7b00ff'
+                }
+            </script>
+
+        </div>
       <br>
         <div style="width: 100%; overflow-x: auto; white-space: nowrap">
             <table>
@@ -373,7 +379,7 @@
                             <td>{{ i.match_league }}</td>
                             <td>{{i.bet_ending_datetime}}</td>
                             <td>{{ i.team_1 }} - {{ i.team_2 }}</td>
-                            <td><span onclick="document.getElementById('bet-iframe').src = '/bahis/mac/{{i.id}}'" style="color: white;">Detaylar</span></td>
+                            <td><a href="/bahis/mac/{{i.id}}" style="color: white;">Detaylar</a></td>
                           </tr>
                         {% endif %}
                     {% else %}
@@ -382,7 +388,7 @@
                             <td>{{ i.match_league }}</td>
                             <td>{{i.bet_ending_datetime}}</td>
                             <td>{{ i.team_1 }} - {{ i.team_2 }}</td>
-                            <td><span onclick="document.getElementById('bet-iframe').src = '/bahis/mac/{{i.id}}'" style="color: white;">Detaylar</span></td>
+                            <td><a href="/bahis/mac/{{i.id}}" style="color: white;">Detaylar</a></td>
                         </tr>
                     {% endif %}
                     {% endfor %}
@@ -394,9 +400,7 @@
             <span style="opacity: 0">KadroMilyon</span>
         </div>
     </center>
-            <center style="background-color: #0f1012; width: 29%; border-radius: 15px; display: inline-block; padding: 10px; box-sizing: border-box">
-                <iframe style="width: 100%; height: 70vh;" id="bet-iframe" frameborder="0"></iframe>
-            <center>
+            </center>
     <div style="background-color: #6a4898; position: fixed; bottom: 50px; right: 0; border-radius: 15px 0 0 15px; color: white; padding: 10px"  onclick="window.open('/coupon')">
         Kuponum
     </div>
@@ -418,17 +422,15 @@
                 <i class="fa-solid fa-bars"></i>
             </div>
     <script>
-      function searchBet(data, delete_before){
-            let search_query = data;
+      function searchBet(){
+            let search_query = document.getElementById("search-box").value;
             let searchable_divs = document.getElementsByClassName("searchable-div")
             for(let i = 0; i < searchable_divs.length; i++){
                 if(search_query.length > 2){
                     if(!searchable_divs[i].innerHTML.includes(search_query)){
                         searchable_divs[i].style.display = "none";
                     }else{
-                        if(!delete_before){
-                            searchable_divs[i].style.display = "table-row";
-                        }
+                        searchable_divs[i].style.display = "table-row";
                     }
                 }else{
                     searchable_divs[i].style.display = "table-row";
