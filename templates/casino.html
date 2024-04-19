@@ -356,7 +356,7 @@
               {% for i in games %}
                     <div onclick="document.location = '/casino/{{ i.id }}'" class="searchable-div" style="background-color: #1a1c1f; min-width: fit-content; padding: 15px; border-radius: 15px; display: inline-block; margin-left: 15px; margin-bottom: 15px">
                       <img class="game-img" style="border-radius: 15px" src="{{ i.img_vertical }}" alt="">
-                      <p style="font-family: 'Open Sans', sans-serif; color: white; font-size: 16px; margin-bottom: 5px">{{ i.name }}</p>
+                      <p style="font-family: 'Open Sans', sans-serif; color: white; font-size: 16px; margin-bottom: 5px; overflow-x: auto">{{ i.name }}</p>
                       <span style="font-family: 'Open Sans', sans-serif; color: gray; font-size: 12px;">{{ i.provider_name }}</span>
                       <p style="font-family: 'Open Sans', sans-serif; color: gray; font-size: 12px; margin-top: 0">{{ i.category }}</p>
                   </div>
