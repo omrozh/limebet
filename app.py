@@ -1694,7 +1694,7 @@ def casino():
                     "id": i.get("id")
                 })
             except AttributeError or KeyError:
-                pass
+                print(c)
     print(games)
     return flask.render_template("casino.html", current_user=current_user, games=games)
 
