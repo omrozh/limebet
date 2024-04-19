@@ -588,7 +588,6 @@ class BetOption(db.Model):
     @property
     def bet_odds(self):
         bet_odds = BetOdd.query.filter_by(bet_option_fk=self.id).filter_by(bettable=True).all()
-
         return bet_odds
 
     @property
@@ -618,10 +617,7 @@ class BetOdd(db.Model):
 
     @property
     def user_selected(self):
-        current_coupon = BetCoupon.query.filter_by(user_fk=current_user.id).filter_by(status="Oluşturuluyor").first()
-        if not current_coupon:
-            return False
-        selected_odds = [i.bet_odd_fk for i in BetSelectedOption.query.filter_by(bet_coupon_fk=current_coupon.id)]
+
         return False
 
 
