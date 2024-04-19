@@ -1416,7 +1416,7 @@ def canli_bahis():
 @app.route("/bahis/mac/<bahis_id>")
 def bahis_mac(bahis_id):
     open_bet = OpenBet.query.get(bahis_id)
-    from_frame = flask.request.args.get("iframe", False)
+    from_frame = flask.request.args.get("iframe", False) == "True"
     return flask.render_template("bahis/bahis_detay.html", open_bet=open_bet, from_frame=from_frame)
 
 
