@@ -1685,14 +1685,16 @@ def casino():
     games = []
     for i in get_providers():
         for c in get_games(i.get("id")):
-            print(c)
-            games.append({
-                "img_vertical": c.get("img_vertical"),
-                "name": c.get("name"),
-                "provider_name": i.get("name"),
-                "category": c.get("category"),
-                "id": i.get("id")
-            })
+            try:
+                games.append({
+                    "img_vertical": c.get("img_vertical"),
+                    "name": c.get("name"),
+                    "provider_name": i.get("name"),
+                    "category": c.get("category"),
+                    "id": i.get("id")
+                })
+            except AttributeError or KeyError:
+                pass
     return flask.render_template("casino.html", current_user=current_user, games=games)
 
 
