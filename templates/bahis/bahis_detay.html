@@ -229,7 +229,6 @@
         </div>
         {% else %}
             <br>
-            <br>
         {% endif %}
         <center style="width: 5%; margin-right: 1%; float: left; height: 600px; background: #0f1012; margin-left: 25px; border-radius: 15px; border: 1px solid rgba(255, 255, 255, .3)"
             id="side-bar">
@@ -312,7 +311,7 @@
             <p style="margin-left: 15px">Marketler</p>
       {% for i in open_bet.bet_options %}
 
-        {% if True %}
+        {% if i.has_odds %}
                 <div style="font-family: 'Open Sans', sans-serif; width: 100%; background-color: #242425; padding: 5px; padding-left: 15px; box-sizing: border-box">
           {{ i.game_name }}
         </div>
