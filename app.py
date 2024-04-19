@@ -1684,8 +1684,7 @@ def casino():
     from casino_utils import get_games, get_providers
     games = []
     for i in get_providers():
-        print(get_games(i.get("id")))
-        for c in get_games(i.get("id")):
+        for c in get_games(i.get("id")).get("games"):
             try:
                 games.append({
                     "img_vertical": c.get("img_vertical"),
