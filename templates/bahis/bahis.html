@@ -373,7 +373,7 @@
                             <td>{{ i.match_league }}</td>
                             <td>{{i.bet_ending_datetime}}</td>
                             <td>{{ i.team_1 }} - {{ i.team_2 }}</td>
-                            <td><span onclick="document.getElementById('bet-iframe').src = '/bahis/mac/{{i.id}}'" style="color: white;">Detaylar</span></td>
+                            <td><span onclick="document.getElementById('bet-iframe').src = '/bahis/mac/{{i.id}}?from_frame=True'" style="color: white;">Detaylar</span></td>
                           </tr>
                         {% endif %}
                     {% else %}
@@ -382,7 +382,7 @@
                             <td>{{ i.match_league }}</td>
                             <td>{{i.bet_ending_datetime}}</td>
                             <td>{{ i.team_1 }} - {{ i.team_2 }}</td>
-                            <td><span onclick="document.getElementById('bet-iframe').src = '/bahis/mac/{{i.id}}'" style="color: white;">Detaylar</span></td>
+                            <td><span onclick="document.getElementById('bet-iframe').src = '/bahis/mac/{{i.id}}?from_frame=True'" style="color: white;">Detaylar</span></td>
                         </tr>
                     {% endif %}
                     {% endfor %}
