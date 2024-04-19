@@ -358,8 +358,8 @@
                 <tbody>
 
                     <tr style="color: white">
-                        <th>Spor</th>
-                        <th>Lig</th>
+                        <th style="display: none">Spor</th>
+                        <th style="display: none">Lig</th>
                         <th>Tarih/Saat</th>
                         <th>Maç Adı</th>
                         <th>Oranlar</th>
@@ -369,8 +369,8 @@
                     {% if canli_bahis %}
                         {% if i.has_live_odds %}
                           <tr class="searchable-div" style="color: white;">
-                            <td>{{ i.sport_readable }}</td>
-                            <td>{{ i.match_league }}</td>
+                            <td style="display: none">{{ i.sport_readable }}</td>
+                            <td style="display: none">{{ i.match_league }}</td>
                             <td>{{i.bet_ending_datetime}}</td>
                             <td>{{ i.team_1 }} - {{ i.team_2 }}</td>
                             <td><span onclick="document.getElementById('bet-iframe').src = '/bahis/mac/{{i.id}}?from_frame=True'" style="color: white;">Detaylar</span></td>
