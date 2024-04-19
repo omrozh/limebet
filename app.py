@@ -1435,8 +1435,7 @@ def take_bet(odd_id):
     new_coupon_bet = BetSelectedOption(bet_coupon_fk=current_coupon.id, bet_odd_fk=odd_id,
                                        bet_option_fk=bet_odd.bet_option_fk, reference_id=str(uuid4()))
 
-    print(BetSelectedOption.query.filter_by(bet_coupon_fk=current_coupon.id).filter_by(
-            match_name=bet_odd.bet_option.match_name).all())
+    print(bet_odd.bet_option.match_name)
     if len(BetSelectedOption.query.filter_by(bet_coupon_fk=current_coupon.id).filter_by(
             match_name=bet_odd.bet_option.match_name).all()) > 0:
         return f'''
