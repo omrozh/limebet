@@ -591,6 +591,7 @@ class BetOption(db.Model):
         unique_bet_odds = []
         unique_bet_odd_names = []
 
+        print(len(bet_odds))
         for i in bet_odds:
             if i.value not in unique_bet_odd_names:
                 unique_bet_odds.append(i)
