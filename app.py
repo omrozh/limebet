@@ -1683,6 +1683,7 @@ def reroute_page():
 def casino():
     from casino_utils import get_games, get_providers
     games = []
+    games_popular = []
     provider_id = flask.request.args.get("provider_id", False)
     provider_name = flask.request.args.get("provider_name", False)
     search_query = flask.request.args.get("search_query")
@@ -1719,6 +1720,17 @@ def casino():
                 "name": c.get("name"),
                 "id": c.get("id")
             })
+        for c in get_games().get("games"):
+            try:
+                games_popular.append({
+                    "img_vertical": c.get("img_vertical"),
+                    "name": c.get("name"),
+                    "provider_name": "-",
+                    "category": c.get("category"),
+                    "id": c.get("id")
+                })
+            except AttributeError or KeyError:
+                pass
 
     return flask.render_template("casino.html", current_user=current_user, games=games, provider_id=provider_id)
 
