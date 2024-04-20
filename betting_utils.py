@@ -169,7 +169,29 @@ def live_betting():
                             )
                             new_bet_options.append(new_bet_option)
 
+                            for bet_option in bet_option.get("odds"):
+                                query = """
+                                INSERT INTO bet_odd (game_id, odd, value, bet_option_fk, bettable, market_url)
+                                VALUES (:game_id, :odd, :value, :bet_option_fk, :bettable, :market_url)
+                                ON CONFLICT (game_id) DO UPDATE
+                                SET odd = EXCLUDED.odd, bettable = EXCLUDED.bettable, market_url = EXCLUDED.market_url, bet_option_fk = EXCLUDED.bet_option_fk
+                                """
 
+                                params = {
+                                    "game_id": bet_option.get("gameID"),
+                                    "odd": bet_option.get("odd"),
+                                    "value": bet_option.get("value").replace("Home", new_open_bet.team_1)
+                                    .replace("home", new_open_bet.team_1).replace("away", new_open_bet.team_2)
+                                    .replace("Away", new_open_bet.team_2).replace("Draw", "Berabere")
+                                    .replace("draw", "berabere"),
+                                    "bet_option_fk": new_bet_option.id,
+                                    "bettable": True,
+                                    "market_url": bet_option.get("market_url")
+                                }
+
+                                db.session.execute(text(query), params)
+
+                            db.session.commit()
 
                         print(time.time() - start_time)
 
