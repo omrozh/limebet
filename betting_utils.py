@@ -164,6 +164,8 @@ def live_betting():
                                 game_details=bet_option.get("gameDetails"),
                                 open_bet_fk=new_open_bet.id
                             )
+                            db.session.add(new_bet_option)
+                            db.session.commit()
 
                             for bet_odd in bet_option.get("odds"):
                                 query = """
