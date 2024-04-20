@@ -157,7 +157,6 @@ def live_betting():
                 db.session.commit()
 
                 for sport in sports:
-                    print("start " + sport)
                     for bet in get_bets(is_live=True, sport_name=sport):
                         new_open_bet = OpenBet.query.filter_by(api_match_id=bet.get("MatchID")).first()
                         if not new_open_bet:
@@ -167,7 +166,6 @@ def live_betting():
                         new_bet_odds = []
 
                         for bet_option in bet.get("Bets"):
-                            print("bet option")
                             new_bet_option = BetOption(
                                 game_name=bet_option.get("gameName"),
                                 game_details=bet_option.get("gameDetails"),
@@ -176,7 +174,6 @@ def live_betting():
                             new_bet_options.append(new_bet_option)
 
                             for bet_odd in bet_option.get("odds"):
-                                print("bet odd")
                                 new_bet_odd = BetOdd.query.filter_by(game_id=bet_odd.get("gameID")).first()
                                 if new_bet_odd:
                                     new_bet_odd.odd = bet_odd.get("odd")
