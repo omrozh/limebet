@@ -1683,7 +1683,7 @@ def reroute_page():
 def casino():
     from casino_utils import get_games, get_providers
     games = []
-    provider_id = flask.request.args.get("provider", False)
+    provider_id = flask.request.args.get("provider_id", False)
     provider_name = flask.request.args.get("provider_name", False)
     if provider_id:
         for c in get_games(provider_id).get("games"):
