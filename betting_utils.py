@@ -170,7 +170,6 @@ def live_betting():
                             new_bet_options.append(new_bet_option)
 
                             for bet_odd in bet_option.get("odds"):
-                                print(bet_odd)
                                 query = """
                                 INSERT INTO bet_odd (game_id, odd, value, bet_option_fk, bettable, market_url)
                                 VALUES (:game_id, :odd, :value, :bet_option_fk, :bettable, :market_url)
@@ -195,7 +194,7 @@ def live_betting():
                             db.session.commit()
 
                         print(time.time() - start_time)
-
+                new_open_bet.live_betting_expired = True
                 db.session.commit()
         except Exception as e:
             print(f"Error occurred: {e}")
