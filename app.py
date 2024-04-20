@@ -1729,10 +1729,13 @@ def casino():
                     "category": c.get("category"),
                     "id": c.get("id")
                 })
+                if len(games_popular) > 200:
+                    break
             except AttributeError or KeyError:
                 pass
 
-    return flask.render_template("casino.html", current_user=current_user, games=games, provider_id=provider_id)
+    return flask.render_template("casino.html", current_user=current_user, games=games, provider_id=provider_id,
+                                 games_popular=games_popular)
 
 
 @app.route("/casino/<game_id>")
