@@ -169,28 +169,7 @@ def live_betting():
                             )
                             new_bet_options.append(new_bet_option)
 
-                            for bet_odd in bet_option.get("odds"):
-                                new_bet_odd = BetOdd.query.filter_by(game_id=bet_odd.get("gameID")).first()
-                                if new_bet_odd:
-                                    new_bet_odd.odd = bet_odd.get("odd")
-                                    new_bet_odd.bettable = True
-                                    new_bet_odd.market_url = bet_odd.get("market_url")
-                                    new_bet_odd.bet_option_fk = new_bet_option.id
-                                    db.session.commit()
-                                else:
-                                    new_bet_odd = BetOdd(
-                                        game_id=bet_odd.get("gameID"),
-                                        odd=bet_odd.get("odd"),
-                                        value=bet_odd.get("value").replace("Home", new_open_bet.team_1)
-                                        .replace("home", new_open_bet.team_1).replace("away", new_open_bet.team_2)
-                                        .replace("Away", new_open_bet.team_2).replace("Draw", "Berabere")
-                                        .replace("draw", "berabere"),
-                                        bet_option_fk=new_bet_option.id,
-                                        bettable=True,
-                                        market_url=bet_odd.get("market_url")
-                                    )
-                                db.session.add(new_bet_odd)
-                                db.session.commit()
+
 
                         print(time.time() - start_time)
 
