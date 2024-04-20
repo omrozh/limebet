@@ -365,7 +365,7 @@
               {% else %}
                     {% for i in games %}
                     <div onclick="document.location = '/casino?provider_id={{ i.id }}&provider_name={{ i.name }}'" class="searchable-div" style="background-color: #1a1c1f; min-width: fit-content; padding: 15px; border-radius: 15px; display: inline-block; margin-left: 15px; margin-bottom: 15px">
-                      <img class="game-img" style="border-radius: 15px;" src="{{ i.img_vertical }}" alt="">
+                    <p style="font-family: 'Open Sans', sans-serif; color: white; font-size: 16px; margin-bottom: 5px; overflow-x: auto; width: 150px; max-width: 30vw; white-space: nowrap">{{ i.name }}</p>
                   </div>
                 {% endfor %}
               {% endif %}
