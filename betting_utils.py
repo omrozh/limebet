@@ -158,16 +158,12 @@ def live_betting():
                         if not new_open_bet:
                             continue
 
-                        new_bet_options = []
-                        new_bet_odds = []
-
                         for bet_option in bet.get("Bets"):
                             new_bet_option = BetOption(
                                 game_name=bet_option.get("gameName"),
                                 game_details=bet_option.get("gameDetails"),
                                 open_bet_fk=new_open_bet.id
                             )
-                            new_bet_options.append(new_bet_option)
 
                             for bet_odd in bet_option.get("odds"):
                                 query = """
@@ -196,6 +192,8 @@ def live_betting():
                         print(time.time() - start_time)
                 try:
                     new_open_bet.live_betting_expired = True
+                    print(new_open_bet.team_1)
+                    print(new_open_bet.team_2)
                 except:
                     pass
                 db.session.commit()
