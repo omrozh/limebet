@@ -9,9 +9,11 @@ def get_providers():
     return r.json()
 
 
-def get_games(provider_id=None):
+def get_games(provider_id=None, game_type=None):
     if provider_id:
         r = requests.get(f"{BASE_URL}/gameList?provider={provider_id}")
+    elif game_type:
+        r = requests.get(f"{BASE_URL}/gameList?type={game_type}")
     else:
         r = requests.get(f"{BASE_URL}/gameList")
     return r.json()
