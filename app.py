@@ -1689,8 +1689,6 @@ def casino():
 
     if provider_id or search_query:
         if search_query:
-            provider_id = "Search"
-            provider_name = ""
             for c in get_games().get("games"):
                 if search_query in c.get("name"):
                     games.append({
