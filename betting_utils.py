@@ -156,9 +156,13 @@ def live_betting():
 
                 db.session.commit()
 
+                total_index = 0
+
                 for sport in sports:
                     print(len(get_bets(is_live=True, sport_name=sport)))
+                    total_index += 1
                     for bet in get_bets(is_live=True, sport_name=sport):
+                        start_time = time.time()
                         new_open_bet = OpenBet.query.filter_by(api_match_id=bet.get("MatchID")).first()
                         if not new_open_bet:
                             continue
@@ -199,6 +203,8 @@ def live_betting():
                         db.session.bulk_save_objects(new_bet_odds)
                         new_open_bet.live_betting_expired = False
                         print("bulk save end")
+                        print(total_index)
+                        print(start_time - time.time())
 
                 db.session.commit()
         except Exception as e:
