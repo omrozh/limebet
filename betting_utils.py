@@ -191,7 +191,7 @@ def live_betting():
 
                         print(time.time() - start_time)
                         try:
-                            new_open_bet.live_betting_expired = True
+                            new_open_bet.live_betting_expired = False
                             db.session.commit()
                         except:
                             pass
