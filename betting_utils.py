@@ -188,7 +188,7 @@ def live_betting():
                                 }
 
                                 print(BetOdd.query.filter_by(game_id=params.get("game_id")).first().value)
-                                print(params.get("bet_option_fk"))
+                                print(BetOdd.query.filter_by(game_id=params.get("game_id")).first().bet_option_fk)
 
                                 db.session.execute(text(query), params)
 
