@@ -127,6 +127,7 @@ def live_betting():
                     """),
                     {"current_time": current_time}
                 )
+                print("1")
 
                 db.session.execute(
                     text("""
@@ -140,6 +141,8 @@ def live_betting():
                     """)
                 )
 
+                print("2")
+
                 db.session.execute(
                     text("""
                     DELETE FROM bet_option
@@ -149,9 +152,12 @@ def live_betting():
                     """)
                 )
 
+                print("3")
+
                 db.session.commit()
 
                 for sport in sports:
+                    print("start " + sport)
                     for bet in get_bets(is_live=True, sport_name=sport):
                         new_open_bet = OpenBet.query.filter_by(api_match_id=bet.get("MatchID")).first()
                         if not new_open_bet:
