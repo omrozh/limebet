@@ -50,7 +50,7 @@ def register_open_bet():
     sports = ["soccer", "volleyball", "basketball", "tennis", "cricket", "american_football"]
     with app.app_context():
         for sport in sports:
-            for i in get_bets(sport_name=sport):
+            for i in get_bets(sport_name=sport, is_live=True):
                 with app.app_context():
                     if len(OpenBet.query.filter_by(api_match_id=i.get("MatchID")).all()) > 0:
                         continue
