@@ -169,7 +169,8 @@ def live_betting():
                             )
                             new_bet_options.append(new_bet_option)
 
-                            for bet_option in bet_option.get("odds"):
+                            for bet_odd in bet_option.get("odds"):
+                                print(bet_odd)
                                 query = """
                                 INSERT INTO bet_odd (game_id, odd, value, bet_option_fk, bettable, market_url)
                                 VALUES (:game_id, :odd, :value, :bet_option_fk, :bettable, :market_url)
@@ -178,15 +179,15 @@ def live_betting():
                                 """
 
                                 params = {
-                                    "game_id": bet_option.get("gameID"),
-                                    "odd": bet_option.get("odd"),
-                                    "value": bet_option.get("value").replace("Home", new_open_bet.team_1)
+                                    "game_id": bet_odd.get("gameID"),
+                                    "odd": bet_odd.get("odd"),
+                                    "value": bet_odd.get("value").replace("Home", new_open_bet.team_1)
                                     .replace("home", new_open_bet.team_1).replace("away", new_open_bet.team_2)
                                     .replace("Away", new_open_bet.team_2).replace("Draw", "Berabere")
                                     .replace("draw", "berabere"),
                                     "bet_option_fk": new_bet_option.id,
                                     "bettable": True,
-                                    "market_url": bet_option.get("market_url")
+                                    "market_url": bet_odd.get("market_url")
                                 }
 
                                 db.session.execute(text(query), params)
