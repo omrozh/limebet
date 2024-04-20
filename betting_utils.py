@@ -193,6 +193,8 @@ def live_betting():
                         try:
                             new_open_bet.live_betting_expired = False
                             db.session.commit()
+                            print(new_open_bet.team_1)
+                            print(new_open_bet.team_2)
                         except:
                             pass
                 db.session.commit()
