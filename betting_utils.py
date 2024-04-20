@@ -157,6 +157,7 @@ def live_betting():
                 db.session.commit()
 
                 for sport in sports:
+                    print(len(get_bets(is_live=True, sport_name=sport)))
                     for bet in get_bets(is_live=True, sport_name=sport):
                         new_open_bet = OpenBet.query.filter_by(api_match_id=bet.get("MatchID")).first()
                         if not new_open_bet:
