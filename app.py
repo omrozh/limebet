@@ -1685,18 +1685,31 @@ def casino():
     games = []
     provider_id = flask.request.args.get("provider_id", False)
     provider_name = flask.request.args.get("provider_name", False)
-    if provider_id:
-        for c in get_games(provider_id).get("games"):
-            try:
-                games.append({
-                    "img_vertical": c.get("img_vertical"),
-                    "name": c.get("name"),
-                    "provider_name": provider_name,
-                    "category": c.get("category"),
-                    "id": c.get("id")
-                })
-            except AttributeError or KeyError:
-                pass
+    search_query = flask.request.args.get("search_query")
+
+    if provider_id or search_query:
+        if search_query:
+            for c in get_games().get("games"):
+                if search_query in c.get("name"):
+                    games.append({
+                        "img_vertical": c.get("img_vertical"),
+                        "name": c.get("name"),
+                        "provider_name": provider_name,
+                        "category": c.get("category"),
+                        "id": c.get("id")
+                    })
+            else:
+                for c in get_games(provider_id).get("games"):
+                    try:
+                        games.append({
+                            "img_vertical": c.get("img_vertical"),
+                            "name": c.get("name"),
+                            "provider_name": provider_name,
+                            "category": c.get("category"),
+                            "id": c.get("id")
+                        })
+                    except AttributeError or KeyError:
+                        pass
 
     else:
         for c in get_providers():

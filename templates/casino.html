@@ -348,7 +348,7 @@
 
     </center>
     <div id="main-content-wrapper">
-            <input type="text" oninput="searchPlayer()" id="search-box" placeholder="Oyun Ara">
+            <input type="text" onchange="searchPlayer()" id="search-box" placeholder="Oyun Ara">
             <br>
             <br>
             <div class="games-div">
@@ -375,15 +375,9 @@
             <script>
                 function searchPlayer(){
                 let search_query = document.getElementById("search-box").value;
-                let searchable_divs = document.getElementsByClassName("searchable-div")
-                for(let i = 0; i < searchable_divs.length; i++){
-                    if(search_query.length > 2){
-                        if(!searchable_divs[i].innerHTML.includes(search_query)){
-                            searchable_divs[i].style.display = "none";
-                        }
-                    }else{
-                        searchable_divs[i].style.display = "inline-block";
-                    }
+                let searchable_divs = document.getElementsByClassName("searchable-div");
+                if (search_query.length > 2){
+                    document.location = '?search_query=' + search_query
                 }
             }
             </script>
