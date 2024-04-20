@@ -127,7 +127,6 @@ def live_betting():
                     """),
                     {"current_time": current_time}
                 )
-                print("1")
 
                 db.session.execute(
                     text("""
@@ -141,8 +140,6 @@ def live_betting():
                     """)
                 )
 
-                print("2")
-
                 db.session.execute(
                     text("""
                     DELETE FROM bet_option
@@ -152,15 +149,9 @@ def live_betting():
                     """)
                 )
 
-                print("3")
-
                 db.session.commit()
 
-                total_index = 0
-
                 for sport in sports:
-                    print(len(get_bets(is_live=True, sport_name=sport)))
-                    total_index += 1
                     for bet in get_bets(is_live=True, sport_name=sport):
                         start_time = time.time()
                         new_open_bet = OpenBet.query.filter_by(api_match_id=bet.get("MatchID")).first()
@@ -185,6 +176,7 @@ def live_betting():
                                     new_bet_odd.bettable = True
                                     new_bet_odd.market_url = bet_odd.get("market_url")
                                     new_bet_odd.bet_option_fk = new_bet_option.id
+                                    db.session.commit()
                                 else:
                                     new_bet_odd = BetOdd(
                                         game_id=bet_odd.get("gameID"),
@@ -197,14 +189,10 @@ def live_betting():
                                         bettable=True,
                                         market_url=bet_odd.get("market_url")
                                     )
-                                new_bet_odds.append(new_bet_odd)
-                        print("Bulk save")
-                        db.session.bulk_save_objects(new_bet_options)
-                        db.session.bulk_save_objects(new_bet_odds)
-                        new_open_bet.live_betting_expired = False
-                        print("bulk save end")
-                        print(total_index)
-                        print(start_time - time.time())
+                                db.session.add(new_bet_odd)
+                                db.session.commit()
+
+                        print(time.time() - start_time)
 
                 db.session.commit()
         except Exception as e:
