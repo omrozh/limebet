@@ -1699,18 +1699,18 @@ def casino():
                         "id": c.get("id")
                     })
                     provider_id = "-"
-            else:
-                for c in get_games(provider_id).get("games"):
-                    try:
-                        games.append({
-                            "img_vertical": c.get("img_vertical"),
-                            "name": c.get("name"),
-                            "provider_name": provider_name,
-                            "category": c.get("category"),
-                            "id": c.get("id")
-                        })
-                    except AttributeError or KeyError:
-                        pass
+        else:
+            for c in get_games(provider_id).get("games"):
+                try:
+                    games.append({
+                        "img_vertical": c.get("img_vertical"),
+                        "name": c.get("name"),
+                        "provider_name": provider_name,
+                        "category": c.get("category"),
+                        "id": c.get("id")
+                    })
+                except AttributeError or KeyError:
+                    pass
 
     else:
         for c in get_providers():
