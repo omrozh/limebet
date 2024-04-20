@@ -1698,7 +1698,7 @@ def casino():
                         "category": c.get("category"),
                         "id": c.get("id")
                     })
-                    provider_id = ""
+                    provider_id = "-"
             else:
                 for c in get_games(provider_id).get("games"):
                     try:
