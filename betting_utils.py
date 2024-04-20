@@ -187,10 +187,11 @@ def live_betting():
                                     "market_url": bet_odd.get("market_url")
                                 }
 
+                                db.session.execute(text(query), params)
+
+
                                 print(BetOdd.query.filter_by(game_id=params.get("game_id")).first().value)
                                 print(BetOdd.query.filter_by(game_id=params.get("game_id")).first().bet_option_fk)
-
-                                db.session.execute(text(query), params)
 
                             db.session.commit()
 
