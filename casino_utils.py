@@ -19,6 +19,3 @@ def get_game_iframe(game_id):
     with open("data.html", "w+") as f:
         f.write(r.text)
     return r.content
-
-
-print(get_providers())
