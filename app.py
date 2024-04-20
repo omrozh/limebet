@@ -1683,19 +1683,30 @@ def reroute_page():
 def casino():
     from casino_utils import get_games, get_providers
     games = []
-    for i in get_providers():
-        for c in get_games(i.get("id")).get("games"):
+    provider_id = flask.request.args.get("provider", False)
+    provider_name = flask.request.args.get("provider_name", False)
+    if provider_id:
+        for c in get_games(provider_id).get("games"):
             try:
                 games.append({
                     "img_vertical": c.get("img_vertical"),
                     "name": c.get("name"),
-                    "provider_name": i.get("name"),
+                    "provider_name": provider_name,
                     "category": c.get("category"),
                     "id": c.get("id")
                 })
             except AttributeError or KeyError:
                 pass
-    return flask.render_template("casino.html", current_user=current_user, games=games)
+
+    else:
+        for c in get_providers():
+            games.append({
+                "img_vertical": c.get("logo"),
+                "name": c.get("name"),
+                "id": c.get("id")
+            })
+
+    return flask.render_template("casino.html", current_user=current_user, games=games, provider_id=provider_id)
 
 
 @app.route("/casino/<game_id>")

@@ -353,14 +353,22 @@
             <br>
             <div class="games-div">
               <br>
-              {% for i in games %}
+              {% if not provider_id %}
+                {% for i in games %}
                     <div onclick="document.location = '/casino/{{ i.id }}'" class="searchable-div" style="background-color: #1a1c1f; min-width: fit-content; padding: 15px; border-radius: 15px; display: inline-block; margin-left: 15px; margin-bottom: 15px">
                       <img class="game-img" style="border-radius: 15px" src="{{ i.img_vertical }}" alt="">
                       <p style="font-family: 'Open Sans', sans-serif; color: white; font-size: 16px; margin-bottom: 5px; overflow-x: auto; width: 150px; max-width: 30vw; white-space: nowrap">{{ i.name }}</p>
                       <span style="font-family: 'Open Sans', sans-serif; color: gray; font-size: 12px;">{{ i.provider_name }}</span>
                       <p style="font-family: 'Open Sans', sans-serif; color: gray; font-size: 12px; margin-top: 0">{{ i.category }}</p>
                   </div>
-              {% endfor %}
+                {% endfor %}
+              {% else %}
+                    {% for i in games %}
+                    <div onclick="document.location = '/casino?provider_id={{ i.id }}&provider_name={{ i.name }}'" class="searchable-div" style="background-color: #1a1c1f; min-width: fit-content; padding: 15px; border-radius: 15px; display: inline-block; margin-left: 15px; margin-bottom: 15px">
+                      <img class="game-img" style="border-radius: 15px" src="{{ i.img_vertical }}" alt="">
+                  </div>
+                {% endfor %}
+              {% endif %}
             </div>
             <script>
                 function searchPlayer(){
