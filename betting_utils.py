@@ -189,18 +189,10 @@ def live_betting():
 
                                 db.session.execute(text(query), params)
 
-
-                                print(BetOdd.query.filter_by(game_id=params.get("game_id")).first().value)
-                                print(BetOdd.query.filter_by(game_id=params.get("game_id")).first().bet_option_fk)
-
                             db.session.commit()
-
-                        print(time.time() - start_time)
                         try:
                             new_open_bet.live_betting_expired = False
                             db.session.commit()
-                            print(new_open_bet.team_1)
-                            print(new_open_bet.team_2)
                         except:
                             pass
                 db.session.commit()
