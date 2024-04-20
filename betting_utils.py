@@ -4,6 +4,7 @@ import time
 import requests
 import sys
 
+from sqlalchemy import text
 # api_key = "zHMFjNS3bRu7vNgUrtr6JPMwOD5Jcuer7O9yw9pwNZMX4XBFwe2tazdyQLsq"
 api_key = "na"
 
@@ -119,16 +120,16 @@ def live_betting():
 
                 # Expire open bets and bet odds
                 db.session.execute(
-                    """
+                    text("""
                     UPDATE open_bet
                     SET live_betting_expired = TRUE
                     WHERE bet_ending_datetime < :current_time AND live_betting_expired = FALSE
-                    """,
+                    """),
                     {"current_time": current_time}
                 )
 
                 db.session.execute(
-                    """
+                    text("""
                     UPDATE bet_odd
                     SET bettable = FALSE, bet_option_fk = 0
                     WHERE bet_option_fk IN (
@@ -136,16 +137,16 @@ def live_betting():
                             SELECT id FROM open_bet WHERE live_betting_expired = TRUE
                         )
                     )
-                    """
+                    """)
                 )
 
                 db.session.execute(
-                    """
+                    text("""
                     DELETE FROM bet_option
                     WHERE open_bet_fk IN (
                         SELECT id FROM open_bet WHERE live_betting_expired = TRUE
                     )
-                    """
+                    """)
                 )
 
                 db.session.commit()
