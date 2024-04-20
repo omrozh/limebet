@@ -167,6 +167,7 @@ def live_betting():
                         new_bet_odds = []
 
                         for bet_option in bet.get("Bets"):
+                            print("bet option")
                             new_bet_option = BetOption(
                                 game_name=bet_option.get("gameName"),
                                 game_details=bet_option.get("gameDetails"),
@@ -175,6 +176,7 @@ def live_betting():
                             new_bet_options.append(new_bet_option)
 
                             for bet_odd in bet_option.get("odds"):
+                                print("bet odd")
                                 new_bet_odd = BetOdd.query.filter_by(game_id=bet_odd.get("gameID")).first()
                                 if new_bet_odd:
                                     new_bet_odd.odd = bet_odd.get("odd")
@@ -194,10 +196,11 @@ def live_betting():
                                         market_url=bet_odd.get("market_url")
                                     )
                                 new_bet_odds.append(new_bet_odd)
-
+                        print("Bulk save")
                         db.session.bulk_save_objects(new_bet_options)
                         db.session.bulk_save_objects(new_bet_odds)
                         new_open_bet.live_betting_expired = False
+                        print("bulk save end")
 
                 db.session.commit()
         except Exception as e:
