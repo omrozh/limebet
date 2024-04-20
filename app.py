@@ -1398,6 +1398,7 @@ def bahis_mobile():
 @app.route("/canli_bahis")
 def canli_bahis():
     open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime <= datetime.datetime.now()).filter_by(live_betting_expired=False).filter_by(has_odds=True).all()
+    print(len(open_bets))
     sports_leagues = []
     for i in open_bets:
         if i.match_league not in sports_leagues:
