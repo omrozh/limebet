@@ -598,7 +598,7 @@ class BetOption(db.Model):
 
 class BetOdd(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    game_id = db.Column(db.String)
+    game_id = db.Column(db.String, unique=True)
     odd = db.Column(db.Float)
     value = db.Column(db.String)
     bet_option_fk = db.Column(db.Integer)
