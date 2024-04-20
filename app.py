@@ -1720,7 +1720,7 @@ def casino():
                 "name": c.get("name"),
                 "id": c.get("id")
             })
-        for c in get_games(type="slot").get("games"):
+        for c in get_games(game_type="slot").get("games"):
             try:
                 games_popular.append({
                     "img_vertical": c.get("img_vertical"),
