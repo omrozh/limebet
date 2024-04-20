@@ -190,12 +190,12 @@ def live_betting():
                             db.session.commit()
 
                         print(time.time() - start_time)
-                try:
-                    new_open_bet.live_betting_expired = True
-                    print(new_open_bet.team_1)
-                    print(new_open_bet.team_2)
-                except:
-                    pass
+                        try:
+                            new_open_bet.live_betting_expired = True
+                            print(new_open_bet.team_1)
+                            print(new_open_bet.team_2)
+                        except:
+                            pass
                 db.session.commit()
         except Exception as e:
             print(f"Error occurred: {e}")
