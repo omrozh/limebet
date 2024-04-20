@@ -1691,7 +1691,7 @@ def casino():
     if provider_id or search_query:
         if search_query:
             for c in get_games().get("games"):
-                if search_query in c.get("name"):
+                if search_query.lower() in c.get("name").lower():
                     games.append({
                         "img_vertical": c.get("img_vertical"),
                         "name": c.get("name"),
