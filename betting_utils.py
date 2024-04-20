@@ -108,6 +108,7 @@ def get_results(match_id):
 
 def live_betting():
     print("Live bet update options")
+    start_time = time.time()
     from app import app, db, OpenBet, BetOdd, BetOption, BetCoupon
     import datetime
 
@@ -200,7 +201,7 @@ def live_betting():
             print(f"Error occurred: {e}")
 
     print("Live bet updated options")
-
+    print(time.time() - start_time)
 
 # Integrate distribute_rewards for cloudbet and make it so people should click on the coupon to claim rewards.
 
