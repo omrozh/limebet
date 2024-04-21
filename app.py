@@ -1104,15 +1104,30 @@ def profile():
 
 @app.route("/")
 def index():
-    from casino_utils import get_providers
+    from casino_utils import get_providers, get_games
     providers = []
+    games_popular = []
     for c in get_providers():
         providers.append({
             "img_vertical": c.get("logo"),
             "name": c.get("name"),
             "id": c.get("id")
         })
-    resp = flask.make_response(flask.render_template("anasayfa.html", current_user=current_user, providers=providers))
+    for c in get_games(provider_id="22").get("games"):
+        try:
+            games_popular.append({
+                "img_vertical": c.get("img_vertical"),
+                "name": c.get("name"),
+                "provider_name": "-",
+                "category": c.get("category"),
+                "id": c.get("id")
+            })
+            if len(games_popular) > 200:
+                break
+        except AttributeError or KeyError:
+            pass
+    resp = flask.make_response(flask.render_template("anasayfa.html", current_user=current_user, providers=providers,
+                                                     games_popular=games_popular))
     if flask.request.args.get("ref", False):
         resp.set_cookie('referrer', flask.request.args.get("ref"))
     return resp
