@@ -1124,7 +1124,7 @@ def index():
     providers = []
     games_popular = []
     open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime > datetime.datetime.now()).filter_by(
-        has_odds=True).all()[:5]
+        has_odds=True).all()[:50]
 
     for c in get_providers():
         providers.append({
