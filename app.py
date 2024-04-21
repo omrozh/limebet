@@ -1122,7 +1122,7 @@ def index():
                 "category": c.get("category"),
                 "id": c.get("id")
             })
-            if len(games_popular) > 200:
+            if len(games_popular) > 20:
                 break
         except AttributeError or KeyError:
             pass
