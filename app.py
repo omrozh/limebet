@@ -1125,7 +1125,7 @@ def index():
     games_popular = []
     open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime > datetime.datetime.now()).filter_by(
         has_odds=True).all()[:5]
-    print(open_bets)
+
     for c in get_providers():
         providers.append({
             "img_vertical": c.get("logo"),
