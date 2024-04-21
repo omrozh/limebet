@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mesajınız Alındı</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://kit.fontawesome.com/a6c8be30d8.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,200" rel="stylesheet" type="text/css">
+</head>
+<body style="font-family: open sans, sans-serif; background-color: #0f1012">
+    <img id="iconmain" src="/static/m2logo.png" alt="" style="height: 50px; padding: 20px; float: left">
+    <script>
+        if(window.innerWidth < window.innerHeight){
+            document.getElementById("iconmain").style.width = "50px";
+        }
+    </script>
+    <br style="clear: both">
+    <center>
+        <div id="check-box">
+            <i style="position: absolute; top: 0; bottom: 0; right: 0; left: 0; margin: auto; color: #3eb655; width: fit-content; height: fit-content; font-size: 10rem" class="fa-solid fa-gear"></i>
+            <i style="position: absolute; top: 0; bottom: 0; right: 0; left: 0; margin: auto; color: #8cd399; width: fit-content; height: fit-content; font-size: 6rem" class="fa-solid fa-circle"></i>
+            <i style="position: absolute; top: 0; bottom: 0; right: 0; left: 0; margin: auto; color: white; width: fit-content; height: fit-content; font-size: 4rem" class="fa-solid fa-check"></i>
+        </div>
+        <script>
+            if(window.innerWidth < window.innerHeight){
+                document.getElementById("check-box").style.display = "none";
+            }
+        </script>
+        <p style="color: white; font-size: 2rem; margin-top: 5%;">Mesajınız Alındı!</p>
+        <p style="width: 50%; color: white">Uzman ekip arkadaşlarımızdan biri size en kısa sürede dönüş yapacak.</p>
+        <p style="width: 50%; color: white">Teşekkürler.</p>
+        <button onclick="document.location = 'https://m2-entertainment.com'" style="background-color: transparent; color: white; border: 1px solid white; border-radius: 5px; margin-top: 250px; font-size: 1rem; padding: 10px; width: 250px; box-sizing: border-box; display: inline-block">
+            Anasayfa
+        </button>
+    </center>
+</body>
+</html>
