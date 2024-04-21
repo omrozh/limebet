@@ -348,27 +348,33 @@
   <center style="margin-top: 50px; max-width: 90vw; overflow-x: auto; white-space: nowrap">
       <div onmouseleave="removeEffect()" onmouseover="glowEffectSelect(this)" class="selection-menu-main" onclick="document.location = '/casino'" style="display: inline-block; vertical-align: top">
           <div style="border-radius: 15px; background: transparent">
-              <img src="/static/casino.jpg" style="width: 250px; border-radius: 15px; margin-bottom: -5px" alt="">
+              <img src="/static/casino.jpg" style="width: 200px; border-radius: 15px; margin-bottom: -5px" alt="">
           </div>
-          <h1 style="color: white">CASINO</h1>
+          <h2 style="color: white">CASINO</h2>
       </div>
       <div onmouseleave="removeEffect()" onmouseover="glowEffectSelect(this)" class="selection-menu-main" onclick="document.location = '/fantezi'" style="display: inline-block; vertical-align: top; margin-left: 50px">
           <div style="border-radius: 15px; background-color: transparent;">
-              <img src="/static/fantezi.jpg" style="width: 250px; border-radius: 15px; margin-bottom: -5px" alt="">
+              <img src="/static/fantezi.jpg" style="width: 200px; border-radius: 15px; margin-bottom: -10px" alt="">
           </div>
-          <h1 style="color: white;">FANTEZİ FUTBOL</h1>
+          <h2 style="color: white;">FANTEZİ FUTBOL</h2>
+      </div>
+      <div onmouseleave="removeEffect()" onmouseover="glowEffectSelect(this)" class="selection-menu-main" onclick="document.location = '/casino'" style="display: inline-block; vertical-align: top; margin-left: 50px">
+          <div style="border-radius: 15px; background-color: transparent;">
+              <img src="/static/slot_icon.png" style="width: 200px; border-radius: 15px; margin-bottom: -10px" alt="">
+          </div>
+          <h2 style="color: white;">SLOT</h2>
       </div>
       <div onmouseleave="removeEffect()" onmouseover="glowEffectSelect(this)" class="selection-menu-main" onclick="document.location = '/bahis'" style="display: inline-block; vertical-align: top; margin-left: 50px">
           <div style="border-radius: 15px; background-color: transparent;">
-              <img src="/static/bahis.jpg" style="width: 250px; border-radius: 15px; margin-bottom: -5px" alt="">
+              <img src="/static/bahis.jpg" style="width: 200px; border-radius: 15px; margin-bottom: -5px" alt="">
           </div>
-          <h1 style="color: white;">BAHİS</h1>
+          <h2 style="color: white;">BAHİS</h2>
       </div>
       <div onmouseleave="removeEffect()" onmouseover="glowEffectSelect(this)" class="selection-menu-main" onclick="document.location = '/canli_bahis'" style="display: inline-block; vertical-align: top; margin-left: 50px">
           <div style="border-radius: 15px; background-color: transparent;">
-              <img src="/static/live_casino.jpg" style="width: 250px; border-radius: 15px; margin-bottom: -5px" alt="">
+              <img src="/static/live_casino.jpg" style="width: 200px; border-radius: 15px; margin-bottom: -5px" alt="">
           </div>
-          <h1 style="color: white;">CANLI CASİNO</h1>
+          <h2 style="color: white;">CANLI CASİNO</h2>
       </div>
       <script>
           function glowEffectSelect(elem){
@@ -418,7 +424,7 @@
         <div style="width: 90%; white-space: nowrap; overflow-x: auto; margin-left: 5%; padding-left: -15px">
             {% for i in games_popular %}
                 <div onclick="document.location = '/casino/{{ i.id }}'" class="searchable-div" style="background-color: #26292d; min-width: fit-content; padding: 15px; border-radius: 15px; display: inline-block; margin-left: 15px; margin-bottom: 15px">
-                  <img class="game-img" style="border-radius: 15px; max-width: 200px" src="{{ i.img_vertical }}" alt="">
+                  <img class="game-img" style="border-radius: 15px; max-width: 180px" src="{{ i.img_vertical }}" alt="">
                   <p style="font-family: 'Open Sans', sans-serif; color: white; font-size: 16px; margin-bottom: 5px; overflow-x: auto; width: 150px; max-width: 30vw; white-space: nowrap">{{ i.name }}</p>
                   <span style="font-family: 'Open Sans', sans-serif; color: gray; font-size: 12px;">{{ i.provider_name }}</span>
                   <p style="font-family: 'Open Sans', sans-serif; color: gray; font-size: 12px; margin-top: 0">{{ i.category }}</p>
