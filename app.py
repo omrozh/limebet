@@ -1108,8 +1108,12 @@ def profile():
         WithdrawalRequest.query.filter_by(user_fk=current_user.id).all()))
 
 
-@app.route("/contact_m2")
+@app.route("/contact_m2", methods=["POST", "GET"])
 def contact_m2():
+    if flask.request.method == "POST":
+        contact_m2_form = ContactM2(email=flask.request.values["email"], message=flask.request.values["message"])
+        db.session.add(contact_m2_form)
+        db.session.commit()
     return flask.render_template("provider/contact_m2.html")
 
 
