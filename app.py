@@ -1123,6 +1123,8 @@ def index():
     from casino_utils import get_providers, get_games
     providers = []
     games_popular = []
+    open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime > datetime.datetime.now()).filter_by(
+        has_odds=True).all()[:5]
     for c in get_providers():
         providers.append({
             "img_vertical": c.get("logo"),
@@ -1143,7 +1145,7 @@ def index():
         except AttributeError or KeyError:
             pass
     resp = flask.make_response(flask.render_template("anasayfa.html", current_user=current_user, providers=providers,
-                                                     games_popular=games_popular))
+                                                     games_popular=games_popular, open_bets=open_bets))
     if flask.request.args.get("ref", False):
         resp.set_cookie('referrer', flask.request.args.get("ref"))
     return resp
