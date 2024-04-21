@@ -420,7 +420,7 @@
                   </div>
         {% endfor %}
         </div>
-        <h3 style="color: white; margin-left: 5%">Popüler Slot Oyunları</h3>
+        <h3 style="color: white; margin-left: 5%"><span style="margin-left: 15px">Popüler Slot Oyunları</span></h3>
         <div style="width: 90%; white-space: nowrap; overflow-x: auto; margin-left: 5%; padding-left: -15px">
             {% for i in games_popular %}
                 <div onclick="document.location = '/casino/{{ i.id }}'" class="searchable-div" style="background-color: #26292d; min-width: fit-content; padding: 15px; border-radius: 15px; display: inline-block; margin-left: 15px; margin-bottom: 15px">
@@ -431,7 +431,7 @@
               </div>
             {% endfor %}
         </div>
-        <h3 style="color: white; margin-left: 5%">Bugün Yaklaşan Maçlar</h3>
+        <h3 style="color: white; margin-left: 5%"><span style="margin-left: 15px">Bugün Yaklaşan Maçlar</span></h3>
         <div style="width: 90%; white-space: nowrap; overflow-x: auto; margin-left: 5%; padding-left: -15px">
             {% for i in open_bets %}
                 <div onclick="document.location = '/bahis/mac/{{ i.id }}'" class="searchable-div" style="background-color: #26292d; min-width: fit-content; padding: 15px; border-radius: 15px; display: inline-block; margin-left: 15px; margin-bottom: 15px">
