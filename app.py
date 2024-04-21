@@ -146,6 +146,12 @@ class Referrer(db.Model):
         return User.query.get(self.user_fk)
 
 
+class ContactM2(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String)
+    message = db.Column(db.String)
+
+
 class PartnerSession(db.Model):
     id = db.Column(db.String, primary_key=True)
     balance = db.Column(db.Float)
@@ -1100,6 +1106,11 @@ def profile():
 
     return flask.render_template("profile.html", current_user=current_user, withdrawal_requests=reversed(
         WithdrawalRequest.query.filter_by(user_fk=current_user.id).all()))
+
+
+@app.route("/contact_m2")
+def contact_m2():
+    return flask.render_template("provider/contact_m2.html")
 
 
 @app.route("/")
