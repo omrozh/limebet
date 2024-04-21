@@ -50,45 +50,62 @@ def register_open_bet():
     sports = ["soccer", "volleyball", "basketball", "tennis", "cricket", "american_football"]
     with app.app_context():
         for sport in sports:
-            for i in get_bets(sport_name=sport, is_live=True):
-                with app.app_context():
-                    if len(OpenBet.query.filter_by(api_match_id=i.get("MatchID")).all()) > 0:
-                        continue
-                    new_open_bet = OpenBet(
-                        api_match_id=i.get("MatchID"),
-                        bet_ending_datetime=i.get("DateTime"),
-                        match_league=i.get("League"),
-                        league_icon_url=i.get("LeagueFlag"),
-                        team_1=i.get("Team1"),
-                        team_2=i.get("Team2"),
-                        has_odds=False,
-                        live_betting_expired=False,
-                        sport=sport
+            for bet in get_bets(is_live=False, sport_name=sport):
+                start_time = time.time()
+                new_open_bet = OpenBet(
+                    api_match_id=bet.get("MatchID"),
+                    bet_ending_datetime=bet.get("DateTime"),
+                    match_league=bet.get("League"),
+                    league_icon_url=bet.get("LeagueFlag"),
+                    team_1=bet.get("Team1"),
+                    team_2=bet.get("Team2"),
+                    has_odds=False,
+                    live_betting_expired=False,
+                    sport=sport
+                )
+                db.session.add(new_open_bet)
+                db.session.commit()
+
+                for bet_option in bet.get("Bets"):
+                    new_bet_option = BetOption(
+                        game_name=bet_option.get("gameName"),
+                        game_details=bet_option.get("gameDetails"),
+                        open_bet_fk=new_open_bet.id
                     )
-                    db.session.add(new_open_bet)
+                    db.session.add(new_bet_option)
                     db.session.commit()
-                    for bet_option in i.get("Bets"):
-                        new_bet_option = BetOption(
-                            game_name=bet_option.get("gameName"),
-                            game_details=bet_option.get("gameDetails"),
-                            open_bet_fk=new_open_bet.id
-                        )
-                        db.session.add(new_bet_option)
-                        db.session.commit()
-                        for bet_odd in bet_option.get("odds"):
-                            new_bet_odd = BetOdd(
-                                game_id=bet_odd.get("gameID"),
-                                odd=bet_odd.get("odd"),
-                                value=bet_odd.get("value").replace("Home", new_open_bet.team_1).replace(
-                                    "home", new_open_bet.team_1).replace("away", new_open_bet.team_2).replace(
-                                    "Away", new_open_bet.team_2).replace("Draw", "Berabere").replace("draw", "berabere"),
-                                bet_option_fk=new_bet_option.id,
-                                bettable=True,
-                                market_url=bet_odd.get("market_url")
-                            )
-                            db.session.add(new_bet_odd)
-                            new_open_bet.has_odds = True
-                            db.session.commit()
+
+                    for bet_odd in bet_option.get("odds"):
+                        query = """
+                                    INSERT INTO bet_odd (game_id, odd, value, bet_option_fk, bettable, market_url)
+                                    VALUES (:game_id, :odd, :value, :bet_option_fk, :bettable, :market_url)
+                                    ON CONFLICT (game_id) DO UPDATE
+                                    SET odd = EXCLUDED.odd, bettable = EXCLUDED.bettable, market_url = EXCLUDED.market_url, bet_option_fk = EXCLUDED.bet_option_fk
+                                    """
+
+                        params = {
+                            "game_id": bet_odd.get("gameID"),
+                            "odd": bet_odd.get("odd"),
+                            "value": bet_odd.get("value").replace("Home", new_open_bet.team_1)
+                            .replace("home", new_open_bet.team_1).replace("away", new_open_bet.team_2)
+                            .replace("Away", new_open_bet.team_2).replace("Draw", "Berabere")
+                            .replace("draw", "berabere"),
+                            "bet_option_fk": new_bet_option.id,
+                            "bettable": True,
+                            "market_url": bet_odd.get("market_url")
+                        }
+                        new_open_bet.has_odds = True
+
+                        db.session.execute(text(query), params)
+
+                    db.session.commit()
+                try:
+                    new_open_bet.live_betting_expired = False
+                    db.session.commit()
+                except:
+                    pass
+                print(time.time() - start_time)
+        db.session.commit()
 
 
 def get_results(match_id):
