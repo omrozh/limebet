@@ -349,23 +349,61 @@
                 <div style="background-color: #6a4898; position: fixed; bottom: 50px; right: 0; border-radius: 15px 0 0 15px; color: white; padding: 10px"  onclick="window.open('/coupon')">
                     Kuponum
                 </div>
-                <div id="mobile-menu" style="position: fixed; bottom: 110px; left: 20px; display: none">
-                    <div onclick="document.location = '/'"
-                         style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 40px; color: white; position: relative; background: transparent">
-                        <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
-                            <i class="fa-solid fa-medal"></i>
-                        </div>
-                    </div>
-                    <div onclick="document.location = '/casino'"
-                         style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 10px; color: white; position: relative; background: transparent">
-                        <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
-                            <i class="fa-solid fa-dice"></i>
-                        </div>
-                    </div>
+                <center id="mobile-home" style="color: white; position: fixed; bottom: 0; left: 0; width: 100%; background-color: #26292d; padding-top: 15px; box-sizing: border-box;" onclick="openMobileMenu()">
+                <div onclick="document.location = '/bahis'" style="border-radius: 50px; background-color: transparent; display: inline-block; color: white; padding: 20px; width: fit-content; height: fit-content; font-size: 1rem">
+                    <i class="fa-solid fa-futbol"></i>
                 </div>
-                <div id="mobile-home" style="color: white; position: fixed; bottom: 50px; left: 20px; background-color: #7b00ff; padding: 15px; border-radius: 50px" onclick="openMobileMenu()">
-                    <i class="fa-solid fa-bars"></i>
+                <div onclick="document.location = '/fantezi'" style="border-radius: 50px; background-color: transparent; display: inline-block; color: white; padding: 20px; width: fit-content; height: fit-content; font-size: 1rem">
+                    <i class="fa-solid fa-medal"></i>
                 </div>
+                <div onclick="document.location = '/'" style="border-radius: 50px; background-color: #6a4898; display: inline-block; color: white; padding: 20px; width: fit-content; height: fit-content; font-size: 1rem">
+                    <i class="fa-solid fa-house"></i>
+                </div>
+                <div onclick="document.location = '/casino'" style="border-radius: 50px; background-color: transparent; display: inline-block; color: white; padding: 20px; width: fit-content; height: fit-content; font-size: 1rem">
+                    <i class="fa-solid fa-dice"></i>
+                </div>
+                <div onclick="document.location = '/profile'" style="border-radius: 50px; background-color: transparent; display: inline-block; color: white; padding: 20px; width: fit-content; height: fit-content; font-size: 1rem">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <br>
+                <br>
+            </center>
+    <script>
+      function searchBet(){
+            let search_query = document.getElementById("search-box").value;
+            let searchable_divs = document.getElementsByClassName("searchable-div")
+            for(let i = 0; i < searchable_divs.length; i++){
+                if(search_query.length > 2){
+                    if(!searchable_divs[i].innerHTML.includes(search_query)){
+                        searchable_divs[i].style.display = "none";
+                    }else{
+                        searchable_divs[i].style.display = "table-row";
+                    }
+                }else{
+                    searchable_divs[i].style.display = "table-row";
+                }
+            }
+        }
+    </script></center>
+    <script>
+        function openMobileMenu(){
+            let mobile_menu = document.getElementById("mobile-menu");
+            if(mobile_menu.style.display === "block"){
+                mobile_menu.style.display = "none";
+                document.getElementById("mobile-home").innerHTML = "<i class=\"fa-solid fa-bars\"></i>"
+            }else{
+                mobile_menu.style.display = "block"
+                document.getElementById("mobile-home").innerHTML = "<i class=\"fa-solid fa-circle-chevron-down\"></i>"
+            }
+        }
+        if (window.innerWidth < window.innerHeight) {
+            document.getElementById("mobile-home").style.display = "block";
+            document.getElementById("desktop-join").style.marginTop = "5px";
+            document.getElementById("desktop-join").style += "; float: right; width: 300px; overflow-x: auto; white-space: nowrap; padding-top: 10px; margin-top: -13px"
+        } else {
+           document.getElementById("mobile-home").style.display = "none";
+        }
+    </script>
             {% endif %}
             <div style="background-color: black; box-shadow: rgba(109, 107, 105, 0.2) 0px 8px 24px; position: absolute; bottom: 120px; box-sizing: border-box; color: white; right: 0; display: none;" id="bet-added">
                 <div style="margin: 15px">
