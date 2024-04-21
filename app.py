@@ -1114,7 +1114,7 @@ def contact_m2():
         contact_m2_form = ContactM2(email=flask.request.values["email"], message=flask.request.values["message"])
         db.session.add(contact_m2_form)
         db.session.commit()
-        return ""
+        return flask.render_template("provider/message_received.html")
     return flask.render_template("provider/contact_m2.html")
 
 
