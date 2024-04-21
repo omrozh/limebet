@@ -1,53 +1,377 @@
-<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>KadroMilyon | Lisanslı Bahis Sitesi</title>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&amp;family=Protest+Guerrilla&amp;display=swap" rel="stylesheet">
+    <title>KadroMilyon | Fantezi Futbol'un Merkezi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <script src="https://kit.fontawesome.com/a6c8be30d8.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&amp;family=Protest+Guerrilla&amp;display=swap"
+          rel="stylesheet">
     <style>
-      .main-header{
-        margin-top: 50px; width: 600px; color: white; font-size: 3rem
-      }
-      @media screen and (max-width: 800px) {
-        .main-header{
-          width: 90%;
-          font-size: 1.5rem;
+        table {
+            border-collapse: collapse;
+            width: 100%;
         }
-      }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        .menu-main{
+            width: 100%; box-sizing: border-box; height: 200px;
+        }
+
+        .slider-wrapper{
+            background-color: #0f1012; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 40px; padding: 10px; overflow: auto; width: 90%; box-sizing: border-box
+        }
+
+        .promotion-image {
+            width: 25%;
+            display: inline-block;
+            margin-left: 3%;
+        }
+
+        .competition-div {
+            background-color: white;
+            width: 72%;
+            text-align: left;
+            display: inline-block;
+            float: left;
+        }
+
+        .kadro-mil {
+            background-image: url('/static/b_y_k_slider.png');
+            background-size: 100% auto;
+            background-repeat: no-repeat;
+            width: 70%;
+            text-align: left;
+            box-sizing: border-box;
+            padding: 20px 50px;
+            min-height: 300px;
+            background-position: center;
+            float: left;
+            border-radius: 40px;
+        }
+
+        #main-content-wrapper {
+            width: 95%;
+            float: right;
+            margin-left: -70px
+        }
+
+        .play-select{
+            width: 50px; height: 50px; border-radius: 100px; background: #292D30FF; position: absolute; bottom: 40px; right: 10px
+        }
+
+        .select-wrapper{
+            display: inline-block; border-radius: 15px; box-sizing: content-box; background-size: cover; padding: 5px; padding-bottom: 20px; position:relative; width: 250px
+        }
+
+        .picture-select{
+            height: 250px; width: 200px;  background-image: url('/static/km-popular1.jpg'); background-position: center; background-size: cover; border-radius: 15px
+        }
+
+        #side-bar {
+            display: block;
+        }
+
+        @media screen and (max-width: 800px) {
+            .play-select{
+                width: 30px;
+                height: 30px;
+                bottom: 50px;
+                right: 15px;
+            }
+            .picture-select{
+                height: 150px;
+                width: 100px;
+            }
+            .select-wrapper{
+                width: 150px
+            }
+            .slider-wrapper{
+                border: none;
+                background: transparent;
+            }
+            .menu-main{
+                height: 100px;
+            }
+            .kadro-mil{
+                border-radius: 0;
+                width: 90%;
+                height: 350px;
+                background-size: cover;
+            }
+            .promotion-image {
+                display: none;
+            }
+            #navbar-main{
+                display: none;
+            }
+
+            .competition-div {
+                width: 100%;
+                float: none;
+            }
+        }
+
+
+        @media screen and (max-width: 1400px) {
+            #main-content-wrapper {
+                width: 100%;
+                float: none;
+                margin-left: 0;
+            }
+
+            #side-bar {
+                display: none;
+            }
+
+            .kadro-mil {
+                min-height: fit-content;
+                height: 320px;
+                width: 100%;
+            }
+
+            #promotion-img {
+                display: none;
+            }
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
     </style>
 </head>
-<body style="font-family: 'Open Sans', sans-serif; background-color: #191a1f">
-  <center style="margin-top: 50px">
-      <img style="width: 150px" src="/static/kadromilyon.png" alt="">
-      <h1 class="main-header">
-        HANGİ ALANDA BAHİS YAPMAK İSTERSİN?
-      </h1>
+<body style="background-color: #191a1f; padding: 0; margin: 0; font-family: 'Open Sans', sans-serif;">
+<div style="width: 100%; height: 100vh; overflow-y: auto">
+    <center style="padding: 20px 50px; background-color: orange; display: none;" id="promotion-insta">
+        <span style="color: white; font-family: 'Protest Guerrilla', sans-serif; font-size: 16px; text-decoration: underline;"
+              onclick="window.localStorage.setItem('hidePromotionInsta', 'true'); document.location = '/promotions/instagram';">Yatırımsız 500TL fırsatı!</span>
+        <script>
+            document.getElementById("promotion-insta").style.display = "none";
+            if (window.localStorage.getItem("hidePromotionInsta") === 'true') {
+                document.getElementById("promotion-insta").style.display = "none";
+            }
+        </script>
+    </center>
+    <div class="menu-main">
+        <img id="iconmain" src="/static/kadromilyon.png" alt="" style="width: 200px; padding: 20px; float: left">
+        <script>
+            if(window.innerWidth < window.innerHeight){
+                document.getElementById("iconmain").style.width = "50px";
+            }
+        </script>
+        <div style="float: left;" id="hid-mob">
+
+        </div>
+        <div style="float: right; margin-top: 40px;">
+            {% if current_user.is_authenticated %}
+            <div style="background-color: #292d30; border-radius: 50px; color: white; padding: 10px; box-sizing: border-box; margin-right: 20px; margin-top: -10px; float: right">
+                <span style="background-color: #212226; padding: 5px; padding-left: 12px; padding-right: 12px; border-radius: 50px; box-sizing: border-box">₺</span>
+                <span id="balance" style="padding-right: 5px; padding-left: 5px">{{'%0.2f'| format(current_user.balance|float)}}</span>
+            </div>
+            <span onclick="refreshBalance()"
+                  style="margin-right: 25px; font-size: 2rem; float: right; color: white; margin-top: -13px">&#x21ba;</span>
+            <script>
+                function updateBalance(balance) {
+                    document.getElementById("balance").innerText = balance;
+                }
+
+                function refreshBalance() {
+                    document.getElementById("balance").innerText = "..."
+                    fetch("/refresh-balance")
+                        .then(x => x.text())
+                        .then(y => updateBalance(y));
+                }
+            </script>
+            <a href="/profile" style="color: dodgerblue; text-decoration: none; margin-right: 25px; float: right">
+                <img style="width: 25px" src="/static/profile.png" alt="">
+            </a>
+            {% else %}
+            <div id="desktop-join">
+                <div onclick="document.location = '/login'"
+                     style="background-color: #292d30; border-radius: 50px; color: white; padding: 10px; box-sizing: border-box; margin-right: 5px; margin-top: -20px; display: inline-block">
+                    <span style="background-color: #212226; padding: 5px; padding-left: 12px; padding-right: 12px; border-radius: 50px; box-sizing: border-box"><i
+                            class="fa-solid fa-right-to-bracket"></i></span>
+                    <span style="padding-right: 5px; padding-left: 5px; font-size: 16px">Giriş Yap</span>
+                </div>
+                <div onclick="document.location = '/signup'"
+                     style="background-color: #7b00ff; border-radius: 50px; color: white; padding: 10px; box-sizing: border-box; margin-right: 20px; margin-top: -20px; display: inline-block">
+                    <span style="background-color: #6000c0; padding: 5px; padding-left: 12px; padding-right: 12px; border-radius: 50px; box-sizing: border-box"><i
+                            class="fa-solid fa-user-plus"></i></span>
+                    <span style="padding-right: 5px; padding-left: 5px">Kayıt Ol</span>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <script>
+            if (window.innerHeight > window.innerWidth) {
+                document.getElementById("hid-mob").style.display = "none";
+            }
+        </script>
+        <div style="padding: 20px 50px; overflow-x: auto; float: left; white-space: nowrap; width: 100vw; background-color: #0f1012; box-sizing: border-box" id="navbar-main">
+                <span style="display: inline-block; color: white; font-family: 'Protest Guerrilla', sans-serif"
+                      onclick="document.location = '/'">
+                    Anasayfa
+                </span>
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+                  onclick="localStorage.clear(); window.location.reload()">
+                    Kampanyalar
+                </span>
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+                  onclick="document.location = '/?filter_q=daily'">
+                    Günlük Yarışmalar
+                </span>
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+                  onclick="document.location = '/?filter_q=weekly'">
+                    Haftalık Yarışmalar
+                </span>
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+                  onclick="document.location = '/?filter_q=daily'">
+                    Yüksek Limitli Yarışmalar
+                </span>
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+                  onclick="document.location = '/?filter_q=Premier-Lig'">
+                    Premier Lig
+                </span>
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+                  onclick="document.location = '/?filter_q=Süper-Lig'">
+                    Süper Lig
+                </span>
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+                  onclick="document.location = '/?filter_q=Bundesliga'">
+                    Bundesliga
+                </span>
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+                  onclick="document.location = '/?filter_q=LaLiga'">
+                    LaLiga
+                </span>
+
+
+            {% if not current_user.is_authenticated %}
+            <span style="display: inline-block; margin-left: 50px; font-family: 'Protest Guerrilla', sans-serif; color: dodgerblue;"
+                  class="hid-desktop"
+                  onclick="document.location = '/login'">
+                        Giriş Yap
+                    </span>
+
+            <span style="display: inline-block; margin-left: 50px; color: #7b00ff; font-family: 'Protest Guerrilla', sans-serif;"
+                  class="hid-desktop"
+                  onclick="document.location = '/signup'">
+                        Kayıt Ol
+                    </span>
+            {% endif %}
+
+        </div>
+    </div>
+    <center style="width: 5%; margin-right: 1%; float: left; height: 600px; background: #0f1012; margin-left: 25px; border-radius: 15px; border: 1px solid rgba(255, 255, 255, .3)"
+            id="side-bar">
+        <div style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 10px; color: white; position: relative;" onclick="document.location = '/fantezi'">
+            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
+                <i class="fa-solid fa-medal"></i>
+            </div>
+        </div>
+
+        <div style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 10px; color: white; position: relative; background: #7b00ff" onclick="document.location = '/'">
+            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
+                <i class="fa-solid fa-house"></i>
+            </div>
+        </div>
+
+        <div onclick="document.location = '/bahis'"
+             style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 40px; color: white; position: relative;">
+            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
+                <i class="fa-solid fa-futbol"></i>
+            </div>
+        </div>
+
+        <div onclick="document.location = '/casino'" style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 10px; color: white; position: relative;">
+            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
+                <i class="fa-solid fa-dice"></i>
+            </div>
+        </div>
+
+        <div onclick="document.location = '/profile'"
+             style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 40px; color: white; position: relative;">
+            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
+                <i class="fa-solid fa-user"></i>
+            </div>
+        </div>
+
+        <div onclick="document.location = '/logout'"
+             style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 40px; color: white; position: relative;">
+            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </div>
+        </div>
+
+        <div onclick="document.location = 'mailto:destek@m2betting.com'"
+             style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 10px; color: lawngreen; position: relative;">
+            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
+                <i class="fa-solid fa-envelope"></i>
+            </div>
+        </div>
+
+        <div onclick="document.location = '/howtoplay'"
+             style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 10px; color: white; position: relative;">
+            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+        </div>
+
+    </center>
+    <div id="main-content-wrapper">
+        <center>
+            <center>
+                <div class="slider-wrapper">
+                    <div id="promotion-img" style="float: right; text-align: center; width: 27%; height: 300px; border-radius: 25px; background-size: cover; background-image: url('/static/k_k_slider.png')">
+                    </div>
+                    <div class="kadro-mil">
+
+                    </div>
+                    <script>
+                        if (window.innerHeight > window.innerWidth) {
+                            document.getElementsByClassName("kadro-mil")[0].style.height = "120px";
+                        }
+                    </script>
+                </div>
+            </center>
+
+
+            <div style="box-sizing: border-box; padding: 15px; width: 90%; border-radius: 15px; min-height: fit-content; overflow: auto">
+
+
+
+  <center style="margin-top: 50px; max-width: 90vw; overflow-x: auto; white-space: nowrap">
       <div onmouseleave="removeEffect()" onmouseover="glowEffectSelect(this)" class="selection-menu-main" onclick="document.location = '/casino'" style="display: inline-block; vertical-align: top">
-          <div style="padding: 5px; border-radius: 15px; background-color: #0f1012; border: 1px solid rgba(255, 255, 255, 0.1)">
-              <img src="/static/casino.jpg" style="width: 200px; border-radius: 15px; margin-bottom: -5px" alt="">
+          <div style="border-radius: 15px; background: transparent">
+              <img src="/static/casino.jpg" style="width: 250px; border-radius: 15px; margin-bottom: -5px" alt="">
           </div>
           <h1 style="color: white">CASINO</h1>
       </div>
-      <div onmouseleave="removeEffect()" onmouseover="glowEffectSelect(this)" class="selection-menu-main" onclick="document.location = '/fantezi'" style="display: inline-block; vertical-align: top">
-          <div style="padding: 5px; border-radius: 15px; background-color: #0f1012; border: 1px solid rgba(255, 255, 255, 0.1)">
-              <img src="/static/fantezi.jpg" style="width: 200px; border-radius: 15px; margin-bottom: -5px" alt="">
+      <div onmouseleave="removeEffect()" onmouseover="glowEffectSelect(this)" class="selection-menu-main" onclick="document.location = '/fantezi'" style="display: inline-block; vertical-align: top; margin-left: 50px">
+          <div style="border-radius: 15px; background-color: transparent;">
+              <img src="/static/fantezi.jpg" style="width: 250px; border-radius: 15px; margin-bottom: -5px" alt="">
           </div>
-          <h1 style="color: white; width: 150px">FANTEZİ FUTBOL</h1>
+          <h1 style="color: white;">FANTEZİ FUTBOL</h1>
       </div>
-      <div onmouseleave="removeEffect()" onmouseover="glowEffectSelect(this)" class="selection-menu-main" onclick="document.location = '/bahis'" style="display: inline-block; vertical-align: top">
-          <div style="padding: 5px; border-radius: 15px; background-color: #0f1012; border: 1px solid rgba(255, 255, 255, 0.1)">
-              <img src="/static/bahis.jpg" style="width: 200px; border-radius: 15px; margin-bottom: -5px" alt="">
+      <div onmouseleave="removeEffect()" onmouseover="glowEffectSelect(this)" class="selection-menu-main" onclick="document.location = '/bahis'" style="display: inline-block; vertical-align: top; margin-left: 50px">
+          <div style="border-radius: 15px; background-color: transparent;">
+              <img src="/static/bahis.jpg" style="width: 250px; border-radius: 15px; margin-bottom: -5px" alt="">
           </div>
           <h1 style="color: white;">BAHİS</h1>
       </div>
-      <p style="color: white; margin-top: 50px;">
-          All rights reserved. ®KadroMilyon
-          <br>
-          2024
-      </p>
+      <div onmouseleave="removeEffect()" onmouseover="glowEffectSelect(this)" class="selection-menu-main" onclick="document.location = '/canli_bahis'" style="display: inline-block; vertical-align: top; margin-left: 50px">
+          <div style="border-radius: 15px; background-color: transparent;">
+              <img src="/static/live_casino.jpg" style="width: 250px; border-radius: 15px; margin-bottom: -5px" alt="">
+          </div>
+          <h1 style="color: white;">CANLI CASİNO</h1>
+      </div>
       <script>
           function glowEffectSelect(elem){
               let all_selections = document.getElementsByClassName("selection-menu-main")
@@ -64,5 +388,57 @@
           }
       </script>
   </center>
+
+            <div id="mobile-menu" style="position: fixed; bottom: 110px; left: 20px; display: none">
+                <div onclick="document.location = '/bahis'"
+                     style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 40px; color: white; position: relative; background: #292d30">
+                    <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
+                        <i class="fa-solid fa-futbol"></i>
+                    </div>
+                </div>
+                <div onclick="document.location = '/casino'"
+                     style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 10px; color: white; position: relative; background: #292d30">
+                    <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
+                        <i class="fa-solid fa-dice"></i>
+                    </div>
+                </div>
+            </div>
+            <div id="mobile-home" style="color: white; position: fixed; bottom: 50px; left: 20px; background-color: #7b00ff; padding: 15px; border-radius: 50px" onclick="openMobileMenu()">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+            </div>
+        </center>
+        <div style="width: 98%; white-space: nowrap; overflow-x: auto">
+            {% for i in games %}
+                  <div onclick="document.location = '/casino?provider_id={{ i.id }}&provider_name={{ i.name }}'" class="searchable-div" style="background-color: #26292d; min-width: fit-content; padding: 15px; border-radius: 15px; display: inline-block; margin-left: 15px; margin-bottom: 15px">
+                    <p style="font-family: 'Open Sans', sans-serif; color: white; font-size: 16px; margin-bottom: 5px; overflow-x: auto; width: 150px; max-width: 30vw; white-space: nowrap">{{ i.name }}</p>
+                  </div>
+        {% endfor %}
+        </div>
+        <br>
+        <span style="opacity: 0">KadroMilyon</span>
+        <br>
+        <span style="opacity: 0">KadroMilyon</span>
+    </div>
+    <script>
+        function openMobileMenu(){
+            let mobile_menu = document.getElementById("mobile-menu");
+            if(mobile_menu.style.display === "block"){
+                mobile_menu.style.display = "none";
+                document.getElementById("mobile-home").innerHTML = "<i class=\"fa-solid fa-bars\"></i>"
+            }else{
+                mobile_menu.style.display = "block"
+                document.getElementById("mobile-home").innerHTML = "<i class=\"fa-solid fa-circle-chevron-down\"></i>"
+            }
+        }
+        if (window.innerWidth < window.innerHeight) {
+            document.getElementById("mobile-home").style.display = "block";
+            document.getElementById("desktop-join").style.marginTop = "5px";
+            document.getElementById("desktop-join").style += "; float: right; width: 300px; overflow-x: auto; white-space: nowrap; padding-top: 10px; margin-top: -13px"
+        } else {
+           document.getElementById("mobile-home").style.display = "none";
+        }
+    </script>
+</div>
 </body>
 </html>

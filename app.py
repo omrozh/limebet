@@ -1104,7 +1104,18 @@ def profile():
 
 @app.route("/")
 def index():
-    return flask.render_template("anasayfa.html")
+    from casino_utils import get_providers
+    providers = []
+    for c in get_providers():
+        providers.append({
+            "img_vertical": c.get("logo"),
+            "name": c.get("name"),
+            "id": c.get("id")
+        })
+    resp = flask.make_response(flask.render_template("anasayfa.html", current_user=current_user, providers=providers))
+    if flask.request.args.get("ref", False):
+        resp.set_cookie('referrer', flask.request.args.get("ref"))
+    return resp
 
 
 @app.route("/claim/bet/<bet_coupon_id>")
