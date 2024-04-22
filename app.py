@@ -331,6 +331,7 @@ class User(db.Model, UserMixin):
     freebet = db.Column(db.Float)
     freebet_usable = db.Column(db.Float)
     telegram_chat_id = db.Column(db.String)
+    last_login = db.Column(db.DateTime)
 
     @property
     def mybets(self):
@@ -1366,7 +1367,8 @@ def login():
         user_from_email = User.query.filter_by(email=values["email"]).first()
         if user_from_email:
             if bcrypt.check_password_hash(user_from_email.password, values["password"]):
-                login_user(user_from_email, remember=True)
+                login_user(user_from_email, remember=False)
+                user_from_email.last_login = datetime.datetime.now()
                 return flask.redirect("/")
     return flask.render_template("login.html")
 
