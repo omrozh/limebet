@@ -196,7 +196,7 @@
 <body style="background-color: #191a1f; padding: 0; margin: 0; font-family: 'Open Sans', sans-serif;">
 <div style="width: 100%;">
     <center style="padding: 20px 50px; background-color: orange; display: none;" id="promotion-insta">
-        <span style="color: white; font-family: 'Protest Guerrilla', sans-serif; font-size: 16px; text-decoration: underline;"
+        <span style="color: white; font-family: 'Open Sans', sans-serif; font-size: 16px; text-decoration: underline;"
               onclick="window.localStorage.setItem('hidePromotionInsta', 'true'); document.location = '/promotions/instagram';">Yatırımsız 500TL fırsatı!</span>
         <script>
             document.getElementById("promotion-insta").style.display = "none";
@@ -261,52 +261,52 @@
             }
         </script>
         <div style="padding: 20px 50px; overflow-x: auto; float: left; white-space: nowrap; width: 100vw; background-color: #0f1012; box-sizing: border-box" id="navbar-main">
-                <span style="display: inline-block; color: white; font-family: 'Protest Guerrilla', sans-serif"
+                <span style="display: inline-block; color: white; font-family: 'Open Sans', sans-serif"
                       onclick="document.location = '/'">
                     Anasayfa
                 </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
                   onclick="localStorage.clear(); window.location.reload()">
                     Kampanyalar
                 </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
                   onclick="document.location = '/?filter_q=daily'">
                     Günlük Yarışmalar
                 </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
                   onclick="document.location = '/?filter_q=weekly'">
                     Haftalık Yarışmalar
                 </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
                   onclick="document.location = '/?filter_q=daily'">
                     Yüksek Limitli Yarışmalar
                 </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
                   onclick="document.location = '/?filter_q=Premier-Lig'">
                     Premier Lig
                 </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
                   onclick="document.location = '/?filter_q=Süper-Lig'">
                     Süper Lig
                 </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
                   onclick="document.location = '/?filter_q=Bundesliga'">
                     Bundesliga
                 </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
                   onclick="document.location = '/?filter_q=LaLiga'">
                     LaLiga
                 </span>
 
 
             {% if not current_user.is_authenticated %}
-            <span style="display: inline-block; margin-left: 50px; font-family: 'Protest Guerrilla', sans-serif; color: dodgerblue;"
+            <span style="display: inline-block; margin-left: 50px; font-family: 'Open Sans', sans-serif; color: dodgerblue;"
                   class="hid-desktop"
                   onclick="document.location = '/login'">
                         Giriş Yap
                     </span>
 
-            <span style="display: inline-block; margin-left: 50px; color: #7b00ff; font-family: 'Protest Guerrilla', sans-serif;"
+            <span style="display: inline-block; margin-left: 50px; color: #7b00ff; font-family: 'Open Sans', sans-serif;"
                   class="hid-desktop"
                   onclick="document.location = '/signup'">
                         Kayıt Ol
@@ -375,7 +375,7 @@
         <center>
             <div style="width: 80%">
                 <img src="/static/{{ competition.competition_type }}.png" style="width: 30px; float: left; margin-right: 15px; margin-top: 10px; border-radius: 500px;" alt="">
-                <h1 style="font-family: 'Protest Guerrilla', sans-serif; color: white; margin-top: 5px; float: left;">{{ competition.competition_name }}</h1>
+                <h1 style="font-family: 'Open Sans', sans-serif; color: white; margin-top: 5px; float: left;">{{ competition.competition_name }}</h1>
             </div>
             <br style="clear: both">
         <div style="background-color: #0f1012; border-radius: 15px; border: 1px solid rgba(255, 255, 255, .3); width: 80%; height: fit-content; text-align: left; padding: 25px; box-sizing: border-box; min-height: fit-content">
@@ -516,7 +516,7 @@
             <br style="clear: both">
             <p style="color: white">Not: Oyuncu yerleşiminin puanlamaya bir etkisi yoktur.</p>
             <br>
-            <button onclick="document.location = '/draft/{{ competition.id }}'" style="position: relative; color: white; font-family: 'Protest Guerrilla', sans-serif; width: 100%; padding: 15px; box-sizing: border-box; background-color: #7b00ff; outline: none; border: none">Yarışmaya Katıl
+            <button onclick="document.location = '/draft/{{ competition.id }}'" style="position: relative; color: white; font-family: 'Open Sans', sans-serif; width: 100%; padding: 15px; box-sizing: border-box; background-color: #7b00ff; outline: none; border: none">Yarışmaya Katıl
             <div class="play-select">
                 <i class="fa-solid fa-play"
                    style="position: absolute; top: 0; right: 0; left: 0; bottom: 0; color: white; margin: auto; width: fit-content; height: fit-content"></i>

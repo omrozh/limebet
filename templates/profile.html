@@ -247,12 +247,12 @@
     <div id="main-content-wrapper">
     <center>
         <div id="current-competitions" class="division-profile" style="display: none">
-            <h1 style="color: white; text-align: left; font-family: 'Protest Guerrilla', sans-serif; width: 80%">Aktif Kadrolar</h1>
+            <h1 style="color: white; text-align: left; font-family: 'Open Sans', sans-serif; width: 80%">Aktif Kadrolar</h1>
             {% if current_user.active_drafts|length == 0%}
                 <p style="color: white; text-align: left; margin-left: 10%">Henüz aktif bir kadronuz yok</p>
             {% endif %}
             {% for i in current_user.active_drafts %}
-            <h1 onclick="document.location = '/competition/{{ i.competition.id }}'" style="font-family: 'Protest Guerrilla', sans-serif; text-decoration: underline; background-color: #7b00ff; color: white; box-sizing: border-box; padding: 10px; width: 80%; margin-bottom: 0; margin-top: 50px; border-radius: 15px 15px 0 0">{{ i.draft_name }}</h1>
+            <h1 onclick="document.location = '/competition/{{ i.competition.id }}'" style="font-family: 'Open Sans', sans-serif; text-decoration: underline; background-color: #7b00ff; color: white; box-sizing: border-box; padding: 10px; width: 80%; margin-bottom: 0; margin-top: 50px; border-radius: 15px 15px 0 0">{{ i.draft_name }}</h1>
                 <div style="background-color: white; width: 80%; margin-top: 0; background-image: url('/static/saha.jpg'); background-size: cover; background-position: center 0;">
                     {% for i in i.chosen_athletes %}
                         <div style="border-top: 1px solid gray; padding: 10px; box-sizing: border-box; color: white; background: rgba(0,0,0,0.5); width: 100%; height: 100%">
@@ -288,7 +288,7 @@
             {% endfor %}
         </div>
         <div id="bets" style="display: none; text-align: left; margin-left: 0; width: 80%; padding: 50px; box-sizing: border-box;" class="division-profile">
-            <h1 style="font-family: 'Protest Guerrilla', sans-serif; color: white; text-align: left;">
+            <h1 style="font-family: 'Open Sans', sans-serif; color: white; text-align: left;">
                 Bahislerim
             </h1>
             {% for i in current_user.mybets %}
@@ -328,7 +328,7 @@
         </div>
         <div id="profile-information" class="division-profile" style="display: block">
             <center>
-                <div style="background-color: #7b00ff; font-family: 'Protest Guerrilla', sans-serif; color: white; padding: 10px; width: 90%; text-align: left; margin-top: 25px" id="fill-profile-box">
+                <div style="background-color: #7b00ff; font-family: 'Open Sans', sans-serif; color: white; padding: 10px; width: 90%; text-align: left; margin-top: 25px" id="fill-profile-box">
                     <p>
                         Profilini Doldur
                     </p>
@@ -395,7 +395,7 @@
         </div>
         <div id="withdraw-money" class="division-profile" style="display: none">
             <center>
-                <div style="background-color: #7b00ff; font-family: 'Protest Guerrilla', sans-serif; color: white; padding: 10px; width: 90%; text-align: left; margin-top: 25px" id="fill-profile-box">
+                <div style="background-color: #7b00ff; font-family: 'Open Sans', sans-serif; color: white; padding: 10px; width: 90%; text-align: left; margin-top: 25px" id="fill-profile-box">
                     <p>
                         Para Çek
                     </p>
@@ -403,7 +403,7 @@
             </center>
             <div style="background-color: #0f1012; width: fit-content; padding: 20px; box-sizing: border-box;  margin-top: 50px">
                 <form method="post" enctype="multipart/form-data" style="background-color: #292d30; border-radius: 5px; color: white; padding: 20px; box-sizing: border-box; width: fit-content; height: fit-content; max-width: 70vw">
-                    <h1 style="color: white; font-family: 'Protest Guerrilla', sans-serif">
+                    <h1 style="color: white; font-family: 'Open Sans', sans-serif">
                       Para Çek
                     </h1>
                     <input type="text" name="form-type" value="withdraw-money" style="display: none">
@@ -436,12 +436,12 @@
             {% endfor %}
         </div>
         <div id="previous-competitions" class="division-profile" style="display: none">
-            <h1 style="color: white; text-align: left; font-family: 'Protest Guerrilla', sans-serif; width: 80%">Geçmiş Kadrolar</h1>
+            <h1 style="color: white; text-align: left; font-family: 'Open Sans', sans-serif; width: 80%">Geçmiş Kadrolar</h1>
             {% if current_user.previous_drafts|length == 0%}
                 <p style="color: white; text-align: left; margin-left: 10%">Henüz geçmiş bir kadro yok</p>
             {% endif %}
             {% for i in current_user.previous_drafts %}
-            <h1 onclick="document.location = '/competition/{{ i.competition.id }}'" style="font-family: 'Protest Guerrilla', sans-serif; text-decoration: underline; background-color: #7b00ff; color: white; box-sizing: border-box; padding: 10px; width: 80%; margin-bottom: 0; margin-top: 50px; border-radius: 15px 15px 0 0">{{ i.draft_name }}</h1>
+            <h1 onclick="document.location = '/competition/{{ i.competition.id }}'" style="font-family: 'Open Sans', sans-serif; text-decoration: underline; background-color: #7b00ff; color: white; box-sizing: border-box; padding: 10px; width: 80%; margin-bottom: 0; margin-top: 50px; border-radius: 15px 15px 0 0">{{ i.draft_name }}</h1>
                 <div style="background-color: white; width: 80%; margin-top: 0; background-image: url('/static/saha.jpg'); background-size: cover; background-position: center 0;">
                     {% for i in i.chosen_athletes %}
                         <div style="border-top: 1px solid gray; padding: 10px; box-sizing: border-box; color: white; background: rgba(0,0,0,0.5); width: 100%; height: 100%">
@@ -477,7 +477,7 @@
             {% endfor %}
         </div>
         <div id="deposit-money" style="display: none" class="division-profile">
-            <h1 style="font-family: 'Protest Guerrilla', sans-serif; color: white">Para Yatır</h1>
+            <h1 style="font-family: 'Open Sans', sans-serif; color: white">Para Yatır</h1>
             <div id="papara-modal-button"  style="display: inline-block" class="select-payment">
                 <div style="border-radius: 15px 15px 0 0; font-family: sans-serif; height: fit-content; padding: 15px; display: inline-block; margin: 15px; background: #333333; box-sizing: border-box; width: 200px">
                     <img src="https://avatars.githubusercontent.com/u/24546447?s=280&v=4" style="width: 150px; border-radius: 15px" alt="">
@@ -485,7 +485,7 @@
                         Servis Sağlayıcı: KadroMilyon Ödeme Servisi
                     </p>
                 </div>
-                <div style="color: white; font-family: 'Protest Guerrilla', sans-serif; background-color: #7b00ff; width: 200px; margin-top: -15px; padding: 10px; box-sizing: border-box; border-radius: 0 0 15px 15px">
+                <div style="color: white; font-family: 'Open Sans', sans-serif; background-color: #7b00ff; width: 200px; margin-top: -15px; padding: 10px; box-sizing: border-box; border-radius: 0 0 15px 15px">
                     Papara
                 </div>
             </div>
@@ -496,7 +496,7 @@
                         Servis Sağlayıcı: KadroMilyon Ödeme Servisi
                     </p>
                 </div>
-                <div style="color: white; font-family: 'Protest Guerrilla', sans-serif; background-color: #7b00ff; width: 200px; margin-top: -15px; padding: 10px; box-sizing: border-box; border-radius: 0 0 15px 15px">
+                <div style="color: white; font-family: 'Open Sans', sans-serif; background-color: #7b00ff; width: 200px; margin-top: -15px; padding: 10px; box-sizing: border-box; border-radius: 0 0 15px 15px">
                     Banka Havalesi
                 </div>
             </div>

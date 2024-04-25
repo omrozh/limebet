@@ -44,7 +44,7 @@
         }
 
         .games-div{
-          width: 95%; text-align: left; background-color: #0f1012; border: 1px solid rgba(255, 255, 255, 0.3); box-sizing: border-box; border-radius: 15px; font-family: 'Protest Guerrilla', sans-serif;
+          width: 95%; text-align: left; background-color: #0f1012; border: 1px solid rgba(255, 255, 255, 0.3); box-sizing: border-box; border-radius: 15px; font-family: 'Open Sans', sans-serif;
         }
         #search-box{
           width: 40%; border-radius: 10px; outline: none; border: none; padding: 10px 15px; font-family: sans-serif; outline: none; font-size: 1rem; box-sizing: border-box; background: transparent; color: white; border: 1px solid white
@@ -175,7 +175,7 @@
 <body style="background-color: #191a1f; padding: 0; margin: 0; font-family: 'Open Sans', sans-serif;">
 <div style="width: 100%;">
     <center style="padding: 20px 50px; background-color: orange; display: none;" id="promotion-insta">
-        <span style="color: white; font-family: 'Protest Guerrilla', sans-serif; font-size: 16px; text-decoration: underline;"
+        <span style="color: white; font-family: 'Open Sans', sans-serif; font-size: 16px; text-decoration: underline;"
               onclick="window.localStorage.setItem('hidePromotionInsta', 'true'); document.location = '/promotions/instagram';">Yatırımsız 500TL fırsatı!</span>
         <script>
             document.getElementById("promotion-insta").style.display = "none";
@@ -240,52 +240,52 @@
             }
         </script>
         <div style="padding: 20px 50px; overflow-x: auto; float: left; white-space: nowrap; width: 100vw; background-color: #0f1012; box-sizing: border-box" id="navbar-main">
-                <span style="display: inline-block; color: white; font-family: 'Protest Guerrilla', sans-serif"
+                <span style="display: inline-block; color: white; font-family: 'Open Sans', sans-serif"
                       onclick="document.location = '/'">
                     Anasayfa
                 </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
                   onclick="localStorage.clear(); window.location.reload()">
                     Kampanyalar
                 </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
                   onclick="document.location = '/?filter_q=daily'">
                     Günlük Yarışmalar
                 </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
                   onclick="document.location = '/?filter_q=weekly'">
                     Haftalık Yarışmalar
                 </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
                   onclick="document.location = '/?filter_q=daily'">
                     Yüksek Limitli Yarışmalar
                 </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
                   onclick="document.location = '/?filter_q=Premier-Lig'">
                     Premier Lig
                 </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
                   onclick="document.location = '/?filter_q=Süper-Lig'">
                     Süper Lig
                 </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
                   onclick="document.location = '/?filter_q=Bundesliga'">
                     Bundesliga
                 </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
                   onclick="document.location = '/?filter_q=LaLiga'">
                     LaLiga
                 </span>
 
 
             {% if not current_user.is_authenticated %}
-            <span style="display: inline-block; margin-left: 50px; font-family: 'Protest Guerrilla', sans-serif; color: dodgerblue;"
+            <span style="display: inline-block; margin-left: 50px; font-family: 'Open Sans', sans-serif; color: dodgerblue;"
                   class="hid-desktop"
                   onclick="document.location = '/login'">
                         Giriş Yap
                     </span>
 
-            <span style="display: inline-block; margin-left: 50px; color: #7b00ff; font-family: 'Protest Guerrilla', sans-serif;"
+            <span style="display: inline-block; margin-left: 50px; color: #7b00ff; font-family: 'Open Sans', sans-serif;"
                   class="hid-desktop"
                   onclick="document.location = '/signup'">
                         Kayıt Ol

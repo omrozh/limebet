@@ -169,7 +169,7 @@
 <body style="background-color: #191a1f; padding: 0; margin: 0; font-family: 'Open Sans', sans-serif;">
 <div style="width: 100%;">
     <center style="padding: 20px 50px; background-color: orange; display: none;" id="promotion-insta">
-        <span style="color: white; font-family: 'Protest Guerrilla', sans-serif; font-size: 16px; text-decoration: underline;"
+        <span style="color: white; font-family: 'Open Sans', sans-serif; font-size: 16px; text-decoration: underline;"
               onclick="window.localStorage.setItem('hidePromotionInsta', 'true'); document.location = '/promotions/instagram';">Yatırımsız 500TL fırsatı!</span>
         <script>
             document.getElementById("promotion-insta").style.display = "none";
@@ -234,52 +234,52 @@
             }
         </script>
         <div style="padding: 20px 50px; overflow-x: auto; float: left; white-space: nowrap; width: 100vw; background-color: #0f1012; box-sizing: border-box" id="navbar-main">
-                <span style="display: inline-block; color: white; font-family: 'Protest Guerrilla', sans-serif"
+                <span style="display: inline-block; color: white; font-family: 'Open Sans', sans-serif"
                       onclick="document.location = '/'">
                     Anasayfa
                 </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
                   onclick="localStorage.clear(); window.location.reload()">
                     Kampanyalar
                 </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
                   onclick="document.location = '/?filter_q=daily'">
                     Günlük Yarışmalar
                 </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
                   onclick="document.location = '/?filter_q=weekly'">
                     Haftalık Yarışmalar
                 </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
                   onclick="document.location = '/?filter_q=daily'">
                     Yüksek Limitli Yarışmalar
                 </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
                   onclick="document.location = '/?filter_q=Premier-Lig'">
                     Premier Lig
                 </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
                   onclick="document.location = '/?filter_q=Süper-Lig'">
                     Süper Lig
                 </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
                   onclick="document.location = '/?filter_q=Bundesliga'">
                     Bundesliga
                 </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Protest Guerrilla', sans-serif"
+            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
                   onclick="document.location = '/?filter_q=LaLiga'">
                     LaLiga
                 </span>
 
 
             {% if not current_user.is_authenticated %}
-            <span style="display: inline-block; margin-left: 50px; font-family: 'Protest Guerrilla', sans-serif; color: dodgerblue;"
+            <span style="display: inline-block; margin-left: 50px; font-family: 'Open Sans', sans-serif; color: dodgerblue;"
                   class="hid-desktop"
                   onclick="document.location = '/login'">
                         Giriş Yap
                     </span>
 
-            <span style="display: inline-block; margin-left: 50px; color: #7b00ff; font-family: 'Protest Guerrilla', sans-serif;"
+            <span style="display: inline-block; margin-left: 50px; color: #7b00ff; font-family: 'Open Sans', sans-serif;"
                   class="hid-desktop"
                   onclick="document.location = '/signup'">
                         Kayıt Ol
@@ -348,10 +348,10 @@
 
     <center>
         <div style="width: 80%; white-space: nowrap; overflow-x: auto;">
-            <h1 style="font-family: 'Protest Guerrilla', sans-serif; color: white; margin-top: 5px; display: inline-block; position: relative;">Kadronu Seç</h1>
+            <h1 style="font-family: 'Open Sans', sans-serif; color: white; margin-top: 5px; display: inline-block; position: relative;">Kadronu Seç</h1>
             <br>
-            <h3 style="font-family: 'Protest Guerrilla', sans-serif; color: white; display: inline-block; margin-left: 15px; position: relative;"><span style="font-size: 12px">Kalan Bütçe: </span> <span style="color: limegreen" id="remaining-budget">50.000</span><span style="display: inline-block; vertical-align: top; font-size: 8px; color: limegreen">TRY</span></h3>
-            <h3 style="font-family: 'Protest Guerrilla', sans-serif; color: white; display: inline-block; margin-left: 15px; position: relative;"><span style="font-size: 12px">Kadro Maliyeti: </span> <span style="color: red" id="money-spent">0</span><span style="display: inline-block; vertical-align: top; font-size: 8px; color: red">TRY</span></h3>
+            <h3 style="font-family: 'Open Sans', sans-serif; color: white; display: inline-block; margin-left: 15px; position: relative;"><span style="font-size: 12px">Kalan Bütçe: </span> <span style="color: limegreen" id="remaining-budget">50.000</span><span style="display: inline-block; vertical-align: top; font-size: 8px; color: limegreen">TRY</span></h3>
+            <h3 style="font-family: 'Open Sans', sans-serif; color: white; display: inline-block; margin-left: 15px; position: relative;"><span style="font-size: 12px">Kadro Maliyeti: </span> <span style="color: red" id="money-spent">0</span><span style="display: inline-block; vertical-align: top; font-size: 8px; color: red">TRY</span></h3>
 
         </div>
         <br style="clear: both">
@@ -379,10 +379,10 @@
                             <div id="team-img-0" style="width: 100px; height: 100px; background-image: url('/static/player.png'); background-size: cover; float:left;"></div>
                             <div style="float: left; margin-left: 15px">
                                 <br>
-                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Protest Guerrilla', sans-serif" id="athlete-0">Oyuncu - 1</span>
+                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Open Sans', sans-serif" id="athlete-0">Oyuncu - 1</span>
                                 <input type="text" style="border: none; outline: none; display: none" name="athlete-0">
                                 <br>
-                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Protest Guerrilla', sans-serif; float: left" id="athlete-cost-wrapper-0">
+                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Open Sans', sans-serif; float: left" id="athlete-cost-wrapper-0">
                                     <span id="athlete-cost-0"></span>₺
                                 </p>
                             </div>
@@ -394,10 +394,10 @@
                             <div id="team-img-1" style="width: 100px; height: 100px; background-image: url('/static/player.png'); background-size: cover; float:left;"></div>
                             <div style="float: left; margin-left: 15px">
                                 <br>
-                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Protest Guerrilla', sans-serif" id="athlete-1">Oyuncu - 2</span>
+                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Open Sans', sans-serif" id="athlete-1">Oyuncu - 2</span>
                                 <input type="text" style="border: none; outline: none; display: none" name="athlete-1">
                                 <br>
-                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Protest Guerrilla', sans-serif; float: left" id="athlete-cost-wrapper-1">
+                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Open Sans', sans-serif; float: left" id="athlete-cost-wrapper-1">
                                     <span id="athlete-cost-1"></span>₺
                                 </p>
                             </div>
@@ -407,10 +407,10 @@
                             <div id="team-img-2" style="width: 100px; height: 100px; background-image: url('/static/player.png'); background-size: cover; float:left;"></div>
                             <div style="float: left; margin-left: 15px">
                                 <br>
-                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Protest Guerrilla', sans-serif" id="athlete-2">Oyuncu - 3</span>
+                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Open Sans', sans-serif" id="athlete-2">Oyuncu - 3</span>
                                 <input type="text" style="border: none; outline: none; display: none" name="athlete-2">
                                 <br>
-                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Protest Guerrilla', sans-serif; float: left" id="athlete-cost-wrapper-2">
+                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Open Sans', sans-serif; float: left" id="athlete-cost-wrapper-2">
                                     <span id="athlete-cost-2"></span>₺
                                 </p>
                             </div>
@@ -420,10 +420,10 @@
                             <div id="team-img-3" style="width: 100px; height: 100px; background-image: url('/static/player.png'); background-size: cover; float:left;"></div>
                             <div style="float: left; margin-left: 15px">
                                 <br>
-                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Protest Guerrilla', sans-serif" id="athlete-3">Oyuncu - 4</span>
+                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Open Sans', sans-serif" id="athlete-3">Oyuncu - 4</span>
                                 <input type="text" style="border: none; outline: none; display: none" name="athlete-3">
                                 <br>
-                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Protest Guerrilla', sans-serif; float: left" id="athlete-cost-wrapper-3">
+                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Open Sans', sans-serif; float: left" id="athlete-cost-wrapper-3">
                                     <span id="athlete-cost-3"></span>₺
                                 </p>
                             </div>
@@ -435,10 +435,10 @@
                             <div id="team-img-4" style="width: 100px; height: 100px; background-image: url('/static/player.png'); background-size: cover; float:left;"></div>
                             <div style="float: left; margin-left: 15px">
                                 <br>
-                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Protest Guerrilla', sans-serif" id="athlete-4">Oyuncu - 5</span>
+                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Open Sans', sans-serif" id="athlete-4">Oyuncu - 5</span>
                                 <input type="text" style="border: none; outline: none; display: none" name="athlete-4">
                                 <br>
-                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Protest Guerrilla', sans-serif; float: left" id="athlete-cost-wrapper-4">
+                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Open Sans', sans-serif; float: left" id="athlete-cost-wrapper-4">
                                     <span id="athlete-cost-4"></span>₺
                                 </p>
                             </div>
@@ -448,10 +448,10 @@
                             <div id="team-img-5" style="width: 100px; height: 100px; background-image: url('/static/player.png'); background-size: cover; float:left;"></div>
                             <div style="float: left; margin-left: 15px">
                                 <br>
-                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Protest Guerrilla', sans-serif" id="athlete-5">Oyuncu - 6</span>
+                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Open Sans', sans-serif" id="athlete-5">Oyuncu - 6</span>
                                 <input type="text" style="border: none; outline: none; display: none" name="athlete-5">
                                 <br>
-                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Protest Guerrilla', sans-serif; float: left" id="athlete-cost-wrapper-5">
+                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Open Sans', sans-serif; float: left" id="athlete-cost-wrapper-5">
                                     <span id="athlete-cost-5"></span>₺
                                 </p>
                             </div>
@@ -463,10 +463,10 @@
                             <div id="team-img-6" style="width: 100px; height: 100px; background-image: url('/static/player.png'); background-size: cover; float:left;"></div>
                             <div style="float: left; margin-left: 15px">
                                 <br>
-                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Protest Guerrilla', sans-serif" id="athlete-6">Oyuncu - 7</span>
+                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Open Sans', sans-serif" id="athlete-6">Oyuncu - 7</span>
                                 <input type="text" style="border: none; outline: none; display: none" name="athlete-6">
                                 <br>
-                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Protest Guerrilla', sans-serif; float: left" id="athlete-cost-wrapper-6">
+                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Open Sans', sans-serif; float: left" id="athlete-cost-wrapper-6">
                                     <span id="athlete-cost-6"></span>₺
                                 </p>
                             </div>
@@ -476,10 +476,10 @@
                             <div id="team-img-7" style="width: 100px; height: 100px; background-image: url('/static/player.png'); background-size: cover; float:left;"></div>
                             <div style="float: left; margin-left: 15px">
                                 <br>
-                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Protest Guerrilla', sans-serif" id="athlete-7">Oyuncu - 8</span>
+                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Open Sans', sans-serif" id="athlete-7">Oyuncu - 8</span>
                                 <input type="text" style="border: none; outline: none; display: none" name="athlete-7">
                                 <br>
-                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Protest Guerrilla', sans-serif; float: left" id="athlete-cost-wrapper-7">
+                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Open Sans', sans-serif; float: left" id="athlete-cost-wrapper-7">
                                     <span id="athlete-cost-7"></span>₺
                                 </p>
                             </div>
@@ -489,10 +489,10 @@
                             <div id="team-img-8" style="width: 100px; height: 100px; background-image: url('/static/player.png'); background-size: cover; float:left;"></div>
                             <div style="float: left; margin-left: 15px">
                                 <br>
-                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Protest Guerrilla', sans-serif" id="athlete-8">Oyuncu - 9</span>
+                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Open Sans', sans-serif" id="athlete-8">Oyuncu - 9</span>
                                 <input type="text" style="border: none; outline: none; display: none" name="athlete-8">
                                 <br>
-                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Protest Guerrilla', sans-serif; float: left" id="athlete-cost-wrapper-8">
+                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Open Sans', sans-serif; float: left" id="athlete-cost-wrapper-8">
                                     <span id="athlete-cost-8"></span>₺
                                 </p>
                             </div>
@@ -502,10 +502,10 @@
                             <div id="team-img-9" style="width: 100px; height: 100px; background-image: url('/static/player.png'); background-size: cover; float:left;"></div>
                             <div style="float: left; margin-left: 15px">
                                 <br>
-                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Protest Guerrilla', sans-serif" id="athlete-9">Oyuncu - 10</span>
+                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Open Sans', sans-serif" id="athlete-9">Oyuncu - 10</span>
                                 <input type="text" style="border: none; outline: none; display: none" name="athlete-9">
                                 <br>
-                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Protest Guerrilla', sans-serif; float: left" id="athlete-cost-wrapper-9">
+                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Open Sans', sans-serif; float: left" id="athlete-cost-wrapper-9">
                                     <span id="athlete-cost-9"></span>₺
                                 </p>
                             </div>
@@ -515,10 +515,10 @@
                             <div id="team-img-10" style="width: 100px; height: 100px; background-image: url('/static/player.png'); background-size: cover; float:left;"></div>
                             <div style="float: left; margin-left: 15px">
                                 <br>
-                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Protest Guerrilla', sans-serif" id="athlete-10">Oyuncu - 11</span>
+                                <span style="margin-top: 1px; color: white; font-size: 1rem; font-family: 'Open Sans', sans-serif" id="athlete-10">Oyuncu - 11</span>
                                 <input type="text" style="border: none; outline: none; display: none" name="athlete-10">
                                 <br>
-                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Protest Guerrilla', sans-serif; float: left" id="athlete-cost-wrapper-10">
+                                <p style="display: none; color: white; margin-top: 20px; font-family: 'Open Sans', sans-serif; float: left" id="athlete-cost-wrapper-10">
                                     <span id="athlete-cost-10"></span>₺
                                 </p>
                             </div>
@@ -591,7 +591,7 @@
             </div>
             </div>
             <br>
-            <button onclick="document.getElementsByTagName('form')[0].submit()" style="position: relative; color: white; font-family: 'Protest Guerrilla', sans-serif; width: 100%; padding: 15px; box-sizing: border-box; background-color: #7b00ff; outline: none; border: none;" id="join-button">Yarışmaya Katıl
+            <button onclick="document.getElementsByTagName('form')[0].submit()" style="position: relative; color: white; font-family: 'Open Sans', sans-serif; width: 100%; padding: 15px; box-sizing: border-box; background-color: #7b00ff; outline: none; border: none;" id="join-button">Yarışmaya Katıl
             <div class="play-select">
                 <i class="fa-solid fa-play"
                    style="position: absolute; top: 0; right: 0; left: 0; bottom: 0; color: white; margin: auto; width: fit-content; height: fit-content"></i>
