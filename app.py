@@ -27,7 +27,6 @@ schedule.clear()
 schedule.every(1).minutes.do(live_betting)
 # schedule.every(1).minutes.do(instant_odds_update)
 schedule.every(3).hours.do(register_open_bet)
-schedule.every(12).hours.do(open_bet_garbage_collector)
 
 
 def run_pending_jobs():
