@@ -52,6 +52,8 @@ def register_open_bet():
         for sport in sports:
             for bet in get_bets(is_live=False, sport_name=sport):
                 start_time = time.time()
+                if len(OpenBet.query.filter_by(api_match_id=bet.get("MatchID")).all()) > 0:
+                    continue
                 new_open_bet = OpenBet(
                     api_match_id=bet.get("MatchID"),
                     bet_ending_datetime=bet.get("DateTime"),
