@@ -1792,3 +1792,87 @@ def casino_game(game_id):
 @app.errorhandler(500)
 def error_500(e):
     return flask.render_template("iserror.html")
+
+
+@app.route("/admin/games")
+def admin_panel_providers():
+    from casino_utils import get_providers, get_games
+    providers = []
+    for c in get_providers():
+        providers.append({
+            "img_vertical": c.get("logo"),
+            "name": c.get("name"),
+            "id": c.get("id")
+        })
+    return flask.render_template("panel/providers.html", providers=providers)
+
+
+@app.route("/admin/home")
+def admin_panel():
+    return flask.render_template("panel/admin.html")
+
+
+@app.route("/admin/games/<provider_id>/<provider_name>")
+def admin_panel_provider_details(provider_id, provider_name):
+    from casino_utils import get_providers, get_games
+    from urllib.parse import unquote
+    games = []
+    for c in get_games(provider_id).get("games"):
+        games.append({
+            "img_vertical": c.get("img_vertical"),
+            "name": c.get("name"),
+            "provider_name": provider_name,
+            "category": c.get("category"),
+            "id": c.get("id"),
+            "game_rtp": c.get("basicRTP"),
+            "provider_id": provider_id
+        })
+    return flask.render_template("panel/games.html", games=games, provider_name=unquote(provider_name))
+
+
+@app.route("/admin/game/<provider_id>/<game_id>")
+def admin_panel_game_details(provider_id, game_id):
+    from casino_utils import get_games
+    for c in get_games(provider_id).get("games"):
+        if str(game_id) == str(c.get("id")):
+            game = {
+                "img_vertical": c.get("img_vertical"),
+                "name": c.get("name"),
+                "category": c.get("category"),
+                "id": c.get("id"),
+                "game_rtp": c.get("basicRTP")
+            }
+            return flask.render_template("panel/game.html", game=game)
+
+    return "Game Doesn't Exist"
+
+
+@app.route("/admin/bonuses")
+def admin_panel_bonuses():
+    return flask.render_template("panel/bonus.html")
+
+
+@app.route("/admin/users")
+def admin_panel_users():
+    return flask.render_template("panel/users.html")
+
+
+@app.route("/admin/finance")
+def admin_panel_finance():
+    return flask.render_template("panel/finance.html")
+
+
+@app.route("/admin/deposit-methods")
+def admin_panel_finance_deposit_methods():
+    return flask.render_template("panel/deposit-methods.html")
+
+
+@app.route("/admin/players")
+def admin_panel_players():
+    return flask.render_template("panel/players.html")
+
+
+@app.route("/css/<filename>")
+def css_host(filename):
+    return flask.send_file(f"templates/css/{filename}")
+
