@@ -3,6 +3,7 @@ import time
 
 import requests
 import sys
+from celery import shared_task
 
 from sqlalchemy import text
 # api_key = "zHMFjNS3bRu7vNgUrtr6JPMwOD5Jcuer7O9yw9pwNZMX4XBFwe2tazdyQLsq"
@@ -43,6 +44,31 @@ def instant_odds_update(specific_match=None):
                 for odd in option.bet_odds:
                     if odd.bettable:
                         cloudbet_instant_odd_update(odd)
+
+
+@shared_task(name='place_bet', default_retry_delay=2 * 60, max_retries=5)
+def place_bets_with_coupon(current_coupon, current_user, coupon_value):
+    from app import app, db
+    with app.app_context():
+        current_coupon.status = "Oluşturuldu"
+        current_coupon.total_value = float(coupon_value)
+
+        from cloudbet import place_bet
+        for i in current_coupon.all_selects:
+            time.sleep(1)
+            if not place_bet(i.odd, i.reference_id):
+                raise ValueError
+
+        if current_user.freebet:
+            freebet_amount = current_user.freebet if current_user.freebet <= float(
+                coupon_value) else float(coupon_value)
+            current_user.balance -= (float(coupon_value) - freebet_amount)
+            current_coupon.freebet_amount = freebet_amount
+            current_user.freebet -= freebet_amount
+        else:
+            current_user.balance -= float(coupon_value)
+            current_coupon.freebet_amount = 0
+        db.session.commit()
 
 
 def register_open_bet():
