@@ -56,7 +56,6 @@ def place_bets_with_coupon(current_coupon_id, current_user_id, coupon_value):
 
         from cloudbet import place_bet
         for i in current_coupon.all_selects:
-            time.sleep(1)
             if not place_bet(i.odd, i.reference_id):
                 raise ValueError
 
