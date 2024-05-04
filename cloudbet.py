@@ -75,7 +75,7 @@ def get_odds_cloudbet(is_live=False, sport_name="soccer"):
 def place_bet(bet_odd: BetOdd, reference_id):
     from app import app
     with app.app_context():
-        trading_url = f"http://170.187.185.145/place/bet"
+        trading_url = f"http://172.232.34.102/place/bet"
         headers = {
             "accept": "application/json",
             "X-API-Key": api_key,
@@ -125,7 +125,7 @@ def cloudbet_instant_odd_update(bet_odd: BetOdd):
 
 
 def get_status_of_bet(bet_reference_id):
-    odd_url = f"http://170.187.185.145/check/bet/{bet_reference_id}"
+    odd_url = f"http://172.232.34.102/check/bet/{bet_reference_id}"
     headers = {
         "accept": "application/json",
         "X-API-Key": api_key,
