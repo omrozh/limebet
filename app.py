@@ -2,6 +2,7 @@ import datetime
 import os.path
 
 import random
+import threading
 from uuid import uuid4
 
 import flask
@@ -1568,7 +1569,9 @@ def coupon():
                 '''
 
         from betting_utils import place_bets_with_coupon
-        place_bets_with_coupon(current_coupon_id=current_coupon.id, current_user_id=current_user.id, coupon_value=flask.request.values["coupon_value"])
+
+        threading.Thread(target=place_bets_with_coupon, args=(current_coupon.id, current_user.id, flask.request.values["coupon_value"])).start()
+
         return flask.redirect("/profile")
     return flask.render_template("bahis/coupon.html", current_coupon=current_coupon, current_user=current_user, changed_odds=changed_odds, odds_did_change=len(changed_odds) > 0)
 
