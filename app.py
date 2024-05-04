@@ -2,7 +2,6 @@ import datetime
 import os.path
 
 import random
-import threading
 from uuid import uuid4
 
 import flask
@@ -1568,10 +1567,24 @@ def coupon():
                     </script>
                 '''
 
-        from betting_utils import place_bets_with_coupon
+        current_coupon.status = "Oluşturuldu"
+        current_coupon.total_value = float(flask.request.values["coupon_value"])
 
-        place_bets_with_coupon(current_coupon.id, current_user.id, flask.request.values["coupon_value"])
+        from cloudbet import place_bet
+        for i in current_coupon.all_selects:
+            if not place_bet(i.odd, i.reference_id):
+                raise ValueError
 
+        if current_user.freebet:
+            freebet_amount = current_user.freebet if current_user.freebet <= float(
+                flask.request.values["coupon_value"]) else float(flask.request.values["coupon_value"])
+            current_user.balance -= (float(flask.request.values["coupon_value"]) - freebet_amount)
+            current_coupon.freebet_amount = freebet_amount
+            current_user.freebet -= freebet_amount
+        else:
+            current_user.balance -= float(flask.request.values["coupon_value"])
+            current_coupon.freebet_amount = 0
+        db.session.commit()
         return flask.redirect("/profile")
     return flask.render_template("bahis/coupon.html", current_coupon=current_coupon, current_user=current_user, changed_odds=changed_odds, odds_did_change=len(changed_odds) > 0)
 
