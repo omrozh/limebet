@@ -1571,9 +1571,8 @@ def coupon():
         current_coupon.total_value = float(flask.request.values["coupon_value"])
 
         from cloudbet import place_bet
-        for i in current_coupon.all_selects:
-            if not place_bet(i.odd, i.reference_id):
-                raise ValueError
+        for i, n in current_coupon.all_selects, range(len(current_coupon.all_selects)):
+            place_bet.apply_async((i.odd, i.reference_id), countdown=n)
 
         if current_user.freebet:
             freebet_amount = current_user.freebet if current_user.freebet <= float(

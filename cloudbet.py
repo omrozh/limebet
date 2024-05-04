@@ -4,6 +4,7 @@ import requests
 import json
 
 import datetime
+from celery import shared_task
 from app import BetOdd, OpenBet, app, db
 
 api_key = "eyJhbGciOiJSUzI1NiIsImtpZCI6IkhKcDkyNnF3ZXBjNnF3LU9rMk4zV05pXzBrRFd6cEdwTzAxNlRJUjdRWDAiLCJ0eXAiOiJKV1QifQ.eyJhY2Nlc3NfdGllciI6InRyYWRpbmciLCJleHAiOjIwMjgwNDU1ODksImlhdCI6MTcxMjY4NTU4OSwianRpIjoiYjIxZGRjZGYtZjZmNy00NTg1LWFlZDItOTVhNTkwMmU2YmUxIiwic3ViIjoiMzEyMTg1NDgtY2U3MS00NWJiLTlmNTctNmE4YmI3NTI5NjY2IiwidGVuYW50IjoiY2xvdWRiZXQiLCJ1dWlkIjoiMzEyMTg1NDgtY2U3MS00NWJiLTlmNTctNmE4YmI3NTI5NjY2In0.1e8o2kkX_UEccVndkKZDUS0IER6pFJPaSpIR3dzb486PyfpbFq82UggU6goIj9g7hns8sB1HNV__9U6XXLStE_x2qWDd2ZoFwMTeZeuGyMBFqdUK3Z-GGAg-_uYr3wqRB9QbhHHrS_BXEyTpRoxuGLncY8Yq87XuyfH0KbTAjexJOqd6RoseKGLnkex2mAaCc53CrLJh2ysq8wvLtRAYDxCQQN7eCbhRm58TDjTFZKU49u3kokNy4JuwLgjubcqC7F1ibYXwLMGPYH6kSN2zkApje_kmw3SSpJ3HqXptfdy1bIsV-GvlSXStpFnz7btp2Jj2Dhv4E4Hqclt8bRQRng"
@@ -72,28 +73,32 @@ def get_odds_cloudbet(is_live=False, sport_name="soccer"):
     return bets
 
 
+@shared_task(name='place_bet', default_retry_delay=2 * 60, max_retries=5)
 def place_bet(bet_odd: BetOdd, reference_id):
-    trading_url = f"http://170.187.185.145/place/bet"
-    headers = {
-        "accept": "application/json",
-        "X-API-Key": api_key,
-        "Content-Type": "application/json"
-    }
-    open_bet = OpenBet.query.get(bet_odd.bet_option.open_bet_fk)
-    market_url = bet_odd.market_url
-    if len(market_url.split("?")[-1]) < 3:
-        market_url = market_url.replace("?", "")
-    data = {
-        "acceptPriceChange": "BETTER",
-        "currency": "PLAY_EUR",
-        "eventId": str(open_bet.api_match_id),
-        "marketUrl": str(market_url),
-        "price": "1.02",
-        "referenceId": str(reference_id),
-        "stake": "1.1"
-    }
-    response = requests.post(trading_url, headers=headers, data=data)
-    return response.json().get("status") == "ACCEPTED" or response.json().get("status") == "PENDING_ACCEPTANCE"
+    from app import app
+    with app.app_context():
+        trading_url = f"http://170.187.185.145/place/bet"
+        headers = {
+            "accept": "application/json",
+            "X-API-Key": api_key,
+            "Content-Type": "application/json"
+        }
+        open_bet = OpenBet.query.get(bet_odd.bet_option.open_bet_fk)
+        market_url = bet_odd.market_url
+        if len(market_url.split("?")[-1]) < 3:
+            market_url = market_url.replace("?", "")
+        data = {
+            "acceptPriceChange": "BETTER",
+            "currency": "PLAY_EUR",
+            "eventId": str(open_bet.api_match_id),
+            "marketUrl": str(market_url),
+            "price": "1.02",
+            "referenceId": str(reference_id),
+            "stake": "1.1"
+        }
+        response = requests.post(trading_url, headers=headers, data=data)
+        if not response.json().get("status") == "ACCEPTED" or response.json().get("status") == "PENDING_ACCEPTANCE":
+            raise ValueError
 
 
 def cloudbet_instant_odd_update(bet_odd: BetOdd):
