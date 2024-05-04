@@ -1570,7 +1570,7 @@ def coupon():
 
         from betting_utils import place_bets_with_coupon
 
-        threading.Thread(target=place_bets_with_coupon, args=(current_coupon.id, current_user.id, flask.request.values["coupon_value"])).start()
+        place_bets_with_coupon(current_coupon.id, current_user.id, flask.request.values["coupon_value"])
 
         return flask.redirect("/profile")
     return flask.render_template("bahis/coupon.html", current_coupon=current_coupon, current_user=current_user, changed_odds=changed_odds, odds_did_change=len(changed_odds) > 0)
