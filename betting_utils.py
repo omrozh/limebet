@@ -3,7 +3,6 @@ import time
 
 import requests
 import sys
-from celery import shared_task
 
 from sqlalchemy import text
 # api_key = "zHMFjNS3bRu7vNgUrtr6JPMwOD5Jcuer7O9yw9pwNZMX4XBFwe2tazdyQLsq"
@@ -46,7 +45,7 @@ def instant_odds_update(specific_match=None):
                         cloudbet_instant_odd_update(odd)
 
 
-@shared_task(name='place_bet', default_retry_delay=2 * 60, max_retries=5)
+# TO DO: Fix celery: https://medium.com/@Aman-tech/celery-with-flask-d1f1c555ceb7
 def place_bets_with_coupon(current_coupon_id, current_user_id, coupon_value):
     from app import app, db, BetCoupon, User
     with app.app_context():
@@ -153,7 +152,7 @@ def get_results(match_id):
             db.session.commit()
 
 
-def live_betting():
+async def live_betting():
     print("Live bet update options")
     start_time = time.time()
     from app import app, db, OpenBet, BetOdd, BetOption, BetCoupon
