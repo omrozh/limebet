@@ -152,7 +152,7 @@ def get_results(match_id):
             db.session.commit()
 
 
-async def live_betting():
+def live_betting():
     print("Live bet update options")
     start_time = time.time()
     from app import app, db, OpenBet, BetOdd, BetOption, BetCoupon

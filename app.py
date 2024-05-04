@@ -1522,7 +1522,7 @@ def remove_bet(odd_id):
 
 
 @app.route("/coupon", methods=["POST", "GET"])
-async def coupon():
+def coupon():
     if not current_user.is_authenticated:
         return flask.redirect("/login")
     current_coupon = BetCoupon.query.filter_by(user_fk=current_user.id).filter_by(status="Oluşturuluyor").first()
@@ -1568,7 +1568,7 @@ async def coupon():
                 '''
 
         from betting_utils import place_bets_with_coupon
-        await place_bets_with_coupon(current_coupon_id=current_coupon.id, current_user_id=current_user.id, coupon_value=flask.request.values["coupon_value"])
+        place_bets_with_coupon(current_coupon_id=current_coupon.id, current_user_id=current_user.id, coupon_value=flask.request.values["coupon_value"])
         return flask.redirect("/profile")
     return flask.render_template("bahis/coupon.html", current_coupon=current_coupon, current_user=current_user, changed_odds=changed_odds, odds_did_change=len(changed_odds) > 0)
 
