@@ -47,9 +47,11 @@ def instant_odds_update(specific_match=None):
 
 
 @shared_task(name='place_bet', default_retry_delay=2 * 60, max_retries=5)
-def place_bets_with_coupon(current_coupon, current_user, coupon_value):
-    from app import app, db
+def place_bets_with_coupon(current_coupon_id, current_user_id, coupon_value):
+    from app import app, db, BetCoupon, User
     with app.app_context():
+        current_coupon = BetCoupon.query.get(current_coupon_id)
+        current_user = User.query.get(current_user_id)
         current_coupon.status = "Oluşturuldu"
         current_coupon.total_value = float(coupon_value)
 
