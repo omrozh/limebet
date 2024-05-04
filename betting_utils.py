@@ -49,26 +49,27 @@ def instant_odds_update(specific_match=None):
 def place_bets_with_coupon(current_coupon_id, current_user_id, coupon_value):
     from app import app, db, BetCoupon, User
     with app.app_context():
-        current_coupon = BetCoupon.query.get(current_coupon_id)
-        current_user = User.query.get(current_user_id)
-        current_coupon.status = "Oluşturuldu"
-        current_coupon.total_value = float(coupon_value)
+        with db.session.no_autoflush:
+            current_coupon = BetCoupon.query.get(current_coupon_id)
+            current_user = User.query.get(current_user_id)
+            current_coupon.status = "Oluşturuldu"
+            current_coupon.total_value = float(coupon_value)
 
-        from cloudbet import place_bet
-        for i in current_coupon.all_selects:
-            if not place_bet(i.odd, i.reference_id):
-                raise ValueError
+            from cloudbet import place_bet
+            for i in current_coupon.all_selects:
+                if not place_bet(i.odd, i.reference_id):
+                    raise ValueError
 
-        if current_user.freebet:
-            freebet_amount = current_user.freebet if current_user.freebet <= float(
-                coupon_value) else float(coupon_value)
-            current_user.balance -= (float(coupon_value) - freebet_amount)
-            current_coupon.freebet_amount = freebet_amount
-            current_user.freebet -= freebet_amount
-        else:
-            current_user.balance -= float(coupon_value)
-            current_coupon.freebet_amount = 0
-        db.session.commit()
+            if current_user.freebet:
+                freebet_amount = current_user.freebet if current_user.freebet <= float(
+                    coupon_value) else float(coupon_value)
+                current_user.balance -= (float(coupon_value) - freebet_amount)
+                current_coupon.freebet_amount = freebet_amount
+                current_user.freebet -= freebet_amount
+            else:
+                current_user.balance -= float(coupon_value)
+                current_coupon.freebet_amount = 0
+            db.session.commit()
 
 
 def register_open_bet():
