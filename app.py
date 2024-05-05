@@ -486,10 +486,7 @@ class OpenBet(db.Model):
 
     @property
     def has_live_odds(self):
-        for i in self.bet_options:
-            if i.has_odds:
-                return True
-        return False
+        return True
 
 
 class BetCoupon(db.Model):
