@@ -25,5 +25,3 @@ def get_game_iframe(game_id):
         f.write(r.text)
     return r.content
 
-
-print(get_games("1"))
