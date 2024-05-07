@@ -86,8 +86,7 @@
 		<script>
 			const onClickOutside = (element, callback) => {
 			  document.addEventListener('click', e => {
-				  alert(element.id)
-				if (!element.contains(e.target)) callback();
+				if (element.id === undefined) callback();
 			  });
 			};
 
