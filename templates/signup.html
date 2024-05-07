@@ -83,15 +83,6 @@
               }
           </script>
       </form>
-		<script>
-			const onClickOutside = (element, callback) => {
-			  document.addEventListener('click', e => {
-				if (element.id === undefined) callback();
-			  });
-			};
-
-			onClickOutside('form-main', () => document.location = '/');
-		</script>
     </div>
 	<app-header>
 		<app-home-header class="sticky-top">
