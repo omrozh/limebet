@@ -45,7 +45,7 @@
 					</app-not-loggedin>
 					{% else %}
 					<app-loggedin>
-						<a onclick="refreshBalance()" class="btn price-btn"> <i class="fa-solid fa-turkish-lira-sign"></i> {{ current_user.balance }} </a>
+						<a onclick="refreshBalance()" class="btn price-btn"> <i class="fa-solid fa-turkish-lira-sign"></i> {{'%0.2f'| format(current_user.balance|float)}} </a>
 						<script>
 							function updateBalance(balance) {
 								document.getElementById("balance").innerText = balance;
