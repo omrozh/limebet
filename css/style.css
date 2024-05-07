@@ -44,7 +44,7 @@ app-header app-home-header .nav .fast-links .btn {
 	font-family: "Poppins", sans-serif;
 }
 app-header app-home-header .nav .fast-links .btn:hover { color: var(--baseColor);  }
-app-header app-home-header .nav .logo {width: 250px;border-bottom: 2px solid var(--baseColor);border-radius: 50px;padding: 15px;padding-bottom: 10px;}
+app-header app-home-header .nav .logo {width: 250px;border-radius: 50px;padding: 15px;padding-bottom: 10px;}
 app-header app-home-header .nav .logo img {
     width: 100%;
     padding: 10px;
