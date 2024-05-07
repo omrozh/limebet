@@ -1119,7 +1119,7 @@ def contact_m2():
 def index():
     from casino_utils import get_providers, get_games
     providers = []
-    games_popular = []
+    games_popular = [[], []]
     open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime > datetime.datetime.now()).filter_by(
         has_odds=True).all()[:50]
 
@@ -1129,21 +1129,44 @@ def index():
             "name": c.get("name"),
             "id": c.get("id")
         })
+    live_casino_games = [[], []]
+    col_index = 0
     for c in get_games(provider_id="22").get("games"):
         try:
-            games_popular.append({
-                "img_vertical": c.get("img_vertical"),
+            games_popular[col_index].append({
+                "img": c.get("img_vertical"),
                 "name": c.get("name"),
                 "provider_name": "-",
                 "category": c.get("category"),
                 "id": c.get("id")
             })
-            if len(games_popular) > 20:
+
+            if len(games_popular[col_index]) >= 8:
+                col_index += 1
+            if col_index == 2:
                 break
         except AttributeError or KeyError:
             pass
-    resp = flask.make_response(flask.render_template("anasayfa.html", current_user=current_user, providers=providers,
-                                                     games_popular=games_popular, open_bets=open_bets))
+    col_index = 0
+
+    for c in get_games(provider_id="1").get("games"):
+        try:
+            live_casino_games[col_index].append({
+                "img": c.get("img_vertical"),
+                "name": c.get("name"),
+                "provider_name": "-",
+                "category": c.get("category"),
+                "id": c.get("id")
+            })
+
+            if len(live_casino_games[col_index]) >= 8:
+                col_index += 1
+            if col_index == 2:
+                break
+        except AttributeError or KeyError:
+            pass
+    resp = flask.make_response(flask.render_template("anasayfa-yeni.html", current_user=current_user, providers=providers,
+                                                     games_popular=games_popular, open_bets=open_bets, live_casino_games=live_casino_games))
     if flask.request.args.get("ref", False):
         resp.set_cookie('referrer', flask.request.args.get("ref"))
     return resp
@@ -1871,5 +1894,29 @@ def admin_panel_players():
 
 @app.route("/css/<filename>")
 def css_host(filename):
-    return flask.send_file(f"templates/css/{filename}")
+    return flask.send_file(f"css/{filename}")
 
+
+@app.route("/js/<filename>")
+def js_host(filename):
+    return flask.send_file(f"js/{filename}")
+
+
+@app.route("/fonts/<filename>")
+def fonts_host(filename):
+    return flask.send_file(f"fonts/{filename}")
+
+
+@app.route("/plugins/owl/<filename>")
+def plugin_host(filename):
+    return flask.send_file(f"plugins/owl/{filename}")
+
+
+@app.route("/img/<directory>/<filename>")
+def img_host_1(directory, filename):
+    return flask.send_file(f"img/{directory}/{filename}")
+
+
+@app.route("/img/<filename>")
+def img_host_2(filename):
+    return flask.send_file(f"img/{filename}")
