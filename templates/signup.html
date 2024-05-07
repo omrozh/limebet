@@ -11,8 +11,14 @@
 	<link rel="stylesheet" href="/plugins/owl/owl.carousel.min.css" />
 	<style>
         .form-main{
-            background-color: #32353a; color: white; padding: 20px; box-sizing: border-box; position: absolute; top: 0; bottom: 0; right: 0; left: 0; margin: auto; width: 750px; height: 580px; max-width: 100vw; overflow-y: auto; border-radius: 15px;
+            background-color: #1d1d1f; color: white; box-sizing: border-box; position: absolute; top: 0; bottom: 0; right: 0; left: 0; margin: auto; width: 750px; height: 650px; max-width: 100vw; overflow-y: auto; border-radius: 15px;
         }
+		input{
+			width: 300px;
+		}
+		#main-img{
+			 display: inline-block; margin-left: 40px
+		}
 		@media screen and (max-width: 748px) {
 			.form-main{
 				height: 100vh;
@@ -20,69 +26,66 @@
 				border-radius: 0;
 				padding-top: 100px;
 			}
+			#main-fill-form{
+				min-width: 100%;
+				box-sizing: border-box;
+			}
+			#main-img{
+				display: none;
+			}
+			input{
+				width: 90%;
+			}
 		}
     </style>
 </head>
 <body style="overflow-y: hidden">
-    <div style="background-color: rgba(0, 0, 0, 0.8); width: 100%; position: fixed; height: 100%; padding: 0; margin: 0; font-family: 'Open Sans', sans-serif; z-index: 9999">
+    <div style="background-color: rgba(0, 0, 0, 0.8); width: 100%; position: fixed; height: 100%; margin: 0; font-family: 'Open Sans', sans-serif; z-index: 9999; box-sizing: border-box; padding-top: 25px;">
       <form  method="post" enctype="multipart/form-data" class="form-main" id="form-main">
-        <h1 style="color: white; font-family: 'Open Sans', sans-serif; float: left;">
+        <h1 style="color: white; font-family: 'Open Sans', sans-serif; float: left; margin: 20px;">
           <img src="/static/kadromilyon.png" onclick="document.location = '/'" alt="" style="height: 40px; vertical-align: top; display: inline-block; z-index: 999; margin-left: 10px">
         </h1>
-		  <span style="color: gray; float: right;" onclick="document.location = '/'">X</span>
+		  <span style="color: gray; float: right; margin: 20px" onclick="document.location = '/'">X</span>
 
 		  <br style="clear: both">
 		  <br>
-
         <div id="step-1">
-            <div style="display: inline-block; margin-left: 5%">
+			<div id="main-img">
+				<img src="/img/slider/slider-sub.png" style="max-width: 300px; vertical-align: top" alt="">
+			</div>
+            <div style="display: inline-block; margin-left: 5%; width: 300px; vertical-align: top; max-height: 280px; margin-bottom: 25px; overflow-y: auto" id="main-fill-form">
                 <label for="username" style="font-family: sans-serif; font-size: 12px">İsim Soyisim</label>
                 <br>
-                <input id="username" name="username" type="text" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1.2rem; border-radius: 5px; border: none;">
+                <input id="username" name="username" type="text" style="padding: 5px; font-family: sans-serif; outline: none; font-size: 1.2rem; border-radius: 5px; border: none;">
                 <br>
                 <label for="email" style="font-family: sans-serif; font-size: 12px;">E-Posta</label>
                 <br>
-                <input id="email" name="email" type="text" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1.2rem; border-radius: 5px; border: none;">
+                <input id="email" name="email" type="text" style="padding: 5px; font-family: sans-serif; outline: none; font-size: 1.2rem; border-radius: 5px; border: none;">
                 <br>
                 <label for="password" style="font-family: sans-serif; font-size: 12px">Şifre</label>
                 <br>
-                <input id="password" name="password" type="password" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1.2rem; border-radius: 5px; border: none;">
+                <input id="password" name="password" type="password" style="padding: 5px; font-family: sans-serif; outline: none; font-size: 1.2rem; border-radius: 5px; border: none;">
                 <br>
                 <label for="tel_no" style="font-family: sans-serif; font-size: 12px">Telefon Numarası</label>
                 <br>
-                <input id="tel_no" name="tel_no" type="text" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1.2rem; border-radius: 5px; border: none;">
+                <input id="tel_no" name="tel_no" type="text" style="padding: 5px; font-family: sans-serif; outline: none; font-size: 1.2rem; border-radius: 5px; border: none;">
                 <br>
+				<label for="id_no" style="font-family: sans-serif; font-size: 12px">TC Kimlik No</label>
                 <br>
-            </div>
-            <div style="display: inline-block; width: 300px; vertical-align: top; margin-left: 5%">
-                <label for="id_no" style="font-family: sans-serif; font-size: 12px">TC Kimlik No</label>
-                <br>
-                <input id="id_no" name="id_no" type="text" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1.2rem; border-radius: 5px; border: none;">
+                <input id="id_no" name="id_no" type="text" style="padding: 5px; font-family: sans-serif; outline: none; font-size: 1.2rem; border-radius: 5px; border: none;">
                 <br>
                 <label for="dob" style="font-family: sans-serif; font-size: 12px">Doğum Tarihi</label>
                 <br>
-                <input id="dob" name="dob" type="date" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1.2rem; border-radius: 5px; border: none;">
+                <input id="dob" name="dob" type="date" style="padding: 5px; font-family: sans-serif; outline: none; font-size: 1.2rem; border-radius: 5px; border: none;">
                 <br>
                 <label for="nickname" style="font-family: sans-serif; font-size: 12px">Kullanıcı Adı</label>
                 <br>
-                <input id="nickname" name="nickname" type="text" style="width: 300px; padding: 5px; font-family: sans-serif; outline: none; font-size: 1.2rem; border-radius: 5px; border: none;">
+                <input id="nickname" name="nickname" type="text" style="padding: 5px; font-family: sans-serif; outline: none; font-size: 1.2rem; border-radius: 5px; border: none;">
                 <br>
                 <br>
-                <input type="checkbox">
-                <span style="font-size: 12px">
-                    Yukarida verdigim bilgilerin dogru oldugunu
-                    teyit ederim. Ayrica tüm kurallar, sartlar,
-                    kosullar, politikalan ve ilgili diger site kurallari
-                    okudugumu ve kabul ettigimi onayliyorum.
-                </span>
             </div>
         </div>
           <br>
-        <center><button style="color: white; font-family: sans-serif; width: 90%; padding: 10px; box-sizing: border-box; background-color: #6a4898; outline: none; border: none" type="submit">Kayıt Ol</button></center>
-          <br>
-          <br>
-          <center>All right reserved. © KadroMilyon<p>2024</p></center>
-
           <script>
               let step = 1
               function proceedForm(){
@@ -94,6 +97,22 @@
                   step = 2
               }
           </script>
+		  <div style="position: fixed; max-width: 750px; background: #1d1d1f; padding: 20px; box-sizing: border-box; border-radius: 15px">
+			  <input type="checkbox" style="width: fit-content">
+			<span style="font-size: 12px;">
+				Yukarıda verdiğim bilgilerin doğru olduğunu
+				teyit ederim. Ayrıca tüm kurallar, şartlar,
+				koşullar, politikalar ve ilgili diğer site kurallarını
+				okuduğumu ve kabul ettiğimi onaylıyorum.
+			</span>
+			  <br>
+			  <br>
+			<center><button style="color: white; font-family: sans-serif; width: 90%; padding: 10px; box-sizing: border-box; background-color: var(--baseColor); outline: none; border: none" type="submit">Kayıt Ol</button></center>
+			  <br>
+			  <br>
+			  <center>All right reserved. © KadroMilyon<p>2024</p></center>
+		  </div>
+
       </form>
     </div>
 	<app-header>
