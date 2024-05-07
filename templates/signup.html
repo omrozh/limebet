@@ -86,11 +86,11 @@
 		<script>
 			const onClickOutside = (element, callback) => {
 			  document.addEventListener('click', e => {
-				if (!element.contains(e.target)) callback();
+				if (!element.id.contains(e.target)) callback();
 			  });
 			};
 
-			onClickOutside('#form-main', () => document.location = '/');
+			onClickOutside('form-main', () => document.location = '/');
 		</script>
     </div>
 	<app-header>
