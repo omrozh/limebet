@@ -1394,6 +1394,54 @@ def login():
 
 @app.route("/signup", methods=["POST", "GET"])
 def signup():
+    from casino_utils import get_providers, get_games
+    providers = []
+    games_popular = [[], []]
+    open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime > datetime.datetime.now()).filter_by(
+        has_odds=True).all()[:50]
+
+    for c in get_providers():
+        providers.append({
+            "img_vertical": c.get("logo"),
+            "name": c.get("name"),
+            "id": c.get("id")
+        })
+    live_casino_games = [[], []]
+    col_index = 0
+    for c in get_games(provider_id="22").get("games"):
+        try:
+            games_popular[col_index].append({
+                "img": c.get("img_vertical"),
+                "name": c.get("name"),
+                "provider_name": "-",
+                "category": c.get("category"),
+                "id": c.get("id")
+            })
+
+            if len(games_popular[col_index]) >= 8:
+                col_index += 1
+            if col_index == 2:
+                break
+        except AttributeError or KeyError:
+            pass
+    col_index = 0
+
+    for c in get_games(provider_id="1").get("games"):
+        try:
+            live_casino_games[col_index].append({
+                "img": c.get("img_vertical"),
+                "name": c.get("name"),
+                "provider_name": "-",
+                "category": c.get("category"),
+                "id": c.get("id")
+            })
+
+            if len(live_casino_games[col_index]) >= 8:
+                col_index += 1
+            if col_index == 2:
+                break
+        except AttributeError or KeyError:
+            pass
     if flask.request.method == "POST":
         values = flask.request.values
         new_user = User(
@@ -1410,7 +1458,7 @@ def signup():
         db.session.commit()
         login_user(new_user)
         return flask.redirect("/profile")
-    return flask.render_template("signup.html")
+    return flask.render_template("signup.html", games_popular=games_popular, live_casino_games=live_casino_games)
 
 
 @app.route("/admin_portal", methods=["POST", "GET"])
