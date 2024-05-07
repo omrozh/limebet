@@ -865,10 +865,10 @@ app-mobilemenu { display: none; }
 	.col-categories .cat .slide a span {
 		white-space: nowrap;
 	}
-	.col-casino .after .col1 a:nth-child(n+3),
-	.col-casino .after .col2 a:nth-child(n+3),
-	.col-live-casino .after .col1 a:nth-child(n+3),
-	.col-live-casino .after .col2 a:nth-child(n+3)
+	.col-casino .after .col1 a:nth-child(n+4),
+	.col-casino .after .col2 a:nth-child(n+4),
+	.col-live-casino .after .col1 a:nth-child(n+4),
+	.col-live-casino .after .col2 a:nth-child(n+4)
 	{
 		display: none;
 	}
