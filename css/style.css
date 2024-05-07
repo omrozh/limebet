@@ -685,9 +685,6 @@ app-mobilemenu { display: none; }
 	}
 }
 @media only screen and (max-width: 768px) {
-    .col2{
-        display: none;
-    }
 	.slider-two { display: none; }
 	app-header app-home-header .nav .rightmenu a.btn.price-btn i.fa-turkish-lira-sign
 	{
