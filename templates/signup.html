@@ -17,7 +17,7 @@
 </head>
 <body style="overflow-y: hidden">
     <div style="background-color: rgba(0, 0, 0, 0.8); width: 100%; position: fixed; height: 100%; padding: 0; margin: 0; font-family: 'Open Sans', sans-serif; z-index: 9999">
-      <form  method="post" enctype="multipart/form-data" class="form-main">
+      <form  method="post" enctype="multipart/form-data" class="form-main" id="form-main">
         <h1 style="color: white; font-family: 'Open Sans', sans-serif">
           <img src="/static/kadromilyon.png" alt="" style="height: 40px; vertical-align: top; display: inline-block; z-index: 999; margin-left: 10px">
         </h1>
@@ -83,6 +83,15 @@
               }
           </script>
       </form>
+		<script>
+			const onClickOutside = (element, callback) => {
+			  document.addEventListener('click', e => {
+				if (!element.contains(e.target)) callback();
+			  });
+			};
+
+			onClickOutside('#form-main', () => document.location = '/');
+		</script>
     </div>
 	<app-header>
 		<app-home-header class="sticky-top">
