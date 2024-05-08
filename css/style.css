@@ -1,12 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,600;0,700;1,100;1,200&display=swap');
+@import "/css/cms-styles.css";
 
-:root {
-	--baseColor: #b986ff;
-	--themeColor: #0e1114;
-}
 
 html, body {
-	background-color: #16191e !important;
+    background-color: var(--backgroundDark) !important;
 }
 
 /* navbar start */
@@ -30,9 +27,9 @@ app-header app-home-header .nav {
 	align-content: center;
 }
 app-header app-home-header .nav .fast-links .btn {
-	background: #121519;
-	color: #fff;
-	border: 1px solid #474849;
+	background: var(--buttonBackground);
+	color: var(--buttonHoverColor);
+	border: 1px solid var(--buttonBorder);
 	border-radius: 50px;
 	text-align: center;
 	display: flex;
@@ -69,15 +66,15 @@ app-header app-home-header .nav .rightmenu app-not-loggedin {
     gap: 10px;
 }
 app-header app-home-header .nav .rightmenu a.btn.login-btn {
-    background: #292c2f;
-    color: #fff;
+    background: var(--loginButtonBackground);
+    color: var(--buttonHoverColor);
     border-radius: 50px;
     padding: 5px 25px;
     border: 1px solid #545556;
 	font-family: "Poppins", sans-serif;
 }
 app-header app-home-header .nav .rightmenu a.btn.login-btn i {
-    background: #202225;
+    background: var(--iconBackground);
     padding: 10px;
     border-radius: 100px;
     margin-left: -15px;
@@ -87,18 +84,18 @@ app-header app-home-header .nav .rightmenu a.btn.login-btn i {
 }
 app-header app-home-header .nav .rightmenu a.btn.register-btn {
     background: rgb(130,97,166);
-    background: linear-gradient(180deg, rgba(130,97,166,1) 0%, rgba(103,70,150,1) 100%);
-    color: #fff;
+    background: linear-gradient(180deg, var(--registerButtonBackgroundStart) 0%, var(--registerButtonBackgroundEnd) 100%);
+    color: var(--buttonHoverColor);
     border-radius: 50px;
     padding: 5px 25px;
     border: 1px solid #545556;
-    -webkit-box-shadow: 0px 0px 10px 0px rgba(131,55,214,1);
-    -moz-box-shadow: 0px 0px 10px 0px rgba(131,55,214,1);
-    box-shadow: 0px 0px 10px 0px rgba(131,55,214,1);
+    -webkit-box-shadow: 0px 0px 10px 0px var(--shadowColor);
+    -moz-box-shadow: 0px 0px 10px 0px var(--shadowColor);
+    box-shadow: 0px 0px 10px 0px var(--shadowColor);
 	font-family: "Poppins", sans-serif;
 }
 app-header app-home-header .nav .rightmenu a.btn.register-btn i {
-    color: #fff;
+    color: var(--buttonHoverColor);
     border-radius: 50px;
     padding: 10px;
     margin-left: -15px;
@@ -115,12 +112,12 @@ app-header app-home-header .nav .rightmenu app-not-loggedin .lang-select,
 app-header app-home-header .nav .rightmenu app-not-loggedin .timer,
 app-header app-home-header .nav .rightmenu app-not-loggedin .notification
 {
-    border: 1px solid #464748;
+    border: 1px solid var(--footerBorder);
     border-radius: 100px;
     padding: 5px 7px;
     font-size: 12px;
     color: #888888;
-    background: #131619;
+    background: var(--backgroundDark);
     cursor: pointer;
     height: 36px;
     display: flex;
@@ -136,8 +133,8 @@ app-header app-home-header .nav .rightmenu app-not-loggedin .timer {
 }
 app-header app-home-header .nav .rightmenu app-not-loggedin .notification {
     width: 36px;
-    color: #8261a6;
-    text-shadow: 0px 0px 6px rgb(185 134 255);
+    color: var(--notificationTextColor);
+    text-shadow: 0px 0px 6px var(--notificationShadow);
     font-size: 14px;
 }
 
@@ -145,8 +142,8 @@ app-header app-home-header .nav .rightmenu a.btn.price-btn,
 app-header app-home-header .nav .rightmenu a.btn.setting-btn,
 app-header app-home-header .nav .rightmenu a.btn.notification-btn
 {
-    background: #292c2f;
-    color: #fff;
+    background: var(--loginButtonBackground);
+    color: var(--buttonHoverColor);
     border-radius: 50px;
     padding: 5px 25px;
     border: 1px solid #545556;
@@ -162,7 +159,7 @@ app-header app-home-header .nav .rightmenu a.btn.notification-btn {
 	font-size: 18px;
 }
 app-header app-home-header .nav .rightmenu a.btn.price-btn i.fa-turkish-lira-sign {
-    background: #202225;
+    background: var(--iconBackground);
     padding: 10px;
     border-radius: 100px;
     margin-left: -15px;
@@ -173,7 +170,7 @@ app-header app-home-header .nav .rightmenu a.btn.price-btn i.fa-turkish-lira-sig
     height: 36px;
 }
 app-header app-home-header .nav .rightmenu a.btn.price-btn i.fa-solid.fa-rotate-left {
-    background: #424242;
+    background: var(--balanceBGColor);
     border-radius: 100px;
     margin-right: -15px;
     margin-left: 10px;
@@ -200,8 +197,8 @@ app-header app-home-header .nav .rightmenu a.btn.profile-btn img {
     width: 100%;
 }
 app-header app-home-header .nav .rightmenu a.btn.notification-btn .counter {
-    background: #8261a6;
-    color: #fff;
+    background: var(--notificationTextColor);
+    color: var(--buttonHoverColor);
     font-size: 11px;
     font-weight: bold;
     border-radius: 100px;
@@ -248,7 +245,7 @@ app-header app-home-header .menu {
     margin: auto;
 }
 app-header app-home-header .menu a span {
-    color: #f4f4f3;
+    color: var(--generalTextColor);
     font-weight: bold;
     font-size: 14px;
 	transition: 0.1s all;
@@ -290,7 +287,7 @@ app-header app-home-header .menu .km.km-promotions { background-position: -400px
 /* menu end */
 /* alert start */
 site-alert {
-    color: #fff;
+    color: var(--buttonHoverColor);
     width: fit-content !important;
     margin: auto;
     padding: 10px 25px;
@@ -352,7 +349,7 @@ slider {
 	max-height: 488px;
 }
 .owl-nav {
-    color: #fff;
+    color: var(--buttonHoverColor);
     position: absolute;
     top: 25px;
     display: flex;
@@ -360,7 +357,7 @@ slider {
     gap: 10px;
 }
 .owl-carousel .owl-nav button.owl-next, .owl-carousel .owl-nav button.owl-prev {
-    background: #282d35 !important;
+    background: var(--sliderBackground) !important;
     width: 35px;
     height: 35px;
     display: flex;
@@ -394,19 +391,19 @@ slider {
 	padding: 0px !important;
 }
 .col-categories .cat {
-	background: #0e1114;
+	background: var(--categoryBackground);
     border-radius: 35px;
     padding: 10px;
-    border: 1px solid #4b4c4f;
+    border: 1px solid var(--footerBorder);
 }
 .col-categories .cat .slide a {
 	width: 100%;
 	display: block;
-	background: #16191e !important;
-    border: 1px solid #464748;
+	background: var(--backgroundDark) !important;
+    border: 1px solid var(--footerBorder);
     border-radius: 100px;
     padding: 10px;
-	color: #f4f4f3;
+	color: var(--generalTextColor);
 	text-decoration: none;
 	display: flex;
 	align-items: center;
@@ -442,7 +439,7 @@ slider {
 .col-casino, .col-live-casino {
     margin-top: 15px;
     border-radius: 35px;
-    border: 1px solid #4b4c4f;
+    border: 1px solid var(--footerBorder);
     padding: 15px;
     display: flex;
     flex-wrap: nowrap;
@@ -493,8 +490,8 @@ slider {
 /* home casino, live-casino end */
 /* footer start */
 .footer {
-    background: #0e1114 !important;
-    border-top: 1px solid #4b4c4f;
+    background: var(--footerBackground) !important;
+    border-top: 1px solid var(--footerBorder);
     margin-top: 15px;
 }
 .footer .inner {
@@ -508,12 +505,12 @@ slider {
     padding: 0 50px;
 }
 .footer .fast-links a {
-    background: #121519;
-    border: 1px solid #474849;
+    background: var(--buttonBackground);
+    border: 1px solid var(--buttonBorder);
     padding: 5px 20px;
     padding-right: 25px;
     display: flex;
-    color: #fff;
+    color: var(--buttonHoverColor);
     align-items: center;
     justify-content: center;
     flex-wrap: nowrap;
@@ -526,7 +523,7 @@ slider {
     margin-top: 30px;
 }
 .footer .details {
-    border-top: 1px solid #31373d;
+    border-top: 1px solid var(--footerDetailsBorder);
     margin-top: 30px;
     padding-top: 30px;
     width: 100%;
@@ -537,7 +534,7 @@ slider {
     gap: 25px;
 }
 .footer .details h3 {
-    color: #fff;
+    color: var(--footerTextColor);
     white-space: nowrap;
     font-size: 21px;
 	cursor: default;
@@ -557,12 +554,12 @@ slider {
 }
 .footer .details ul a:hover { color: var(--baseColor); }
 .footer .providers {
-	border-top: 1px solid #31373d;
+	border-top: 1px solid var(--footerDetailsBorder);
     margin-top: 25px;
 	padding: 30px;
 }
 .footer .providers img { max-width: 100%; }
-.footer .copy {border-top: 1px solid #31373d;padding-top: 25px;color: #9c9c9c;text-align: center;display: flex;gap: 20px;flex-direction: row;flex-wrap: nowrap;justify-content: center;align-items: center;}
+.footer .copy {border-top: 1px solid var(--footerDetailsBorder);padding-top: 25px;color: var(--footerCopyBackground);text-align: center;display: flex;gap: 20px;flex-direction: row;flex-wrap: nowrap;justify-content: center;align-items: center;}
 .footer .copy a {
     width: 150px;
 	transition: 0.1s all;
@@ -576,7 +573,7 @@ slider {
 	cursor:default;
 	font-family: "Poppins", sans-serif;
 }
-.footer .copy p a { color: #fff; text-decoration: none; }
+.footer .copy p a { color:  var(--footerTextColor); text-decoration: none; }
 .footer .copy p a:hover { color: var(--baseColor); }
 .footer .finish {
     display: flex;
@@ -584,7 +581,7 @@ slider {
     flex-wrap: wrap;
     align-items: center;
     margin-top: 30px;
-    color: #9c9c9c;
+    color: var(--footerCopyBackground);
 	font-family: "Poppins", sans-serif;
 }
 .footer .finish a img {
@@ -778,13 +775,13 @@ app-mobilemenu { display: none; }
 	app-header app-home-header .menu-container {
 		height: 40px;
 		width: 100%;
-		border: 1px solid #0e1114;
+		border: 1px solid var(--menuIconBackground);
 		overflow: hidden;
 		position: relative;
 		margin-bottom: 5px;
 	}
 	app-header app-home-header .menu {
-		border: 1px solid #0e1114;
+		border: 1px solid var(--menuIconBackground);
 		overflow: auto;
 		padding: 0 5px;
 	}
@@ -970,7 +967,7 @@ app-mobilemenu { display: none; }
 		margin-bottom: 5px;
 	}
 	app-mobilemenu .mobile-menu a span {
-		color: #fff;
+		color: var(--buttonHoverColor);
 	}
 	app-mobilemenu .mobile-menu a:hover span,
 	app-mobilemenu .mobile-menu a.active span {
@@ -979,11 +976,11 @@ app-mobilemenu { display: none; }
 	app-mobilemenu .mobile-menu a:nth-child(3) {
 		position: relative;
 		margin-top: -75px;
-		background: rgb(103,69,149);
-		background: linear-gradient(0deg, rgba(103,69,149,1) 0%, rgba(130,97,166,1) 100%);
+		background: var(--liveChatBackgroundStart);
+		background: linear-gradient(0deg, var(--liveChatBackgroundStart) 0%, var(--liveChatBackgroundEnd) 100%);
 		padding: 10px;
 		border-radius: 15px;
-		box-shadow: 0px 0px 15px -2.5px rgba(131,55,214,1);
+		box-shadow: 0px 0px 15px -2.5px var(--shadowColor);
 		padding: 10px 15px;
 		font-size: 9px;
 	}
@@ -1018,7 +1015,7 @@ app-mobilemenu { display: none; }
 		display: block;
 		width: 1px;
 		margin: 0 7.5px;
-		background: #232426;
+		background: var(--mobileMenuLineBGColor);
 	}
 	app-footer .footer {
 		padding-bottom: 100px;
