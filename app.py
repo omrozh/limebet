@@ -321,7 +321,7 @@ class BetTransaction(db.Model):
 
 
 class M2CallbackRouter(db.Model):
-    id = db.Column(db.String)
+    id = db.Column(db.String, primary_key=True)
     user_uuid = db.Column(db.String)
     base_url = db.Column(db.String)
 
