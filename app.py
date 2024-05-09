@@ -2019,7 +2019,7 @@ def casino_player_details():
 
 
 @app.route("/casino-callback//getBalance")
-def casino_player_details():
+def casino_get_balance():
     subject_user = User.query.get(flask.request.args.get("userID"))
     if not subject_user.password == flask.request.args.get("token"):
         return {
@@ -2035,7 +2035,7 @@ def casino_player_details():
 
 
 @app.route("/casino-callback//moveFunds")
-def casino_player_details():
+def casino_result_bet():
     subject_user = User.query.get(flask.request.args.get("userID"))
     if not subject_user.password == flask.request.args.get("token"):
         return {
