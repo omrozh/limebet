@@ -53,7 +53,7 @@ def logged_in_users(date_start, date_end, compare_date_delta):
 
         users_logged_in_within_previous_period = User.query.filter(
             User.last_login >= previous_start,
-            User.last_login.last_login <= previous_end
+            User.last_login <= previous_end
         ).all()
 
         if len(users_logged_in_within_previous_period) > 0:
