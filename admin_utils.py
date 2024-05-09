@@ -7,7 +7,7 @@ def calculate_transaction_volume_for_date(date_start, date_end, compare_date_del
         transactions = TransactionLog.query.filter(
             TransactionLog.transaction_date >= date_start,
             TransactionLog.transaction_date <= date_end,
-            TransactionLog.transactions_status == "completed",
+            TransactionLog.transaction_status == "completed",
             TransactionLog.transaction_type != "bahis"
         ).all()
 
@@ -16,7 +16,7 @@ def calculate_transaction_volume_for_date(date_start, date_end, compare_date_del
         transactions_compare = TransactionLog.query.filter(
             TransactionLog.transaction_date >= previous_start,
             TransactionLog.transaction_date <= previous_end,
-            TransactionLog.transactions_status == "completed",
+            TransactionLog.transaction_status == "completed",
             TransactionLog.transaction_type != "bahis"
         ).all()
 
