@@ -92,6 +92,9 @@ bundesliga_teams = ['BayernMünih', 'BorussiaDortmund', 'Leipzig', 'UnionBerlin'
 
 app.config["SECRET_KEY"] = "ksjf-sjc-wsf12-sac"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///site.db"
+app.config["DO_ROUTE_USERS"] = False
+# True if website is not kadromilyon
+app.config["CASINO_BASE_URL"] = "https://kadromilyon.com/casino-callback/"
 
 db = SQLAlchemy(app)
 
@@ -1479,8 +1482,25 @@ def signup():
         new_user.user_information.tel_no = flask.request.values["tel_no"]
         db.session.commit()
         login_user(new_user)
+        if app.config.get("DO_ROUTE_USERS"):
+            data = {
+                "user_uuid": new_user.user_uuid,
+                "base_url": app.config.get("CASINO_BASE_URL")
+            }
+            requests.post("https://kadromilyon.com/save_user_to_m2router", data=data)
         return flask.redirect("/profile")
     return flask.render_template("signup.html", games_popular=games_popular, live_casino_games=live_casino_games)
+
+
+@app.route("/save_user_to_m2router", methods=["POST", "GET"])
+def save_user_to_m2router():
+    if flask.request.method == "POST":
+        new_m2_router = M2CallbackRouter(id=str(uuid4()), user_uuid=flask.request.values["user_uuid"],
+                                         base_url=app.config.get("base_url"))
+        db.session.add(new_m2_router)
+        db.session.commit()
+        return "OK"
+    return "Forbidden"
 
 
 @app.route("/admin_portal", methods=["POST", "GET"])
@@ -2011,8 +2031,8 @@ def img_host_2(filename):
 def casino_player_details():
     m2_callback_router = M2CallbackRouter.query.filter_by(user_uuid=flask.request.args.get("token")).first()
     if m2_callback_router:
-        import requests
-        return requests.get(m2_callback_router.base_url + "playerDetails", params=flask.request.args).json()
+        if not m2_callback_router.base_url == app.config.get("CASINO_BASE_URL"):
+            return requests.get(m2_callback_router.base_url + "playerDetails", params=flask.request.args).json()
     subject_user = User.query.get(flask.request.args.get("userID"))
     if not subject_user.user_uuid == flask.request.args.get("token"):
         return {
@@ -2034,8 +2054,8 @@ def casino_player_details():
 def casino_get_balance():
     m2_callback_router = M2CallbackRouter.query.filter_by(user_uuid=flask.request.args.get("token")).first()
     if m2_callback_router:
-        import requests
-        return requests.get(m2_callback_router.base_url + "getBalance", params=flask.request.args).json()
+        if not m2_callback_router.base_url == app.config.get("CASINO_BASE_URL"):
+            return requests.get(m2_callback_router.base_url + "getBalance", params=flask.request.args).json()
 
     subject_user = User.query.get(flask.request.args.get("userID"))
     if not subject_user.user_uuid == flask.request.args.get("token"):
@@ -2055,8 +2075,8 @@ def casino_get_balance():
 def casino_result_bet():
     m2_callback_router = M2CallbackRouter.query.filter_by(user_uuid=flask.request.args.get("token")).first()
     if m2_callback_router:
-        import requests
-        return requests.get(m2_callback_router.base_url + "moveFunds", params=flask.request.args).json()
+        if not m2_callback_router.base_url == app.config.get("CASINO_BASE_URL"):
+            return requests.get(m2_callback_router.base_url + "moveFunds", params=flask.request.args).json()
 
     subject_user = User.query.get(flask.request.args.get("userID"))
     if not subject_user.user_uuid == flask.request.args.get("token"):
