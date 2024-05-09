@@ -1400,6 +1400,7 @@ def login():
             if bcrypt.check_password_hash(user_from_email.password, values["password"]):
                 login_user(user_from_email, remember=False)
                 user_from_email.last_login = datetime.datetime.now()
+                db.session.commit()
                 return flask.redirect("/")
     return flask.render_template("login.html")
 
