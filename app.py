@@ -19,7 +19,8 @@ from imap_tools import MailBox
 import schedule
 import time
 
-from betting_utils import distribute_rewards, live_betting, instant_odds_update, register_open_bet, open_bet_garbage_collector
+from betting_utils import distribute_rewards, live_betting, instant_odds_update, register_open_bet, \
+    open_bet_garbage_collector
 
 schedule.clear()
 
@@ -331,6 +332,7 @@ class User(db.Model, UserMixin):
     freebet_usable = db.Column(db.Float)
     telegram_chat_id = db.Column(db.String)
     last_login = db.Column(db.DateTime)
+    registration_date = db.Column(db.DateTime)
 
     @property
     def mybets(self):
@@ -644,6 +646,7 @@ class WithdrawalRequest(db.Model):
     status = db.Column(db.String, default="Beklemede")
     user_fk = db.Column(db.Integer)
     withdraw_to = db.Column(db.String)
+    request_date = db.Column(db.DateTime)
 
     @property
     def user(self):
@@ -1096,7 +1099,8 @@ def profile():
             new_wr = WithdrawalRequest(
                 withdrawal_amount=float(flask.request.values["amount"]),
                 user_fk=current_user.id,
-                withdraw_to=flask.request.values["iban"]
+                withdraw_to=flask.request.values["iban"],
+                request_date=datetime.datetime.now()
             )
             db.session.add(new_wr)
             db.session.commit()
@@ -1165,8 +1169,9 @@ def index():
                 break
         except AttributeError or KeyError:
             pass
-    resp = flask.make_response(flask.render_template("anasayfa-yeni.html", current_user=current_user, providers=providers,
-                                                     games_popular=games_popular, open_bets=open_bets, live_casino_games=live_casino_games))
+    resp = flask.make_response(
+        flask.render_template("anasayfa-yeni.html", current_user=current_user, providers=providers,
+                              games_popular=games_popular, open_bets=open_bets, live_casino_games=live_casino_games))
     if flask.request.args.get("ref", False):
         resp.set_cookie('referrer', flask.request.args.get("ref"))
     return resp
@@ -1185,7 +1190,7 @@ def coupon_id(bet_coupon_id):
         if bet_status == "WIN":
             total_reward *= i.odd_locked_in_rate
         elif bet_status == "HALF_WIN":
-            total_reward *= i.odd_locked_in_rate/2
+            total_reward *= i.odd_locked_in_rate / 2
         elif bet_status == "HALF_LOSS":
             total_reward *= .5
         elif bet_status == "ACCEPTED" or bet_status == "PENDING_ACCEPTANCE":
@@ -1198,6 +1203,13 @@ def coupon_id(bet_coupon_id):
             return flask.redirect("/profile")
 
     bet_coupon.status = "Sonuçlandı"
+    new_transaction = TransactionLog(transaction_amount=float(total_reward),
+                                     transaction_type="bahis_kazanci", transaction_date=datetime.date.today(),
+                                     user_fk=current_user.id, transaction_status="completed",
+                                     payment_unique_number=f"Spor Bahisi Kazancı - Kupon {bet_coupon_id}")
+
+    db.session.add(new_transaction)
+
     current_user.balance += total_reward
     db.session.commit()
     return flask.redirect("/profile")
@@ -1450,7 +1462,8 @@ def signup():
             password=bcrypt.generate_password_hash(values["password"]),
             referred_by=flask.request.cookies.get('somecookiename', None),
             freebet_usable=100,
-            freebet=0
+            freebet=0,
+            registration_date=datetime.datetime.now()
         )
         db.session.add(new_user)
         db.session.commit()
@@ -1495,7 +1508,8 @@ def bahis():
     for i in open_bets:
         if i.match_league not in sports_leagues:
             sports_leagues.append(i.match_league)
-    return flask.render_template("bahis/bahis.html", open_bets=open_bets, canli_bahis=False, sports_leagues=sports_leagues)
+    return flask.render_template("bahis/bahis.html", open_bets=open_bets, canli_bahis=False,
+                                 sports_leagues=sports_leagues)
 
 
 @app.route("/bahis-mobile")
@@ -1506,27 +1520,32 @@ def bahis_mobile():
     for i in open_bets:
         if i.match_league not in sports_leagues:
             sports_leagues.append(i.match_league)
-    return flask.render_template("bahis/bahis-mobile.html", open_bets=open_bets, canli_bahis=False, sports_leagues=sports_leagues)
+    return flask.render_template("bahis/bahis-mobile.html", open_bets=open_bets, canli_bahis=False,
+                                 sports_leagues=sports_leagues)
 
 
 @app.route("/canli_bahis")
 def canli_bahis():
-    open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime <= datetime.datetime.now()).filter_by(live_betting_expired=False).filter_by(has_odds=True).all()
+    open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime <= datetime.datetime.now()).filter_by(
+        live_betting_expired=False).filter_by(has_odds=True).all()
     sports_leagues = []
     for i in open_bets:
         if i.match_league not in sports_leagues:
             sports_leagues.append(i.match_league)
-    return flask.render_template("bahis/bahis.html", open_bets=open_bets, canli_bahis=True, sports_leagues=sports_leagues)
+    return flask.render_template("bahis/bahis.html", open_bets=open_bets, canli_bahis=True,
+                                 sports_leagues=sports_leagues)
 
 
 @app.route("/canli_bahis_mobile")
 def canli_bahis_mobile():
-    open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime <= datetime.datetime.now()).filter_by(live_betting_expired=False).filter_by(has_odds=True).all()
+    open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime <= datetime.datetime.now()).filter_by(
+        live_betting_expired=False).filter_by(has_odds=True).all()
     sports_leagues = []
     for i in open_bets:
         if i.match_league not in sports_leagues:
             sports_leagues.append(i.match_league)
-    return flask.render_template("bahis/bahis-mobile.html", open_bets=open_bets, canli_bahis=True, sports_leagues=sports_leagues)
+    return flask.render_template("bahis/bahis-mobile.html", open_bets=open_bets, canli_bahis=True,
+                                 sports_leagues=sports_leagues)
 
 
 @app.route("/bahis/mac/<bahis_id>")
@@ -1557,7 +1576,8 @@ def take_bet(odd_id):
     if BetSelectedOption.query.filter_by(bet_odd_fk=odd_id).filter_by(bet_coupon_fk=current_coupon.id).first():
         return flask.redirect("/bahis")
     new_coupon_bet = BetSelectedOption(bet_coupon_fk=current_coupon.id, bet_odd_fk=odd_id,
-                                       bet_option_fk=bet_odd.bet_option_fk, reference_id=str(uuid4()), match_name=bet_odd.bet_option.match_name)
+                                       bet_option_fk=bet_odd.bet_option_fk, reference_id=str(uuid4()),
+                                       match_name=bet_odd.bet_option.match_name)
 
     if len(BetSelectedOption.query.filter_by(bet_coupon_fk=current_coupon.id).filter_by(
             match_name=bet_odd.bet_option.match_name).all()) > 0:
@@ -1618,6 +1638,13 @@ def coupon():
             db.session.commit()
             return flask.redirect("/coupon")
     if flask.request.method == "POST":
+        new_transaction = TransactionLog(transaction_amount=float(flask.request.values["coupon_value"]),
+                                         transaction_type="bahis", transaction_date=datetime.date.today(),
+                                         user_fk=current_user.id, transaction_status="completed"
+                                         payment_unique_number=f"Spor Bahisi - Kupon {current_coupon.id}")
+
+        db.session.add(new_transaction)
+
         if current_user.freebet:
             if current_user.balance + current_user.freebet < float(flask.request.values["coupon_value"]):
                 return '''
@@ -1654,7 +1681,8 @@ def coupon():
             current_coupon.freebet_amount = 0
         db.session.commit()
         return flask.redirect("/profile")
-    return flask.render_template("bahis/coupon.html", current_coupon=current_coupon, current_user=current_user, changed_odds=changed_odds, odds_did_change=len(changed_odds) > 0)
+    return flask.render_template("bahis/coupon.html", current_coupon=current_coupon, current_user=current_user,
+                                 changed_odds=changed_odds, odds_did_change=len(changed_odds) > 0)
 
 
 @app.route("/double")
