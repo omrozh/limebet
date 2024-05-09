@@ -97,8 +97,8 @@ def total_withdrawals(date_start, date_end, compare_date_delta):
             WithdrawalRequest.request_date == "Tamamlandı"
         ).all()])
 
-        if len(withdrawal_requests_for_previous_period) > 0:
-            percentage_change = len(withdrawal_requests) / withdrawal_requests_for_previous_period * 100
+        if withdrawal_requests_for_previous_period > 0:
+            percentage_change = withdrawal_requests / withdrawal_requests_for_previous_period * 100
         else:
             percentage_change = 0
 
