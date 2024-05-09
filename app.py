@@ -1997,3 +1997,62 @@ def img_host_1(directory, filename):
 @app.route("/img/<filename>")
 def img_host_2(filename):
     return flask.send_file(f"img/{filename}")
+
+
+@app.route("/casino-callback/playerDetails")
+def casino_player_details():
+    subject_user = User.query.get(flask.request.args.get("userID"))
+    if not subject_user.password == flask.request.args.get("token"):
+        return {
+            "status": False,
+            "errors": {
+                "error": "Authorization Error"
+            }
+        }
+    return flask.jsonify({
+        "status": True,
+        "userId": subject_user.password,
+        "nickname": subject_user.username if subject_user.username else "player",
+        "currency": "TRY",
+        "language": "tr",
+    })
+
+
+@app.route("/casino-callback//getBalance")
+def casino_player_details():
+    subject_user = User.query.get(flask.request.args.get("userID"))
+    if not subject_user.password == flask.request.args.get("token"):
+        return {
+            "status": False,
+            "errors": {
+                "error": "Authorization Error"
+            }
+        }
+    return flask.jsonify({
+        "status": True,
+        "balance": round(current_user.balance, 2)
+    })
+
+
+@app.route("/casino-callback//moveFunds")
+def casino_player_details():
+    subject_user = User.query.get(flask.request.args.get("userID"))
+    if not subject_user.password == flask.request.args.get("token"):
+        return {
+            "status": False,
+            "errors": {
+                "error": "Authorization Error"
+            }
+        }
+    if flask.request.args.get("eventType") == "Win":
+        subject_user.balance += float(flask.request.args.get("amount"))
+    if flask.request.args.get("eventType") == "Lose":
+        subject_user.balance -= float(flask.request.args.get("amount"))
+    db.session.commit()
+    return flask.jsonify({
+        "status": True,
+        "balance": round(current_user.balance, 2)
+    })
+
+
+# TO DO: Implement bonuses
