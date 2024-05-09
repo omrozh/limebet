@@ -110,13 +110,13 @@ def calculate_ggr(date_start, date_end, compare_date_delta):
         bet_transactions = sum([i.transaction_amount for i in TransactionLog.query.filter(
             TransactionLog.transaction_date >= date_end,
             TransactionLog.transaction_date <= date_start,
-            TransactionLog.status == "completed",
+            TransactionLog.transaction_status == "completed",
             TransactionLog.transaction_type == "bahis"
         ).all()])
         bet_win_transactions = sum([i.transaction_amount for i in TransactionLog.query.filter(
             TransactionLog.transaction_date >= date_end,
             TransactionLog.transaction_date <= date_start,
-            TransactionLog.status == "completed",
+            TransactionLog.transaction_status == "completed",
             TransactionLog.transaction_type == "bahis_kazanci"
         ).all()])
 
