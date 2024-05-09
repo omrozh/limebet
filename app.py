@@ -2043,7 +2043,7 @@ def casino_player_details():
         }
     return flask.jsonify({
         "status": True,
-        "userId": subject_user.password,
+        "userId": subject_user.id,
         "nickname": subject_user.username if subject_user.username else "player",
         "currency": "TRY",
         "language": "tr",
