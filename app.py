@@ -2078,3 +2078,4 @@ def casino_result_bet():
 
 
 # TO DO: Implement bonuses
+# TO DO: Check casino integration (also with router.
