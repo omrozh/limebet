@@ -1640,7 +1640,7 @@ def coupon():
     if flask.request.method == "POST":
         new_transaction = TransactionLog(transaction_amount=float(flask.request.values["coupon_value"]),
                                          transaction_type="bahis", transaction_date=datetime.date.today(),
-                                         user_fk=current_user.id, transaction_status="completed"
+                                         user_fk=current_user.id, transaction_status="completed",
                                          payment_unique_number=f"Spor Bahisi - Kupon {current_coupon.id}")
 
         db.session.add(new_transaction)
