@@ -320,9 +320,16 @@ class BetTransaction(db.Model):
     transaction_date = db.Column(db.Date)
 
 
+class M2CallbackRouter(db.Model):
+    id = db.Column(db.String)
+    user_uuid = db.Column(db.String)
+    base_url = db.Column(db.String)
+
+
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String)
+    user_uuid = db.Column(db.String)
     email = db.Column(db.String, unique=True)
     password = db.Column(db.String)
     is_admin = db.Column(db.Boolean, default=False)
@@ -1464,7 +1471,8 @@ def signup():
             referred_by=flask.request.cookies.get('somecookiename', None),
             freebet_usable=100,
             freebet=0,
-            registration_date=datetime.datetime.now()
+            registration_date=datetime.datetime.now(),
+            user_uuid=str(uuid4())
         )
         db.session.add(new_user)
         db.session.commit()
@@ -2001,8 +2009,12 @@ def img_host_2(filename):
 
 @app.route("/casino-callback/playerDetails")
 def casino_player_details():
+    m2_callback_router = M2CallbackRouter.query.filter_by(user_uuid=flask.request.args.get("token")).first()
+    if m2_callback_router:
+        import requests
+        return requests.get(m2_callback_router.base_url + "playerDetails", params=flask.request.args).json()
     subject_user = User.query.get(flask.request.args.get("userID"))
-    if not subject_user.password == flask.request.args.get("token"):
+    if not subject_user.user_uuid == flask.request.args.get("token"):
         return {
             "status": False,
             "errors": {
@@ -2020,8 +2032,13 @@ def casino_player_details():
 
 @app.route("/casino-callback//getBalance")
 def casino_get_balance():
+    m2_callback_router = M2CallbackRouter.query.filter_by(user_uuid=flask.request.args.get("token")).first()
+    if m2_callback_router:
+        import requests
+        return requests.get(m2_callback_router.base_url + "getBalance", params=flask.request.args).json()
+
     subject_user = User.query.get(flask.request.args.get("userID"))
-    if not subject_user.password == flask.request.args.get("token"):
+    if not subject_user.user_uuid == flask.request.args.get("token"):
         return {
             "status": False,
             "errors": {
@@ -2034,10 +2051,15 @@ def casino_get_balance():
     })
 
 
-@app.route("/casino-callback//moveFunds")
+@app.route("/casino-callback/moveFunds")
 def casino_result_bet():
+    m2_callback_router = M2CallbackRouter.query.filter_by(user_uuid=flask.request.args.get("token")).first()
+    if m2_callback_router:
+        import requests
+        return requests.get(m2_callback_router.base_url + "moveFunds", params=flask.request.args).json()
+
     subject_user = User.query.get(flask.request.args.get("userID"))
-    if not subject_user.password == flask.request.args.get("token"):
+    if not subject_user.user_uuid == flask.request.args.get("token"):
         return {
             "status": False,
             "errors": {
