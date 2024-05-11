@@ -35,6 +35,7 @@ def get_odds_cloudbet(is_live=False, sport_name="soccer"):
 
     except requests.exceptions.RequestException as e:
         print("Error:", e)
+        return 0
 
     for competition in event_data.get("competitions"):
         for event in competition.get("events"):
