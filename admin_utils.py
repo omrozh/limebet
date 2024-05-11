@@ -153,7 +153,7 @@ def total_bet(date_start, date_end, compare_date_delta):
             TransactionLog.transaction_date >= date_end,
             TransactionLog.transaction_date <= date_start,
             TransactionLog.status == "completed",
-            TransactionLog.transaction_type == "bahis"
+            TransactionLog.transaction_type == "place_bet" or TransactionLog.transaction_type == "casino_win" or TransactionLog.transaction_type == "casino_loss"
         ).all()])
 
         previous_start = date_start - timedelta(days=compare_date_delta)
@@ -163,7 +163,7 @@ def total_bet(date_start, date_end, compare_date_delta):
             TransactionLog.transaction_date >= previous_end,
             TransactionLog.transaction_date <= previous_start,
             TransactionLog.status == "completed",
-            TransactionLog.transaction_type == "bahis"
+            TransactionLog.transaction_type == "place_bet" or TransactionLog.transaction_type == "casino_win" or TransactionLog.transaction_type == "casino_loss"
         ).all()])
 
         if bet_transactions_for_previous_period > 0:

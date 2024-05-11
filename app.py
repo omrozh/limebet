@@ -1214,7 +1214,7 @@ def coupon_id(bet_coupon_id):
 
     bet_coupon.status = "Sonuçlandı"
     new_transaction = TransactionLog(transaction_amount=float(total_reward),
-                                     transaction_type="bahis_kazanci", transaction_date=datetime.date.today(),
+                                     transaction_type="bet_win", transaction_date=datetime.date.today(),
                                      user_fk=current_user.id, transaction_status="completed",
                                      payment_unique_number=f"Spor Bahisi Kazancı - Kupon {bet_coupon_id}")
 
@@ -1668,7 +1668,7 @@ def coupon():
             return flask.redirect("/coupon")
     if flask.request.method == "POST":
         new_transaction = TransactionLog(transaction_amount=float(flask.request.values["coupon_value"]),
-                                         transaction_type="bahis", transaction_date=datetime.date.today(),
+                                         transaction_type="place_bet", transaction_date=datetime.date.today(),
                                          user_fk=current_user.id, transaction_status="completed",
                                          payment_unique_number=f"Spor Bahisi - Kupon {current_coupon.id}")
 
@@ -2087,15 +2087,25 @@ def casino_result_bet():
             }
         }
     if flask.request.args.get("eventType") == "Win":
+        new_transaction = TransactionLog(transaction_amount=float(flask.request.args.get("amount")),
+                                         transaction_type="casino_win", transaction_date=datetime.date.today(),
+                                         user_fk=current_user.id, transaction_status="completed",
+                                         payment_unique_number=f"Casino Kazancı - Oyun ID: {flask.request.values.get('gameId')}")
+        db.session.add(new_transaction)
+
         subject_user.balance += float(flask.request.args.get("amount"))
     if flask.request.args.get("eventType") == "Lose":
+        new_transaction = TransactionLog(transaction_amount=float(flask.request.args.get("amount")),
+                                         transaction_type="casino_loss", transaction_date=datetime.date.today(),
+                                         user_fk=current_user.id, transaction_status="completed",
+                                         payment_unique_number=f"Casino Kaybı - Oyun ID: {flask.request.values.get('gameId')}")
+        db.session.add(new_transaction)
         subject_user.balance -= float(flask.request.args.get("amount"))
     db.session.commit()
     return flask.jsonify({
         "status": True,
         "balance": round(current_user.balance, 2)
     })
-
 
 # TO DO: Implement bonuses
 # TO DO: Check casino integration (also with router.
