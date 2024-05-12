@@ -194,6 +194,8 @@
                     <div class="card-header">
                         <h5 class="mb-0">Mevcut İşlemler</h5>
                     </div>
+                        <br>
+                        <input type="text" oninput="searchRow()" id="search-box" placeholder="İşlem Ara" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
                     <div class="table-responsive">
                         <table class="table table-hover table-nowrap">
                             <thead class="thead-light">
@@ -214,7 +216,7 @@
                             </thead>
                             <tbody>
                                 {% for i in transactions %}
-                                    <tr>
+                                    <tr class="searchable-div">
                                     <td>
                                         <a class="text-heading font-semibold" href="#">
                                             {{ i.transaction_type }}
@@ -287,6 +289,21 @@
             </div>
         </main>
     </div>
+    <script>
+        function searchRow(){
+            let search_query = document.getElementById("search-box").value;
+            let searchable_divs = document.getElementsByClassName("searchable-div")
+            for(let i = 0; i < searchable_divs.length; i++){
+                if(search_query.length > 2){
+                    if(!searchable_divs[i].innerHTML.includes(search_query)){
+                        searchable_divs[i].style.display = "none";
+                    }
+                }else{
+                    searchable_divs[i].style.display = "table-row";
+                }
+            }
+        }
+    </script>
 </div>
 </body>
 </html>

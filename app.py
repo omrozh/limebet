@@ -317,8 +317,6 @@ class OpenUserBet(db.Model):
                 "winner": taken_bet.winner
             })
 
-            # TO DO: Create API endpoint to create OpenUserBet
-
             return {
                 "status": "Bet Completed",
                 "winner": taken_bet.winner
@@ -379,12 +377,12 @@ class User(db.Model, UserMixin):
                         datetime.timedelta(days=bonus.valid_thru):
                     return bonus
 
-    def give_loss_bonus(self, bonus, amount):
+    def give_percent_bonus(self, bonus, amount):
         self.balance = amount / 100 * bonus.bonus_amount
         db.session.commit()
 
-    # TO DO: Implement other bonuses, implemented bonus types: freebet, loss, trying.
-    # To implement: deposit, first deposit, other sport bonuses.
+    # TO DO: Implement other bonuses, implemented bonus types: freebet, trying.
+    # To implement: loss, deposit, first deposit, other sport bonuses. Bonus request panel.
 
     @property
     def mybets(self):
