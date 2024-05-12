@@ -213,117 +213,64 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                {% for i in transactions %}
+                                    <tr>
                                     <td>
                                         <a class="text-heading font-semibold" href="#">
-                                            Yatırım
+                                            {{ i.transaction_type }}
                                         </a>
                                     </td>
                                     <td>
                                         <a class="text-heading font-semibold" href="#">
-                                            testkm
+                                            {{ i.user.username }}
                                         </a>
                                     </td>
                                     <td>
                                         <a class="text-heading font-semibold" href="#">
-                                            500.00₺
+                                            {{ i.transaction_amount }}₺
                                         </a>
                                     </td>
                                     <td>
                                         <a class="text-heading font-semibold" href="#">
-                                            29 Nis 2024 10:28:19
+                                            {{ i.transaction_date }}
                                         </a>
                                     </td>
                                     <td>
                                         <a class="text-heading font-semibold" href="#">
-                                            29 Nis 2024 10:28:37
+                                            {{ i.transaction_date }}
                                         </a>
                                     </td>
                                     <td>
                                         <a class="text-heading font-semibold" href="#">
-                                            1
-                                        </a>
-                                    </td>
-                                    <td>
-
-                                        <a class="text-heading font-semibold" href="#">
-                                            Anında Havale
-                                        </a>
-                                    </td>
-                                    <td>
-                                        213.165.168.226
-                                    </td>
-                                    <td>
-                                        <a class="text-heading font-semibold" href="#">
-                                            1
+                                            {{ i.user.id }}
                                         </a>
                                     </td>
                                     <td>
 
+                                        <a class="text-heading font-semibold" href="#">
+                                            {{ i.payment_unique_number }}
+                                        </a>
                                     </td>
                                     <td>
-                                        Tamamlandı
+                                        -
+                                    </td>
+                                    <td>
+                                        <a class="text-heading font-semibold" href="#">
+                                            {{ i.user.referred_by }}
+                                        </a>
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                    <td>
+                                        {{ i.status }}
                                     </td>
                                     <td class="text-end">
                                         <a href="#" class="btn btn-sm btn-neutral">Detaylar</a>
                                         <a href="#" class="btn btn-sm btn-neutral">İade Et</a>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <a class="text-heading font-semibold" href="#">
-                                            Çekim
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a class="text-heading font-semibold" href="#">
-                                            testkm
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a class="text-heading font-semibold" href="#">
-                                            2000.00₺
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a class="text-heading font-semibold" href="#">
-                                            30 Nis 2024 10:28:19
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a class="text-heading font-semibold" href="#">
-                                            30 Nis 2024 10:28:37
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a class="text-heading font-semibold" href="#">
-                                            1
-                                        </a>
-                                    </td>
-                                    <td>
-
-                                        <a class="text-heading font-semibold" href="#">
-                                            Anında Havale
-                                        </a>
-                                    </td>
-                                    <td>
-                                        213.165.168.226
-                                    </td>
-                                    <td>
-                                        <a class="text-heading font-semibold" href="#">
-                                            1
-                                        </a>
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-                                        Tamamlandı
-                                    </td>
-                                    <td class="text-end">
-                                        <a href="#" class="btn btn-sm btn-neutral">Detaylar</a>
-                                    </td>
-                                </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>

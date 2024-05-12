@@ -173,6 +173,30 @@ class PartnerSession(db.Model):
         db.session.commit()
 
 
+class BonusAssigned(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    bonus_fk = db.Column(db.Integer)
+    user_fk = db.Column(db.Integer)
+    bonus_assigned_date = db.Column(db.DateTime)
+
+
+class Bonus(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    bonus_type = db.Column(db.String)
+    bonus_name = db.Column(db.String)
+    bonus_amount = db.Column(db.Float)
+    who_can_cancel = db.Column(db.String)
+    on_cancel = db.Column(db.String)
+    currency = db.Column(db.String)
+    minimum_deposit = db.Column(db.Float)
+    maximum_deposit = db.Column(db.Float)
+    minimum_spin = db.Column(db.Integer)
+    start_date = db.Column(db.DateTime)
+    end_date = db.Column(db.DateTime)
+    valid_thru = db.Column(db.Integer)
+    bonus_description = db.Column(db.String)
+
+
 class DoubleOrNothing(db.Model):
     id = db.Column(db.String, primary_key=True)
     current_offer = db.Column(db.Float)
@@ -343,6 +367,24 @@ class User(db.Model, UserMixin):
     telegram_chat_id = db.Column(db.String)
     last_login = db.Column(db.DateTime)
     registration_date = db.Column(db.DateTime)
+    
+    def get_bonuses(self, bonus_type):
+        assigned_bonuses = BonusAssigned.query.filter_by(user_fk=self.id)
+        
+        for assigned_bonus in assigned_bonuses:
+            bonus = Bonus.query.get(assigned_bonus.bonus_fk)
+            
+            if bonus.bonus_type == bonus_type:
+                if datetime.datetime.now() > assigned_bonus.bonus_assigned_date + \
+                        datetime.timedelta(days=bonus.valid_thru):
+                    return bonus
+
+    def give_loss_bonus(self, bonus, amount):
+        self.balance = amount / 100 * bonus.bonus_amount
+        db.session.commit()
+
+    # TO DO: Implement other bonuses, implemented bonus types: freebet, loss, trying.
+    # To implement: deposit, first deposit, other sport bonuses.
 
     @property
     def mybets(self):
@@ -648,6 +690,10 @@ class TransactionLog(db.Model):
     payment_information_fk = db.Column(db.Integer)
     user_fk = db.Column(db.Integer)
     payment_unique_number = db.Column(db.String)
+
+    @property
+    def user(self):
+        return User.query.get(self.user_fk)
 
 
 class WithdrawalRequest(db.Model):
@@ -1102,6 +1148,7 @@ def profile():
             if verify_id(int(values["id_no"]), " ".join(values["name"].split(" ")[0:-1]), values["name"].split(" ")[-1],
                          int(str(values["dob"]).split("-")[0])):
                 user_info.id_verified = True
+                current_user.balance += current_user.get_bonuses("trying_bonus").bonus_amount
                 db.session.commit()
 
             return flask.redirect("/profile")
@@ -1472,7 +1519,7 @@ def signup():
             email=values["email"],
             password=bcrypt.generate_password_hash(values["password"]),
             referred_by=flask.request.cookies.get('somecookiename', None),
-            freebet_usable=100,
+            freebet_usable=0,
             freebet=0,
             registration_date=datetime.datetime.now(),
             user_uuid=str(uuid4())
@@ -1642,6 +1689,8 @@ def remove_bet(odd_id):
 def coupon():
     if not current_user.is_authenticated:
         return flask.redirect("/login")
+    current_user.freebet = current_user.get_bonuses("freebet").bonus_amount
+    db.session.delete(current_user.get_bonuses("freebet"))
     current_coupon = BetCoupon.query.filter_by(user_fk=current_user.id).filter_by(status="Oluşturuluyor").first()
     if not current_coupon:
         current_coupon = BetCoupon(user_fk=current_user.id, status="Oluşturuluyor", total_value=0)
@@ -1984,7 +2033,8 @@ def admin_panel_users():
 
 @app.route("/admin/finance")
 def admin_panel_finance():
-    return flask.render_template("panel/finance.html")
+    transactions = TransactionLog.query.all()
+    return flask.render_template("panel/finance.html", transaction=transactions)
 
 
 @app.route("/admin/deposit-methods")
