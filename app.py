@@ -1734,10 +1734,10 @@ def coupon():
                     </script>
                 '''
         else:
-            if current_user.balance < float(flask.request.values["coupon_value"]):
+            if current_user.balance < float(flask.request.values["coupon_value"]) or float(flask.request.values["coupon_value"]) < 10:
                 return '''
                     <script>
-                        alert('Yetersiz bakiye')
+                        alert('Yetersiz bakiye veya geçersiz miktar')
                         document.location = '/coupon'
                     </script>
                 '''
