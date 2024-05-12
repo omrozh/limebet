@@ -2034,7 +2034,8 @@ def admin_panel_users():
 @app.route("/admin/finance")
 def admin_panel_finance():
     transactions = TransactionLog.query.all()
-    return flask.render_template("panel/finance.html", transaction=transactions)
+    number_of_transactions = len(transactions)
+    return flask.render_template("panel/finance.html", transactions=transactions, number_of_transactions=number_of_transactions)
 
 
 @app.route("/admin/deposit-methods")
