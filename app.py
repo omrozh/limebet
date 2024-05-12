@@ -1689,7 +1689,8 @@ def remove_bet(odd_id):
 def coupon():
     if not current_user.is_authenticated:
         return flask.redirect("/login")
-    current_user.freebet = current_user.get_bonuses("freebet").bonus_amount
+    if current_user.get_bonuses("freebet"):
+        current_user.freebet = current_user.get_bonuses("freebet").bonus_amount
     db.session.delete(current_user.get_bonuses("freebet"))
     current_coupon = BetCoupon.query.filter_by(user_fk=current_user.id).filter_by(status="Oluşturuluyor").first()
     if not current_coupon:
