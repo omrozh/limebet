@@ -2192,5 +2192,11 @@ def promotions():
     bonuses = Bonus.query.filter(Bonus.start_date <= datetime.datetime.today().date(), Bonus.end_date >= datetime.datetime.today().date()).all()
     return flask.render_template("promotions.html", bonuses=bonuses, current_user=current_user)
 
+
+@app.route("/promotion")
+def promotion():
+    bonus = Bonus.query.get(flask.request.args.get("promotion_id"))
+    return flask.render_template("promotions.html", bonus=bonus, current_user=current_user)
+
 # TO DO: Implement bonuses
 # TO DO: Check casino integration (also with router.
