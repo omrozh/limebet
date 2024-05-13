@@ -408,15 +408,15 @@ class User(db.Model, UserMixin):
 
     def update_bonus_balance(self, deposit_amount):
         if self.get_bonuses("casino", "deposit_bonus"):
-            self.casino_bonus_balance += self.give_percent_bonus(self.get_bonuses("casino", "deposit_bonus"), deposit_amount)
+            self.casino_bonus_balance += self.give_percent_bonus(self.get_bonuses("casino", "yatirim-bonusu"), deposit_amount)
         if self.get_bonuses("casino", "first_deposit_bonus"):
-            self.casino_bonus_balance += self.give_percent_bonus(self.get_bonuses("casino", "first_deposit_bonus"), deposit_amount)
+            self.casino_bonus_balance += self.give_percent_bonus(self.get_bonuses("casino", "ilk-yatirim-bonusu"), deposit_amount)
 
         if self.get_bonuses("sport-betting", "deposit_bonus"):
-            self.sports_bonus_balance += self.give_percent_bonus(self.get_bonuses("casino", "deposit_bonus"),
+            self.sports_bonus_balance += self.give_percent_bonus(self.get_bonuses("casino", "yatirim-bonusu"),
                                                                  deposit_amount)
         if self.get_bonuses("sport-betting", "first_deposit_bonus"):
-            self.sports_bonus_balance += self.give_percent_bonus(self.get_bonuses("casino", "first_deposit_bonus"),
+            self.sports_bonus_balance += self.give_percent_bonus(self.get_bonuses("casino", "ilk-yatirim-bonusu"),
                                                                  deposit_amount)
 
     # TO DO: call this method everytime user makes deposit
