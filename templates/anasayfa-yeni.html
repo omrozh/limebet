@@ -61,16 +61,6 @@
 									elem.style.display = "none";
 								}
 							}
-							function updateBalance(balance) {
-								document.getElementById("balance").innerText = balance;
-							}
-
-							function refreshBalance() {
-								document.getElementById("balance").innerText = "..."
-								fetch("/refresh-balance")
-									.then(x => x.text())
-									.then(y => updateBalance(y));
-							}
 						</script>
 						<a href="/profile" class="btn setting-btn"> <i class="fa-solid fa-gear"></i> </a>
 						<a href="/notifications" class="btn notification-btn"> <i class="fa-regular fa-bell"></i> <div class="counter">2</div> </a>
