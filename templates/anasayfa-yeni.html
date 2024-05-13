@@ -46,8 +46,16 @@
 					</app-not-loggedin>
 					{% else %}
 					<app-loggedin>
-						<a href="#." class="btn price-btn"> <i class="fa-solid fa-turkish-lira-sign"></i> {{'%0.2f'| format(current_user.balance|float)}} <i class="fa-solid fa-sort-down"></i> </a>
+						<a href="#." class="btn price-btn"> <i class="fa-solid fa-turkish-lira-sign"></i> {{'%0.2f'| format(current_user.balance|float)}} <i class="fa-solid fa-sort-down" onclick="openDetailedBalance()"></i> </a>
+						<div style="background-color: var(--themeColor); color: var(--generalTextColor); border: var(--buttonBorder); position: fixed; top: 200px; right: 50px; height: fit-content; width: fit-content; z-index: 99999">
+							Casino Bonus Bakiyesi: {{'%0.2f'| format(current_user.casino_bonus_balance|float)}}
+							<br>
+							Spor Bonus Bakiyesi: {{'%0.2f'| format(current_user.sport_bonus_balance|float)}}
+						</div>
 						<script>
+							function openDetailedBalance(){
+
+							}
 							function updateBalance(balance) {
 								document.getElementById("balance").innerText = balance;
 							}
