@@ -84,9 +84,9 @@
 		<div class="container">
           <br>
 			<div class="row">
-                <img src="/img/{{ bonus.id }}.png" style="width: 400px; max-width: 100vw; display: inline-block" alt="">
+                <img src="/img/{{ bonus.id }}.png" style="width: 400px; max-width: 100vw; display: inline-block; height: 250px;" alt="">
                 <span style="color: white; display: inline-block; vertical-align: top; max-width: 800px;">
-                  {{ bonus.bonus_description }}
+                  {{ bonus.bonus_description | safe }}
                 </span>
               <br style="clear: both; display: block">
                 <button onclick="document.location = '/bonus_request?promotion_id={{ bonus.id }}'" href="/signup" style="border-radius: 15px; margin-top: 20px; color: var(--generalTextColor); background-color: var(--baseColor); border: none; padding: 15px;"> Talep Et </button>
