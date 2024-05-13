@@ -192,8 +192,8 @@ class Bonus(db.Model):
     minimum_deposit = db.Column(db.Float)
     maximum_deposit = db.Column(db.Float)
     minimum_spin = db.Column(db.Integer)
-    start_date = db.Column(db.DateTime)
-    end_date = db.Column(db.DateTime)
+    start_date = db.Column(db.Date)
+    end_date = db.Column(db.Date)
     valid_thru = db.Column(db.Integer)
     bonus_description = db.Column(db.String)
 
@@ -2039,8 +2039,8 @@ def admin_panel_bonuses():
             minimum_deposit=values.get("minimum_deposit", 0),
             maximum_deposit=values.get("maximum_deposit", 999999999),
             minimum_spin=values.get("minimum_spin", 0),
-            start_date=values.get("start_date"),
-            end_date=values.get("end_date"),
+            start_date=datetime.datetime.strptime(values["start_date"], '%Y-%m-%d'),
+            end_date=datetime.datetime.strptime(values["end_date"], '%Y-%m-%d'),
             valid_thru=values.get("valid_thru"),
             bonus_description=values.get("bonus_description")
         )
