@@ -1722,6 +1722,7 @@ def coupon():
         sports_bonus_balance = current_user.sports_bonus_balance
 
         net_change = float(flask.request.values["coupon_value"]) - sports_bonus_balance
+        print(net_change)
 
         current_user.sports_bonus_balance -= float(flask.request.values["coupon_value"])
         if current_user.sports_bonus_balance < 0:
@@ -1729,6 +1730,7 @@ def coupon():
 
         if net_change > 0:
             net_change = 0
+        print(net_change)
 
         new_transaction = TransactionLog(transaction_amount=float(flask.request.values["coupon_value"]),
                                          transaction_type="place_bet", transaction_date=datetime.date.today(),
@@ -1738,7 +1740,7 @@ def coupon():
         db.session.add(new_transaction)
 
         if current_user.freebet:
-            if current_user.balance + current_user.freebet < float(flask.request.values["coupon_value"]):
+            if current_user.balance + current_user.freebet < float(net_change):
                 return '''
                     <script>
                         alert('Yetersiz bakiye')
