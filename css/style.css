@@ -676,10 +676,6 @@ app-mobilemenu { display: none; }
 	.footer .finish {
 		font-size: 11px;
 	}
-	app-header app-home-header .nav .rightmenu a.btn.price-btn i.fa-solid.fa-sort-down
-	{
-		display: none;
-	}
 }
 @media only screen and (max-width: 768px) {
 	.slider-two { display: none; }
@@ -816,7 +812,6 @@ app-mobilemenu { display: none; }
 	app-content .container .row {
 		padding: 10px !important;
 	}
-	app-header app-home-header .nav .rightmenu a.btn.price-btn i.fa-solid.fa-sort-down,
 	app-header app-home-header .nav .rightmenu a.btn.setting-btn,
 	app-header app-home-header .nav .rightmenu a.btn.notification-btn {
 		display: none;
