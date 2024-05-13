@@ -391,7 +391,7 @@ class User(db.Model, UserMixin):
             bonus = Bonus.query.get(assigned_bonus.bonus_fk)
             
             if bonus.bonus_type == bonus_type and bonus.bonus_product == product:
-                if datetime.datetime.now() > assigned_bonus.bonus_assigned_date + \
+                if datetime.datetime.now() < assigned_bonus.bonus_assigned_date + \
                         datetime.timedelta(days=bonus.valid_thru):
                     return bonus
 
