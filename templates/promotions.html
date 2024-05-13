@@ -82,7 +82,7 @@
           <br>
 			<div class="row">
 				{% for bonus in bonuses %}
-                <img src="/img/{{ bonus.id }}.png" onclick="document.location = '/promotion?promotion_id={{ bonus.id }}'" style="width: 400px; margin-top: 25px;" alt="">
+                <img src="/img/{{ bonus.id }}.png" onclick="document.location = '/promotion?promotion_id={{ bonus.id }}'" style="width: 400px; margin-top: 25px; min-width: 33%;" alt="">
                 {% endfor %}
             </div>
 		</div>
