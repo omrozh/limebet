@@ -2228,5 +2228,6 @@ def bonus_request():
     db.session.commit()
     return flask.redirect("/promotions")
 
+# TO DO: Add bonus taleplerim page to profile
 # TO DO: Implement bonuses
 # TO DO: Check casino integration (also with router.
