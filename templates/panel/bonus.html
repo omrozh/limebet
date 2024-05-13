@@ -189,41 +189,43 @@
                     <div class="col-xl-3 col-sm-6 col-12" style="width: 100vw">
                             <div class="card shadow border-0" style="display: inline-block; width: 80vw; margin-top: 25px">
                                 <div class="card-body">
-                                    <div class="row">
+                                    <form method="post" enctype="multipart/form-data">
+                                        <div class="row">
                                         <div class="col">
                                             <h1 class="h3 font-bold mb-0">Bonus Ekle</h1>
                                           <br>
-                                          <select onchange="document.getElementById('select-type').style.display = 'inline-block'" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                                          <select name="bonus_product" onchange="document.getElementById('select-type').style.display = 'inline-block'; if(this.value === 'casino'){document.getElementById('sport-only').style.display = 'none'}" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
                                             <option value="select-type">Ürün Seçin</option>
                                             <option value="sport-betting">Spor Bahisi</option>
                                             <option value="casino">Casino</option>
                                           </select>
-                                          <select id="select-type" onchange="document.getElementById(this.value).style.display = 'block'" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; display: none">
+                                          <select name="bonus_type" id="select-type" onchange="document.getElementById(this.value).style.display = 'block'" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; display: none">
                                             <option value="select-type">Bonus Türü Seçin</option>
                                             <option value="ilk-yatirim-bonusu">İlk Para Yatırma</option>
                                             <option value="yatirim-bonusu">Para Yatırma</option>
                                             <option value="deneme-bonusu">Deneme Bonusu</option>
                                             <option value="kayip-bonusu">Kayıp Bonusu</option>
+                                            <option value="freebet" id="sport-only">Freebet</option>
                                           </select>
                                           <br>
                                           <br>
                                           <div id="ilk-yatirim-bonusu" style="display: none">
-                                            <input type="text" placeholder="Bonus Adı" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
-                                              <input type="number" placeholder="Bonus Miktarı %" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                                            <input name="bonus_name" type="text" placeholder="Bonus Adı" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                                              <input name="bonus_amount" type="number" placeholder="Bonus Miktarı %" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
                                             <select style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
                                               <option value="select-type">Şartlar ve Koşullar</option>
                                               <option value="sport-betting">generalBonusTerms</option>
                                               <option value="casino">generalTermsAndConditions</option>
                                             </select>
-                                            <select style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 200px">
+                                            <select name="who_can_cancel" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 200px">
                                               <option value="select-type">Kimler iptal edebilir?</option>
-                                              <option value="sport-betting">Sadece Admin</option>
-                                              <option value="casino">Müşteri</option>
+                                              <option value="only_admin">Sadece Admin</option>
+                                              <option value="customer">Müşteri</option>
                                             </select>
-                                            <select style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 200px">
+                                            <select name="on_cancel" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 200px">
                                               <option value="select-type">İptal Ayarları</option>
-                                              <option value="sport-betting">Tüm Karıyla Beraber</option>
-                                              <option value="casino">Sadece Bonus Bakiyesiyle</option>
+                                              <option value="with_profit">Tüm Karıyla Beraber</option>
+                                              <option value="only_bonus">Sadece Bonus Bakiyesiyle</option>
                                             </select>
                                               <br>
                                               <br>
@@ -233,54 +235,49 @@
                                             </select>
                                             <br>
                                             <br>
-                                            <select style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 200px">
+                                            <select name="currency" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 200px">
                                               <option value="select-type">Para Birimi</option>
-                                              <option value="sport-betting">TRY</option>
-                                              <option value="sport-betting">EUR</option>
-                                              <option value="sport-betting">USD</option>
-                                              <option value="sport-betting">CNY</option>
-                                              <option value="sport-betting">JPY</option>
-                                              <option value="sport-betting">CHF</option>
+                                              <option value="TRY">TRY</option>
                                             </select>
-                                            <input type="text" placeholder="Minimum Para Yatırma" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
-                                            <input type="text" placeholder="Maksimum Para Yatırma" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
-                                            <input type="number" placeholder="Çevirim" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                                            <input name="minimum_deposit" type="text" placeholder="Minimum Para Yatırma" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                                            <input name="maximum_deposit" type="text" placeholder="Maksimum Para Yatırma" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                                            <input name="minimum_spin" type="number" placeholder="Çevirim" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
                                             <br>
                                             <br>
                                             <div style="display: inline-block">
                                               <label for="start-date">Başlama Tarihi</label>
                                               <br>
-                                              <input id="start-date" type="date" placeholder="" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 200px">
+                                              <input name="start_date" id="start-date" type="date" placeholder="" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 200px">
                                             </div>
                                             <div style="display: inline-block">
                                               <label for="end-date">Bitiş Tarihi</label>
                                               <br>
-                                              <input id="end-date" type="date" placeholder="" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 200px">
+                                              <input name="end_date" id="end-date" type="date" placeholder="" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 200px">
                                             </div>
                                             <div style="display: inline-block">
                                               <label for="ends-in">Kullandıktan x gün sonra sona erer</label>
                                               <br>
-                                              <input id="ends-in" type="number" placeholder="" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 300px">
+                                              <input name="valid_thru" id="ends-in" type="number" placeholder="" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 300px">
                                             </div>
                                             <div style="display: inline-block">
                                               <label for="bonus-image">Bonus Görseli</label>
                                               <br>
-                                              <input id="bonus-image" type="file" placeholder="" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 300px">
+                                              <input name="bonus_image" id="bonus-image" type="file" placeholder="" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 300px">
                                             </div>
                                             <br>
                                             <br>
                                             <div style="display: inline-block">
                                               <label for="bonus-description">Bonus Açıklaması</label>
                                               <br>
-                                              <textarea id="bonus-description" placeholder="Bonus Açıklaması" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 70vw"></textarea>
+                                              <textarea name="bonus_description" id="bonus-description" placeholder="Bonus Açıklaması" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 70vw"></textarea>
                                             </div>
                                             <br>
                                             <br>
-                                              <input type="checkbox"> Otomatik bonus tanımla
+                                              <input name="auto_bonus" type="checkbox"> Otomatik bonus tanımla
                                               <br>
                                               <br>
                                             <div style="display: inline-block">
-                                              <input type="button" placeholder="" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 200px; background: #1e7bf2; color: white" value="Kaydet">
+                                              <input type="submit" placeholder="" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 200px; background: #1e7bf2; color: white" value="Kaydet">
                                             </div>
                                           </div>
                                     </div>
@@ -299,36 +296,41 @@
                                     <th scope="col">Bonus Geçerlilik Süresi</th>
                                     <th scope="col">Bonus Türü</th>
                                     <th scope="col">Bonus Miktarı</th>
-                                    <th scope="col">Bonus Limiti</th>
+                                    <th scope="col">Minimum Yatırım</th>
+                                    <th scope="col">Maksimum Yatırım</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                {% for i in bonuses %}
+                                    <tr>
                                     <td>
                                         <a class="text-heading font-semibold" href="#">
-                                            Spor Bahisleri
+                                            {{ i.bonus_product }}
                                         </a>
                                     </td>
                                     <td>
 
                                         <a class="text-heading font-semibold" href="#">
-                                            Hoşgeldin Bonusu
+                                            {{ i.bonus_name }}
                                         </a>
                                     </td>
                                     <td>
-                                        Nisan 15, 2024 - Mayıs 15, 2024
+                                        {{ i.start_date }} - {{ i.end_date }}
                                     </td>
                                     <td>
                                         <a class="text-heading font-semibold" href="#">
-                                            Yatırım Bonusu
+                                            {{ i.bonus_type }}
                                         </a>
                                     </td>
                                     <td>
-                                        %100
+                                        {{ i.bonus_amount }}
                                     </td>
                                     <td>
-                                        ₺3.500
+                                        {{ i.minimum_deposit }}
+                                    </td>
+                                    <td>
+                                        {{ i.maximum_deposit }}
                                     </td>
                                     <td class="text-end">
                                         <a href="#" class="btn btn-sm btn-neutral">Detaylar</a>
@@ -337,14 +339,16 @@
                                         </button>
                                     </td>
                                 </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
                     <div class="card-footer border-0 py-5">
-                        <span class="text-muted text-sm">1 Bonus Mevcut</span>
+                        <span class="text-muted text-sm">{{ number_of_bonuses }} Bonus Mevcut</span>
                     </div>
                 </div>
                                     </div>
+                                    </form>
                                 </div>
                             </div>
 

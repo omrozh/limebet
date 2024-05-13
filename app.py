@@ -182,6 +182,7 @@ class BonusAssigned(db.Model):
 
 class Bonus(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    bonus_product = db.Column(db.String)
     bonus_type = db.Column(db.String)
     bonus_name = db.Column(db.String)
     bonus_amount = db.Column(db.Float)
@@ -2021,9 +2022,34 @@ def admin_panel_game_details(provider_id, game_id):
     return "Game Doesn't Exist"
 
 
-@app.route("/admin/bonuses")
+@app.route("/admin/bonuses", methods=["POST", "GET"])
 def admin_panel_bonuses():
-    return flask.render_template("panel/bonus.html")
+    bonuses = Bonus.query.all()
+    number_of_bonuses = len(bonuses)
+    if flask.request.method == "POST":
+        values = flask.request.values
+        new_bonus = Bonus(
+            bonus_product=values.get("bonus_product"),
+            bonus_type=values.get("bonus_type"),
+            bonus_name=values.get("bonus_name"),
+            bonus_amount=values.get("bonus_amount"),
+            who_can_cancel=values.get("who_can_cancel"),
+            on_cancel=values.get("on_cancel"),
+            currency=values.get("currency"),
+            minimum_deposit=values.get("minimum_deposit", 0),
+            maximum_deposit=values.get("maximum_deposit", 999999999),
+            minimum_spin=values.get("minimum_spin", 0),
+            start_date=values.get("start_date"),
+            end_date=values.get("end_date"),
+            valid_thru=values.get("valid_thru"),
+            bonus_description=values.get("bonus_description")
+        )
+        db.session.add(new_bonus)
+        db.session.commit()
+
+        file = flask.request.files.get("bonus_image")
+        file.save(f"img/{str(new_bonus.id)}.png")
+    return flask.render_template("panel/bonus.html", bonuses=bonuses, number_of_bonuses=number_of_bonuses)
 
 
 @app.route("/admin/users")
