@@ -2238,7 +2238,6 @@ def bonus_request():
     new_bonus_assigned = BonusAssigned(user_fk=current_user.id, bonus_fk=flask.request.args.get("promotion_id"),
                                        status="Talep Edildi")
     db.session.add(new_bonus_assigned)
-    db.session.add(new_bonus_request)
     db.session.commit()
     return flask.redirect("/promotions")
 
