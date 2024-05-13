@@ -198,6 +198,19 @@ class Bonus(db.Model):
     bonus_description = db.Column(db.String)
 
 
+class BonusRequest(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    bonus_fk = db.Column(db.Integer)
+    user_fk = db.Column(db.Integer)
+
+    @property
+    def bonus(self):
+        return Bonus.query.get(self.bonus_fk)
+
+    @property
+    def user(self):
+        return User.query.get(self.user_fk)
+
 class DoubleOrNothing(db.Model):
     id = db.Column(db.String, primary_key=True)
     current_offer = db.Column(db.Float)
