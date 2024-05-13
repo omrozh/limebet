@@ -47,14 +47,19 @@
 					{% else %}
 					<app-loggedin>
 						<a href="#." class="btn price-btn"> <i class="fa-solid fa-turkish-lira-sign"></i> {{'%0.2f'| format(current_user.balance|float)}} <i class="fa-solid fa-sort-down" onclick="openDetailedBalance()"></i> </a>
-						<div style="background-color: var(--themeColor); color: var(--generalTextColor); border: var(--buttonBorder); position: fixed; top: 200px; right: 50px; height: fit-content; width: fit-content; z-index: 99999">
+						<div id="detailed-balance" style="background-color: var(--themeColor); color: var(--generalTextColor); border: 1px solid var(--buttonBorder); position: fixed; top: 100px; right: 150px; height: fit-content; width: fit-content; z-index: 99999; padding: 10px; border-radius: 10px; display: none">
 							Casino Bonus Bakiyesi: {{'%0.2f'| format(current_user.casino_bonus_balance|float)}}
 							<br>
 							Spor Bonus Bakiyesi: {{'%0.2f'| format(current_user.sports_bonus_balance|float)}}
 						</div>
 						<script>
 							function openDetailedBalance(){
-
+								let elem = document.getElementById("detailed-balance")
+								if(elem.style.display === "none"){
+									elem.style.display = "block"
+								}else{
+									elem.style.display = "none";
+								}
 							}
 							function updateBalance(balance) {
 								document.getElementById("balance").innerText = balance;
