@@ -46,17 +46,20 @@
 					</app-not-loggedin>
 					{% else %}
 					<app-loggedin>
-						<a onclick="refreshBalance()" class="btn price-btn"> <i class="fa-solid fa-turkish-lira-sign"></i> <span id="balance">{{'%0.2f'| format(current_user.balance|float)}}</span> </a>
+						<a href="#." class="btn price-btn"> <i class="fa-solid fa-turkish-lira-sign"></i> {{'%0.2f'| format(current_user.balance|float)}} <i class="fa-solid fa-sort-down" onclick="openDetailedBalance()"></i> </a>
+						<div id="detailed-balance" style="background-color: var(--themeColor); color: var(--generalTextColor); border: 1px solid var(--buttonBorder); position: fixed; top: 12%; right: 10%; height: fit-content; width: fit-content; z-index: 99999; padding: 10px; border-radius: 10px; display: none">
+							Casino Bonus Bakiyesi: {{'%0.2f'| format(current_user.casino_bonus_balance|float)}}₺
+							<br>
+							Spor Bonus Bakiyesi: {{'%0.2f'| format(current_user.sports_bonus_balance|float)}}₺
+						</div>
 						<script>
-							function updateBalance(balance) {
-								document.getElementById("balance").innerText = balance;
-							}
-
-							function refreshBalance() {
-								document.getElementById("balance").innerText = "..."
-								fetch("/refresh-balance")
-									.then(x => x.text())
-									.then(y => updateBalance(y));
+							function openDetailedBalance(){
+								let elem = document.getElementById("detailed-balance")
+								if(elem.style.display === "none"){
+									elem.style.display = "block"
+								}else{
+									elem.style.display = "none";
+								}
 							}
 						</script>
 						<a href="/profile" class="btn setting-btn"> <i class="fa-solid fa-gear"></i> </a>
