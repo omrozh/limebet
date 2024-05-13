@@ -178,6 +178,7 @@ class BonusAssigned(db.Model):
     bonus_fk = db.Column(db.Integer)
     user_fk = db.Column(db.Integer)
     bonus_assigned_date = db.Column(db.DateTime)
+    status = db.Column(db.String)
 
 
 class Bonus(db.Model):
@@ -385,7 +386,7 @@ class User(db.Model, UserMixin):
     completed_first_deposit = db.Column(db.Boolean)
 
     def get_bonuses(self, product, bonus_type):
-        assigned_bonuses = BonusAssigned.query.filter_by(user_fk=self.id).all()
+        assigned_bonuses = BonusAssigned.query.filter_by(user_fk=self.id).filter_by(status="Kullanılabilir").all()
         
         for assigned_bonus in assigned_bonuses:
             bonus = Bonus.query.get(assigned_bonus.bonus_fk)
@@ -394,6 +395,9 @@ class User(db.Model, UserMixin):
                 if datetime.datetime.now() < assigned_bonus.bonus_assigned_date + \
                         datetime.timedelta(days=bonus.valid_thru):
                     return bonus
+                else:
+                    assigned_bonus.status = "Tarihi Geçti"
+                    db.session.commit()
 
     def give_percent_bonus(self, bonus, amount):
         return amount / 100 * bonus.bonus_amount
@@ -410,21 +414,25 @@ class User(db.Model, UserMixin):
             bonus = self.get_bonuses("casino", "yatirim-bonusu")
             if bonus.minimum_deposit < deposit_amount < bonus.maximum_deposit:
                 self.casino_bonus_balance += self.give_percent_bonus(bonus, deposit_amount)
+            bonus.status = "Kullanıldı"
 
         if self.get_bonuses("casino", "ilk-yatirim-bonusu"):
             bonus = self.get_bonuses("casino", "ilk-yatirim-bonusu")
             if bonus.minimum_deposit < deposit_amount < bonus.maximum_deposit:
                 self.casino_bonus_balance += self.give_percent_bonus(bonus, deposit_amount)
+            bonus.status = "Kullanıldı"
 
         if self.get_bonuses("sport-betting", "yatirim-bonusu"):
             bonus = self.get_bonuses("sport-betting", "yatirim-bonusu")
             if bonus.minimum_deposit < deposit_amount < bonus.maximum_deposit:
                 self.sports_bonus_balance += self.give_percent_bonus(bonus, deposit_amount)
+            bonus.status = "Kullanıldı"
 
         if self.get_bonuses("sport-betting", "first_deposit_bonus"):
             bonus = self.get_bonuses("sport-betting", "yatirim-bonusu")
             if bonus.minimum_deposit < deposit_amount < bonus.maximum_deposit:
                 self.sports_bonus_balance += self.give_percent_bonus(bonus, deposit_amount)
+            bonus.status = "Kullanıldı"
 
         db.session.commit()
 
@@ -2218,7 +2226,7 @@ def promotion():
 
 @app.route("/bonus_request")
 def bonus_request():
-    new_bonus_request = BonusRequest.query.filter_by(user_fk=current_user.id).filter_by(bonus_fk=flask.request.args.get("promotion_id")).filter_by(status="Talep Edildi").first()
+    new_bonus_request = BonusAssigned.query.filter_by(user_fk=current_user.id).filter_by(bonus_fk=flask.request.args.get("promotion_id")).filter_by(status="Talep Edildi").first()
     if new_bonus_request:
         return '''
             <script>
@@ -2227,8 +2235,9 @@ def bonus_request():
             </script>
         '''
 
-    new_bonus_request = BonusRequest(user_fk=current_user.id, bonus_fk=flask.request.args.get("promotion_id"),
-                                     status="Talep Edildi")
+    new_bonus_assigned = BonusAssigned(user_fk=current_user.id, bonus_fk=flask.request.args.get("promotion_id"),
+                                       status="Talep Edildi")
+    db.session.add(new_bonus_assigned)
     db.session.add(new_bonus_request)
     db.session.commit()
     return flask.redirect("/promotions")
