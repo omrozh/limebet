@@ -385,7 +385,7 @@ class User(db.Model, UserMixin):
     completed_first_deposit = db.Column(db.Boolean)
 
     def get_bonuses(self, product, bonus_type):
-        assigned_bonuses = BonusAssigned.query.filter_by(user_fk=self.id)
+        assigned_bonuses = BonusAssigned.query.filter_by(user_fk=self.id).all()
         
         for assigned_bonus in assigned_bonuses:
             bonus = Bonus.query.get(assigned_bonus.bonus_fk)
