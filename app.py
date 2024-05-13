@@ -2209,6 +2209,7 @@ def promotions():
 @app.route("/promotion")
 def promotion():
     bonus = Bonus.query.get(flask.request.args.get("promotion_id"))
+    bonus.bonus_description = bonus.bonus_description.replace("\n", "<br>")
     return flask.render_template("promotion-details.html", bonus=bonus, current_user=current_user)
 
 
