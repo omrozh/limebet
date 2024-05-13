@@ -419,6 +419,8 @@ class User(db.Model, UserMixin):
             self.sports_bonus_balance += self.give_percent_bonus(self.get_bonuses("casino", "ilk-yatirim-bonusu"),
                                                                  deposit_amount)
 
+        db.session.commit()
+
     # TO DO: call this method everytime user makes deposit
 
     @property
