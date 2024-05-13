@@ -396,9 +396,7 @@ class User(db.Model, UserMixin):
                     return bonus
 
     def give_percent_bonus(self, bonus, amount):
-        self.balance = amount / 100 * bonus.bonus_amount
-        db.session.commit()
-
+        return amount / 100 * bonus.bonus_amount
     # TO DO: Implement other bonuses, implemented bonus types: freebet, trying.
     # To implement: loss, deposit, first deposit, other sport bonuses. Bonus request panel.
 
@@ -407,17 +405,26 @@ class User(db.Model, UserMixin):
         return BetCoupon.query.filter_by(user_fk=self.id).all()
 
     def update_bonus_balance(self, deposit_amount):
-        if self.get_bonuses("casino", "deposit_bonus"):
-            self.casino_bonus_balance += self.give_percent_bonus(self.get_bonuses("casino", "yatirim-bonusu"), deposit_amount)
-        if self.get_bonuses("casino", "first_deposit_bonus"):
-            self.casino_bonus_balance += self.give_percent_bonus(self.get_bonuses("casino", "ilk-yatirim-bonusu"), deposit_amount)
 
-        if self.get_bonuses("sport-betting", "deposit_bonus"):
-            self.sports_bonus_balance += self.give_percent_bonus(self.get_bonuses("casino", "yatirim-bonusu"),
-                                                                 deposit_amount)
+        if self.get_bonuses("casino", "yatirim-bonusu"):
+            bonus = self.get_bonuses("casino", "yatirim-bonusu")
+            if bonus.minimum_deposit < deposit_amount < bonus.maximum_deposit:
+                self.casino_bonus_balance += self.give_percent_bonus(bonus, deposit_amount)
+
+        if self.get_bonuses("casino", "ilk-yatirim-bonusu"):
+            bonus = self.get_bonuses("casino", "ilk-yatirim-bonusu")
+            if bonus.minimum_deposit < deposit_amount < bonus.maximum_deposit:
+                self.casino_bonus_balance += self.give_percent_bonus(bonus, deposit_amount)
+
+        if self.get_bonuses("sport-betting", "yatirim-bonusu"):
+            bonus = self.get_bonuses("sport-betting", "yatirim-bonusu")
+            if bonus.minimum_deposit < deposit_amount < bonus.maximum_deposit:
+                self.sports_bonus_balance += self.give_percent_bonus(bonus, deposit_amount)
+
         if self.get_bonuses("sport-betting", "first_deposit_bonus"):
-            self.sports_bonus_balance += self.give_percent_bonus(self.get_bonuses("casino", "ilk-yatirim-bonusu"),
-                                                                 deposit_amount)
+            bonus = self.get_bonuses("sport-betting", "yatirim-bonusu")
+            if bonus.minimum_deposit < deposit_amount < bonus.maximum_deposit:
+                self.sports_bonus_balance += self.give_percent_bonus(bonus, deposit_amount)
 
         db.session.commit()
 
