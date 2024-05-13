@@ -84,9 +84,7 @@
 		<div class="container">
           <br>
 			<div class="row">
-				{% for bonus in bonuses %}
                 <img src="/img/{{ bonus.id }}.png" onclick="document.location = '/promotion?promotion_id={{ bonus.id }}'" style="width: 400px;" alt="">
-                {% endfor %}
             </div>
 		</div>
 	</app-content>
