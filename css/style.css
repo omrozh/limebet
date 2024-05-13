@@ -169,8 +169,8 @@ app-header app-home-header .nav .rightmenu a.btn.price-btn i.fa-turkish-lira-sig
 	width: 36px;
     height: 36px;
 }
-app-header app-home-header .nav .rightmenu a.btn.price-btn i.fa-solid.fa-rotate-left {
-    background: var(--balanceBGColor);
+app-header app-home-header .nav .rightmenu a.btn.price-btn i.fa-solid.fa-sort-down {
+    background: #424242;
     border-radius: 100px;
     margin-right: -15px;
     margin-left: 10px;
