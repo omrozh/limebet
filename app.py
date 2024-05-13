@@ -2211,5 +2211,22 @@ def promotion():
     bonus = Bonus.query.get(flask.request.args.get("promotion_id"))
     return flask.render_template("promotion-details.html", bonus=bonus, current_user=current_user)
 
+
+@app.route("/bonus_request")
+def bonus_request():
+    new_bonus_request = BonusRequest.query.filter_by(user_fk=current_user.id).filter_by(bonus_fk=flask.request.args.get("promotion_id")).first()
+    if new_bonus_request:
+        return '''
+            <script>
+                alert('Bu bonusu zaten talep ettiniz.')
+                document.location = '/promotions'
+            </script>
+        '''
+
+    new_bonus_request = BonusRequest(user_fk=current_user.id, bonus_fk=flask.request.args.get("promotion_id"))
+    db.session.add(new_bonus_request)
+    db.session.commit()
+    return flask.redirect("/promotions")
+
 # TO DO: Implement bonuses
 # TO DO: Check casino integration (also with router.
