@@ -202,6 +202,7 @@ class BonusRequest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     bonus_fk = db.Column(db.Integer)
     user_fk = db.Column(db.Integer)
+    status = db.Column(db.String)
 
     @property
     def bonus(self):
@@ -2215,7 +2216,7 @@ def promotion():
 
 @app.route("/bonus_request")
 def bonus_request():
-    new_bonus_request = BonusRequest.query.filter_by(user_fk=current_user.id).filter_by(bonus_fk=flask.request.args.get("promotion_id")).first()
+    new_bonus_request = BonusRequest.query.filter_by(user_fk=current_user.id).filter_by(bonus_fk=flask.request.args.get("promotion_id")).filter_by(status="Talep Edildi").first()
     if new_bonus_request:
         return '''
             <script>
@@ -2224,7 +2225,8 @@ def bonus_request():
             </script>
         '''
 
-    new_bonus_request = BonusRequest(user_fk=current_user.id, bonus_fk=flask.request.args.get("promotion_id"))
+    new_bonus_request = BonusRequest(user_fk=current_user.id, bonus_fk=flask.request.args.get("promotion_id"),
+                                     status="Talep Edildi")
     db.session.add(new_bonus_request)
     db.session.commit()
     return flask.redirect("/promotions")
