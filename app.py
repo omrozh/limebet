@@ -1722,15 +1722,13 @@ def coupon():
         sports_bonus_balance = current_user.sports_bonus_balance
 
         net_change = float(flask.request.values["coupon_value"]) - sports_bonus_balance
-        print(net_change)
 
         current_user.sports_bonus_balance -= float(flask.request.values["coupon_value"])
         if current_user.sports_bonus_balance < 0:
             current_user.sports_bonus_balance = 0
 
-        if net_change > 0:
+        if net_change < 0:
             net_change = 0
-        print(net_change)
 
         new_transaction = TransactionLog(transaction_amount=float(flask.request.values["coupon_value"]),
                                          transaction_type="place_bet", transaction_date=datetime.date.today(),
