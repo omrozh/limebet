@@ -47,12 +47,15 @@
 					{% else %}
 					<app-loggedin>
 						<a href="#." class="btn price-btn"> <i class="fa-solid fa-turkish-lira-sign"></i> {{'%0.2f'| format(current_user.balance|float)}} <i class="fa-solid fa-sort-down" onclick="openDetailedBalance()"></i> </a>
-						<div id="detailed-balance">
+						<div style="display: none" id="detailed-balance">
 							Casino Bonus Bakiyesi: {{'%0.2f'| format(current_user.casino_bonus_balance|float)}}₺
 							<br>
 							Spor Bonus Bakiyesi: {{'%0.2f'| format(current_user.sports_bonus_balance|float)}}₺
 						</div>
 						<script>
+                            document.addEventListener("scroll", function(e){
+                                document.getElementById("detailed-balance").style.display = "none"
+                            })
 							function openDetailedBalance(){
 								let elem = document.getElementById("detailed-balance")
 								if(elem.style.display === "none"){
