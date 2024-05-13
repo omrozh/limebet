@@ -54,7 +54,7 @@
 								</span>
 							{% else %}
 								{{'%0.2f'| format(current_user.balance|float)}}
-							{% endfor %}
+							{% endif %}
 						</a>
 						<a href="/profile" class="btn setting-btn"> <i class="fa-solid fa-gear"></i> </a>
 						<a href="/notifications" class="btn notification-btn"> <i class="fa-regular fa-bell"></i> <div class="counter">2</div> </a>
