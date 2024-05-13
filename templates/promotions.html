@@ -47,10 +47,10 @@
 					{% else %}
 					<app-loggedin>
 						<a href="#." class="btn price-btn"> <i class="fa-solid fa-turkish-lira-sign"></i>
-							{% if current_user.sport_bonus_balance + current_user.casino_bonus_balance > 0 %}
+							{% if current_user.sports_bonus_balance + current_user.casino_bonus_balance > 0 %}
 								<span style="display: inline-block; vertical-align: middle">
 									<p style="font-size: 12px; margin-bottom: 0; margin-block-start: 0; margin-block-end: 0;">{{'%0.2f'| format(current_user.balance|float)}}</p>
-									<p style="font-size: 8px; color: var(--baseColor) margin-top: 0; margin-bottom: 0; margin-block-start: 0; margin-block-end: 0">{{'%0.2f'| format(current_user.casino_bonus_balance + current_user.sport_bonus_balance |float)}}</p>
+									<p style="font-size: 8px; color: var(--baseColor) margin-top: 0; margin-bottom: 0; margin-block-start: 0; margin-block-end: 0">{{'%0.2f'| format(current_user.casino_bonus_balance + current_user.sports_bonus_balance |float)}}</p>
 								</span>
 							{% else %}
 								{{'%0.2f'| format(current_user.balance|float)}}
