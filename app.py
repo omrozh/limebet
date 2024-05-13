@@ -1690,7 +1690,7 @@ def remove_bet(odd_id):
 def coupon():
     if not current_user.is_authenticated:
         return flask.redirect("/login")
-    if current_user.get_bonuses("freebet") is not None:
+    if current_user.get_bonuses("sport-betting", "freebet") is not None:
         current_user.freebet = current_user.get_bonuses("freebet").bonus_amount
         db.session.delete(current_user.get_bonuses("freebet"))
 
@@ -2237,6 +2237,7 @@ def bonus_request():
 
     new_bonus_assigned = BonusAssigned(user_fk=current_user.id, bonus_fk=flask.request.args.get("promotion_id"),
                                        status="Talep Edildi")
+    # TO DO: Update bonus_assigned_date when bonus request is approved.
     db.session.add(new_bonus_assigned)
     db.session.commit()
     return flask.redirect("/promotions")
