@@ -380,14 +380,17 @@ class User(db.Model, UserMixin):
     telegram_chat_id = db.Column(db.String)
     last_login = db.Column(db.DateTime)
     registration_date = db.Column(db.DateTime)
-    
-    def get_bonuses(self, bonus_type):
+    casino_bonus_balance = db.Column(db.Float)
+    sports_bonus_balance = db.Column(db.Float)
+    completed_first_deposit = db.Column(db.Boolean)
+
+    def get_bonuses(self, product, bonus_type):
         assigned_bonuses = BonusAssigned.query.filter_by(user_fk=self.id)
         
         for assigned_bonus in assigned_bonuses:
             bonus = Bonus.query.get(assigned_bonus.bonus_fk)
             
-            if bonus.bonus_type == bonus_type:
+            if bonus.bonus_type == bonus_type and bonus.bonus_product == product:
                 if datetime.datetime.now() > assigned_bonus.bonus_assigned_date + \
                         datetime.timedelta(days=bonus.valid_thru):
                     return bonus
@@ -403,53 +406,20 @@ class User(db.Model, UserMixin):
     def mybets(self):
         return BetCoupon.query.filter_by(user_fk=self.id).all()
 
-    def update_balance(self):
-        transactions = TransactionLog.query.filter_by(user_fk=self.id).filter_by(transaction_status="initiated").all()
-        emails = get_unread_email("kadromilyon@gmail.com", "dbpixumfhzuvkvzu")
-        for i in transactions:
-            if i.transaction_date < datetime.datetime.today().date() - datetime.timedelta(days=2):
-                i.transaction_status = "cancelled"
-            # TO DO: Change email
+    def update_bonus_balance(self, deposit_amount):
+        if self.get_bonuses("casino", "deposit_bonus"):
+            self.casino_bonus_balance += self.give_percent_bonus(self.get_bonuses("casino", "deposit_bonus"), deposit_amount)
+        if self.get_bonuses("casino", "first_deposit_bonus"):
+            self.casino_bonus_balance += self.give_percent_bonus(self.get_bonuses("casino", "first_deposit_bonus"), deposit_amount)
 
-            for email in emails:
+        if self.get_bonuses("sport-betting", "deposit_bonus"):
+            self.sports_bonus_balance += self.give_percent_bonus(self.get_bonuses("casino", "deposit_bonus"),
+                                                                 deposit_amount)
+        if self.get_bonuses("sport-betting", "first_deposit_bonus"):
+            self.sports_bonus_balance += self.give_percent_bonus(self.get_bonuses("casino", "first_deposit_bonus"),
+                                                                 deposit_amount)
 
-                if "bilgi@papara.com" in email.get("sender"):
-                    if i.payment_unique_number in email.get("summary") and \
-                            str(i.transaction_amount) == str(email.get("subject").split(" ")[1]).replace(",", "."):
-
-                        i.transaction_status = "completed"
-                        self.balance += i.transaction_amount
-                        if self.referred_by is not None:
-                            referrer = Referrer.query.get(self.referred_by)
-                            referrer.user.balance += i.transaction_amount / 100 * referrer.commission_rate
-                        db.session.commit()
-
-                if "yapikredi@iletisim.yapikredi.com.tr" in email.get("sender"):
-                    if email.get("subject") == "Akıllı Asistan-Gelen FAST":
-                        for c in email.get("summary").split(" "):
-                            if c == "tarihinde,":
-                                start_index = email.get("summary").split(" ").index(c) + 1
-                            if c == "isimli/unvanlı":
-                                end_index = email.get("summary").split(" ").index(c)
-                        if i.transaction_amount == float(".".join(str(email.get("summary").split(" ")[15]).split(","))):
-                            if i.payment_unique_number.upper().upper() == " ".join(
-                                    email.get("summary").split(" ")[start_index:end_index]):
-                                i.transaction_status = "completed"
-                                i.payment_unique_number = email.get("summary").split(" ")[8] + " " + \
-                                                          email.get("summary").split(" ")[9] + "-" + str(self.id)
-                                if not len(TransactionLog.query.filter_by(
-                                        payment_unique_number=i.payment_unique_number).all()) == 1:
-                                    continue
-                                else:
-                                    self.balance += i.transaction_amount
-                                    if self.referred_by is not None:
-                                        referrer = Referrer.query.get(self.referred_by)
-                                        referrer.user.balance += i.transaction_amount / 100 * referrer.commission_rate
-                                db.session.commit()
-
-                    # TO DO: Change this to different bank.
-
-                # Make this support bank transfers as well.
+    # TO DO: call this method everytime user makes deposit
 
     @property
     def user_information(self):
@@ -1161,7 +1131,6 @@ def profile():
             if verify_id(int(values["id_no"]), " ".join(values["name"].split(" ")[0:-1]), values["name"].split(" ")[-1],
                          int(str(values["dob"]).split("-")[0])):
                 user_info.id_verified = True
-                current_user.balance += current_user.get_bonuses("trying_bonus").bonus_amount
                 db.session.commit()
 
             return flask.redirect("/profile")
@@ -1334,7 +1303,6 @@ def competition(competition_id):
 @app.route("/refresh-balance")
 @login_required
 def refresh_balance():
-    current_user.update_balance()
     return "%.2f" % current_user.balance
 
 
@@ -1528,6 +1496,9 @@ def signup():
     if flask.request.method == "POST":
         values = flask.request.values
         new_user = User(
+            completed_first_deposit=False,
+            casino_bonus_balance=0,
+            sports_bonus_balance=0,
             username=values["username"],
             email=values["email"],
             password=bcrypt.generate_password_hash(values["password"]),
@@ -1731,6 +1702,17 @@ def coupon():
             db.session.commit()
             return flask.redirect("/coupon")
     if flask.request.method == "POST":
+        sports_bonus_balance = current_user.sports_bonus_balance
+
+        net_change = float(flask.request.values["coupon_value"]) - sports_bonus_balance
+
+        current_user.sports_bonus_balance -= float(flask.request.values["coupon_value"])
+        if current_user.sports_bonus_balance < 0:
+            current_user.sports_bonus_balance = 0
+
+        if net_change > 0:
+            net_change = 0
+
         new_transaction = TransactionLog(transaction_amount=float(flask.request.values["coupon_value"]),
                                          transaction_type="place_bet", transaction_date=datetime.date.today(),
                                          user_fk=current_user.id, transaction_status="completed",
@@ -1747,7 +1729,7 @@ def coupon():
                     </script>
                 '''
         else:
-            if current_user.balance < float(flask.request.values["coupon_value"]) or float(flask.request.values["coupon_value"]) < 10:
+            if current_user.balance < net_change or float(flask.request.values["coupon_value"]) < 10:
                 return '''
                     <script>
                         alert('Yetersiz bakiye veya geçersiz miktar')
@@ -1766,11 +1748,11 @@ def coupon():
         if current_user.freebet:
             freebet_amount = current_user.freebet if current_user.freebet <= float(
                 flask.request.values["coupon_value"]) else float(flask.request.values["coupon_value"])
-            current_user.balance -= (float(flask.request.values["coupon_value"]) - freebet_amount)
+            current_user.balance -= (net_change - freebet_amount)
             current_coupon.freebet_amount = freebet_amount
             current_user.freebet -= freebet_amount
         else:
-            current_user.balance -= float(flask.request.values["coupon_value"])
+            current_user.balance -= net_change
             current_coupon.freebet_amount = 0
         db.session.commit()
         return flask.redirect("/profile")
@@ -2172,6 +2154,17 @@ def casino_result_bet():
             return requests.get(m2_callback_router.base_url + "moveFunds", params=flask.request.args).json()
 
     subject_user = User.query.get(flask.request.args.get("userID"))
+    casino_bonus_balance = current_user.casino_bonus_balance
+
+    net_change = float(flask.request.args.get("amount")) - casino_bonus_balance
+
+    current_user.sports_bonus_balance -= float(flask.request.args.get("amount"))
+    if current_user.casino_bonus_balance < 0:
+        current_user.casino_bonus_balance = 0
+
+    if net_change > 0:
+        net_change = 0
+
     if not subject_user.user_uuid == flask.request.args.get("token"):
         return {
             "status": False,
@@ -2193,7 +2186,7 @@ def casino_result_bet():
                                          user_fk=current_user.id, transaction_status="completed",
                                          payment_unique_number=f"Casino Kaybı - Oyun ID: {flask.request.values.get('gameId')}")
         db.session.add(new_transaction)
-        subject_user.balance -= float(flask.request.args.get("amount"))
+        subject_user.balance -= net_change
     db.session.commit()
     return flask.jsonify({
         "status": True,
