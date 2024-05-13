@@ -212,6 +212,7 @@
                                             {% if form_type %}
                                             <script>
                                                 document.getElementById("select-type").value = "{{ form_type }}";
+                                                document.getElementById("select-type").style.display = "block";
                                                 document.getElementById("product-type").value = "{{ product_type }}";
                                             </script>
                                             {% endif %}
