@@ -273,6 +273,9 @@ app-header app-home-header .menu .km {
 	background-image: url(/img/menu_icons.png);
 	background-size: cover;
 }
+#detailed-balance{
+    background-color: var(--themeColor); color: var(--generalTextColor); border: 1px solid var(--buttonBorder); position: fixed; top: 12%; right: 10%; height: fit-content; width: fit-content; z-index: 99999; padding: 10px; border-radius: 10px; display: none
+}
 app-header app-home-header .menu .km.km-live { background-position: 0px 0px; }
 app-header app-home-header .menu .km.km-sports { background-position: -40px 0px; }
 app-header app-home-header .menu .km.km-slot { background-position: -80px 0px; }
@@ -678,6 +681,9 @@ app-mobilemenu { display: none; }
 	}
 }
 @media only screen and (max-width: 768px) {
+    #detailed-balance{
+        top: 60px;
+    }
 	.slider-two { display: none; }
 	app-header app-home-header .nav .rightmenu a.btn.price-btn i.fa-turkish-lira-sign
 	{
