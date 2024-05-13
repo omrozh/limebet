@@ -194,12 +194,12 @@
                                         <div class="col">
                                             <h1 class="h3 font-bold mb-0">Bonus Ekle</h1>
                                           <br>
-                                          <select name="bonus_product" onchange="document.getElementById('select-type').style.display = 'inline-block'; if(this.value === 'casino'){document.getElementById('sport-only').disabled = true;}else{document.getElementById('sport-only').disabled = false;}" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                                          <select id="product-type" name="bonus_product" onchange="document.getElementById('select-type').style.display = 'inline-block'; if(this.value === 'casino'){document.getElementById('sport-only').disabled = true;}else{document.getElementById('sport-only').disabled = false;}" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
                                             <option value="select-type">Ürün Seçin</option>
                                             <option value="sport-betting">Spor Bahisi</option>
                                             <option value="casino">Casino</option>
                                           </select>
-                                          <select name="bonus_type" id="select-type" onchange="document.location = `/admin/bonuses?bonus_type=${this.value}`" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; display: none">
+                                          <select name="bonus_type" id="select-type" onchange="document.location = `/admin/bonuses?bonus_type=${this.value}&product_type=${document.getElementById('product-type').value;}`" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; display: none">
                                             <option value="select-type">Bonus Türü Seçin</option>
                                             <option value="ilk-yatirim-bonusu">İlk Para Yatırma</option>
                                             <option value="yatirim-bonusu">Para Yatırma</option>
@@ -209,6 +209,12 @@
                                           </select>
                                           <br>
                                           <br>
+                                            {% if form_type %}
+                                            <script>
+                                                document.getElementById("select-type").value = "{{ form_type }}";
+                                                document.getElementById("product-type").value = "{{ product_type }}";
+                                            </script>
+                                            {% endfor %}
                                           {% if form_type == "ilk-yatirim-bonusu" or form_type == "yatirim_bonusu" %}
                                             <div id="ilk-yatirim-bonusu" class="bonus-add-form">
                                                 <input name="bonus_name" type="text" placeholder="Bonus Adı" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
