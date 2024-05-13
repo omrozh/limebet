@@ -2179,7 +2179,7 @@ def casino_result_bet():
     if current_user.casino_bonus_balance < 0:
         current_user.casino_bonus_balance = 0
 
-    if net_change > 0:
+    if net_change < 0:
         net_change = 0
 
     if not subject_user.user_uuid == flask.request.args.get("token"):
