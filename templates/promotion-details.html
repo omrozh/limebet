@@ -89,7 +89,7 @@
                   {{ bonus.bonus_description }}
                 </span>
               <br style="clear: both; display: block">
-                <button href="/signup" style="border-radius: 15px; margin-top: 20px; color: var(--generalTextColor); background-color: var(--baseColor); border: none; padding: 15px;"> Talep Et </button>
+                <button onclick="document.location = '/bonus_request?promotion_id={{ bonus.id }}'" href="/signup" style="border-radius: 15px; margin-top: 20px; color: var(--generalTextColor); background-color: var(--baseColor); border: none; padding: 15px;"> Talep Et </button>
             </div>
 		</div>
 	</app-content>
