@@ -2049,7 +2049,7 @@ def admin_panel_bonuses():
 
         file = flask.request.files.get("bonus_image")
         file.save(f"img/{str(new_bonus.id)}.png")
-    return flask.render_template("panel/bonus.html", bonuses=bonuses, number_of_bonuses=number_of_bonuses, bonus_type=flask.request.args.get("bonus_type", "none"))
+    return flask.render_template("panel/bonus.html", bonuses=bonuses, number_of_bonuses=number_of_bonuses, form_type=flask.request.args.get("bonus_type", "none"))
 
 
 @app.route("/admin/users")
