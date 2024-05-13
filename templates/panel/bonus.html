@@ -194,7 +194,7 @@
                                         <div class="col">
                                             <h1 class="h3 font-bold mb-0">Bonus Ekle</h1>
                                           <br>
-                                          <select id="product-type" name="bonus_product" onchange="document.getElementById('select-type').style.display = 'inline-block'; if(this.value === 'casino'){document.getElementById('sport-only').disabled = true;}else{document.getElementById('sport-only').disabled = false;}" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                                          <select id="product-type" name="bonus_product" onchange="document.getElementById('select-type').style.display = 'inline-block'; if(this.value === 'casino'){document.getElementById('sport-only').disabled = true;  document.getElementById('casino-only').disabled = false;}else{document.getElementById('sport-only').disabled = false; document.getElementById('casino-only').disabled = true;}" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
                                             <option value="select-type">Ürün Seçin</option>
                                             <option value="sport-betting">Spor Bahisi</option>
                                             <option value="casino">Casino</option>
@@ -206,6 +206,7 @@
                                             <option value="deneme-bonusu">Deneme Bonusu</option>
                                             <option value="kayip-bonusu">Kayıp Bonusu</option>
                                             <option value="freebet" id="sport-only">Freebet</option>
+                                              <option value="freespin" id="casino-only">Freespin</option>
                                           </select>
                                           <br>
                                           <br>

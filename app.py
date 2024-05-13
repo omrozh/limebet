@@ -401,8 +401,7 @@ class User(db.Model, UserMixin):
 
     def give_percent_bonus(self, bonus, amount):
         return amount / 100 * bonus.bonus_amount
-    # TO DO: Implement other bonuses, implemented bonus types: freebet, trying.
-    # To implement: loss, deposit, first deposit, other sport bonuses. Bonus request panel.
+    # To implement: freespin, loss, freebet, try
 
     @property
     def mybets(self):
