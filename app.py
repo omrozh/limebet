@@ -197,6 +197,7 @@ class Bonus(db.Model):
     end_date = db.Column(db.Date)
     valid_thru = db.Column(db.Integer)
     bonus_description = db.Column(db.String)
+    round_value = db.Column(db.Integer)
 
 
 class BonusRequest(db.Model):
@@ -2054,7 +2055,8 @@ def admin_panel_bonuses():
             start_date=datetime.datetime.strptime(values["start_date"], '%Y-%m-%d'),
             end_date=datetime.datetime.strptime(values["end_date"], '%Y-%m-%d'),
             valid_thru=values.get("valid_thru"),
-            bonus_description=values.get("bonus_description")
+            bonus_description=values.get("bonus_description"),
+            round_value=int(values.get("round_value", 0))
         )
         db.session.add(new_bonus)
         db.session.commit()
