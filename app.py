@@ -2091,6 +2091,7 @@ def admin_panel_partnership_operations():
     partnership = SitePartner.query.get(flask.request.args["partnership_id"])
     if flask.request.method == "POST":
         partnership.partnership_balance += float(flask.request.values["balance_increase"])
+        partnership.partnership_status = "Aktif"
         db.session.commit()
         return flask.redirect("/admin/players")
     return flask.render_template("panel/partnership_balance.html", partnership=partnership)
