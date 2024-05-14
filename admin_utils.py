@@ -111,13 +111,13 @@ def calculate_ggr(date_start, date_end, compare_date_delta):
             TransactionLog.transaction_date >= date_end,
             TransactionLog.transaction_date <= date_start,
             TransactionLog.transaction_status == "completed",
-            TransactionLog.transaction_type == "bahis"
+            TransactionLog.transaction_type.in_(["place_bet", "casino_win", "casino_loss"])
         ).all()])
         bet_win_transactions = sum([i.transaction_amount for i in TransactionLog.query.filter(
             TransactionLog.transaction_date >= date_end,
             TransactionLog.transaction_date <= date_start,
             TransactionLog.transaction_status == "completed",
-            TransactionLog.transaction_type == "bahis_kazanci"
+            TransactionLog.transaction_type.in_(["bet_win", "casino_win"])
         ).all()])
 
         previous_start = date_start - timedelta(days=compare_date_delta)
@@ -127,13 +127,13 @@ def calculate_ggr(date_start, date_end, compare_date_delta):
             TransactionLog.transaction_date >= previous_end,
             TransactionLog.transaction_date <= previous_start,
             TransactionLog.transaction_status == "completed",
-            TransactionLog.transaction_type == "bahis"
+            TransactionLog.transaction_type.in_(["place_bet", "casino_win", "casino_loss"])
         ).all()])
         bet_win_transactions_for_previous_period = sum([i.transaction_amount for i in TransactionLog.query.filter(
             TransactionLog.transaction_date >= previous_end,
             TransactionLog.transaction_date <= previous_start,
             TransactionLog.transaction_status == "completed",
-            TransactionLog.transaction_type == "bahis_kazanci"
+            TransactionLog.transaction_type.in_(["bet_win", "casino_win"])
         ).all()])
 
         total_ggr = bet_transactions - bet_win_transactions
