@@ -193,58 +193,19 @@
                                         <div class="row">
                                       <br>
                                       <br>
-                    <div class="card shadow border-0 mb-7">
-                    <div class="card-header">
-                        <h5 class="mb-0">Mevcut Bonus Talepleri</h5>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-hover table-nowrap">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">Bonus Adı</th>
-                                    <th scope="col">Kullanıcı Id</th>
-                                    <th scope="col">Kullanıcı Adı</th>
-                                    <th scope="col">Bonus Id</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for i in bonus_requests %}
-                                    <tr>
-                                    <td>
-                                        <a class="text-heading font-semibold" href="#">
-                                            {{ i.bonus.bonus_name }}
-                                        </a>
-                                    </td>
-                                    <td>
 
-                                        <a class="text-heading font-semibold" href="#">
-                                            {{ i.user_fk }}
-                                        </a>
-                                    </td>
-                                    <td>
-                                        {{ i.user.username }}
-                                    </td>
-                                    <td>
-                                        <a class="text-heading font-semibold" href="#">
-                                            {{ i.bonus.id }}
-                                        </a>
-                                    </td>
-                                    <td class="text-end">
-                                        <a href="#" class="btn btn-sm btn-neutral" onclick="document.location = '/admin/accept_bonus_request?bonus_id={{ i.id }}'">Kabul Et</a>
-                                        <button onclick="document.location = '/admin/decline_bonus_request?bonus_id={{ i.id }}'" type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
-                                            X
-                                        </button>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+                    <div class="card-header">
+                        <h5 class="mb-0">Bonus Talebini Kabul Et: {{ bonus_request.bonus.bonus_name }}</h5>
                     </div>
-                    <div class="card-footer border-0 py-5">
-                        <span class="text-muted text-sm">{{ number_of_requests }} Bonus Talebi Mevcut</span>
-                    </div>
-                </div>
+                                            <br>
+                                            <br>
+                                            <form method="post" enctype="multipart/form-data">
+                                                <input type="text" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none" name="bonus_amount" placeholder="Bonus Miktarı">
+                                                Minimum Tutar: {{ bonus_request.bonus.minimum_bonus_amount }}
+                                                Maksimum Tutar: {{ bonus_request.bonus.maximum_bonus_amount }}
+                                                <button style="background-color: #5c60f5; color: white; border-radius: 5px; margin-top: 15px">Onayla</button>
+                                            </form>
+
                                     </div>
                                     </form>
                                 </div>

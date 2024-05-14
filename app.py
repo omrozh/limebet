@@ -2098,7 +2098,29 @@ def admin_panel_bonuses():
 
 @app.route("/admin/bonus_requests", methods=["POST", "GET"])
 def admin_panel_bonus_request():
-    return flask.render_template("panel/bonus_request.html", bonus_requests=BonusAssigned.query.all())
+    bonus_requests = BonusAssigned.query.all()
+    return flask.render_template("panel/bonus_request.html", bonus_requests=bonus_request,
+                                 number_of_requests=len(bonus_requests))
+
+
+@app.route("/admin/accept_bonus_request", methods=["POST", "GET"])
+def admin_panel_accept_bonus_request():
+    subject_bonus_request = BonusAssigned.query.get(flask.request.args["bonus_id"])
+    if flask.request.method == "POST":
+        subject_bonus_request.status = "Kullanılabilir"
+        subject_bonus_request.bonus_assigned_date = datetime.datetime.today().date()
+        subject_bonus_request.bonus_amount = flask.request.values["bonus_amount"]
+        db.session.commit()
+        return flask.redirect("/admin/bonus_requests")
+    return flask.render_template("panel/accept_bonus_request.html", bonus_request=subject_bonus_request)
+
+
+@app.route("/admin/decline_bonus_request")
+def admin_panel_decline_bonus_request():
+    subject_bonus_request = BonusAssigned.query.get(flask.request.args["bonus_id"])
+    subject_bonus_request.status = "Reddedildi"
+    db.session.commit()
+    return flask.redirect("/admin/bonus_requests")
 
 
 @app.route("/admin/users")
