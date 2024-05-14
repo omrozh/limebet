@@ -2139,6 +2139,10 @@ def admin_panel():
     withdrawal_requests = WithdrawalRequest.query.filter(WithdrawalRequest.status != "Tamamlandı"). \
         filter(WithdrawalRequest.status != "Reddedildi").all()
     number_of_requests = len(withdrawal_requests)
+
+    start_date = datetime.datetime.today() - datetime.timedelta(days=day_difference)
+    end_date = datetime.datetime.today() - datetime.timedelta(days=1)
+
     return flask.render_template(
         "panel/admin.html",
         withdrawal_requests=withdrawal_requests,
@@ -2154,8 +2158,7 @@ def admin_panel():
         total_withdrawals=total_withdrawals,
         total_withdrawals_percentage_change=total_withdrawals_percentage_change,
         ggr=ggr,
-        new_signups=len(User.query.filter(datetime.datetime.today() - datetime.timedelta(days=day_difference) < \
-                                             User.registration_date < datetime.datetime.today() - datetime.timedelta(days=1)).all()),
+        new_signups=len(User.query.filter(User.registration_date.between(start_date, end_date)).all()),
         ggr_percentage_change=ggr_percentage_change,
         total_bet=total_bet,
         total_bet_percentage_change=total_bet_percentage_change
