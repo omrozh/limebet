@@ -1,3 +1,6 @@
+import datetime
+import time
+
 import requests
 
 BASE_URL = "https://fungamess.games/api/v2/kadromilyon"
@@ -19,9 +22,12 @@ def get_games(provider_id=None, game_type=None):
     return r.json()
 
 
-def get_game_iframe(game_id):
-    r = requests.get(f"{BASE_URL}/start?demo=true&gameId={game_id}")
-    with open("data.html", "w+") as f:
-        f.write(r.text)
-    return r.content
+def get_game_iframe(game_id, user_id, user_uuid, demo="true", bonus=None):
+    if bonus:
+        response = requests.get(
+            f"{BASE_URL}/start?demo={demo}&gameId={game_id}&country=TR&userID={user_id}&token={user_uuid}&bonusName={bonus.bonus_name}&bonusRounds={bonus.bonus_amount}&bonusBet={bonus.round_value}&bonusExpired={int(time.time())+3600}")
+        return response.url
+    else:
+        response = requests.get(f"{BASE_URL}/start?demo={demo}&gameId={ game_id }&country=TR&userID={ user_id }&token={ user_uuid }")
+        return response.url
 

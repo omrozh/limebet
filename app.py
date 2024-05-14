@@ -1974,7 +1974,12 @@ def casino():
 
 @app.route("/casino/<game_id>")
 def casino_game(game_id):
-    return flask.render_template("casino-game.html", game_id=game_id)
+    freespin_bonus = current_user.get_bonuses("casino", "freespin")
+    if freespin_bonus:
+        current_user.get_bonuses("casino", "freespin").status = "Kullanıldı"
+    from casino_utils import get_game_iframe
+
+    return flask.render_template("casino-game.html", game_iframe=get_game_iframe(game_id, current_user.id, current_user.user_uuid, demo="true", bonus=freespin_bonus))
 
 
 @app.errorhandler(500)
