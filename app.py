@@ -183,6 +183,10 @@ class BonusAssigned(db.Model):
     bonus_amount = db.Column(db.Float)
 
     @property
+    def user(self):
+        return User.query.get(self.user_fk)
+
+    @property
     def bonus(self):
         return Bonus.query.get(self.bonus_fk)
 
@@ -2090,6 +2094,11 @@ def admin_panel_bonuses():
     return flask.render_template("panel/bonus.html", bonuses=bonuses, number_of_bonuses=number_of_bonuses,
                                  form_type=flask.request.args.get("bonus_type", None),
                                  product_type=flask.request.args.get("product_type", None))
+
+
+@app.route("/admin/bonus_requests", methods=["POST", "GET"])
+def admin_panel_bonus_request():
+    return flask.render_template("panel/bonus_request.html", bonus_requests=BonusAssigned.query.all())
 
 
 @app.route("/admin/users")
