@@ -417,7 +417,7 @@ class User(db.Model, UserMixin):
 
     @property
     def reference_code(self):
-        referrer_obj = Referrer.query.filter_by(user_fk=self.id)
+        referrer_obj = Referrer.query.filter_by(user_fk=self.id).first()
         return referrer_obj.id
 
     def get_bonuses(self, product, bonus_type):
