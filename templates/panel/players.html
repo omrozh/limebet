@@ -271,17 +271,17 @@
                                         {{ i.last_login }}
                                     </td>
                                     <td>
-                                        {{ i.partnership_balance }}
+                                        {{ i.site_partner.partnership_balance }}
                                     </td>
                                     <td>
-                                        {{ i.partnership_earnings }}
+                                        {{ i.site_partner.partnership_earnings }}
                                     </td>
                                     <td class="text-end">
                                         <a href="#" class="btn btn-sm btn-neutral">Detaylar</a>
                                         {% if not i.site_partner %}
                                             <a href="/admin/partnership?user_id={{ i.id }}" class="btn btn-sm btn-neutral">Kasa Yap</a>
                                         {% else %}
-                                            <a href="/admin/partnership/balance?partnership_id={{ i.partnership.id }}" class="btn btn-sm btn-neutral">Kasa Bakiyesini Arttır</a>
+                                            <a href="/admin/partnership/balance?partnership_id={{ i.site_partner.id }}" class="btn btn-sm btn-neutral">Kasa Bakiyesini Arttır</a>
                                         {% endif %}
                                         <button onclick="document.location = '/admin/remove_user?user_id={{ i.id }}'" type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
                                             <i class="bi bi-trash"></i>
