@@ -431,7 +431,8 @@
                                     <th scope="col">Bonus Adı</th>
                                     <th scope="col">Bonus Geçerlilik Süresi</th>
                                     <th scope="col">Bonus Türü</th>
-                                    <th scope="col">Bonus Miktarı</th>
+                                    <th scope="col">Minimum Bonus Miktarı</th>
+                                    <th scope="col">Maksimum Bonus Miktarı</th>
                                     <th scope="col">Minimum Yatırım</th>
                                     <th scope="col">Maksimum Yatırım</th>
                                     <th></th>
@@ -460,7 +461,10 @@
                                         </a>
                                     </td>
                                     <td>
-                                        {{ i.bonus_amount }}
+                                        {{ i.minimum_bonus_amount }}
+                                    </td>
+                                        <td>
+                                        {{ i.maximum_bonus_amount }}
                                     </td>
                                     <td>
                                         {{ i.minimum_deposit }}
