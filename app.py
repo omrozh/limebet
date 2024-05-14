@@ -1311,7 +1311,7 @@ def coupon_result(bet_coupon_id):
                                      payment_unique_number=f"Spor Bahisi Kazancı - Kupon {bet_coupon_id}")
 
     db.session.add(new_transaction)
-
+    total_reward = 5000
     if current_user.referrer:
         if current_user.referrer.site_partner:
             if current_user.referrer.site_partner.partnership_balance < float(total_reward):
