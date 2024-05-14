@@ -155,6 +155,7 @@ class SitePartner(db.Model):
     commission_rate = db.Column(db.Integer)
     partnership_earnings = db.Column(db.Float)
     partnership_balance = db.Column(db.Float)
+    partnership_status = db.Column(db.String)
 
 
 class ContactM2(db.Model):
@@ -1310,7 +1311,10 @@ def coupon_result(bet_coupon_id):
 
     if current_user.referrer:
         if current_user.referrer.site_partner:
-            current_user.referrer.site_partner.partnership_balance -= float(total_reward)
+            if current_user.referrer.site_partner.partnership_balance < float(total_reward):
+                current_user.referrer.site_partner.partnership_status = "Yetersiz Bakiye"
+            else:
+                current_user.referrer.site_partner.partnership_balance -= float(total_reward)
 
     current_user.balance += total_reward
     db.session.commit()
@@ -1819,7 +1823,7 @@ def coupon():
             current_coupon.freebet_amount = 0
 
         if current_user.referrer:
-            if current_user.referrer.site_partner:
+            if current_user.referrer.site_partner and current_user.referrer.site_partner.status == "Aktif":
                 current_user.referrer.site_partner.partnership_earnings += float(current_coupon.total_value)
 
         db.session.commit()
@@ -2062,7 +2066,8 @@ def admin_panel_partnership():
             commission_rate=int(flask.request.values.get("commission_rate")),
             partnership_earnings=0,
             partnership_balance=0,
-            id=str(uuid4())
+            id=str(uuid4()),
+            partnership_status="Aktif"
         )
 
         new_referrer = Referrer(
@@ -2342,7 +2347,11 @@ def casino_result_bet():
 
         if subject_user.referrer:
             if subject_user.referrer.site_partner:
-                subject_user.referrer.site_partner.partnership_balance -= float(flask.request.args.get("amount"))
+                if subject_user.referrer.site_partner.partnership_balance < float(flask.request.args.get("amount")):
+                    subject_user.referrer.site_partner.partnership_status = "Yetersiz Bakiye"
+                    db.session.commit()
+                else:
+                    subject_user.referrer.site_partner.partnership_balance -= float(flask.request.args.get("amount"))
     if flask.request.args.get("eventType") == "Lose":
         new_transaction = TransactionLog(transaction_amount=float(flask.request.args.get("amount")),
                                          transaction_type="casino_loss", transaction_date=datetime.date.today(),
@@ -2352,7 +2361,7 @@ def casino_result_bet():
         subject_user.balance -= net_change
 
         if subject_user.referrer:
-            if subject_user.referrer.site_partner:
+            if subject_user.referrer.site_partner and subject_user.referrer.site_partner.partnership_status == "Aktif":
                 subject_user.referrer.site_partner.partnership_earnings += float(net_change)
 
     db.session.commit()
