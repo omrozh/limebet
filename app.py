@@ -1284,6 +1284,7 @@ def index():
 def coupon_result(bet_coupon_id):
     from cloudbet import get_status_of_bet
     total_reward = 5000
+    print(current_user.referrer)
     if current_user.referrer:
         if current_user.referrer.site_partner:
             if current_user.referrer.site_partner.partnership_balance < float(total_reward):
