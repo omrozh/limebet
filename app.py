@@ -2121,6 +2121,14 @@ def admin_panel_players():
     return flask.render_template("panel/players.html", users=users, number_of_users=number_of_users)
 
 
+
+@app.route("/admin/remove_user")
+def remove_user():
+    db.session.delete(User.query.get(flask.request.args["user_id"]))
+    db.session.commit()
+    return flask.redirect("/admin/players")
+
+
 @app.route("/css/<filename>")
 def css_host(filename):
     return flask.send_file(f"css/{filename}")
