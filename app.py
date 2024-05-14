@@ -414,7 +414,10 @@ class User(db.Model, UserMixin):
     @property
     def referrer(self):
         referrer_obj = Referrer.query.get(self.referred_by)
-        return referrer_obj.user
+        if referrer_obj:
+            return referrer_obj.user
+        else:
+            return None
 
     @property
     def reference_code(self):
