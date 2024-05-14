@@ -2098,9 +2098,7 @@ def admin_panel_bonuses():
 
 @app.route("/admin/users")
 def admin_panel_users():
-    users = User.query.all()
-    number_of_users = len(users)
-    return flask.render_template("panel/users.html", users=users, number_of_users=number_of_users)
+    return flask.render_template("panel/users.html")
 
 
 @app.route("/admin/finance")
@@ -2118,7 +2116,9 @@ def admin_panel_finance_deposit_methods():
 
 @app.route("/admin/players")
 def admin_panel_players():
-    return flask.render_template("panel/players.html")
+    users = User.query.all()
+    number_of_users = len(users)
+    return flask.render_template("panel/players.html", users=users, number_of_users=number_of_users)
 
 
 @app.route("/css/<filename>")
