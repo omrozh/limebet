@@ -1,5 +1,6 @@
 from app import TransactionLog, app, User, WithdrawalRequest
 from datetime import timedelta
+import os
 
 
 def calculate_transaction_volume_for_date(date_start, date_end, compare_date_delta):
@@ -172,3 +173,12 @@ def total_bet(date_start, date_end, compare_date_delta):
             percentage_change = 100
 
         return bet_transactions, percentage_change - 100
+
+def list_directory_contents_recursive(directory_path):
+    contents = []
+    for root, dirs, files in os.walk(directory_path):
+        for name in dirs:
+            contents.append(os.path.join(root, name))
+        for name in files:
+            contents.append(os.path.join(root, name))
+    return contents

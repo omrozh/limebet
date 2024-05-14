@@ -1,0 +1,1083 @@
+app-header app-home-header .nav .logo {
+    border: none;
+    padding: 0 15px;
+}
+app-header app-home-header .menu a i.km {
+    display: none;
+}
+app-home-header.other-pages.sticky-top {
+    border: none;
+    padding: 0;
+}
+.sportsbook {
+	display: flex;
+    width: 100%;
+    height: calc(100% - 105px);
+    position: absolute;
+	gap: 10px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+	font-family: 'Poppins';
+}
+.sportsbook .c1 {
+    width: 300px;
+}
+.sportsbook a {
+    text-decoration: none !important;
+}
+.sportsbook-menu .menu {
+    gap: 15px;
+}
+.sportsbook-menu .menu a {
+    padding: 10px;
+}
+.match-find {
+    border: 1px solid #4b4c4f;
+    border-radius: 10px;
+    background: #0e1014;
+    color: #565656 !important;
+    height: 35px;
+    padding-left: 35px;
+    order: 3;
+}
+.match-find input {
+    background: transparent !important;
+    border: none !important;
+    width: 100%;
+    height: 100%;
+    padding: 5px 10px;
+	outline: none !important;
+    color: #fff !important;
+	font-size: 14px;
+}
+.match-find button.searchbtn {
+    position: absolute;
+    margin-left: -38px;
+    margin-top: -3.25px;
+    border: 1px solid #4b4c4f;
+    border-radius: 10px;
+    background: #0e1014;
+    color: #fff;
+    width: 40px;
+    height: 40px;
+}
+.sportsbook .match-cont {
+    position: relative;
+    border: 1px solid #4b4c4f;
+    border-radius: 10px;
+    background: #0e1014;
+    color: #565656 !important;
+    margin-top: 10px;
+    height: calc(99% - 45px);
+}
+.sportsbook .match-cat {
+	position: relative;
+    height: 100%;
+    padding: 15px;
+}
+.sportsbook .match-cat .inpts {
+    display: flex;
+    gap: 5px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+.sportsbook .match-cat .inpts a {
+    color: #353a42;
+    text-decoration: none;
+    font-size: 14px;
+}
+.sportsbook .match-cat .inpts a.active {
+    color: #fff;
+}
+.sportsbook .allof span, .sportsbook .allof a {
+    border: 1px solid #4b4c4f;
+    border-radius: 10px;
+    background: #0e1014;
+    color: #565656;
+    padding: 5px 10px;
+    font-size: 12px;
+}
+.sportsbook .allof {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+}
+.sportsbook .allof span {
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 3px;
+    font-weight: bold;
+}
+.sportsbook .match-items {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 7.5px;
+}
+.sportsbook .match-items .spec-item, .match-items .item {
+    background: #16191e;
+    border: 1px solid #4b4c4f;
+    border-radius: 10px;
+    color: #fff;
+    padding: 7.5px 10px;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    white-space: nowrap;
+    flex-wrap: wrap;
+}
+.match-items .item .cou {
+	color: #808080;
+}
+.sportsbook .match-items .spec-item i.fa-solid.fa-chevron-down, .match-items .item i.fa-solid.fa-chevron-down {
+    position: absolute;
+    right: 25px;
+    color: #808080;
+}
+.spec-item .subitem2 {
+    padding: 0;
+}
+.sportsbook .match-cat .inpts a:after {
+    content: "";
+    margin-left: -21%;
+    width: 136%;
+    height: 1px;
+    background: #353a42;
+    display: block;
+    margin-top: 10px;
+}
+.sportsbook .match-cat .inpts a.active:after {
+    background: #56348c;
+    box-shadow: 0px 0px 15px 2px rgba(86,52,140,1);
+}
+.sportsbook .allof span i.fa-solid.fa-chevron-down {
+    font-size: 7px;
+}
+.icon1 {
+    background: url(/img/sportsbooks/icons1.png);
+    background-size: cover;
+    width: 25px;
+    height: 25px;
+    display: block;
+}
+.icon1.icon-1 { background-position: 0px 0px; }
+.icon1.icon-2 {background-position: 25px 0px;}
+.icon1.icon-3 {background-position: 50px 0px;}
+.sb {
+    background: url(/img/sportsbooks/icons2.png);
+    background-size: 55px;
+    width: 25px;
+    height: 25px;
+    display: block;
+}
+.sb.sb-soccer {background-position: -2.5px 1px;}
+.sb.sb-basket {background-position: -2.5px -25px;}
+.sb.sb-tennis {background-position: -2.5px -52.5px;}
+.sb.sb-volleyball {background-position: -2.5px -78.5px;}
+.sb.sb-icehockey {background-position: -2.5px -105.5px;}
+.sb.sb-pingpong {background-position: -2.5px -132.5px;}
+.sb.sb-handball {background-position: -2.5px -158.5px;}
+.sb.sb-americanfootball {background-position: -2.5px -185.5px;}
+.sb.sb-australianfootball {background-position: -29.5px -242.5px;}
+.sb.sb-autoracing {background-position: -29.5px -213.5px;}
+.sb.sb-baseball {background-position: -29.5px -185.5px;}
+.sb.sb-eurovision {background-position: -2.5px -242.5px;}
+.sb.sb-boxing {background-position: -2.5px -211.5px;}
+.sb.sb-badminton {background-position: -29.5px 0px;}
+.sb.sb-beachfootball {background-position: -29.5px -25.5px;}
+.sb.sb-beachvolleyball {background-position: -29.5px -52.5px;}
+.sb.sb-bowling {background-position: -29.5px -79.5px;}
+.sb.sb-cricket {background-position: -29.5px -104.5px;}
+.sb.sb-chess {background-position: -29.5px -132.5px;}
+.sb.sb-darts {background-position: -29.5px -158.5px;}
+.sb.sb-formula {background-position: -2.5px -269.5px;}
+.ps .ps__rail-x:hover, .ps .ps__rail-y:hover, .ps .ps__rail-x:focus, .ps .ps__rail-y:focus, .ps .ps__rail-x.ps--clicking, .ps .ps__rail-y.ps--clicking {
+    background: none !important;
+}
+/* middle */
+.sportsbook .c2 {
+    position: relative;
+    border: 1px solid #4b4c4f;
+    border-radius: 10px;
+    background: #16191e;
+    color: #565656 !important;
+    height: 99%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 10px;
+    overflow: hidden;
+}
+.sportsbook .c2 .c3 {
+    display: flex;
+    justify-content: space-between;
+    flex: 0 100%;
+    padding: 10px;
+}
+.sportsbook a {
+    text-decoration: none !important;
+}
+.sportsbook .c2 .c3 .sbms {
+    display: flex;
+    gap: 10px;
+}
+.sportsbook .c2 .c3 .sbms a {
+    color: #707070;
+    display: flex;
+    align-content: space-between;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    font-size: 14px;
+}
+.sportsbook .c2 .c3 .sbms a:after
+{
+    content: "";
+    display: inline-flex;
+    width: 1px;
+    height: 15px;
+    margin-left: 10px;
+    position: relative;
+    background: #707070;
+}
+.sportsbook .c2 .c3 .sbms a:last-child:after {
+    display: none;
+}
+.sportsbook .c2 .c3 .sbms a.active {
+    color: #fff;
+}
+.sportsbook .c2 .c3 .rgmts a {
+    color: #fff;
+    border: 1px solid #4b4c4f;
+    border-radius: 10px;
+    background: #0e1014;
+    padding: 5px;
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.sportsbook .c2 .c3 .rgmts {
+    display: flex;
+    gap: 10px;
+}
+.sportsbook .c4 .seTxs .sbms {
+    color: #fff;
+}
+.sportsbook .c4 .seTxs {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 10px;
+}
+.sportsbook .c4 {
+    flex: 0 100%;
+}
+.sportsbook .c2 .c5 {
+    flex: 0 15%;
+    background: #24282b;
+}
+.sportsbook .c4 .rgmts button {
+    background: #1b2024;
+    border: none;
+    outline: none;
+    padding: 5px 10px;
+}
+.sportsbook .c4 .rgmts {
+    display: flex;
+}
+.sportsbook .c4 .rgmts button.active {
+    background: #383f44;
+}
+.sportsbook .c4 .matchlist {
+    border-top: 1px solid #474849;
+}
+.sportsbook .c4 .matchlist .matchshead .item {
+    display: flex;
+    w,: ;
+    w,: 1;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    gap: 10px;
+}
+.sportsbook .c4 .matchlist .matchshead .item .oddsHead {
+    display: flex;
+    gap: 43px;
+    justify-content: flex-end;
+    width: 272.5px;
+    font-size: 14px;
+}
+.sportsbook .c4 .matchlist .matchs {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 0;
+    height: 100%;
+    position: relative;
+}
+.sportsbook .c4 .matchlist .matchs .item .p1, .sportsbook .c4 .matchlist .matchs .item .p2 {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 10px;
+    align-items: center;
+}
+.sportsbook .c4 .matchlist .matchs .item .odds {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    gap: 5px;
+}
+
+.sportsbook .c4 .matchlist .matchs .item .odds .odd button {
+    background: #1b2024;
+    border: 1px solid #36393d;
+    color: #fff;
+    width: 55px;
+    height: 30px;
+    font-size: 14px;
+}
+.sportsbook .c4 .matchlist .matchs .item .time * {
+    color: #a4a4a4;
+    font-size: 13px;
+}
+.sportsbook .c4 .matchlist .matchs .item .time {
+    display: flex;
+    gap: 10px;
+    margin-right: 10px;
+}
+.sportsbook .c4 .matchlist .matchs .item span.score {
+    color: #a3a3a3;
+    font-size: 11px;
+}
+.sportsbook .c4 .matchlist .matchs .item .mtchdtls span.match-league {color: #a3a3a3;font-size: 12px;}
+.sportsbook .c4 .matchlist .matchs .item .mtchdtls span.match, .sportsbook .c4 .matchlist .matchs .item .mtchdtls span.match a {
+    color: #fff;
+    font-size: 13px;
+}
+.sportsbook .c4 .matchlist .matchs .item .mtchdtls {display: flex;flex-direction: column;}
+.sportsbook .c4 .matchlist .matchs .item {
+    display: flex;
+    justify-content: space-between;
+    background: #24282b;
+    padding: 10px;
+    border-bottom: 1px solid #0e1114;
+}
+.sportsbook .c4 .matchlist .matchshead {
+    background: #1b2024;
+    padding: 2.5px 0;
+}
+.sportsbook .c4 .matchlist .matchshead .item .time {
+    font-size: 14px;
+}
+.sportsbook .matchlist .odd.new-down button:after {
+    content: "";
+    display: block;
+    width: 52px;
+    height: 2px;
+    background: #8e0000;
+    position: absolute;
+    margin-top: 2px;
+    margin-left: -5px;
+	animation: fadeOut 2.5s ease forwards;
+}
+.sportsbook .matchlist .odd.new-up button:before {
+    content: "";
+    display: block;
+    width: 52px;
+    height: 2px;
+    background: #008e07;
+    position: absolute;
+	margin-top: -3px;
+    margin-left: -5px;
+    animation: fadeOut 2.5s ease forwards;
+}
+match-details.match-details .odds-cont .odds-opts .odds-list .odd-detail .odds button.odd.new-down:after {
+    content: "";
+    display: block;
+    width: 69px;
+    height: 2px;
+    background: #8e0000;
+    position: absolute;
+    margin-top: 2px;
+    margin-left: -5px;
+    animation: fadeOut 2.5s ease forwards;
+}
+match-details.match-details .odds-cont .odds-opts .odds-list .odd-detail .odds button.odd.new-up:before {
+    content: "";
+    display: block;
+    width: 69px;
+    height: 2px;
+    background: #008e07;
+    position: absolute;
+    margin-top: -4px;
+    margin-left: -5px;
+    animation: fadeOut 2.5s ease forwards;
+}
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+.ps__thumb-y {
+    background-color: #fff !important;
+}
+.match-items .item .subitem {
+    background: #0e1014;
+    border: 1px solid #4b4c4f;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.item-details {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding-right: 50px;
+    width: 100%;
+}
+.match-items .item .subitem i.fa-solid.fa-chevron-down {
+    right: 40px !important;
+}
+
+.match-items .item .subitem img {
+    width: 20px;
+}
+.match-items .item .subitem .subitem-details {
+    background: #0e1014;
+    border-radius: 10px;
+    color: #fff;
+    padding: 7.5px 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    width: 100%;
+}
+.subitem2 {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    gap: 5px;
+    width: 100%;
+    padding-top: 0;
+    flex-direction: column;
+}
+.subitem2 a {
+    color: #fff;
+    font-size: 12px;
+    background: #7f57b6;
+    border-radius: 10px;
+    width: 100%;
+    display: block;
+    padding: 7px 10px;
+	transition: 0.1s all;
+}
+.subitem2 a:hover {
+	transform: scale(1.025);
+}
+.subitem-cont {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 5px;
+}
+.match-items .item .item-details.active i.fa-solid.fa-chevron-down, .sportsbook .match-items .subitem-details.active i.fa-solid.fa-chevron-down, .match-items .spec-item .item-details.active i.fa-solid.fa-chevron-down {
+    transform: rotate(180deg);
+}
+mybet.mybet {
+    position: fixed;
+    right: 25px;
+    z-index: 9999;
+    background: #24282b;
+    border: 1px solid #4b4c4f;
+    border-bottom: 0;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    overflow: hidden;
+    transition: 0.1s all;
+    max-width: 335px;
+}
+mybet.mybet span {
+    color: #999999;
+}
+mybet.mybet .header {
+    background: #6b3d8e;
+    color: #fff;
+    text-align: center;
+    padding: 15px 75px;
+    font-size: 14px;
+    cursor: pointer;
+}
+mybet.mybet .bets {
+    padding: 10px;
+    color: #fff;
+    min-height: 150px;
+    font-size: 14px;
+}
+.bets empty-bet {
+    text-align: center;
+}
+mybet.mybet .bets p {
+    margin: 0;
+}
+mybet.mybet playable-bet .bet-options {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+mybet.mybet playable-bet .bet-options button {
+    background: #16191e;
+    border: 1px solid #4b4c4f;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 10px;
+    padding: 5px 15px;
+    flex: 0 32%;
+}
+mybet.mybet playable-bet .bet-options button.active {
+    background: #7f57b6;
+}
+mybet.mybet playable-bet .matchs {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 10px;
+    gap: 10px;
+}
+mybet.mybet playable-bet .matchs .match {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    background: #16191e;
+    border: 1px solid #4b4c4f;
+    border-radius: 10px;
+    overflow: hidden;
+}
+mybet.mybet playable-bet .matchs .match .t {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    border-bottom: 1px solid #4b4c4f;
+    padding: 5px;
+    gap: 5px;
+    align-items: center;
+}
+mybet.mybet playable-bet .matchs .match .t .close {
+    color: #7e7e7f;
+    float: right;
+    margin: 0 auto;
+    margin-right: 0;
+    cursor: pointer;
+}
+mybet.mybet playable-bet .matchs .match .t .icon .sb {
+    transform: scale(0.75);
+}
+mybet.mybet playable-bet .matchs .match .t .icon {
+    width: 20px;
+    height: 23px;
+}
+mybet.mybet playable-bet .matchs .match .t .matchName {
+    font-size: 13px;
+    margin-right: 25px;
+}
+mybet.mybet playable-bet .matchs .match .b {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding: 5px;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+}
+mybet.mybet playable-bet .matchs .match .b .betDetails {
+    color: #525355;
+    font-size: 13px;
+}
+mybet.mybet playable-bet .matchs .match .b .betDetails b {
+    color: #fff;
+}
+mybet.mybet playable-bet .matchs .match .b .betratio {
+    background: #7f57b6;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: 13px;
+}
+mybet.mybet playable-bet .settings {
+    display: flex;
+    margin-top: 10px;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin: 15px 0px;
+}
+mybet.mybet playable-bet .settings .removeAll, mybet.mybet playable-bet .settings .total {
+    color: #848585;
+    background: none;
+    border: none;
+}
+mybet.mybet playable-bet .settings .total span {
+    background: #7f57b6;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: 13px;
+}
+mybet.mybet playable-bet .result {
+    margin-top: 10px;
+    padding: 5px;
+    background: #16191e;
+    border: 1px solid #4b4c4f;
+    border-radius: 10px;
+}
+mybet.mybet playable-bet .result .result-cont {
+    background: #7f57b6;
+    border-radius: 10px;
+    padding: 5px 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+mybet.mybet playable-bet .result .result-cont span.amount, mybet.mybet playable-bet .result .result-cont i.fa-solid.fa-turkish-lira-sign {
+    color: #fff;
+}
+mybet.mybet playable-bet .result .result-cont .totalText, mybet.mybet playable-bet .result .result-cont .titler {
+    color: #bdbac5;
+    font-size: 13px;
+}
+mybet.mybet playable-bet .matchs {
+	max-height: 450px;
+	width: 100%;
+	overflow-y: auto;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+mybet.mybet playable-bet .matchs .match {
+	width: 100%;
+}
+match-details.match-details {
+    width: 100%;
+    height: 90%;
+}
+match-details.match-details .firsdt-cont {
+    padding: 10px;
+    background: url(/img/sportsbooks/matchdetailsbg.png);
+    background-position: center;
+}
+match-details.match-details .firsdt-cont .firsdt {padding: 10px;display: flex;flex-direction: column;flex-wrap: wrap;}
+match-details.match-details .firsdt-cont .firsdt .league {
+    display: flex;
+    gap: 10px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+match-details.match-details .firsdt-cont .firsdt .league span.match-league {
+    color: #fff;
+}
+match-details.match-details .firsdt-cont .firsdt .match-details {display: flex;flex-direction: column;flex-wrap: wrap;text-align: center;}
+match-details.match-details .firsdt-cont .firsdt .match-details .date {
+    color: #bfbfbf;
+    font-size: 14px;
+}
+match-details.match-details .firsdt-cont .firsdt .match-details .teams {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 25px;
+    gap: 25px;
+    color: #fff;
+}
+match-details.match-details .firsdt-cont .firsdt .match-details .teams .team-cont {
+    padding: 15px;
+}
+match-details.match-details .firsdt-cont .firsdt .match-details .teams .team-cont .team-logo {
+    background: #16191e8f;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #4b4c4f;
+}
+match-details.match-details .firsdt-cont .firsdt .match-details .teams .team-cont .team-logo .team-sep {
+    background: #16191e;
+    border: 1px solid #4b4c4f;
+    padding: 15px;
+    border-radius: 10px;
+}
+match-details.match-details .firsdt-cont .firsdt .match-details .teams .team-cont .team-name {
+    margin-top: 10px;
+    font-size: 18px;
+}
+match-details.match-details .firsdt-cont .firsdt .match-details .teams .teamvs {
+    font-size: 35px;
+    font-weight: bold;
+    margin-top: -25px;
+}
+match-details.match-details .firsdt-cont .firsdt .match-details .date b {
+    color: #fff;
+}
+.odds-cont .odds-cat .cats {
+    background: #16191e;
+    border-bottom: 1px solid #494a4d;
+    display: flex;
+    justify-content: space-between;
+}
+.odds-cont .odds-cat .cats button {
+    background: #16191e;
+    border: none;
+    color: #848484;
+    padding: 10px 15px;
+    flex: 0 16.66%;
+    transition: 0.1s all;
+    font-size: 14px;
+}
+.odds-cont .odds-cat .cats button:hover,
+.odds-cont .odds-cat .cats button.active
+{
+    background: #383f44;
+    color: #fff;
+}
+match-details.match-details .odds-cont .odds-opts {
+    padding: 15px;
+    height: 100%;
+}
+match-details.match-details .odds-cont .odds-opts .odds-sep.ps {
+    position: relative;
+    height: 90%;
+}
+match-details.match-details .odds-cont .odds-opts .odds-list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    color: #fff;
+    gap: 20px;
+}
+match-details.match-details .odds-cont .odds-opts .odds-list .odd-detail {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+match-details.match-details .odds-cont .odds-opts .odds-list .odd-detail .odd-title {
+    flex: 0 25%;
+    font-size: 13px;
+}
+match-details.match-details .odds-cont .odds-opts .odds-list .odd-detail .odds odd span {
+    font-size: 13px;
+}
+match-details.match-details .odds-cont .odds-opts .odds-list .odd-detail .odds {
+    flex: 0 75%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 25px;
+}
+match-details.match-details .odds-cont .odds-opts .odds-list .odd-detail .odds button.odd {
+    background: #1b2024;
+    color: #fff;
+    padding: 3.5px 5px;
+    border: 1px solid #2c3032;
+    width: 70px;
+    font-size: 14px;
+    overflow: hidden;
+}
+match-details.match-details .odds-cont .odds-opts .odds-list .odd-detail .odds button.odd:hover {
+	background: #2a3034;
+}
+match-details.match-details .odds-cont .odds-opts .odds-list .odd-detail .odds odd {
+    width: 200px;
+    text-align: right;
+    display: flex;
+    gap: 5px;
+    justify-content: flex-end;
+    align-items: center;
+}
+match-details.match-details .odds-cont .odds-opts .odds-list .odd-detail .odds .betbuilder {
+    width: 50px;
+}
+match-details.match-details .odds-cont .odds-opts .odds-list .odd-detail .odds .betbuilder .bb {
+    background: #0e1114;
+    padding: 5px 17px;
+    border: 1px solid #494a4d;
+    border-radius: 25px;
+}
+match-details.match-details .odds-cont .odds-opts .odds-list .odd-detail .odds .betbuilder img {
+    width: 100%;
+}
+.mobile-menu { display: none; }
+.d-hide { display:none; }
+.c-f { color: #fff; }
+@media screen and (max-width: 768px) {
+	.sportsbook-menu {
+		width: 300px;
+		overflow-x: scroll;
+	}
+	app-header app-home-header .menu {
+		display: flex;
+		align-items: center;
+	}
+	app-header app-home-header .menu a {
+		white-space: nowrap;
+	}
+	.sportsbook .c2 .c3 .sbms a {
+		font-size: 9px;
+	}
+	.sportsbook .c2 .c3 .sbms {
+		align-items: center;
+	}
+	.sportsbook .c4 .rgmts {display: none;}
+	.sportsbook .c4 .seTxs .sbms {
+		font-size: 13px;
+	}
+	.sportsbook .c2 .c3 {
+		padding-bottom: 0;
+	}
+	.sportsbook .c4 .matchlist .matchshead {
+		display: none;
+	}
+	.sportsbook .c4 .matchlist .matchs .item {
+		flex-direction: column;
+		width: 100%;
+	}
+	span.d-hide.m-show.c-f.odd-text {
+		display: contents;
+	}
+	match-details.match-details .odds-cont .odds-opts .odds-list .odd-detail {
+		flex-direction: column;
+		text-align: center;
+		width: 100%;
+	}
+	match-details.match-details .odds-cont .odds-opts .odds-list .odd-detail .odds .betbuilder {
+		display: none;
+	}
+	match-details.match-details .odds-cont .odds-opts .odds-list .odd-detail .odds {
+		width: 100%;
+		flex: 0 100%;
+		display: flex;
+		margin-top: 10px;
+	}
+	match-details.match-details .odds-cont .odds-opts .odds-list .odd-detail .odds odd {
+		display: flex;
+		justify-content: center;
+	}
+}
+/* mobile */
+@media screen and (max-width: 767px) {
+	.sportsbook-menu {
+		display:none;
+	}
+	.m-show { display: contents; }
+	.sportsbook-menu .menu,
+	.sportsbook .match-items .spec-item,
+	.sportsbook .match-cat .inpts,
+	.sportsbook .allof
+	{
+		display: none !important;
+	}
+	.sportsbook .c1 {
+		width: 100%;
+	}
+	.sportsbook .match-cont {
+		height: auto;
+		order: 2;
+	}
+	.sportsbook .match-items .spec-item i.fa-solid.fa-chevron-down, .match-items .item i.fa-solid.fa-chevron-down {
+		display: none;
+	}
+	.item-details {
+		padding-right: 0;
+	}
+	.desktop-menu {
+		display: none !important;
+	}
+	.mobile-menu {
+		display: block;
+	}
+	.sportsbook .match-items.mobile-menu a {
+		color: #fff;
+	}
+	.mobile-menu .owl-item.active.center .mm-item {
+		background: #8261a6;
+		box-shadow: 0px 0px 11px -4px rgba(130,97,166,1);
+		transform: scale(0.9);
+	}
+	.mobile-menu .mm-item {
+		background: #16191e;
+		padding: 10px;
+		border: 1px solid #2c2c2f;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		color: #fff;
+		border-radius: 10px;
+		transform: scale(0.8);
+	}
+	.mobile-menu .owl-nav {
+		left: 0;
+		right: 0;
+		margin: auto;
+		width: 100%;
+		opacity: 1;
+	}
+	.mobile-menu  button.owl-next {
+		right: -22.5%;
+		position: absolute;
+		top: 30px;
+		background: none !important;
+		border: none !important;
+	}
+	.mobile-menu  button.owl-prev {
+		position: absolute;
+		left: -22.5%;
+		top: 30px;
+		background: none !important;
+		border: none !important;
+	}
+	.sportsbook {
+		flex-direction: column;
+		height: auto;
+		padding-bottom: 125px;
+	}
+	.sportsbook .c2 .c3, .sportsbook .c4 .seTxs, .sportsbook .c4 .matchlist .matchshead {
+		display: none;
+	}
+	.sportsbook .c4 .matchlist .matchs .item {
+		flex-direction: column;
+		flex-wrap: wrap;
+	}
+	.sportsbook .c4 .matchlist .matchs .item .p1, .sportsbook .c4 .matchlist .matchs .item .p2 {
+	    display: flex;
+	    justify-content: flex-start;
+	}
+	match-details.match-details .firsdt-cont .firsdt .league {
+		display: flex;
+		justify-content: center;
+		margin-bottom: 5px;
+		width: 100%;
+	}
+	match-details.match-details .firsdt-cont .firsdt .match-details {
+		width: 100%;
+	}
+	match-details.match-details .firsdt-cont .firsdt .match-details .teams .team-cont {
+		padding: 5px;
+	}
+	match-details.match-details .firsdt-cont .firsdt .match-details .teams .team-cont .team-name {
+		font-size: 14px;
+	}
+	.odds-cont .odds-cat .cats {
+		overflow: scroll;
+	}
+	match-details.match-details .odds-cont .odds-opts .odds-list .odd-detail {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		flex-wrap: nowrap;
+	}
+	match-details.match-details .odds-cont .odds-opts .odds-list .odd-detail .odds .betbuilder {
+		display: none;
+	}
+	match-details.match-details .odds-cont .odds-opts .odds-list .odd-detail .odd-title {
+		text-align: center;
+		margin-bottom: 10px;
+	}
+	match-details.match-details .odds-cont .odds-opts .odds-list .odd-detail .odds {
+		display: flex;
+		width: 100%;
+		flex: 0 100%;
+		justify-content: flex-start;
+		align-items: center;
+	}
+	match-details.match-details .odds-cont .odds-opts .odds-list .odd-detail .odds odd {
+		text-align: left;
+		display: flex;
+		justify-content: center;
+		white-space: nowrap;
+		flex-direction: column;
+	}
+	.odds-cont .odds-cat .cats button {
+		white-space: nowrap;
+	}
+	.mobile-fast-menu {
+		margin-bottom: 10px;
+		order: 1;
+	}
+	.mobile-menu .ma-item {
+		font-size: 13px;
+		background: #16191e;
+		padding: 5px 10px;
+		border: 1px solid #2c2c2f;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		color: #fff;
+		border-radius: 10px;
+		white-space: nowrap;
+	}
+	.mobile-menu .ma-item.active {
+		background: #8261a6;
+		box-shadow: 0px 0px 12px -7px rgba(130, 97, 166, 1);
+	}
+	.odd-text {
+		font-size: 12px;
+	}
+	.sportsbook .c4 .matchlist .matchs .item span.score {
+		white-space: nowrap;
+	}
+	fast-menu.page-sportsbook .area .info, fast-menu.page-sportsbook .area .line, fast-menu.page-sportsbook .area .livechat {
+		display: none;
+	}
+	fast-menu.page-sportsbook .mybet-chart a {
+		color: #fff;
+		font-size: 20px;
+	}
+	mybet.mybet {
+		display:none;
+		top: 0;
+		width: 100%;
+		right: 0;
+		height: 100%;
+		left: 0;
+		max-width: initial;
+	}
+	mybet.mybet playable-bet .matchs {
+		max-height: 450px;
+		width: 100%;
+		overflow-y: auto;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
+	mybet.mybet playable-bet .matchs .match {
+		width: 100%;
+	}
+}

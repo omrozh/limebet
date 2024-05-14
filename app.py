@@ -562,6 +562,10 @@ class OpenBet(db.Model):
         get_results(self.api_match_id)
 
     @property
+    def who_wins_bet(self):
+        return BetOption.query.filter_by(open_bet_fk=self.id).filter_by(game_name="Maç Sonucu").first()
+
+    @property
     def sport_readable(self):
         sports_turkish = {
             "soccer": "Futbol",
@@ -691,7 +695,24 @@ class BetOption(db.Model):
     @property
     def bet_odds(self):
         bet_odds = BetOdd.query.filter_by(bet_option_fk=self.id).filter_by(bettable=True).all()
+        if self.game_name == "Maç Sonucu":
+            processed_bet_odds = [0, 0, 0]
+            for i in bet_odds:
+                if i.value == self.open_bet_obj.team_1:
+                    processed_bet_odds[0] = i
+                elif i.value == self.open_bet_obj.team_2:
+                    processed_bet_odds[2] = i
+                else:
+                    processed_bet_odds[1] = i
+
+            return processed_bet_odds
+
         return bet_odds
+
+
+    @property
+    def open_bet_obj(self):
+        return OpenBet.query.get(self.open_bet_fk)
 
     @property
     def has_odds(self):
@@ -1228,8 +1249,14 @@ def index():
     from casino_utils import get_providers, get_games
     providers = []
     games_popular = [[], []]
-    open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime > datetime.datetime.now()).filter_by(
-        has_odds=True).all()[:50]
+    sliders_main = []
+    sliders_sub = []
+
+    for i in os.listdir("img/slider/slider-main"):
+        sliders_main.append(f"/img/slider/slider-main/{i}")
+
+    for i in os.listdir("img/slider/slider-sub"):
+        sliders_sub.append(f"/img/slider/slider-sub/{i}")
 
     for c in get_providers():
         providers.append({
@@ -1275,7 +1302,7 @@ def index():
             pass
     resp = flask.make_response(
         flask.render_template("anasayfa-yeni.html", current_user=current_user, providers=providers,
-                              games_popular=games_popular, open_bets=open_bets, live_casino_games=live_casino_games))
+                              games_popular=games_popular, live_casino_games=live_casino_games, sliders_main=sliders_main, sliders_sub=sliders_sub))
     if flask.request.args.get("ref", False):
         resp.set_cookie('referrer', flask.request.args.get("ref"))
     return resp
@@ -1640,8 +1667,10 @@ def bahis():
     for i in open_bets:
         if i.match_league not in sports_leagues:
             sports_leagues.append(i.match_league)
-    return flask.render_template("bahis/bahis.html", open_bets=open_bets, canli_bahis=False,
+    return flask.render_template("bahis/bahis-yeni.html", open_bets=open_bets, canli_bahis=False,
                                  sports_leagues=sports_leagues)
+
+# TO DO: Complete sports betting integration FE.
 
 
 @app.route("/bahis-mobile")
@@ -2102,6 +2131,45 @@ def admin_panel_partnership_operations():
     return flask.render_template("panel/partnership_balance.html", partnership=partnership)
 
 
+@app.route("/admin/cms", methods=["POST", "GET"])
+def admin_panel_cms():
+    css_dict = []
+    with open("css/cms-styles.css", 'r') as file:
+        for line in file:
+            if ':' in line and ';' in line:
+                key, value = line.strip().replace(';', '').split(':', 1)
+                key = key.strip().replace('--', '')
+                value = value.strip()
+                css_dict.append((key, value))
+    from admin_utils import list_directory_contents_recursive
+
+    images = list_directory_contents_recursive("img")
+
+    if flask.request.method == "POST":
+        if flask.request.values.get("form-type") == "image-update":
+            file = flask.request.files.get("image-to-update")
+            file.save(flask.request.values.get("file-select"))
+        if flask.request.values["form-type"] == "remove-slider":
+            os.system(f'rm -f {flask.request.values.get("file-select")}')
+        if flask.request.values["form-type"] == "add-slider":
+            file = flask.request.files.get("image-to-upload")
+            file.save(f'img/slider/{flask.request.values.get("file-select")}/{str(uuid4())}.png')
+        if flask.request.values["form-type"] == "update-theme":
+            css_dict = {}
+            for i in flask.request.values.keys():
+                if not i == "form-type" and not i == "option":
+                    css_dict[i] = flask.request.values.get(i)
+            with open("css/cms-styles.css", 'w') as file:
+                file.write(":root {\n")
+                for key, value in css_dict.items():
+                    file.write(f"    --{key}: {value};\n")
+                file.write("}\n")
+
+        return flask.redirect("/admin/cms")
+
+    return flask.render_template("panel/cms.html", css_dict=css_dict, images=images, option=flask.request.args.get("option"))
+
+
 @app.route("/admin/home")
 def admin_panel():
     import admin_utils
@@ -2318,13 +2386,23 @@ def plugin_host(filename):
     return flask.send_file(f"plugins/owl/{filename}")
 
 
+@app.route("/plugins/perfect-scrollbar/<filename>")
+def plugin_perfect_scrollbar(filename):
+    return flask.send_file(f"plugins/perfect-scrollbar/{filename}")
+
+
 @app.route("/img/<directory>/<filename>")
 def img_host_1(directory, filename):
     return flask.send_file(f"img/{directory}/{filename}")
 
 
+@app.route("/img/<directory>/<directory_2>/<filename>")
+def img_host_2(directory, directory_2, filename):
+    return flask.send_file(f"img/{directory}/{directory_2}/{filename}")
+
+
 @app.route("/img/<filename>")
-def img_host_2(filename):
+def img_host_3(filename):
     return flask.send_file(f"img/{filename}")
 
 

@@ -1,0 +1,564 @@
+<!DOCTYPE HTML>
+<html lang="tr-TR">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+	<title>KadroMilyon</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	<link rel="stylesheet" href="/css/sportsbook.css" />
+	<link rel="stylesheet" href="/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="/css/fontawesome.min.css" />
+	<link rel="stylesheet" href="/plugins/owl/owl.carousel.min.css" />
+	<link rel="stylesheet" href="/plugins/perfect-scrollbar/perfect-scrollbar.css" />
+</head>
+<body>
+	<app-header>
+		<app-home-header class="other-pages sticky-top">
+			<div class="nav">
+				<div class="logo"> <a href="/"> <img src="/img/logo.png" /> </a> </div>
+				<div class="sportsbook-menu">
+					<div class="menu">
+						<a href="/" class="n-link"> <span>ANASAYFA</span> </a>
+						<a href="#." class="n-link"> <span>KAMPANYALAR</span> </a>
+						<a href="#." class="n-link"> <span>GÜNLÜK YARIŞMALAR</span> </a>
+						<a href="#." class="n-link"> <span>HAFTALIK YARIŞMALAR</span> </a>
+						<a href="#." class="n-link"> <span>YÜKSEK LİMİTLİ YARIŞMALAR</span> </a>
+					</div>
+				</div>
+				<div class="rightmenu">
+					<app-not-loggedin>
+						<a href="#." class="btn login-btn"> <i class="fa-solid fa-right-to-bracket"></i> Giriş Yap </a>
+						<a href="#." class="btn register-btn"> <i class="fa-solid fa-user-plus"></i> Kayıt Ol </a>
+						<div class="lang-select">
+							<div class="view"> <img src="/img/flag/tr.png" /> TR <i class="fa-solid fa-chevron-down"></i> </div>
+						</div>
+						<div class="timer">
+							16:40:50
+						</div>
+						<a href="#." class="notification"> <i class="fa-solid fa-bell"></i> </a>
+					</app-not-loggedin>
+					<app-loggedin style="display:none">
+						<a href="#." class="btn price-btn"> <i class="fa-solid fa-turkish-lira-sign"></i> 3.442,00 <i class="fa-solid fa-sort-down"></i> </a>
+						<a href="#." class="btn setting-btn"> <i class="fa-solid fa-gear"></i> </a>
+						<a href="#." class="btn notification-btn"> <i class="fa-regular fa-bell"></i> <div class="counter">2</div> </a>
+						<a href="#." class="btn profile-btn"> <img src="/img/profile-demo.png" /> </a>
+					</app-loggedin>
+				</div>
+			</div>
+		</app-home-header>
+	</app-header>
+	<app-content>
+		<div class="sportsbook">
+			<div class="c1">
+				<div class="mobile-menu mobile-fast-menu">
+					<div class="mobileSlider2 owl-carousel">
+
+						<a href="/" class="ma-item"> ANASAYFA </a>
+						<a href="#." class="ma-item active"> CANLI BAHİSLER </a>
+						<a href="#." class="ma-item"> SPOR BAHİSLERİ </a>
+						<a href="#." class="ma-item"> SLOT OYUNLARI </a>
+					</div>
+				</div>
+				<div class="match-find">
+					<button class="searchbtn"> <i class="fa fa-search"></i> </button>
+					<input type="text" placeholder="Maçınızı bulun.." />
+				</div>
+				<div class="match-cont">
+					<div class="match-cat">
+						<div class="inpts">
+							<a href="#." class="active"> CANLI (159) </a>
+							<a href="#."> SPOR BAHİSLERİ </a>
+						</div>
+						<div class="allof">
+							<span class="selector"> <i class="fa fa-clock"></i> TÜMÜ <i class="fa-solid fa-chevron-down"></i> </span>
+							<a href="#."> <img src="/img/sportsbooks/betbuilder.png" style="width: 50px;"> </a>
+						</div>
+						<div class="mobile-menu">
+							<div class="mobileSlider owl-carousel">
+								<a href="#." class="mm-item"> <span class="sb sb-soccer"></span> Futbol <span class="cou">(1140)</span> </a>
+								<a href="#." class="mm-item"> <span class="sb sb-basket"></span> Basketbol <span class="cou">(120)</span> </a>
+								<a href="#." class="mm-item"> <span class="sb sb-tennis"></span> Tenis <span class="cou">(340)</span> </a>
+								<a href="#." class="mm-item"> <span class="sb sb-volleyball"></span> Voleybol <span class="cou">(75)</span> </a>
+								<a href="#." class="mm-item"> <span class="sb sb-icehockey"></span> Buz Hokeyi <span class="cou">(59)</span> </a>
+								<a href="#." class="mm-item"> <span class="sb sb-pingpong"></span> Masa Tenisi <span class="cou">(59)</span> </a>
+							</div>
+						</div>
+						<div class="match-items desktop-menu">
+							<div class="spec-item">
+								<div class="item-details">
+									<span class="icon1 icon-1"></span> YAKLAŞAN MAÇLAR <i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<div class="subitem2" style="display:none">
+								</div>
+							</div>
+							<div class="spec-item">
+								<div class="item-details">
+									<span class="icon1 icon-2"></span> POPÜLER MAÇLAR <i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<div class="subitem2" style="display:none">
+									<a href="#."> DATA </a>
+								</div>
+							</div>
+							<div class="spec-item">
+								<div class="item-details">
+									<span class="icon1 icon-3"></span> POPÜLER TURNUVALAR <i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<div class="subitem2" style="display:none">
+									<a href="#."> UEFA Şampiyonlar Ligi (1) </a>
+									<a href="#."> UEFA Avrupla Ligi (1) </a>
+									<a href="#."> NBA (5) </a>
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-details">
+										<span class="sb sb-soccer"></span> Futbol <span class="cou">(1140)</span> <i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<div class="subitem-cont" style="display:none">
+									<div class="subitem flag-it">
+										<div class="subitem-details"><img src="/img/sportsbooks/flags/it.png">İtalya (3) <i class="fa-solid fa-chevron-down"></i></div>
+										<div class="subitem2" style="display:none">
+											<a href="#."> İtalya Seria A (11)</a>
+											<a href="#."> İtalya Seria B (9)</a>
+											<a href="#."> İtalya Kupası</a>
+										</div>
+									</div>
+									<div class="subitem flag-fr">
+										<div class="subitem-details"><img src="/img/sportsbooks/flags/fr.png">Fransa (1) <i class="fa-solid fa-chevron-down"></i></div>
+										<div class="subitem2" style="display:none">
+											<a href="#."> Fransa Kupası</a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-details">
+										<span class="sb sb-basket"></span> Basketbol <span class="cou">(120)</span> <i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<div class="subitem-cont" style="display:none">
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-details">
+										<span class="sb sb-tennis"></span> Tenis <span class="cou">(340)</span> <i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<div class="subitem-cont" style="display:none">
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-details">
+										<span class="sb sb-volleyball"></span> Voleybol <span class="cou">(75)</span> <i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<div class="subitem-cont" style="display:none">
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-details">
+										<span class="sb sb-icehockey"></span> Buz Hokeyi <span class="cou">(59)</span> <i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<div class="subitem-cont" style="display:none">
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-details">
+										<span class="sb sb-pingpong"></span> Masa Tenisi <span class="cou">(59)</span> <i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<div class="subitem-cont" style="display:none">
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-details">
+										<span class="sb sb-handball"></span> Hentbol <span class="cou">(427)</span> <i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<div class="subitem-cont" style="display:none">
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-details">
+										<span class="sb sb-americanfootball"></span> Amerikan Futbolu <span class="cou">(9)</span> <i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<div class="subitem-cont" style="display:none">
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-details">
+										<span class="sb sb-australianfootball"></span> Avustralya Futbolu <span class="cou">(17)</span> <i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<div class="subitem-cont" style="display:none">
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-details">
+										<span class="sb sb-autoracing"></span> Otomobil Yarışı <span class="cou">(1)</span> <i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<div class="subitem-cont" style="display:none">
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-details">
+										<span class="sb sb-baseball"></span> Beyzbol <span class="cou">(45)</span> <i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<div class="subitem-cont" style="display:none">
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-details">
+										<span class="sb sb-boxing"></span> Boks <span class="cou">(50)</span> <i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<div class="subitem-cont" style="display:none">
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-details">
+										<span class="sb sb-eurovision"></span> Eurovision <span class="cou">(1)</span> <i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<div class="subitem-cont" style="display:none">
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-details">
+										<span class="sb sb-badminton"></span> Badminton <span class="cou">(44)</span> <i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<div class="subitem-cont" style="display:none">
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-details">
+										<span class="sb sb-beachfootball"></span> Plaj Futbolu <span class="cou">(3)</span> <i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<div class="subitem-cont" style="display:none">
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-details">
+										<span class="sb sb-beachvolleyball"></span> Plaj Voleybolu <span class="cou">(16)</span> <i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<div class="subitem-cont" style="display:none">
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-details">
+										<span class="sb sb-bowling"></span> Bowling <span class="cou">(21)</span> <i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<div class="subitem-cont" style="display:none">
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-details">
+										<span class="sb sb-cricket"></span> Kriket <span class="cou">(7)</span> <i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<div class="subitem-cont" style="display:none">
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-details">
+										<span class="sb sb-chess"></span> Satranç <span class="cou">(121)</span> <i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<div class="subitem-cont" style="display:none">
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-details">
+										<span class="sb sb-darts"></span> Dart <span class="cou">(18)</span> <i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<div class="subitem-cont" style="display:none">
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-details">
+										<span class="sb sb-formula"></span> Formula <span class="cou">(21)</span> <i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<div class="subitem-cont" style="display:none">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="c2">
+				<div class="c3">
+					<div class="sbms">
+						<a href="#." class="active"> Anasayfa </a>
+						<a href="#."> Genel Görünüm </a>
+						<a href="#."> Kombine Görünüm </a>
+						<a href="#."> Takvim </a>
+						<a href="#."> Sonuçlar </a>
+					</div>
+					<div class="rgmts">
+						<a href="#."> <i class="fa-solid fa-calculator"></i> </a>
+						<a href="#."> <i class="fa-solid fa-gear"></i> </a>
+					</div>
+				</div>
+				<div class="c4" style="display:block">
+					<div class="seTxs">
+						<div class="sbms">
+							CANLI BAHİS
+						</div>
+						<div class="rgmts">
+							<button class="active"> <span class="sb sb-soccer"></span> </button>
+							<button> <span class="sb sb-basket"></span> </button>
+							<button> <span class="sb sb-tennis"></span> </button>
+							<button> <span class="sb sb-volleyball"></span> </button>
+							<button> <span class="sb sb-icehockey"></span> </button>
+							<button> <span class="sb sb-pingpong"></span> </button>
+							<button> <span class="sb sb-handball"></span> </button>
+							<button> <span class="sb sb-americanfootball"></span> </button>
+							<button> <span class="sb sb-autoracing"></span> </button>
+							<button> <span class="sb sb-boxing"></span> </button>
+						</div>
+					</div>
+					<div class="matchlist">
+						<div class="matchshead">
+							<div class="item">
+								<div class="score"></div>
+								<div class="logo"></div>
+								<div class="mtchdtls"></div>
+								<div class="time">Zaman</div>
+								<div class="oddsHead">
+									<div class="odd odd1"> 1 </div>
+									<div class="odd odd2"> X </div>
+									<div class="odd odd3"> 2 </div>
+									<div class="odd oddmore"> Daha faz... </div>
+								</div>
+							</div>
+						</div>
+						<div class="matchs-cont">
+							<div class="matchs">
+								{% for i in open_bets %}
+								<div class="item">
+									<div class="p1">
+										<div class="mtchdtls">
+											<span class="match"> <a href="#."> {{ i.team_1 }} - {{ i.team_2 }} </a> </span>
+											<span class="match-league"> {{ i.match_league }} </span>
+										</div>
+									</div>
+									<div class="p2">
+										<div class="time">
+											<a href="#." class="info"> <i class="fa-solid fa-circle-info"></i> </a>
+											<span class="timeText"> {{ i.bet_ending_datetime }} </span>
+											<a href="#." class="watc"> <i class="fa-solid fa-display"></i> </a>
+										</div>
+										<div class="odds">
+											<div class="odd odd1 new-up"> <span class="d-hide m-show c-f odd-text">1</span> <button> {{ i.who_wins_bet.bet_odds.0.odd }} </button> </div>
+											<div class="odd odd2"> <span class="d-hide m-show c-f odd-text">X</span> <button> {{ i.who_wins_bet.bet_odds.1.odd }} </button> </div>
+											<div class="odd odd3"> <span class="d-hide m-show c-f odd-text">2</span> <button> {{ i.who_wins_bet.bet_odds.2.odd }} </button> </div>
+											<div class="odd oddmore"> <button> + </button> </div>
+										</div>
+									</div>
+								</div>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
+				<match-details class="match-details" style="display:none">
+					<div class="firsdt-cont">
+						<div class="firsdt">
+							<div class="league">
+								<span class="logo"> <img src="/img/sportsbooks/logos/1.png"> </span>
+								<span class="match-league"> Rusya Premier Lig </span>
+							</div>
+							<div class="match-details">
+								<div class="date"> 29.04.2024, <b>22:00 Pazartesi</b> </div>
+								<div class="teams">
+									<div class="team-cont">
+										<div class="team-logo">
+											<div class="team-sep">
+												<img src="/img/sportsbooks/teammates/athleticbilbao.png" />
+											</div>
+										</div>
+										<div class="team-name"> Athletic Bilbao </div>
+									</div>
+									<div class="teamvs"> VS </div>
+									<div class="team-cont">
+										<div class="team-logo">
+											<div class="team-sep">
+												<img src="/img/sportsbooks/teammates/granada.png" />
+											</div>
+										</div>
+										<div class="team-name"> Granada </div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="odds-cont">
+						<div class="odds-cat">
+							<div class="cats">
+								<button class="active" id="odd_main"> Anasayfa </button>
+								<button id="odd_betbuilder"> Bet Builder </button>
+								<button id="odd_match"> Maç </button>
+								<button id="odd_totals"> Toplamlar </button>
+								<button id="odd_handicaps"> Handikaplar </button>
+								<button id="odd_hals"> Yarılar </button>
+							</div>
+						</div>
+						<div class="odds-opts">
+							<div class="odds-sep">
+								<div class="odds-list odd_betbuilder" style="display:none">
+									<div class="odd-detail">
+										<div class="odd-title"> Maç Sonucu </div>
+										<div class="odds">
+											<odd> <span>1</span> <button class="odd">1.41</button> </odd>
+											<odd> <span>X</span> <button class="odd">4.05</button> </odd>
+											<odd> <span>2</span> <button class="odd">11.8</button> </odd>
+											<div class="betbuilder"> <a href="#."> <div class="bb"> <img src="/img/sportsbooks/bb.png"> </div> </a> </div>
+										</div>
+									</div>
+								</div>
+								<div class="odds-list odd_main">
+									<div class="odd-detail">
+										<div class="odd-title"> Maç Sonucu </div>
+										<div class="odds">
+											<odd> <span>1</span> <button class="odd new-down">1.41</button> </odd>
+											<odd> <span>X</span> <button class="odd">4.05</button> </odd>
+											<odd> <span>2</span> <button class="odd new-up">11.8</button> </odd>
+											<div class="betbuilder"> <a href="#."> <div class="bb"> <img src="/img/sportsbooks/bb.png"> </div> </a> </div>
+										</div>
+									</div>
+									<div class="odd-detail">
+										<div class="odd-title"> Çifte Şans </div>
+										<div class="odds">
+											<odd> <span>1X</span> <button class="odd">1.08</button> </odd>
+											<odd> <span>X</span> <button class="odd">1.31</button> </odd>
+											<odd> <span>2X</span> <button class="odd">2.46</button> </odd>
+											<div class="betbuilder"></div>
+										</div>
+									</div>
+									<div class="odd-detail">
+										<div class="odd-title"> Maçın Geri Kalanı </div>
+										<div class="odds">
+											<odd> <span>1 (0:0)</span> <button class="odd">1.56</button> </odd>
+											<odd> <span>X (0:0)</span> <button class="odd">3.55</button> </odd>
+											<odd> <span>2 (0:0)</span> <button class="odd">8.4</button> </odd>
+											<div class="betbuilder"></div>
+										</div>
+									</div>
+									<div class="odd-detail">
+										<div class="odd-title"> Beraberlikte İade </div>
+										<div class="odds">
+											<odd> <span>Takım 1</span> <button class="odd">1.03</button> </odd>
+											<odd> <span>Takım 2</span> <button class="odd">1.33</button> </odd>
+											<div class="betbuilder"></div>
+										</div>
+									</div>
+									<div class="odd-detail">
+										<div class="odd-title"> Toplam Gol </div>
+										<div class="odds">
+											<odd> <span>Üst (0.5)</span> <button class="odd">3.45</button> </odd>
+											<odd> <span>Alt (0.5)</span> <button class="odd">1.33</button> </odd>
+											<div class="betbuilder"></div>
+										</div>
+									</div>
+									<div class="odd-detail">
+										<div class="odd-title"> Toplam Gol </div>
+										<div class="odds">
+											<odd> <span>Üst (1)</span> <button class="odd">3.45</button> </odd>
+											<odd> <span>Alt (1)</span> <button class="odd">1.33</button> </odd>
+											<div class="odd-break"></div>
+											<odd> <span>Üst (1.5)</span> <button class="odd">3.45</button> </odd>
+											<odd> <span>Alt (1.5)</span> <button class="odd">1.33</button> </odd>
+											<div class="betbuilder"> <a href="#."> <div class="bb"> <img src="/img/sportsbooks/bb.png"> </div> </a> </div>
+										</div>
+									</div>
+									<div class="odd-detail">
+										<div class="odd-title"> Gol Handikapı </div>
+										<div class="odds">
+											<odd> <span>Handikap1 (-0.5)</span> <button class="odd">3.45</button> </odd>
+											<odd> <span>Handikap2 (0)</span> <button class="odd">1.33</button> </odd>
+											<div class="betbuilder"></div>
+										</div>
+									</div>
+									<div class="odd-detail">
+										<div class="odd-title"> Gol Handikapı (Son) </div>
+										<div class="odds">
+											<odd> <span>Handikap1 (-0.5)</span> <button class="odd">3.45</button> </odd>
+											<odd> <span>Handikap2 (0)</span> <button class="odd">1.33</button> </odd>
+											<div class="betbuilder"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</match-details>
+			</div>
+			<mybet class="mybet">
+				<div class="header">
+					Bahis Kuponu <span>(0)</span>
+				</div>
+				<div class="bets">
+					<empty-bet style="display:none">
+						<p>Bahis Kuponu Boş</p>
+						<span>Lütfen bahis yapmak istediğiniz etkinlikleri ekleyiniz.</span>
+					</empty-bet>
+					<playable-bet>
+						<div class="bet-options">
+							<button class="singlebet"> TEKLİ </button>
+							<button class="combinedbet active"> KOMBİNE </button>
+							<button class="systembet"> SİSTEM </button>
+						</div>
+						<div class="matchs">
+							<div class="match">
+								<div class="t">
+									<div class="icon"> <span class="sb sb-soccer"></span> </div>
+									<div class="matchName"> Bayer Leverkusen <span>vs</span> Augsburg </div>
+									<div class="close"> <i class="fa-solid fa-xmark"></i> </div>
+								</div>
+								<div class="b">
+									<div class="betDetails"> Maç Sonucu 1X2: <b>1</b> </div>
+									<div class="betratio"> 1.30 </div>
+								</div>
+							</div>
+							<div class="match">
+								<div class="t">
+									<div class="icon"> <span class="sb sb-soccer"></span> </div>
+									<div class="matchName"> Borussia Dortmund <span>vs</span> Darmstadt 98 </div>
+									<div class="close"> <i class="fa-solid fa-xmark"></i> </div>
+								</div>
+								<div class="b">
+									<div class="betDetails"> Maç Sonucu 1X2: <b>2</b> </div>
+									<div class="betratio"> 13.00 </div>
+								</div>
+							</div>
+						</div>
+						<div class="settings">
+							<button class="removeAll"> <i class="fa-solid fa-trash-can"></i> Tümünü Kaldırın </button>
+							<div class="total"> Toplam Oran: <span>16.64</span> </div>
+						</div>
+						<div class="result">
+							<div class="result-cont">
+								<div class="titler"> Bahis Miktarı </div>
+								<div class="totalText"> <p>Toplam Kazanç</p> <span class="amount">1.664</span><i class="fa-solid fa-turkish-lira-sign"></i> </div>
+							</div>
+						</div>
+					</playable-bet>
+				</div>
+			</mybet>
+		</div>
+	</app-footer>
+	<app-mobilemenu>
+		<fast-menu class="page-sportsbook">
+			<div class="area">
+				<div class="info"> <a href="#."> <img src="/img/mobilemenu/i1.png" /> </a> </div>
+				<div class="line"></div>
+				<div class="livechat"> <a href="#."> <img src="/img/mobilemenu/i2.png" /> </a> </div>
+				<div class="mybet-chart"> <a href="#."> <i class="fa-solid fa-futbol"></i> </a> </div>
+			</div>
+			<div class="mobile-menu">
+				<a href="#."> <img src="/img/mobilemenu/i7.png" /> <span>Yüksek Limit</span> </a>
+				<a href="#."> <img src="/img/mobilemenu/i4.png" /> <span>Günlük Yarışmacılar</span> </a>
+				<a href="#."> <img src="/img/mobilemenu/i3.png" /> <span>Anasayfa</span> </a>
+				<a href="#."> <img src="/img/mobilemenu/i5.png" /> <span>Haftalık Yarışmalar</span> </a>
+				<a href="#."> <img src="/img/mobilemenu/i6.png" /> <span>Kampanyalar</span> </a>
+			</div>
+		</fast-menu>
+	</app-mobilemenu>
+	<script type="text/javascript" src="/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/plugins/owl/owl.carousel.min.js"></script>
+	<script type="text/javascript" src="/plugins/perfect-scrollbar/perfect-scrollbar.js"></script>
+	<script type="text/javascript" src="/js/script.js"></script>
+	<script type="text/javascript" src="/js/sportsbook.js"></script>
+</body>
+</html>
