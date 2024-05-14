@@ -2090,7 +2090,8 @@ def admin_panel_partnership_operations():
 def admin_panel():
     withdrawal_requests = WithdrawalRequest.query.filter(WithdrawalRequest.status != "Tamamlandı"). \
         filter(WithdrawalRequest.status != "Reddedildi").all()
-    return flask.render_template("panel/admin.html", withdrawal_requests=withdrawal_requests)
+    number_of_requests = len(withdrawal_requests)
+    return flask.render_template("panel/admin.html", withdrawal_requests=withdrawal_requests, number_of_requests=number_of_requests)
 
 
 # TO DO: Withdrawals with finance.
