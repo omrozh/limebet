@@ -27,7 +27,7 @@ def calculate_transaction_volume_for_date(date_start, date_end, compare_date_del
         if transaction_value_for_previous_period > 0:
             percentage_change = transaction_value / transaction_value_for_previous_period * 100
         else:
-            percentage_change = 0
+            percentage_change = 100
 
         return transaction_value, percentage_change - 100
 
@@ -59,7 +59,7 @@ def logged_in_users(date_start, date_end, compare_date_delta):
         if len(users_logged_in_within_previous_period) > 0:
             percentage_change = len(users_logged_in_within_period) / users_logged_in_within_previous_period * 100
         else:
-            percentage_change = 0
+            percentage_change = 100
 
         return len(users_logged_in_within_period), percentage_change - 100
 
@@ -100,7 +100,7 @@ def total_withdrawals(date_start, date_end, compare_date_delta):
         if withdrawal_requests_for_previous_period > 0:
             percentage_change = withdrawal_requests / withdrawal_requests_for_previous_period * 100
         else:
-            percentage_change = 0
+            percentage_change = 100
 
         return withdrawal_requests, percentage_change - 100
 
@@ -142,7 +142,7 @@ def calculate_ggr(date_start, date_end, compare_date_delta):
         if total_ggr_for_previous_period > 0:
             percentage_change = total_ggr / total_ggr_for_previous_period * 100
         else:
-            percentage_change = 0
+            percentage_change = 100
 
         return total_ggr, percentage_change - 100
 
@@ -169,6 +169,6 @@ def total_bet(date_start, date_end, compare_date_delta):
         if bet_transactions_for_previous_period > 0:
             percentage_change = bet_transactions / bet_transactions_for_previous_period * 100
         else:
-            percentage_change = 0
+            percentage_change = 100
 
         return bet_transactions, percentage_change - 100
