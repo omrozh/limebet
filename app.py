@@ -1692,7 +1692,7 @@ def coupon():
         return flask.redirect("/login")
     if current_user.get_bonuses("sport-betting", "freebet") is not None:
         current_user.freebet = current_user.get_bonuses("sport-betting", "freebet").bonus_amount
-        db.session.delete(current_user.get_bonuses("sport-betting", "freebet"))
+        current_user.get_bonuses("sport-betting", "freebet").status = "Kullanıldı"
 
     current_coupon = BetCoupon.query.filter_by(user_fk=current_user.id).filter_by(status="Oluşturuluyor").first()
     if not current_coupon:
