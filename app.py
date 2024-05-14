@@ -2099,7 +2099,7 @@ def admin_panel_bonuses():
 @app.route("/admin/bonus_requests", methods=["POST", "GET"])
 def admin_panel_bonus_request():
     bonus_requests = BonusAssigned.query.all()
-    return flask.render_template("panel/bonus_request.html", bonus_requests=bonus_request,
+    return flask.render_template("panel/bonus_request.html", bonus_requests=bonus_requests,
                                  number_of_requests=len(bonus_requests))
 
 
