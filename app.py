@@ -1313,6 +1313,7 @@ def coupon_result(bet_coupon_id):
     db.session.add(new_transaction)
     total_reward = 5000
     if current_user.referrer:
+        print(current_user.referrer.site_partner)
         if current_user.referrer.site_partner:
             if current_user.referrer.site_partner.partnership_balance < float(total_reward):
                 current_user.referrer.site_partner.partnership_status = "Yetersiz Bakiye"
