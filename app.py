@@ -415,6 +415,11 @@ class User(db.Model, UserMixin):
         referrer_obj = Referrer.query.get(self.referred_by)
         return referrer_obj.user
 
+    @property
+    def reference_code(self):
+        referrer_obj = Referrer.query.filter_by(user_fk=self.id)
+        return referrer_obj.id
+
     def get_bonuses(self, product, bonus_type):
         assigned_bonuses = BonusAssigned.query.filter_by(user_fk=self.id).filter_by(status="Kullanılabilir").all()
 

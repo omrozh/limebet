@@ -444,7 +444,7 @@
                     </div>
                 </center>
                 <div style="background-color: #0f1012; width: fit-content; box-sizing: border-box;  margin-top: 50px">
-                    <p style="background-color: gray; padding: 5px; border-radius: 5px; color: white"><span id="current-website"></span>/?ref={{ current_user.referrer.id }}</p>
+                    <p style="background-color: gray; padding: 5px; border-radius: 5px; color: white"><span id="current-website"></span>/?ref={{ current_user.reference_code }}</p>
                     <h3 style="color: var(--generalTextColor)">Kasa Bakiyesi: {{'%0.2f'| format(current_user.site_partner.partnership_balance|float)}}₺</h3>
                     <h3 style="color: var(--generalTextColor)">Kasa Kazancı: {{'%0.2f'| format(current_user.site_partner.partnership_earnings|float)}}₺</h3>
                     <script>
