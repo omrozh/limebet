@@ -67,8 +67,8 @@ def logged_in_users(date_start, date_end, compare_date_delta):
 def total_users(date_start, date_end):
     with app.app_context():
         users_logged_in_within_period = User.query.filter(
-            User.last_login >= date_end,
-            User.last_login <= date_start
+            User.registration_date >= date_end,
+            User.registration_date <= date_start
         ).all()
 
         users_logged_in_within_previous_period = User.query.all()

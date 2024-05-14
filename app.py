@@ -1210,6 +1210,8 @@ def profile():
     return flask.render_template("profile.html", current_user=current_user, withdrawal_requests=reversed(
         WithdrawalRequest.query.filter_by(user_fk=current_user.id).all()))
 
+# TO DO: Implement bonuses in profile.
+
 
 @app.route("/contact_m2", methods=["POST", "GET"])
 def contact_m2():
@@ -2102,10 +2104,62 @@ def admin_panel_partnership_operations():
 
 @app.route("/admin/home")
 def admin_panel():
+    import admin_utils
+    day_difference = int(flask.request.args.get("days", 1))
+    total_deposits, total_deposits_percentage_change = admin_utils.calculate_transaction_volume_for_date(
+        datetime.datetime.today()-datetime.timedelta(days=1),
+        datetime.datetime.today()-datetime.timedelta(days=day_difference),
+        day_difference
+    )
+    total_balance, total_balance_percentage_change = admin_utils.calculate_total_balance()
+    logged_in_users, logged_in_users_percentage_change = admin_utils.logged_in_users(
+        datetime.datetime.today() - datetime.timedelta(days=1),
+        datetime.datetime.today() - datetime.timedelta(days=day_difference),
+        day_difference
+    )
+    total_users, total_users_percentage_change = admin_utils.total_users(
+        datetime.datetime.today() - datetime.timedelta(days=1),
+        datetime.datetime.today() - datetime.timedelta(days=day_difference)
+    )
+    total_withdrawals, total_withdrawals_percentage_change = admin_utils.total_withdrawals(
+        datetime.datetime.today() - datetime.timedelta(days=1),
+        datetime.datetime.today() - datetime.timedelta(days=day_difference),
+        day_difference
+    )
+    ggr, ggr_percentage_change = admin_utils.calculate_ggr(
+        datetime.datetime.today() - datetime.timedelta(days=1),
+        datetime.datetime.today() - datetime.timedelta(days=day_difference),
+        day_difference
+    )
+    total_bet, total_bet_percentage_change = admin_utils.total_bet(
+        datetime.datetime.today() - datetime.timedelta(days=1),
+        datetime.datetime.today() - datetime.timedelta(days=day_difference),
+        day_difference
+    )
     withdrawal_requests = WithdrawalRequest.query.filter(WithdrawalRequest.status != "Tamamlandı"). \
         filter(WithdrawalRequest.status != "Reddedildi").all()
     number_of_requests = len(withdrawal_requests)
-    return flask.render_template("panel/admin.html", withdrawal_requests=withdrawal_requests, number_of_requests=number_of_requests)
+    return flask.render_template(
+        "panel/admin.html",
+        withdrawal_requests=withdrawal_requests,
+        number_of_requests=number_of_requests,
+        total_deposits=total_deposits,
+        total_deposits_percentage_change=total_deposits_percentage_change,
+        total_balance=total_balance,
+        total_balance_percentage_change=total_balance_percentage_change,
+        logged_in_users=logged_in_users,
+        logged_in_users_percentage_change=logged_in_users_percentage_change,
+        total_users=total_users,
+        total_users_percentage_change=total_users_percentage_change,
+        total_withdrawals=total_withdrawals,
+        total_withdrawals_percentage_change=total_withdrawals_percentage_change,
+        ggr=ggr,
+        new_signups=len(User.query.filter_by(datetime.datetime.today() - datetime.timedelta(days=day_difference) < \
+                                             User.registration_date < datetime.datetime.today() - datetime.timedelta(days=1))),
+        ggr_percentage_change=ggr_percentage_change,
+        total_bet=total_bet,
+        total_bet_percentage_change=total_bet_percentage_change
+    )
 
 
 # TO DO: Withdrawals with finance.
