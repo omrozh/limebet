@@ -76,7 +76,7 @@ def total_users(date_start, date_end):
         if len(users_logged_in_within_previous_period) > 0:
             percentage_change = len(users_logged_in_within_period) / len(users_logged_in_within_previous_period) * 100
         else:
-            percentage_change = 0
+            percentage_change = 100 - 100
 
         return len(users_logged_in_within_period), percentage_change
 
