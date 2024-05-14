@@ -8,7 +8,7 @@ def calculate_transaction_volume_for_date(date_start, date_end, compare_date_del
             TransactionLog.transaction_date >= date_start,
             TransactionLog.transaction_date <= date_end,
             TransactionLog.transaction_status == "completed",
-            TransactionLog.transaction_type != "bahis"
+            TransactionLog.transaction_type == "yatirim"
         ).all()
 
         previous_start = date_start - timedelta(days=compare_date_delta)
@@ -17,7 +17,7 @@ def calculate_transaction_volume_for_date(date_start, date_end, compare_date_del
             TransactionLog.transaction_date >= previous_end,
             TransactionLog.transaction_date <= previous_start,
             TransactionLog.transaction_status == "completed",
-            TransactionLog.transaction_type != "bahis"
+            TransactionLog.transaction_type == "yatirim"
         ).all()
 
         transaction_value = sum([t.transaction_amount for t in transactions])
