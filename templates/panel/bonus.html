@@ -220,7 +220,8 @@
                                           {% if form_type == "ilk-yatirim-bonusu" or form_type == "yatirim-bonusu" %}
                                             <div id="ilk-yatirim-bonusu" class="bonus-add-form">
                                                 <input name="bonus_name" type="text" placeholder="Bonus Adı" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
-                                                  <input name="bonus_amount" type="number" placeholder="Bonus Miktarı %" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                                                  <input name="minimum_bonus_amount" type="number" placeholder="Minimum Bonus Miktarı %" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                                                <input name="maksimum_bonus_amount" type="number" placeholder="Maksimum Bonus Miktarı %" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
                                                 <select style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
                                                   <option value="select-type">Şartlar ve Koşullar</option>
                                                   <option value="sport-betting">generalBonusTerms</option>
@@ -286,7 +287,8 @@
                                             {% elif form_type == "freebet" %}
                                             <div id="freebet" class="bonus-add-form">
                                                 <input name="bonus_name" type="text" placeholder="Bonus Adı" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
-                                                  <input name="bonus_amount" type="number" placeholder="Freebet Miktarı" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                                                  <input name="minimum_bonus_amount" type="number" placeholder="Minimum Freebet Miktarı" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                                                <input name="maximum_bonus_amount" type="number" placeholder="Maksimum Freebet Miktarı" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
                                                 <select style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
                                                   <option value="select-type">Şartlar ve Koşullar</option>
                                                   <option value="sport-betting">generalBonusTerms</option>
@@ -350,8 +352,9 @@
                                             {% elif form_type == "freespin" %}
                                             <div id="freebet" class="bonus-add-form">
                                                 <input name="bonus_name" type="text" placeholder="Bonus Adı" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
-                                                  <input name="bonus_amount" type="number" placeholder="Freespin Miktarı" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
-                                                <input name="bonus_amount" type="number" placeholder="Bahis Miktarı" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                                                  <input name="minimum_bonus_amount" type="number" placeholder="Minimum Freespin Miktarı" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                                                    <input name="maksimum_bonus_amount" type="number" placeholder="Maksimum Freespin Miktarı" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                                                <input name="round_value" type="number" placeholder="Bahis Miktarı" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
                                                 <select style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
                                                   <option value="select-type">Şartlar ve Koşullar</option>
                                                   <option value="sport-betting">generalBonusTerms</option>
