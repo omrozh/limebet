@@ -230,6 +230,11 @@
             <span class="navbar-item" style="background: #0f1012; ; padding: 15px; box-sizing: border-box; display: inline-block; color: white" onclick="changeDivision('bets', this)">
                 Bahisler
             </span>
+            {% if current_user.site_partner %}
+            <span class="navbar-item" style="background: #0f1012; ; padding: 15px; box-sizing: border-box; display: inline-block; color: white" onclick="changeDivision('partnership', this)">
+                Kasa İşlemleri
+            </span>
+            {% endif %}
             <span class="navbar-item" style="background: #0f1012; ; padding: 15px; box-sizing: border-box; display: inline-block; ; color: white" onclick="document.location = '/logout'">
                 Çıkış Yap
             </span>
@@ -427,6 +432,29 @@
                 </div>
             {% endfor %}
         </div>
+        {% if current_user.site_partner %}
+
+            <div id="partnership" class="division-profile" style="display: block">
+                <center>
+                    <br>
+                    <div style="background-color: #7b00ff; font-family: 'Open Sans', sans-serif; color: white; padding: 10px; width: 90%; text-align: left; margin-top: 25px">
+                        <p>
+                            Kasa İşlemleri
+                        </p>
+                    </div>
+                </center>
+                <div style="background-color: #0f1012; width: fit-content; box-sizing: border-box;  margin-top: 50px">
+                    <p style="background-color: gray; padding: 5px; border-radius: 5px; color: white"><span id="current-website"></span>/?ref={{ current_user.referrer.id }}</p>
+                    <h3 style="color: var(--generalTextColor)">Kasa Bakiyesi: {{'%0.2f'| format(current_user.site_partner.partnership_balance|float)}}₺</h3>
+                    <h3 style="color: var(--generalTextColor)">Kasa Kazancı: {{'%0.2f'| format(current_user.site_partner.partnership_earnings|float)}}₺</h3>
+                    <script>
+                        document.getElementById("current-website").innerHTML = window.location.origin;
+                    </script>
+                </div>
+                <br>
+                <br>
+            </div>
+        {% endif %}
         <div id="previous-competitions" class="division-profile" style="display: none">
             <h1 style="color: white; text-align: left; font-family: 'Open Sans', sans-serif; width: 80%">Geçmiş Kadrolar</h1>
             {% if current_user.previous_drafts|length == 0%}

@@ -150,6 +150,13 @@ class Referrer(db.Model):
         return User.query.get(self.user_fk)
 
 
+class SitePartner(db.Model):
+    id = db.Column(db.String, primary_key=True)
+    commission_rate = db.Column(db.Integer)
+    partnership_earnings = db.Column(db.Float)
+    partnership_balance = db.Column(db.Float)
+
+
 class ContactM2(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String)
@@ -397,6 +404,16 @@ class User(db.Model, UserMixin):
     casino_bonus_balance = db.Column(db.Float)
     sports_bonus_balance = db.Column(db.Float)
     completed_first_deposit = db.Column(db.Boolean)
+    site_partner_fk = db.Column(db.Integer)
+
+    @property
+    def site_partner(self):
+        return SitePartner.query.get(self.site_partner_fk)
+
+    @property
+    def referrer(self):
+        referrer_obj = Referrer.query.get(self.referred_by)
+        return referrer_obj.user
 
     def get_bonuses(self, product, bonus_type):
         assigned_bonuses = BonusAssigned.query.filter_by(user_fk=self.id).filter_by(status="Kullanılabilir").all()
@@ -1255,7 +1272,7 @@ def index():
 
 @app.route("/claim/bet/<bet_coupon_id>")
 @login_required
-def coupon_id(bet_coupon_id):
+def coupon_result(bet_coupon_id):
     from cloudbet import get_status_of_bet
     bet_coupon = BetCoupon.query.get(bet_coupon_id)
     if not bet_coupon.status == "Oluşturuldu":
@@ -1285,6 +1302,10 @@ def coupon_id(bet_coupon_id):
                                      payment_unique_number=f"Spor Bahisi Kazancı - Kupon {bet_coupon_id}")
 
     db.session.add(new_transaction)
+
+    if current_user.referrer:
+        if current_user.referrer.site_partner:
+            current_user.referrer.site_partner.partnership_balance -= float(total_reward)
 
     current_user.balance += total_reward
     db.session.commit()
@@ -1791,6 +1812,11 @@ def coupon():
         else:
             current_user.balance -= net_change
             current_coupon.freebet_amount = 0
+
+        if current_user.referrer:
+            if current_user.referrer.site_partner:
+                current_user.referrer.site_partner.partnership_earnings += float(current_coupon.total_value)
+
         db.session.commit()
         return flask.redirect("/profile")
     return flask.render_template("bahis/coupon.html", current_coupon=current_coupon, current_user=current_user,
@@ -2022,9 +2048,52 @@ def admin_panel_providers():
     return flask.render_template("panel/providers.html", providers=providers)
 
 
+@app.route("/admin/partnership", methods=["POST", "GET"])
+def admin_panel_partnership():
+    partner = User.query.get(flask.request.args["user_id"])
+
+    if flask.request.method == "POST":
+        new_site_partner = SitePartner(
+            commission_rate=int(flask.request.values.get("commission_rate")),
+            partnership_earnings=0,
+            partnership_balance=0,
+            id=str(uuid4())
+        )
+
+        new_referrer = Referrer(
+            user_fk=partner.id,
+            id=str(uuid4()),
+            commission_rate=0
+        )
+        partner.site_partner_fk = new_site_partner.id
+
+        db.session.add(new_referrer)
+        db.session.add(new_site_partner)
+        db.session.commit()
+
+        return flask.redirect("/admin/players")
+
+    return flask.render_template("panel/partnership.html", partner=partner)
+
+
+@app.route("/admin/partnership/balance", methods=["POST", "GET"])
+def admin_panel_partnership_operations():
+    partnership = SitePartner.query.get(flask.request.args["partner_id"])
+    if flask.request.method == "POST":
+        partnership.partnership_balance += flask.request.values["balance_increase"]
+        db.session.commit()
+        return flask.redirect("/admin/players")
+    return flask.render_template("panel/partnership_balance.html", partnership=partnership)
+
+
 @app.route("/admin/home")
 def admin_panel():
-    return flask.render_template("panel/admin.html")
+    withdrawal_requests = WithdrawalRequest.query.filter(WithdrawalRequest.status != "Tamamlandı"). \
+        filter(WithdrawalRequest.status != "Reddedildi").all()
+    return flask.render_template("panel/admin.html", withdrawal_requests=withdrawal_requests)
+
+
+# TO DO: Withdrawals with finance.
 
 
 @app.route("/admin/games/<provider_id>/<provider_name>")
@@ -2263,7 +2332,11 @@ def casino_result_bet():
                                          payment_unique_number=f"Casino Kazancı - Oyun ID: {flask.request.values.get('gameId')}")
         db.session.add(new_transaction)
 
-        subject_user.balance += float(flask.request.args.get("amount"))
+        subject_user.balance -= float(flask.request.args.get("amount"))
+
+        if subject_user.referrer:
+            if subject_user.referrer.site_partner:
+                subject_user.referrer.site_partner.partnership_balance -= float(flask.request.args.get("amount"))
     if flask.request.args.get("eventType") == "Lose":
         new_transaction = TransactionLog(transaction_amount=float(flask.request.args.get("amount")),
                                          transaction_type="casino_loss", transaction_date=datetime.date.today(),
@@ -2271,6 +2344,11 @@ def casino_result_bet():
                                          payment_unique_number=f"Casino Kaybı - Oyun ID: {flask.request.values.get('gameId')}")
         db.session.add(new_transaction)
         subject_user.balance -= net_change
+
+        if subject_user.referrer:
+            if subject_user.referrer.site_partner:
+                subject_user.referrer.site_partner.partnership_earnings += float(net_change)
+
     db.session.commit()
     return flask.jsonify({
         "status": True,
