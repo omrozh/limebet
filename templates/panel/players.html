@@ -221,7 +221,8 @@
                                     <th scope="col">Hesaptaki Güncel Bakiye</th>
                                     <th scope="col">Bahis Hacmi</th>
                                     <th scope="col">Son Giriş</th>
-                                    <th>Partner Statüsü</th>
+                                    <th>Kasa Statüsü</th>
+                                    <th>Kasa Komisyon Oranı</th>
                                     <th>Kasa Bakiyesi</th>
                                     <th>Kasa Kazancı</th>
                                     <th></th>
@@ -273,6 +274,9 @@
                                     </td>
                                     <td>
                                         {{ i.site_partner.partnership_status }}
+                                    </td>
+                                    <td>
+                                        {{ i.site_partner.commission_rate }}
                                     </td>
                                     <td>
                                         {{ i.site_partner.partnership_balance }}
