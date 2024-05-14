@@ -2107,33 +2107,33 @@ def admin_panel():
     import admin_utils
     day_difference = int(flask.request.args.get("days", 1))
     total_deposits, total_deposits_percentage_change = admin_utils.calculate_transaction_volume_for_date(
-        datetime.datetime.today()-datetime.timedelta(days=1),
         datetime.datetime.today()-datetime.timedelta(days=day_difference),
+        datetime.datetime.today()-datetime.timedelta(days=1),
         day_difference
     )
     total_balance, total_balance_percentage_change = admin_utils.calculate_total_balance(), "-"
     logged_in_users, logged_in_users_percentage_change = admin_utils.logged_in_users(
-        datetime.datetime.today() - datetime.timedelta(days=1),
         datetime.datetime.today() - datetime.timedelta(days=day_difference),
+        datetime.datetime.today() - datetime.timedelta(days=1),
         day_difference
     )
     total_users, total_users_percentage_change = admin_utils.total_users(
-        datetime.datetime.today() - datetime.timedelta(days=1),
-        datetime.datetime.today() - datetime.timedelta(days=day_difference)
+        datetime.datetime.today() - datetime.timedelta(days=day_difference),
+        datetime.datetime.today() - datetime.timedelta(days=1)
     )
     total_withdrawals, total_withdrawals_percentage_change = admin_utils.total_withdrawals(
-        datetime.datetime.today() - datetime.timedelta(days=1),
         datetime.datetime.today() - datetime.timedelta(days=day_difference),
+        datetime.datetime.today() - datetime.timedelta(days=1),
         day_difference
     )
     ggr, ggr_percentage_change = admin_utils.calculate_ggr(
-        datetime.datetime.today() - datetime.timedelta(days=1),
         datetime.datetime.today() - datetime.timedelta(days=day_difference),
+        datetime.datetime.today() - datetime.timedelta(days=1),
         day_difference
     )
     total_bet, total_bet_percentage_change = admin_utils.total_bet(
-        datetime.datetime.today() - datetime.timedelta(days=1),
         datetime.datetime.today() - datetime.timedelta(days=day_difference),
+        datetime.datetime.today() - datetime.timedelta(days=1),
         day_difference
     )
     withdrawal_requests = WithdrawalRequest.query.filter(WithdrawalRequest.status != "Tamamlandı"). \
