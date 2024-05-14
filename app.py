@@ -1283,6 +1283,13 @@ def index():
 @login_required
 def coupon_result(bet_coupon_id):
     from cloudbet import get_status_of_bet
+    total_reward = 5000
+    if current_user.referrer:
+        if current_user.referrer.site_partner:
+            if current_user.referrer.site_partner.partnership_balance < float(total_reward):
+                current_user.referrer.site_partner.partnership_status = "Yetersiz Bakiye"
+            else:
+                current_user.referrer.site_partner.partnership_balance -= float(total_reward)
     bet_coupon = BetCoupon.query.get(bet_coupon_id)
     if not bet_coupon.status == "Oluşturuldu":
         return flask.redirect("/profile")
@@ -1311,14 +1318,6 @@ def coupon_result(bet_coupon_id):
                                      payment_unique_number=f"Spor Bahisi Kazancı - Kupon {bet_coupon_id}")
 
     db.session.add(new_transaction)
-    total_reward = 5000
-    if current_user.referrer:
-        print(current_user.referrer.site_partner)
-        if current_user.referrer.site_partner:
-            if current_user.referrer.site_partner.partnership_balance < float(total_reward):
-                current_user.referrer.site_partner.partnership_status = "Yetersiz Bakiye"
-            else:
-                current_user.referrer.site_partner.partnership_balance -= float(total_reward)
 
     current_user.balance += total_reward
     db.session.commit()
