@@ -278,7 +278,7 @@
                                     </td>
                                     <td class="text-end">
                                         <a href="#" class="btn btn-sm btn-neutral">Detaylar</a>
-                                        {% if not site_partner %}
+                                        {% if not i.site_partner %}
                                             <a href="/admin/partnership?user_id={{ i.id }}" class="btn btn-sm btn-neutral">Kasa Yap</a>
                                         {% else %}
                                             <a href="/admin/partnership/balance?partnership_id={{ i.partnership.id }}" class="btn btn-sm btn-neutral">Kasa Bakiyesini Arttır</a>
