@@ -1826,7 +1826,7 @@ def coupon():
             current_coupon.freebet_amount = 0
 
         if current_user.referrer:
-            if current_user.referrer.site_partner and current_user.referrer.site_partner.status == "Aktif":
+            if current_user.referrer.site_partner and current_user.referrer.site_partner.partnership_status == "Aktif":
                 current_user.referrer.site_partner.partnership_earnings += float(current_coupon.total_value)
 
         db.session.commit()
