@@ -152,7 +152,7 @@ def total_bet(date_start, date_end, compare_date_delta):
         bet_transactions = sum([i.transaction_amount for i in TransactionLog.query.filter(
             TransactionLog.transaction_date >= date_end,
             TransactionLog.transaction_date <= date_start,
-            TransactionLog.status == "completed",
+            TransactionLog.transaction_status == "completed",
             TransactionLog.transaction_type.in_(["place_bet", "casino_win", "casino_loss"])
         ).all()])
 
@@ -162,7 +162,7 @@ def total_bet(date_start, date_end, compare_date_delta):
         bet_transactions_for_previous_period = sum([i.transaction_amount for i in TransactionLog.query.filter(
             TransactionLog.transaction_date >= previous_end,
             TransactionLog.transaction_date <= previous_start,
-            TransactionLog.status == "completed",
+            TransactionLog.transaction_status == "completed",
             TransactionLog.transaction_type.in_(["place_bet", "casino_win", "casino_loss"])
         ).all()])
 
