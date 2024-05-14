@@ -2154,8 +2154,8 @@ def admin_panel():
         total_withdrawals=total_withdrawals,
         total_withdrawals_percentage_change=total_withdrawals_percentage_change,
         ggr=ggr,
-        new_signups=len(User.query.filter_by(datetime.datetime.today() - datetime.timedelta(days=day_difference) < \
-                                             User.registration_date < datetime.datetime.today() - datetime.timedelta(days=1))),
+        new_signups=len(User.query.filter(datetime.datetime.today() - datetime.timedelta(days=day_difference) < \
+                                             User.registration_date < datetime.datetime.today() - datetime.timedelta(days=1)).all()),
         ggr_percentage_change=ggr_percentage_change,
         total_bet=total_bet,
         total_bet_percentage_change=total_bet_percentage_change
