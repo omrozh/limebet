@@ -1569,7 +1569,7 @@ def signup():
             username=values["username"],
             email=values["email"],
             password=bcrypt.generate_password_hash(values["password"]),
-            referred_by=flask.request.cookies.get('somecookiename', None),
+            referred_by=flask.request.cookies.get('referrer', None),
             freebet_usable=0,
             freebet=0,
             registration_date=datetime.datetime.now(),
