@@ -2078,7 +2078,7 @@ def admin_panel_partnership():
 
 @app.route("/admin/partnership/balance", methods=["POST", "GET"])
 def admin_panel_partnership_operations():
-    partnership = SitePartner.query.get(flask.request.args["partner_id"])
+    partnership = SitePartner.query.get(flask.request.args["partnership_id"])
     if flask.request.method == "POST":
         partnership.partnership_balance += flask.request.values["balance_increase"]
         db.session.commit()
