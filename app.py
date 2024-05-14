@@ -9,6 +9,7 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, current_user, login_required, login_user, UserMixin, logout_user
 from flask_bcrypt import Bcrypt
+from sqlalchemy import desc
 import requests
 
 import shortuuid
@@ -214,6 +215,7 @@ class BonusRequest(db.Model):
     def user(self):
         return User.query.get(self.user_fk)
 
+
 class DoubleOrNothing(db.Model):
     id = db.Column(db.String, primary_key=True)
     current_offer = db.Column(db.Float)
@@ -388,10 +390,10 @@ class User(db.Model, UserMixin):
 
     def get_bonuses(self, product, bonus_type):
         assigned_bonuses = BonusAssigned.query.filter_by(user_fk=self.id).filter_by(status="Kullanılabilir").all()
-        
+
         for assigned_bonus in assigned_bonuses:
             bonus = Bonus.query.get(assigned_bonus.bonus_fk)
-            
+
             if bonus.bonus_type == bonus_type and bonus.bonus_product == product:
                 if datetime.datetime.now() < assigned_bonus.bonus_assigned_date + \
                         datetime.timedelta(days=bonus.valid_thru):
@@ -402,6 +404,7 @@ class User(db.Model, UserMixin):
 
     def give_percent_bonus(self, bonus, amount):
         return amount / 100 * bonus.bonus_amount
+
     # To implement: freespin, loss, freebet, try
 
     @property
@@ -437,6 +440,24 @@ class User(db.Model, UserMixin):
         db.session.commit()
 
     # TO DO: call this method everytime user makes deposit
+
+    def get_last(self, transaction_type):
+        latest_transaction = TransactionLog.query.filter(
+            TransactionLog.transaction_status == "Tamamlandı",
+            TransactionLog.transaction_type == transaction_type,
+            TransactionLog.user_fk == self.id
+        ).order_by(desc(TransactionLog.transaction_date)).first()
+
+        if latest_transaction:
+            return latest_transaction
+        else:
+            return None
+
+    @property
+    def total_bets(self):
+        return sum([i.transaction_amount for i in TransactionLog.query.filter(
+            TransactionLog.transaction_type in ["place_bet", "casino_win", "casino_loss"]
+        ).all()])
 
     @property
     def user_information(self):
@@ -687,7 +708,7 @@ class TransactionLog(db.Model):
     transaction_type = db.Column(db.String)
     transaction_status = db.Column(db.String, default="initiated")
     transaction_date = db.Column(db.Date)
-    payment_information_fk = db.Column(db.Integer)
+    payment_channel = db.Column(db.String)
     user_fk = db.Column(db.Integer)
     payment_unique_number = db.Column(db.String)
 
@@ -1979,7 +2000,9 @@ def casino_game(game_id):
         current_user.get_bonuses("casino", "freespin").status = "Kullanıldı"
     from casino_utils import get_game_iframe
 
-    return flask.render_template("casino-game.html", game_iframe=get_game_iframe(game_id, current_user.id, current_user.user_uuid, demo="true", bonus=freespin_bonus))
+    return flask.render_template("casino-game.html",
+                                 game_iframe=get_game_iframe(game_id, current_user.id, current_user.user_uuid,
+                                                             demo="true", bonus=freespin_bonus))
 
 
 @app.errorhandler(500)
@@ -2075,14 +2098,17 @@ def admin_panel_bonuses():
 
 @app.route("/admin/users")
 def admin_panel_users():
-    return flask.render_template("panel/users.html")
+    users = User.query.all()
+    number_of_users = len(users)
+    return flask.render_template("panel/users.html", users=users, number_of_users=number_of_users)
 
 
 @app.route("/admin/finance")
 def admin_panel_finance():
     transactions = TransactionLog.query.all()
     number_of_transactions = len(transactions)
-    return flask.render_template("panel/finance.html", transactions=transactions, number_of_transactions=number_of_transactions)
+    return flask.render_template("panel/finance.html", transactions=transactions,
+                                 number_of_transactions=number_of_transactions)
 
 
 @app.route("/admin/deposit-methods")
@@ -2219,7 +2245,8 @@ def casino_result_bet():
 
 @app.route("/promotions")
 def promotions():
-    bonuses = Bonus.query.filter(Bonus.start_date <= datetime.datetime.today().date(), Bonus.end_date >= datetime.datetime.today().date()).all()
+    bonuses = Bonus.query.filter(Bonus.start_date <= datetime.datetime.today().date(),
+                                 Bonus.end_date >= datetime.datetime.today().date()).all()
     return flask.render_template("promotions.html", bonuses=bonuses, current_user=current_user)
 
 
@@ -2232,7 +2259,8 @@ def promotion():
 
 @app.route("/bonus_request")
 def bonus_request():
-    new_bonus_request = BonusAssigned.query.filter_by(user_fk=current_user.id).filter_by(bonus_fk=flask.request.args.get("promotion_id")).filter_by(status="Talep Edildi").first()
+    new_bonus_request = BonusAssigned.query.filter_by(user_fk=current_user.id).filter_by(
+        bonus_fk=flask.request.args.get("promotion_id")).filter_by(status="Talep Edildi").first()
     if new_bonus_request:
         return '''
             <script>

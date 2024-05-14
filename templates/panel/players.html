@@ -219,57 +219,54 @@
                                     <th scope="col">En Son Para Yatırma</th>
                                     <th scope="col">En Son Para Çekme</th>
                                     <th scope="col">Hesaptaki Güncel Bakiye</th>
-                                    <th scope="col">Toplam Bıraktığı Kar (GGR)</th>
                                     <th scope="col">Bahis Hacmi</th>
-                                    <th scope="col">En Son Oynadığı Oyun</th>
                                     <th scope="col">Son Giriş</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
+                                {% for i in users %}
                                 <tr>
                                     <td>
                                         <a class="text-heading font-semibold" href="#">
-                                            1
+                                            {{ i.id }}
                                         </a>
                                     </td>
                                     <td>
 
                                         <a class="text-heading font-semibold" href="#">
-                                            oyuncu1
+                                            {{ i.username }}
                                         </a>
                                     </td>
                                     <td>
-                                        Evet
+                                        {% if i.user_information.tc_kimlik_no %}
+                                            Evet
+                                        {% else %}
+                                            Hayır
+                                        {% endif %}
                                     </td>
                                     <td>
                                         <a class="text-heading font-semibold" href="#">
-                                            Bonus Avcısı
+                                            -
                                         </a>
                                     </td>
                                     <td>
                                         -
                                     </td>
                                     <td>
-                                        Nisan, 28 2024 11:18:50
+                                        {{ i.get_last("yatirim").transaction_date }}
                                     </td>
                                     <td>
-                                        Nisan, 28 2024 12:18:50
+                                        {{ i.get_last("çekim").transaction_date }}
                                     </td>
                                     <td>
-                                        482.43₺
+                                        {{ i.balance }}
                                     </td>
                                     <td>
-                                        1182.35₺
+                                        {{'%0.2f'| format(i.total_bets|float)}}₺
                                     </td>
                                     <td>
-                                        8273.35₺
-                                    </td>
-                                    <td>
-                                        Sweet Bonanza
-                                    </td>
-                                    <td>
-                                        Nisan, 28 2024 11:15:50
+                                        {{ i.last_login }}
                                     </td>
                                     <td class="text-end">
                                         <a href="#" class="btn btn-sm btn-neutral">Detaylar</a>
@@ -278,11 +275,12 @@
                                         </button>
                                     </td>
                                 </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
                     <div class="card-footer border-0 py-5">
-                        <span class="text-muted text-sm">1 Kullanıcı Mevcut</span>
+                        <span class="text-muted text-sm">{{ number_of_users }} Kullanıcı Mevcut</span>
                     </div>
                 </div>
                                     </div>
