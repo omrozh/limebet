@@ -283,6 +283,70 @@
                                                   <input type="submit" placeholder="" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 200px; background: #1e7bf2; color: white" value="Kaydet">
                                                 </div>
                                               </div>
+                                            {% if form_type == "freebet" %}
+                                            <div id="freebet" class="bonus-add-form">
+                                                <input name="bonus_name" type="text" placeholder="Bonus Adı" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                                                  <input name="bonus_amount" type="number" placeholder="Bonus Miktarı" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                                                <select style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                                                  <option value="select-type">Şartlar ve Koşullar</option>
+                                                  <option value="sport-betting">generalBonusTerms</option>
+                                                  <option value="casino">generalTermsAndConditions</option>
+                                                </select>
+                                                <select name="who_can_cancel" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 200px">
+                                                  <option value="select-type">Kimler iptal edebilir?</option>
+                                                  <option value="only_admin">Sadece Admin</option>
+                                                  <option value="customer">Müşteri</option>
+                                                </select>
+                                                <select name="on_cancel" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 200px">
+                                                  <option value="select-type">İptal Ayarları</option>
+                                                  <option value="with_profit">Tüm Karıyla Beraber</option>
+                                                  <option value="only_bonus">Sadece Bonus Bakiyesiyle</option>
+                                                </select>
+                                                <br>
+                                                <br>
+                                                <select name="currency" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 200px">
+                                                  <option value="select-type">Para Birimi</option>
+                                                  <option value="TRY">TRY</option>
+                                                </select>
+                                                <input name="minimum_spin" type="number" placeholder="Çevirim" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                                                <br>
+                                                <br>
+                                                <div style="display: inline-block">
+                                                  <label for="start-date">Başlama Tarihi</label>
+                                                  <br>
+                                                  <input name="start_date" id="start-date" type="date" placeholder="" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 200px">
+                                                </div>
+                                                <div style="display: inline-block">
+                                                  <label for="end-date">Bitiş Tarihi</label>
+                                                  <br>
+                                                  <input name="end_date" id="end-date" type="date" placeholder="" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 200px">
+                                                </div>
+                                                <div style="display: inline-block">
+                                                  <label for="ends-in">Kullandıktan x gün sonra sona erer</label>
+                                                  <br>
+                                                  <input name="valid_thru" id="ends-in" type="number" placeholder="" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 300px">
+                                                </div>
+                                                <div style="display: inline-block">
+                                                  <label for="bonus-image">Bonus Görseli</label>
+                                                  <br>
+                                                  <input name="bonus_image" id="bonus-image" type="file" placeholder="" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 300px">
+                                                </div>
+                                                <br>
+                                                <br>
+                                                <div style="display: inline-block">
+                                                  <label for="bonus-description">Bonus Açıklaması</label>
+                                                  <br>
+                                                  <textarea name="bonus_description" id="bonus-description" placeholder="Bonus Açıklaması" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 70vw"></textarea>
+                                                </div>
+                                                <br>
+                                                <br>
+                                                  <input name="auto_bonus" type="checkbox"> Otomatik bonus tanımla
+                                                  <br>
+                                                  <br>
+                                                <div style="display: inline-block">
+                                                  <input type="submit" placeholder="" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 200px; background: #1e7bf2; color: white" value="Kaydet">
+                                                </div>
+                                              </div>
                                             {% endif %}
                                     </div>
                                       <br>
