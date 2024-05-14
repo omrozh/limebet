@@ -449,9 +449,9 @@ class User(db.Model, UserMixin):
         ).order_by(desc(TransactionLog.transaction_date)).first()
 
         if latest_transaction:
-            return latest_transaction
+            return latest_transaction.transaction_date
         else:
-            return None
+            return "-"
 
     @property
     def total_bets(self):
