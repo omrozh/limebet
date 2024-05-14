@@ -2111,7 +2111,7 @@ def admin_panel():
         datetime.datetime.today()-datetime.timedelta(days=day_difference),
         day_difference
     )
-    total_balance, total_balance_percentage_change = admin_utils.calculate_total_balance()
+    total_balance, total_balance_percentage_change = admin_utils.calculate_total_balance(), "-"
     logged_in_users, logged_in_users_percentage_change = admin_utils.logged_in_users(
         datetime.datetime.today() - datetime.timedelta(days=1),
         datetime.datetime.today() - datetime.timedelta(days=day_difference),
