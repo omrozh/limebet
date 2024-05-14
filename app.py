@@ -1284,13 +1284,14 @@ def index():
 def coupon_result(bet_coupon_id):
     from cloudbet import get_status_of_bet
     total_reward = 5000
-    print(current_user.referrer.site_partner)
+    print(current_user.referrer.site_partner.partnership_balance)
     if current_user.referrer:
         if current_user.referrer.site_partner:
             if current_user.referrer.site_partner.partnership_balance < float(total_reward):
                 current_user.referrer.site_partner.partnership_status = "Yetersiz Bakiye"
             else:
                 current_user.referrer.site_partner.partnership_balance -= float(total_reward)
+    db.session.commit()
     bet_coupon = BetCoupon.query.get(bet_coupon_id)
     if not bet_coupon.status == "Oluşturuldu":
         return flask.redirect("/profile")
