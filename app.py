@@ -1680,7 +1680,7 @@ def bahis():
         if i.match_league not in sports_leagues:
             sports_leagues.append(i.match_league)
     return flask.render_template("bahis/bahis-yeni.html", open_bets=open_bets, canli_bahis=False,
-                                 sports_leagues=sports_leagues, number_of_chunks=number_of_chunks)
+                                 sports_leagues=sports_leagues, number_of_chunks=number_of_chunks, offset=offset)
 
 # TO DO: Complete sports betting integration FE.
 
