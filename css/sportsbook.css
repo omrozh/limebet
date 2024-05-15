@@ -490,7 +490,7 @@ match-details.match-details .odds-cont .odds-opts .odds-list .odd-detail .odds b
 .subitem2 a {
     color: #fff;
     font-size: 12px;
-    background: #7f57b6;
+    background: var(--baseColor);
     border-radius: 10px;
     width: 100%;
     display: block;
@@ -561,7 +561,7 @@ mybet.mybet playable-bet .bet-options button {
     flex: 0 32%;
 }
 mybet.mybet playable-bet .bet-options button.active {
-    background: #7f57b6;
+    background: var(--baseColor);
 }
 mybet.mybet playable-bet .matchs {
     display: flex;
@@ -624,7 +624,7 @@ mybet.mybet playable-bet .matchs .match .b .betDetails b {
     color: #fff;
 }
 mybet.mybet playable-bet .matchs .match .b .betratio {
-    background: #7f57b6;
+    background: var(--baseColor);
     color: #fff;
     padding: 5px 10px;
     border-radius: 10px;
@@ -644,7 +644,7 @@ mybet.mybet playable-bet .settings .removeAll, mybet.mybet playable-bet .setting
     border: none;
 }
 mybet.mybet playable-bet .settings .total span {
-    background: #7f57b6;
+    background: var(--baseColor);
     color: #fff;
     padding: 5px 10px;
     border-radius: 10px;
@@ -658,7 +658,7 @@ mybet.mybet playable-bet .result {
     border-radius: 10px;
 }
 mybet.mybet playable-bet .result .result-cont {
-    background: #7f57b6;
+    background: var(--baseColor);
     border-radius: 10px;
     padding: 5px 10px;
     display: flex;
