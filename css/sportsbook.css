@@ -527,7 +527,7 @@ mybet.mybet span {
     color: #999999;
 }
 mybet.mybet .header {
-    background: #6b3d8e;
+    background: var(--baseColor);
     color: #fff;
     text-align: center;
     padding: 15px 75px;
