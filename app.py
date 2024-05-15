@@ -562,6 +562,16 @@ class OpenBet(db.Model):
         get_results(self.api_match_id)
 
     @property
+    def team_1_logo(self):
+        from betting_utils import get_team_badge
+        return get_team_badge(self.team_1)
+
+    @property
+    def team_2_logo(self):
+        from betting_utils import get_team_badge
+        return get_team_badge(self.team_2)
+
+    @property
     def who_wins_bet(self):
         return BetOption.query.filter_by(open_bet_fk=self.id).filter_by(game_name="Maç Sonucu").first()
 
@@ -1713,7 +1723,7 @@ def canli_bahis_mobile():
 def bahis_mac(bahis_id):
     open_bet = OpenBet.query.get(bahis_id)
     from_frame = flask.request.args.get("iframe", False) == "True"
-    return flask.render_template("bahis/bahis_detay.html", open_bet=open_bet, from_frame=from_frame)
+    return flask.render_template("bahis/bahis_detay_yeni.html", open_bet=open_bet, from_frame=from_frame)
 
 
 @app.route("/take_bet/<odd_id>")

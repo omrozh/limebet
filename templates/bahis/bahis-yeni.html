@@ -81,7 +81,6 @@
 								<a href="#." class="mm-item"> <span class="sb sb-tennis"></span> Tenis <span class="cou">(340)</span> </a>
 								<a href="#." class="mm-item"> <span class="sb sb-volleyball"></span> Voleybol <span class="cou">(75)</span> </a>
 								<a href="#." class="mm-item"> <span class="sb sb-icehockey"></span> Buz Hokeyi <span class="cou">(59)</span> </a>
-								<a href="#." class="mm-item"> <span class="sb sb-pingpong"></span> Masa Tenisi <span class="cou">(59)</span> </a>
 							</div>
 						</div>
 						<div class="match-items desktop-menu">
@@ -280,9 +279,6 @@
 					<div class="sbms">
 						<a href="#." class="active"> Anasayfa </a>
 						<a href="#."> Genel Görünüm </a>
-						<a href="#."> Kombine Görünüm </a>
-						<a href="#."> Takvim </a>
-						<a href="#."> Sonuçlar </a>
 					</div>
 					<div class="rgmts">
 						<a href="#."> <i class="fa-solid fa-calculator"></i> </a>
@@ -328,7 +324,7 @@
 								<div class="item">
 									<div class="p1">
 										<div class="mtchdtls">
-											<span class="match"> <a href="#."> {{ i.team_1 }} - {{ i.team_2 }} </a> </span>
+											<span class="match"> <a onclick="document.getElementById('iframe-betting-detail').src = '/bahis/mac/{{ i.id }}'" href="#."> {{ i.team_1 }} - {{ i.team_2 }} </a> </span>
 											<span class="match-league"> {{ i.match_league }} </span>
 										</div>
 									</div>
@@ -352,47 +348,28 @@
 					</div>
 				</div>
 				<match-details class="match-details" style="display:none">
-					<div class="firsdt-cont">
+					<iframe src="" id="iframe-betting-detail" style="width: 100%; height: 100%; min-height: 50vh" frameborder="0"></iframe>
+					<div style="display: none">
+						<div class="firsdt-cont">
 						<div class="firsdt">
 							<div class="league">
-								<span class="logo"> <img src="/img/sportsbooks/logos/1.png"> </span>
 								<span class="match-league"> Rusya Premier Lig </span>
 							</div>
 							<div class="match-details">
 								<div class="date"> 29.04.2024, <b>22:00 Pazartesi</b> </div>
 								<div class="teams">
 									<div class="team-cont">
-										<div class="team-logo">
-											<div class="team-sep">
-												<img src="/img/sportsbooks/teammates/athleticbilbao.png" />
-											</div>
-										</div>
 										<div class="team-name"> Athletic Bilbao </div>
 									</div>
 									<div class="teamvs"> VS </div>
 									<div class="team-cont">
-										<div class="team-logo">
-											<div class="team-sep">
-												<img src="/img/sportsbooks/teammates/granada.png" />
-											</div>
-										</div>
 										<div class="team-name"> Granada </div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="odds-cont">
-						<div class="odds-cat">
-							<div class="cats">
-								<button class="active" id="odd_main"> Anasayfa </button>
-								<button id="odd_betbuilder"> Bet Builder </button>
-								<button id="odd_match"> Maç </button>
-								<button id="odd_totals"> Toplamlar </button>
-								<button id="odd_handicaps"> Handikaplar </button>
-								<button id="odd_hals"> Yarılar </button>
-							</div>
-						</div>
+						<div class="odds-cont">
 						<div class="odds-opts">
 							<div class="odds-sep">
 								<div class="odds-list odd_betbuilder" style="display:none">
@@ -410,76 +387,21 @@
 									<div class="odd-detail">
 										<div class="odd-title"> Maç Sonucu </div>
 										<div class="odds">
-											<odd> <span>1</span> <button class="odd new-down">1.41</button> </odd>
+											<odd> <span>1</span> <button class="odd">1.41</button> </odd>
 											<odd> <span>X</span> <button class="odd">4.05</button> </odd>
-											<odd> <span>2</span> <button class="odd new-up">11.8</button> </odd>
-											<div class="betbuilder"> <a href="#."> <div class="bb"> <img src="/img/sportsbooks/bb.png"> </div> </a> </div>
-										</div>
-									</div>
-									<div class="odd-detail">
-										<div class="odd-title"> Çifte Şans </div>
-										<div class="odds">
-											<odd> <span>1X</span> <button class="odd">1.08</button> </odd>
-											<odd> <span>X</span> <button class="odd">1.31</button> </odd>
-											<odd> <span>2X</span> <button class="odd">2.46</button> </odd>
-											<div class="betbuilder"></div>
-										</div>
-									</div>
-									<div class="odd-detail">
-										<div class="odd-title"> Maçın Geri Kalanı </div>
-										<div class="odds">
-											<odd> <span>1 (0:0)</span> <button class="odd">1.56</button> </odd>
-											<odd> <span>X (0:0)</span> <button class="odd">3.55</button> </odd>
-											<odd> <span>2 (0:0)</span> <button class="odd">8.4</button> </odd>
-											<div class="betbuilder"></div>
-										</div>
-									</div>
-									<div class="odd-detail">
-										<div class="odd-title"> Beraberlikte İade </div>
-										<div class="odds">
-											<odd> <span>Takım 1</span> <button class="odd">1.03</button> </odd>
-											<odd> <span>Takım 2</span> <button class="odd">1.33</button> </odd>
-											<div class="betbuilder"></div>
-										</div>
-									</div>
-									<div class="odd-detail">
-										<div class="odd-title"> Toplam Gol </div>
-										<div class="odds">
-											<odd> <span>Üst (0.5)</span> <button class="odd">3.45</button> </odd>
-											<odd> <span>Alt (0.5)</span> <button class="odd">1.33</button> </odd>
-											<div class="betbuilder"></div>
-										</div>
-									</div>
-									<div class="odd-detail">
-										<div class="odd-title"> Toplam Gol </div>
-										<div class="odds">
-											<odd> <span>Üst (1)</span> <button class="odd">3.45</button> </odd>
-											<odd> <span>Alt (1)</span> <button class="odd">1.33</button> </odd>
-											<div class="odd-break"></div>
-											<odd> <span>Üst (1.5)</span> <button class="odd">3.45</button> </odd>
-											<odd> <span>Alt (1.5)</span> <button class="odd">1.33</button> </odd>
-											<div class="betbuilder"> <a href="#."> <div class="bb"> <img src="/img/sportsbooks/bb.png"> </div> </a> </div>
-										</div>
-									</div>
-									<div class="odd-detail">
-										<div class="odd-title"> Gol Handikapı </div>
-										<div class="odds">
-											<odd> <span>Handikap1 (-0.5)</span> <button class="odd">3.45</button> </odd>
-											<odd> <span>Handikap2 (0)</span> <button class="odd">1.33</button> </odd>
-											<div class="betbuilder"></div>
-										</div>
-									</div>
-									<div class="odd-detail">
-										<div class="odd-title"> Gol Handikapı (Son) </div>
-										<div class="odds">
-											<odd> <span>Handikap1 (-0.5)</span> <button class="odd">3.45</button> </odd>
-											<odd> <span>Handikap2 (0)</span> <button class="odd">1.33</button> </odd>
-											<div class="betbuilder"></div>
+											<odd> <span>2</span> <button class="odd">11.8</button> </odd>
+											<odd> <span>1</span> <button class="odd">1.41</button> </odd>
+											<odd> <span>X</span> <button class="odd">4.05</button> </odd>
+											<odd> <span>2</span> <button class="odd">11.8</button> </odd>
+											<odd> <span>1</span> <button class="odd">1.41</button> </odd>
+											<odd> <span>X</span> <button class="odd">4.05</button> </odd>
+											<odd> <span>2</span> <button class="odd">11.8</button> </odd>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
+					</div>
 					</div>
 				</match-details>
 			</div>

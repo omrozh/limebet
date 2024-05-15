@@ -9,6 +9,18 @@ from sqlalchemy import text
 api_key = "na"
 
 
+def get_team_badge(team_name):
+    try:
+        r = requests.get(f"https://www.thesportsdb.com/api/v1/json/3/searchteams.php?t={team_name}")
+        return r.json().get("teams")[0].get("strTeamBadge")
+    except:
+        try:
+            r = requests.get(f"https://www.thesportsdb.com/api/v1/json/3/searchteams.php?t={team_name.split(' ')[0]}")
+            return r.json().get("teams")[0].get("strTeamBadge")
+        except:
+            return None
+
+
 def get_bettable_matches(date):
     r = requests.get(f"https://www.nosyapi.com/apiv2/service/bettable-matches?apiKey={api_key}&date={date}")
     return r.json()

@@ -1,0 +1,74 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+	<title>KadroMilyon</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	<link rel="stylesheet" href="/css/sportsbook.css" />
+	<link rel="stylesheet" href="/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="/css/fontawesome.min.css" />
+	<link rel="stylesheet" href="/plugins/owl/owl.carousel.min.css" />
+	<link rel="stylesheet" href="/plugins/perfect-scrollbar/perfect-scrollbar.css" />
+</head>
+
+<body>
+    <match-details class="match-details">
+					<div class="firsdt-cont">
+						<div class="firsdt">
+							<div class="league">
+								<span class="match-league"> {{ open_bet.match_league }} </span>
+							</div>
+							<div class="match-details">
+								<div class="date"> {{ open_bet.bet_ending_datetime }} </div>
+								<div class="teams">
+									<div class="team-cont">
+										<div class="team-logo">
+											<div class="team-sep">
+												<img style="width: 50px; height: 50px" src="{{ open_bet.team_1_logo }}" />
+											</div>
+										</div>
+										<div class="team-name"> {{ open_bet.team_1 }} </div>
+									</div>
+									<div class="teamvs"> VS </div>
+									<div class="team-cont">
+										<div class="team-logo">
+											<div class="team-sep">
+												<img style="width: 50px; height: 50px" src="{{ open_bet.team_2_logo }}" />
+											</div>
+										</div>
+										<div class="team-name"> {{ open_bet.team_2 }} </div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="odds-cont">
+						<div class="odds-opts">
+							<div class="odds-sep">
+								<div class="odds-list">
+                                    {% for i in open_bet.bet_options %}
+                                    	{% if i.has_odds %}
+										<div class="odd-detail" style="background-color: var(--categoryBackground); border: 1px solid var(--buttonBorder); border-radius: 5px; padding: 10px; box-sizing: border-box; margin-top: 5px;">
+											<div class="odd-title"> <h6>{{ i.game_name }}</h6> </div>
+											<div class="odds">
+											{% for c in i.bet_odds %}
+												{% if c.odd %}
+													{% if c.user_selected %}
+														<odd style="background-color: red; color: white;" onclick="document.location = '/remove_bet/{{c.id}}'"> <span>{{ c.value }}</span> <button class="odd">{{ c.odd }}</button> </odd>
+													{% else %}
+														<odd onclick="document.location = '/take_bet/{{c.id}}'"> <span>{{ c.value }}</span> <button class="odd">{{ c.odd }}</button> </odd>
+													{% endif %}
+												{% endif %}
+											{% endfor %}
+											</div>
+										</div>
+										{% endif %}
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+					</div>
+				</match-details>
+</body>
+</html>
