@@ -1671,10 +1671,11 @@ def admin_portal():
 
 @app.route("/bahis")
 def bahis():
-    offset = int(flask.request.args.get("offset", 0))
+    offset = int(flask.request.args.get("offset", 1))
+    offset -= 1
     open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime > datetime.datetime.now()).filter_by(
         has_odds=True).all()
-    number_of_chunks = range(int(len(open_bets)/50) + 1)
+    number_of_chunks = range(1, int(len(open_bets)/50) + 2)
     sports_leagues = []
     for i in open_bets:
         if i.match_league not in sports_leagues:
