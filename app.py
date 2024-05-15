@@ -1671,14 +1671,16 @@ def admin_portal():
 
 @app.route("/bahis")
 def bahis():
+    offset = flask.request.args.get("offset", 0)
     open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime > datetime.datetime.now()).filter_by(
-        has_odds=True).all()
+        has_odds=True).all()[offset*50:(offset+1)*50]
+    number_of_chunks = range(int(len(open_bets)/50) + 1)
     sports_leagues = []
     for i in open_bets:
         if i.match_league not in sports_leagues:
             sports_leagues.append(i.match_league)
     return flask.render_template("bahis/bahis-yeni.html", open_bets=open_bets, canli_bahis=False,
-                                 sports_leagues=sports_leagues)
+                                 sports_leagues=sports_leagues, number_of_chunks=number_of_chunks)
 
 # TO DO: Complete sports betting integration FE.
 
