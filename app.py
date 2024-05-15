@@ -1680,6 +1680,7 @@ def bahis():
     for i in open_bets:
         if i.match_league not in sports_leagues:
             sports_leagues.append(i.match_league)
+    offset += 1
     return flask.render_template("bahis/bahis-yeni.html", open_bets=open_bets[offset*50:(offset+1)*50], canli_bahis=False,
                                  sports_leagues=sports_leagues, number_of_chunks=number_of_chunks, offset=offset)
 
