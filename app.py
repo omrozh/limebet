@@ -1671,16 +1671,14 @@ def admin_portal():
 
 @app.route("/bahis")
 def bahis():
-    offset = int(flask.request.args.get("offset", 1))
-    offset -= 1
+    offset = int(flask.request.args.get("offset", 0))
     open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime > datetime.datetime.now()).filter_by(
         has_odds=True).all()
-    number_of_chunks = range(1, int(len(open_bets)/50) + 2)
+    number_of_chunks = range(int(len(open_bets)/50) + 1)
     sports_leagues = []
     for i in open_bets:
         if i.match_league not in sports_leagues:
             sports_leagues.append(i.match_league)
-    offset += 1
     return flask.render_template("bahis/bahis-yeni.html", open_bets=open_bets[offset*50:(offset+1)*50], canli_bahis=False,
                                  sports_leagues=sports_leagues, number_of_chunks=number_of_chunks, offset=offset)
 
