@@ -1671,7 +1671,7 @@ def admin_portal():
 
 @app.route("/bahis")
 def bahis():
-    offset = flask.request.args.get("offset", 0)
+    offset = int(flask.request.args.get("offset", 0))
     open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime > datetime.datetime.now()).filter_by(
         has_odds=True).all()[offset*50:(offset+1)*50]
     number_of_chunks = range(int(len(open_bets)/50) + 1)
