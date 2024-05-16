@@ -1578,6 +1578,10 @@ def signup():
     providers = []
     games_popular = [[], []]
     sliders_sub = []
+    sliders_main = []
+
+    for i in os.listdir("img/slider/slider-main"):
+        sliders_main.append(f"/img/slider/slider-main/{i}")
 
     for i in os.listdir("img/slider/slider-sub"):
         sliders_sub.append(f"/img/slider/slider-sub/{i}")
@@ -1651,7 +1655,7 @@ def signup():
             }
             requests.post("https://kadromilyon.com/save_user_to_m2router", data=data)
         return flask.redirect("/profile")
-    return flask.render_template("signup.html", sliders_sub=sliders_sub, games_popular=games_popular, live_casino_games=live_casino_games)
+    return flask.render_template("signup.html", sliders_sub=sliders_sub, sliders_main=sliders_main, games_popular=games_popular, live_casino_games=live_casino_games)
 
 
 @app.route("/save_user_to_m2router", methods=["POST", "GET"])
