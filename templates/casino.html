@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-	<title>LimeBet</title>
+	<title>KadroMilyon</title>
 	<link rel="stylesheet" href="/css/style.css" />
 	<link rel="stylesheet" href="/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="/css/fontawesome.min.css" />
@@ -22,14 +22,14 @@
         }
 
         .games-div{
-          width: 100%; text-align: left; background-color: var(--casinoBackgroundColor); border: 1px solid var(--buttonBorder); box-sizing: border-box; border-radius: 15px; font-family: 'Open Sans', sans-serif;
+          width: 100%; text-align: left; box-sizing: border-box; border-radius: 15px; font-family: 'Open Sans', sans-serif;
         }
         #search-box{
           width: 40%; border-radius: 10px; outline: none; border: none; padding: 10px 15px; font-family: sans-serif; outline: none; font-size: 1rem; box-sizing: border-box; background: transparent; color: var(--generalTextColor); border: 1px solid var(--buttonBorder)
         }
 
         .game-img{
-          width: 10.7vw;
+          width: 10.5vw;
         }
 
         #main-content-wrapper {
@@ -126,27 +126,31 @@
 		</app-home-header>
 	</app-header>
 	<app-content>
-		<div class="container">
+		<div class="container" style="max-width: 100%">
           <br>
 			<div class="row">
-				<div id="main-content-wrapper">
+				<center id="main-content-wrapper">
             <input type="text" onchange="searchPlayer()" id="search-box" placeholder="Oyun Ara">
             <br>
             <br>
-            <div class="games-div">
+            <div class="games-div" style="text-align: center">
               <br>
               {% if provider_id %}
+				<div style="width: 98%; white-space: nowrap; overflow-x: auto">
+                    {% for i in providers %}
+                          <div onclick="document.location = '/casino?provider_id={{ i.id }}&provider_name={{ i.name }}'" class="searchable-div" style="background-color: #1a1c1f; min-width: fit-content; padding: 15px; border-radius: 15px; display: inline-block; margin-left: 15px; margin-bottom: 15px">
+                            <p style="font-family: 'Open Sans', sans-serif; color: white; font-size: 16px; margin-bottom: 5px; overflow-x: auto; width: 150px; max-width: 30vw; white-space: nowrap">{{ i.name }}</p>
+                          </div>
+                {% endfor %}
+                </div>
                 {% for i in games %}
-                    <div onclick="document.location = '/casino/{{ i.id }}'" class="searchable-div" style="background-color: #1a1c1f; min-width: fit-content; padding: 15px; border-radius: 15px; display: inline-block; margin-left: 15px; margin-bottom: 15px">
-                      <img class="game-img" style="border-radius: 15px" src="{{ i.img_vertical }}" alt="">
-                      <p style="font-family: 'Open Sans', sans-serif; color: white; font-size: 16px; margin-bottom: 5px; overflow-x: auto; width: 150px; max-width: 30vw; white-space: nowrap">{{ i.name }}</p>
-                      <span style="font-family: 'Open Sans', sans-serif; color: gray; font-size: 12px;">{{ i.provider_name }}</span>
-                      <p style="font-family: 'Open Sans', sans-serif; color: gray; font-size: 12px; margin-top: 0">{{ i.category }}</p>
+                    <div onclick="document.location = '/casino/{{ i.id }}'" class="searchable-div" style="min-width: fit-content; display: inline-block;">
+                      <img class="game-img" style="" src="{{ i.img_vertical }}" alt="">
                   </div>
                 {% endfor %}
               {% else %}
                 <div style="width: 98%; white-space: nowrap; overflow-x: auto">
-                    {% for i in games %}
+                    {% for i in providers %}
                           <div onclick="document.location = '/casino?provider_id={{ i.id }}&provider_name={{ i.name }}'" class="searchable-div" style="background-color: #1a1c1f; min-width: fit-content; padding: 15px; border-radius: 15px; display: inline-block; margin-left: 15px; margin-bottom: 15px">
                             <p style="font-family: 'Open Sans', sans-serif; color: white; font-size: 16px; margin-bottom: 5px; overflow-x: auto; width: 150px; max-width: 30vw; white-space: nowrap">{{ i.name }}</p>
                           </div>
@@ -154,11 +158,8 @@
                 </div>
               {% endif %}
                 {% for i in games_popular %}
-                    <div onclick="document.location = '/casino/{{ i.id }}'" class="searchable-div" style="background-color: #1a1c1f; min-width: fit-content; padding: 15px; border-radius: 15px; display: inline-block; margin-left: 15px; margin-bottom: 15px">
-                      <img class="game-img" style="border-radius: 15px" src="{{ i.img_vertical }}" alt="">
-                      <p style="font-family: 'Open Sans', sans-serif; color: white; font-size: 16px; margin-bottom: 5px; overflow-x: auto; width: 150px; max-width: 30vw; white-space: nowrap">{{ i.name }}</p>
-                      <span style="font-family: 'Open Sans', sans-serif; color: gray; font-size: 12px;">{{ i.provider_name }}</span>
-                      <p style="font-family: 'Open Sans', sans-serif; color: gray; font-size: 12px; margin-top: 0">{{ i.category }}</p>
+                    <div onclick="document.location = '/casino/{{ i.id }}'" class="searchable-div" style="display: inline-block;">
+                      <img class="game-img" style="" src="{{ i.img_vertical }}" alt="">
                   </div>
                 {% endfor %}
             </div>
@@ -173,10 +174,10 @@
             </script>
 
         <br>
-        <span style="opacity: 0">LimeBet</span>
+        <span style="opacity: 0">KadroMilyon</span>
         <br>
-        <span style="opacity: 0">LimeBet</span>
-    </div>
+        <span style="opacity: 0">KadroMilyon</span>
+    </center>
             </div>
 		</div>
 	</app-content>
@@ -221,13 +222,13 @@
 				</div>
 				<div class="copy">
 					<a href="#." class="licence-url"> <img src="/img/licence.png" /> </a>
-					<p> LimeBet.com is operated by M2 Betting registered under No. 164124 at, Chuchubiweg 17, Curaçao. This website is licensed and regulated by Curaçao eGaming, license No. 1668/JAZ.  In
+					<p> KadroMilyon.com is operated by M2 Betting registered under No. 164124 at, Chuchubiweg 17, Curaçao. This website is licensed and regulated by Curaçao eGaming, license No. 1668/JAZ.  In
 	order to register for this website, the user is required to accept the “<a href="#.">General Terms and Conditions.</a>" In the event the ”<a href="#.">General Terms and Conditions</a>" are updated, existing users may choose to
 	discontinue using the products and services before the said update shall become effective, which is a minimum of two weeks after it has been announced.  </p>
 				</div>
 				<div class="finish">
 					<a href="/"> <img src="/img/logo.png" /> </a>
-					<p> 2024 © LimeBet </p>
+					<p> 2024 © KadroMilyon </p>
 				</div>
 			</div>
 		</div>

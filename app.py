@@ -2089,6 +2089,7 @@ def casino():
     provider_id = flask.request.args.get("provider_id", False)
     provider_name = flask.request.args.get("provider_name", False)
     search_query = flask.request.args.get("search_query")
+    providers = []
 
     if provider_id or search_query:
         if search_query:
@@ -2103,6 +2104,12 @@ def casino():
                     })
                     provider_id = "-"
         else:
+            for c in get_providers():
+                providers.append({
+                    "img_vertical": c.get("logo"),
+                    "name": c.get("name"),
+                    "id": c.get("id")
+                })
             for c in get_games(provider_id).get("games"):
                 try:
                     games.append({
@@ -2117,7 +2124,7 @@ def casino():
 
     else:
         for c in get_providers():
-            games.append({
+            providers.append({
                 "img_vertical": c.get("logo"),
                 "name": c.get("name"),
                 "id": c.get("id")
@@ -2136,9 +2143,8 @@ def casino():
             except AttributeError or KeyError:
                 pass
 
-    return flask.render_template("casino.html", current_user=current_user, games=games, provider_id=provider_id,
+    return flask.render_template("casino.html", current_user=current_user, providers=providers,games=games, provider_id=provider_id,
                                  games_popular=games_popular)
-
 
 @app.route("/casino/<game_id>")
 def casino_game(game_id):
