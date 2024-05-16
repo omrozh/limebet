@@ -1923,7 +1923,7 @@ def coupon():
                 current_user.referrer.site_partner.partnership_earnings += float(current_coupon.total_value)
 
         db.session.commit()
-        return flask.redirect("/profile")
+        return flask.redirect("/coupon")
     return flask.render_template("bahis/coupon-new.html", current_coupon=current_coupon, current_user=current_user,
                                  changed_odds=changed_odds, odds_did_change=len(changed_odds) > 0)
 
