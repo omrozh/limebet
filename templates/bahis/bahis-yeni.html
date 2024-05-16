@@ -430,7 +430,10 @@
 				</match-details>
 			</div>
 			<mybet class="mybet" style="min-height: fit-content">
+				{% if current_user.is_authenticated %}
 				<div onclick="document.getElementById('coupon-iframe').src = `/coupon?timestamp=${Date.now()}`" class="header">
+				{% else %}
+				<div onclick="document.location = `/login`" class="header">
 					Bahis Kuponu
 				</div>
 				<iframe id="coupon-iframe" style="height: 250px" src="/coupon" frameborder="0"></iframe>
