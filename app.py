@@ -12,6 +12,8 @@ from flask_bcrypt import Bcrypt
 from sqlalchemy import desc
 import requests
 
+from sqlalchemy import or_
+
 import shortuuid
 import feedparser
 import base64
@@ -1672,41 +1674,77 @@ def admin_portal():
 @app.route("/bahis")
 def bahis():
     offset = int(flask.request.args.get("offset", 0))
-    open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime > datetime.datetime.now()).filter_by(
-        has_odds=True).all()
-    number_of_chunks = range(int(len(open_bets)/50) + 1)
-    sports_leagues = []
+    sport = flask.request.args.get("sport", None)
+    league = flask.request.args.get("league", None)
+    search_q = flask.request.args.get("search_q", None)
+    if search_q:
+        open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime > datetime.datetime.now(),
+                                         or_(OpenBet.team_1.like('%' + search_q + '%'),
+                                             OpenBet.team_2.like('%' + search_q + '%'))).filter_by(
+            has_odds=True)
+    else:
+
+        open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime > datetime.datetime.now()).filter_by(
+            has_odds=True)
+
+    sports_and_leagues = {}
+
     for i in open_bets:
-        if i.match_league not in sports_leagues:
-            sports_leagues.append(i.match_league)
-    return flask.render_template("bahis/bahis-yeni.html", open_bets=open_bets[offset*50:(offset+1)*50], canli_bahis=False,
-                                 sports_leagues=sports_leagues, number_of_chunks=number_of_chunks, offset=offset)
+        if i.sport not in sports_and_leagues.keys():
+            sports_and_leagues[i.sport] = []
+        if i.match_league not in sports_and_leagues[i.sport]:
+            sports_and_leagues[i.sport].append(i.match_league)
+
+    if sport:
+        open_bets = open_bets.filter_by(sport=sport)
+    if league:
+        open_bets = open_bets.filter_by(match_league=league)
+
+    open_bets = open_bets.all()
+
+    number_of_chunks = range(int(len(open_bets) / 50) + 1)
+
+    return flask.render_template("bahis/bahis-yeni.html", open_bets=open_bets[offset * 50:(offset + 1) * 50],
+                                 canli_bahis=False,
+                                 number_of_chunks=number_of_chunks, offset=offset,
+                                 sports_and_leagues=sports_and_leagues)
 
 # TO DO: Complete sports betting integration FE.
 
 
-@app.route("/bahis-mobile")
-def bahis_mobile():
-    open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime > datetime.datetime.now()).filter_by(
-        has_odds=True).all()
-    sports_leagues = []
-    for i in open_bets:
-        if i.match_league not in sports_leagues:
-            sports_leagues.append(i.match_league)
-    return flask.render_template("bahis/bahis-mobile.html", open_bets=open_bets, canli_bahis=False,
-                                 sports_leagues=sports_leagues)
-
-
 @app.route("/canli_bahis")
 def canli_bahis():
-    open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime <= datetime.datetime.now()).filter_by(
-        live_betting_expired=False).filter_by(has_odds=True).all()
-    sports_leagues = []
+    offset = int(flask.request.args.get("offset", 0))
+    sport = flask.request.args.get("sport", None)
+    league = flask.request.args.get("league", None)
+    search_q = flask.request.args.get("search_q", None)
+    if search_q:
+        open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime <= datetime.datetime.now(), or_(OpenBet.team_1.like('%' + search_q + '%'), OpenBet.team_2.like('%' + search_q + '%'))).filter_by(
+            live_betting_expired=False).filter_by(has_odds=True)
+    else:
+        open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime <= datetime.datetime.now()).filter_by(
+            live_betting_expired=False).filter_by(has_odds=True)
+    sports_and_leagues = {}
+
     for i in open_bets:
-        if i.match_league not in sports_leagues:
-            sports_leagues.append(i.match_league)
-    return flask.render_template("bahis/bahis.html", open_bets=open_bets, canli_bahis=True,
-                                 sports_leagues=sports_leagues)
+        if i.sport not in sports_and_leagues.keys():
+            sports_and_leagues[i.sport] = []
+        if i.match_league not in sports_and_leagues[i.sport]:
+            sports_and_leagues[i.sport].append(i.match_league)
+
+    if sport:
+        open_bets = open_bets.filter_by(sport=sport)
+    if league:
+        open_bets = open_bets.filter_by(match_league=league)
+
+    open_bets = open_bets.all()
+
+    number_of_chunks = range(int(len(open_bets) / 50) + 1)
+
+    return flask.render_template("bahis/bahis-yeni.html", open_bets=open_bets[offset * 50:(offset + 1) * 50],
+                                 canli_bahis=True,
+                                 number_of_chunks=number_of_chunks, offset=offset,
+                                 sports_and_leagues=sports_and_leagues)
 
 
 @app.route("/canli_bahis_mobile")

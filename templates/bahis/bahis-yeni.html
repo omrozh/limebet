@@ -20,30 +20,49 @@
 				<div class="sportsbook-menu">
 					<div class="menu">
 						<a href="/" class="n-link"> <span>ANASAYFA</span> </a>
-						<a href="#." class="n-link"> <span>KAMPANYALAR</span> </a>
-						<a href="#." class="n-link"> <span>GÜNLÜK YARIŞMALAR</span> </a>
-						<a href="#." class="n-link"> <span>HAFTALIK YARIŞMALAR</span> </a>
-						<a href="#." class="n-link"> <span>YÜKSEK LİMİTLİ YARIŞMALAR</span> </a>
+						<a href="/promotions" class="n-link"> <span>KAMPANYALAR</span> </a>
+						<a href="/casino" class="n-link"> <span>CASINO</span> </a>
+						<a href="/casino" class="n-link"> <span>CANLI CASINO</span> </a>
 					</div>
 				</div>
 				<div class="rightmenu">
+					{% if not current_user.is_authenticated %}
 					<app-not-loggedin>
-						<a href="#." class="btn login-btn"> <i class="fa-solid fa-right-to-bracket"></i> Giriş Yap </a>
-						<a href="#." class="btn register-btn"> <i class="fa-solid fa-user-plus"></i> Kayıt Ol </a>
+						<a href="/login" class="btn login-btn"> <i class="fa-solid fa-right-to-bracket"></i> Giriş Yap </a>
+							<a href="/signup" class="btn register-btn"> <i class="fa-solid fa-user-plus"></i> Kayıt Ol </a>
 						<div class="lang-select">
 							<div class="view"> <img src="/img/flag/tr.png" /> TR <i class="fa-solid fa-chevron-down"></i> </div>
 						</div>
-						<div class="timer">
+						<div class="timer" id="timer">
 							16:40:50
 						</div>
+						<script>
+							function setTimer(){
+								var d = new Date();
+								var n = d.toLocaleTimeString();
+								document.getElementById("timer").innerText = n;
+							}
+							setInterval(setTimer, 1000)
+						</script>
 						<a href="#." class="notification"> <i class="fa-solid fa-bell"></i> </a>
 					</app-not-loggedin>
-					<app-loggedin style="display:none">
-						<a href="#." class="btn price-btn"> <i class="fa-solid fa-turkish-lira-sign"></i> 3.442,00 <i class="fa-solid fa-sort-down"></i> </a>
-						<a href="#." class="btn setting-btn"> <i class="fa-solid fa-gear"></i> </a>
-						<a href="#." class="btn notification-btn"> <i class="fa-regular fa-bell"></i> <div class="counter">2</div> </a>
-						<a href="#." class="btn profile-btn"> <img src="/img/profile-demo.png" /> </a>
+					{% else %}
+					<app-loggedin>
+						<a href="#." class="btn price-btn"> <i class="fa-solid fa-turkish-lira-sign"></i>
+							{% if current_user.sports_bonus_balance + current_user.casino_bonus_balance > 0 %}
+								<span style="display: inline-block; vertical-align: middle">
+									<p style="font-size: 12px; margin-bottom: 0; margin-block-start: 0; margin-block-end: 0;">{{'%0.2f'| format(current_user.balance|float)}}</p>
+									<p style="font-size: 8px; color: var(--baseColor); margin-top: 0; margin-bottom: 0; margin-block-start: 0; margin-block-end: 0">{{'%0.2f'| format(current_user.casino_bonus_balance + current_user.sports_bonus_balance |float)}}</p>
+								</span>
+							{% else %}
+								{{'%0.2f'| format(current_user.balance|float)}}
+							{% endif %}
+						</a>
+						<a href="/profile" class="btn setting-btn"> <i class="fa-solid fa-gear"></i> </a>
+						<a href="/notifications" class="btn notification-btn"> <i class="fa-regular fa-bell"></i> <div class="counter">2</div> </a>
+						<a href="/profile" class="btn profile-btn"> <img src="/img/profile-demo.png" /> </a>
 					</app-loggedin>
+					{% endif %}
 				</div>
 			</div>
 		</app-home-header>
@@ -62,210 +81,202 @@
 				</div>
 				<div class="match-find">
 					<button class="searchbtn"> <i class="fa fa-search"></i> </button>
-					<input type="text" placeholder="Maçınızı bulun.." />
+					<input onchange="document.location = `?search_q=${this.value}`" type="text" placeholder="Maçınızı bulun.." />
 				</div>
 				<div class="match-cont">
 					<div class="match-cat">
 						<div class="inpts">
-							<a href="#." class="active"> CANLI (159) </a>
-							<a href="#."> SPOR BAHİSLERİ </a>
+							{% if canli_bahis %}
+								<a href="/canli_bahis" class="active"> CANLI </a>
+								<a href="/bahis"> SPOR BAHİSLERİ </a>
+							{% else %}
+								<a href="/canli_bahis"> CANLI </a>
+								<a href="/bahis" class="active"> SPOR BAHİSLERİ </a>
+							{% endif %}
 						</div>
 						<div class="allof">
-							<span class="selector"> <i class="fa fa-clock"></i> TÜMÜ <i class="fa-solid fa-chevron-down"></i> </span>
-							<a href="#."> <img src="/img/sportsbooks/betbuilder.png" style="width: 50px;"> </a>
+							<span class="selector"> <i class="fa fa-clock"></i> TÜMÜ </span>
+							<a href="#."> <img src="/img/logo.png" style="width: 50px;"> </a>
 						</div>
 						<div class="mobile-menu">
 							<div class="mobileSlider owl-carousel">
-								<a href="#." class="mm-item"> <span class="sb sb-soccer"></span> Futbol <span class="cou">(1140)</span> </a>
-								<a href="#." class="mm-item"> <span class="sb sb-basket"></span> Basketbol <span class="cou">(120)</span> </a>
-								<a href="#." class="mm-item"> <span class="sb sb-tennis"></span> Tenis <span class="cou">(340)</span> </a>
-								<a href="#." class="mm-item"> <span class="sb sb-volleyball"></span> Voleybol <span class="cou">(75)</span> </a>
-								<a href="#." class="mm-item"> <span class="sb sb-icehockey"></span> Buz Hokeyi <span class="cou">(59)</span> </a>
+								<a href="?sport=soccer" class="mm-item"> <span class="sb sb-soccer"></span> Futbol </a>
+								<a href="?sport=basketball" class="mm-item"> <span class="sb sb-basket"></span> Basketbol </a>
+								<a href="?sport=tennis" class="mm-item"> <span class="sb sb-tennis"></span> Tenis </a>
+								<a href="?sport=volleyball" class="mm-item"> <span class="sb sb-volleyball"></span> Voleybol </a>
+								<a href="?sport=cricket" class="mm-item"> <span class="sb sb-cricket"></span> Kriket </a>
 							</div>
 						</div>
 						<div class="match-items desktop-menu">
-							<div class="spec-item">
-								<div class="item-details">
-									<span class="icon1 icon-1"></span> YAKLAŞAN MAÇLAR <i class="fa-solid fa-chevron-down"></i>
-								</div>
-								<div class="subitem2" style="display:none">
-								</div>
-							</div>
-							<div class="spec-item">
-								<div class="item-details">
-									<span class="icon1 icon-2"></span> POPÜLER MAÇLAR <i class="fa-solid fa-chevron-down"></i>
-								</div>
-								<div class="subitem2" style="display:none">
-									<a href="#."> DATA </a>
-								</div>
-							</div>
-							<div class="spec-item">
-								<div class="item-details">
-									<span class="icon1 icon-3"></span> POPÜLER TURNUVALAR <i class="fa-solid fa-chevron-down"></i>
-								</div>
-								<div class="subitem2" style="display:none">
-									<a href="#."> UEFA Şampiyonlar Ligi (1) </a>
-									<a href="#."> UEFA Avrupla Ligi (1) </a>
-									<a href="#."> NBA (5) </a>
-								</div>
-							</div>
+
 							<div class="item">
 								<div class="item-details">
-										<span class="sb sb-soccer"></span> Futbol <span class="cou">(1140)</span> <i class="fa-solid fa-chevron-down"></i>
+										<span class="sb sb-soccer"></span> Futbol <i class="fa-solid fa-chevron-down"></i>
 								</div>
 								<div class="subitem-cont" style="display:none">
-									<div class="subitem flag-it">
-										<div class="subitem-details"><img src="/img/sportsbooks/flags/it.png">İtalya (3) <i class="fa-solid fa-chevron-down"></i></div>
-										<div class="subitem2" style="display:none">
-											<a href="#."> İtalya Seria A (11)</a>
-											<a href="#."> İtalya Seria B (9)</a>
-											<a href="#."> İtalya Kupası</a>
+
+									{% for i in sports_and_leagues.soccer %}
+										<div class="subitem">
+											<a href="?league={{ i }}" style="background-color: var(--baseColor); padding: 5px; border-radius: 5px; width: 100%; color: var(--generalTextColor)"> {{ i }} </a>
 										</div>
-									</div>
-									<div class="subitem flag-fr">
-										<div class="subitem-details"><img src="/img/sportsbooks/flags/fr.png">Fransa (1) <i class="fa-solid fa-chevron-down"></i></div>
-										<div class="subitem2" style="display:none">
-											<a href="#."> Fransa Kupası</a>
+									{% endfor %}
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-details">
+										<span class="sb sb-basket"></span> Basketbol <i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<div class="subitem-cont" style="display:none">
+									{% for i in sports_and_leagues.basketball %}
+										<div class="subitem">
+											<a href="?league={{ i }}" style="background-color: var(--baseColor); padding: 5px; border-radius: 5px; width: 100%; color: var(--generalTextColor)"> {{ i }} </a>
 										</div>
-									</div>
+									{% endfor %}
 								</div>
 							</div>
 							<div class="item">
 								<div class="item-details">
-										<span class="sb sb-basket"></span> Basketbol <span class="cou">(120)</span> <i class="fa-solid fa-chevron-down"></i>
+										<span class="sb sb-tennis"></span> Tenis <i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<div class="subitem-cont" style="display:none">
+									{% for i in sports_and_leagues.tennis %}
+										<div class="subitem">
+											<a href="?league={{ i }}" style="background-color: var(--baseColor); padding: 5px; border-radius: 5px; width: 100%; color: var(--generalTextColor)"> {{ i }} </a>
+										</div>
+									{% endfor %}
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-details">
+										<span class="sb sb-volleyball"></span> Voleybol <i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<div class="subitem-cont" style="display:none">
+									{% for i in sports_and_leagues.volleyball %}
+										<div class="subitem">
+											<a href="?league={{ i }}" style="background-color: var(--baseColor); padding: 5px; border-radius: 5px; width: 100%; color: var(--generalTextColor)"> {{ i }} </a>
+										</div>
+									{% endfor %}
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-details">
+										<span class="sb sb-icehockey"></span> Buz Hokeyi <i class="fa-solid fa-chevron-down"></i>
 								</div>
 								<div class="subitem-cont" style="display:none">
 								</div>
 							</div>
 							<div class="item">
 								<div class="item-details">
-										<span class="sb sb-tennis"></span> Tenis <span class="cou">(340)</span> <i class="fa-solid fa-chevron-down"></i>
+										<span class="sb sb-pingpong"></span> Masa Tenisi <i class="fa-solid fa-chevron-down"></i>
 								</div>
 								<div class="subitem-cont" style="display:none">
 								</div>
 							</div>
 							<div class="item">
 								<div class="item-details">
-										<span class="sb sb-volleyball"></span> Voleybol <span class="cou">(75)</span> <i class="fa-solid fa-chevron-down"></i>
+										<span class="sb sb-handball"></span> Hentbol <i class="fa-solid fa-chevron-down"></i>
 								</div>
 								<div class="subitem-cont" style="display:none">
 								</div>
 							</div>
 							<div class="item">
 								<div class="item-details">
-										<span class="sb sb-icehockey"></span> Buz Hokeyi <span class="cou">(59)</span> <i class="fa-solid fa-chevron-down"></i>
+										<span class="sb sb-americanfootball"></span> Amerikan Futbolu <i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<div class="subitem-cont" style="display:none">
+									{% for i in sports_and_leagues.american_football %}
+										<div class="subitem">
+											<a href="?league={{ i }}" style="background-color: var(--baseColor); padding: 5px; border-radius: 5px; width: 100%; color: var(--generalTextColor)"> {{ i }} </a>
+										</div>
+									{% endfor %}
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-details">
+										<span class="sb sb-australianfootball"></span> Avustralya Futbolu <i class="fa-solid fa-chevron-down"></i>
 								</div>
 								<div class="subitem-cont" style="display:none">
 								</div>
 							</div>
 							<div class="item">
 								<div class="item-details">
-										<span class="sb sb-pingpong"></span> Masa Tenisi <span class="cou">(59)</span> <i class="fa-solid fa-chevron-down"></i>
+										<span class="sb sb-cricket"></span> Kriket <i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<div class="subitem-cont" style="display:none">
+									{% for i in sports_and_leagues.cricket %}
+										<div class="subitem">
+											<a href="?league={{ i }}" style="background-color: var(--baseColor); padding: 5px; border-radius: 5px; width: 100%; color: var(--generalTextColor)"> {{ i }} </a>
+										</div>
+									{% endfor %}
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-details">
+										<span class="sb sb-baseball"></span> Beyzbol <i class="fa-solid fa-chevron-down"></i>
 								</div>
 								<div class="subitem-cont" style="display:none">
 								</div>
 							</div>
 							<div class="item">
 								<div class="item-details">
-										<span class="sb sb-handball"></span> Hentbol <span class="cou">(427)</span> <i class="fa-solid fa-chevron-down"></i>
+										<span class="sb sb-boxing"></span> Boks <i class="fa-solid fa-chevron-down"></i>
 								</div>
 								<div class="subitem-cont" style="display:none">
 								</div>
 							</div>
 							<div class="item">
 								<div class="item-details">
-										<span class="sb sb-americanfootball"></span> Amerikan Futbolu <span class="cou">(9)</span> <i class="fa-solid fa-chevron-down"></i>
+										<span class="sb sb-eurovision"></span> Eurovision <i class="fa-solid fa-chevron-down"></i>
 								</div>
 								<div class="subitem-cont" style="display:none">
 								</div>
 							</div>
 							<div class="item">
 								<div class="item-details">
-										<span class="sb sb-australianfootball"></span> Avustralya Futbolu <span class="cou">(17)</span> <i class="fa-solid fa-chevron-down"></i>
+										<span class="sb sb-badminton"></span> Badminton <i class="fa-solid fa-chevron-down"></i>
 								</div>
 								<div class="subitem-cont" style="display:none">
 								</div>
 							</div>
 							<div class="item">
 								<div class="item-details">
-										<span class="sb sb-autoracing"></span> Otomobil Yarışı <span class="cou">(1)</span> <i class="fa-solid fa-chevron-down"></i>
+										<span class="sb sb-beachfootball"></span> Plaj Futbolu <i class="fa-solid fa-chevron-down"></i>
 								</div>
 								<div class="subitem-cont" style="display:none">
 								</div>
 							</div>
 							<div class="item">
 								<div class="item-details">
-										<span class="sb sb-baseball"></span> Beyzbol <span class="cou">(45)</span> <i class="fa-solid fa-chevron-down"></i>
+										<span class="sb sb-beachvolleyball"></span> Plaj Voleybolu <i class="fa-solid fa-chevron-down"></i>
 								</div>
 								<div class="subitem-cont" style="display:none">
 								</div>
 							</div>
 							<div class="item">
 								<div class="item-details">
-										<span class="sb sb-boxing"></span> Boks <span class="cou">(50)</span> <i class="fa-solid fa-chevron-down"></i>
+										<span class="sb sb-bowling"></span> Bowling <i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<div class="subitem-cont" style="display:none">
+								</div>
+							</div>
+
+							<div class="item">
+								<div class="item-details">
+										<span class="sb sb-chess"></span> Satranç <i class="fa-solid fa-chevron-down"></i>
 								</div>
 								<div class="subitem-cont" style="display:none">
 								</div>
 							</div>
 							<div class="item">
 								<div class="item-details">
-										<span class="sb sb-eurovision"></span> Eurovision <span class="cou">(1)</span> <i class="fa-solid fa-chevron-down"></i>
+										<span class="sb sb-darts"></span> Dart <i class="fa-solid fa-chevron-down"></i>
 								</div>
 								<div class="subitem-cont" style="display:none">
 								</div>
 							</div>
 							<div class="item">
 								<div class="item-details">
-										<span class="sb sb-badminton"></span> Badminton <span class="cou">(44)</span> <i class="fa-solid fa-chevron-down"></i>
-								</div>
-								<div class="subitem-cont" style="display:none">
-								</div>
-							</div>
-							<div class="item">
-								<div class="item-details">
-										<span class="sb sb-beachfootball"></span> Plaj Futbolu <span class="cou">(3)</span> <i class="fa-solid fa-chevron-down"></i>
-								</div>
-								<div class="subitem-cont" style="display:none">
-								</div>
-							</div>
-							<div class="item">
-								<div class="item-details">
-										<span class="sb sb-beachvolleyball"></span> Plaj Voleybolu <span class="cou">(16)</span> <i class="fa-solid fa-chevron-down"></i>
-								</div>
-								<div class="subitem-cont" style="display:none">
-								</div>
-							</div>
-							<div class="item">
-								<div class="item-details">
-										<span class="sb sb-bowling"></span> Bowling <span class="cou">(21)</span> <i class="fa-solid fa-chevron-down"></i>
-								</div>
-								<div class="subitem-cont" style="display:none">
-								</div>
-							</div>
-							<div class="item">
-								<div class="item-details">
-										<span class="sb sb-cricket"></span> Kriket <span class="cou">(7)</span> <i class="fa-solid fa-chevron-down"></i>
-								</div>
-								<div class="subitem-cont" style="display:none">
-								</div>
-							</div>
-							<div class="item">
-								<div class="item-details">
-										<span class="sb sb-chess"></span> Satranç <span class="cou">(121)</span> <i class="fa-solid fa-chevron-down"></i>
-								</div>
-								<div class="subitem-cont" style="display:none">
-								</div>
-							</div>
-							<div class="item">
-								<div class="item-details">
-										<span class="sb sb-darts"></span> Dart <span class="cou">(18)</span> <i class="fa-solid fa-chevron-down"></i>
-								</div>
-								<div class="subitem-cont" style="display:none">
-								</div>
-							</div>
-							<div class="item">
-								<div class="item-details">
-										<span class="sb sb-formula"></span> Formula <span class="cou">(21)</span> <i class="fa-solid fa-chevron-down"></i>
+										<span class="sb sb-formula"></span> Formula <i class="fa-solid fa-chevron-down"></i>
 								</div>
 								<div class="subitem-cont" style="display:none">
 								</div>
@@ -288,19 +299,19 @@
 				<div class="c4" style="display:block">
 					<div class="seTxs">
 						<div class="sbms">
+							{% if canli_bahis %}
 							CANLI BAHİS
+							{% else %}
+							MAÇ ÖNCESİ BAHİS
+							{% endif %}
 						</div>
 						<div class="rgmts">
-							<button class="active"> <span class="sb sb-soccer"></span> </button>
-							<button> <span class="sb sb-basket"></span> </button>
-							<button> <span class="sb sb-tennis"></span> </button>
-							<button> <span class="sb sb-volleyball"></span> </button>
-							<button> <span class="sb sb-icehockey"></span> </button>
-							<button> <span class="sb sb-pingpong"></span> </button>
-							<button> <span class="sb sb-handball"></span> </button>
-							<button> <span class="sb sb-americanfootball"></span> </button>
-							<button> <span class="sb sb-autoracing"></span> </button>
-							<button> <span class="sb sb-boxing"></span> </button>
+							<button onclick="document.location = '?sport=soccer'"> <span class="sb sb-soccer"></span> </button>
+							<button onclick="document.location = '?sport=basketball'"> <span class="sb sb-basket"></span> </button>
+							<button onclick="document.location = '?sport=tennis'"> <span class="sb sb-tennis"></span> </button>
+							<button onclick="document.location = '?sport=volleyball'"> <span class="sb sb-volleyball"></span> </button>
+							<button onclick="document.location = '?sport=cricket'"> <span class="sb sb-cricket"></span> </button>
+							<button onclick="document.location = '?sport=american_football'"> <span class="sb sb-americanfootball"></span> </button>
 						</div>
 					</div>
 					<div class="matchlist">
@@ -481,11 +492,11 @@
 				<div class="mybet-chart"> <a href="#."> <i class="fa-solid fa-futbol"></i> </a> </div>
 			</div>
 			<div class="mobile-menu">
-				<a href="#."> <img src="/img/mobilemenu/i7.png" /> <span>Yüksek Limit</span> </a>
-				<a href="#."> <img src="/img/mobilemenu/i4.png" /> <span>Günlük Yarışmacılar</span> </a>
-				<a href="#."> <img src="/img/mobilemenu/i3.png" /> <span>Anasayfa</span> </a>
-				<a href="#."> <img src="/img/mobilemenu/i5.png" /> <span>Haftalık Yarışmalar</span> </a>
-				<a href="#."> <img src="/img/mobilemenu/i6.png" /> <span>Kampanyalar</span> </a>
+				<a href="/fantezi"> <img src="/img/mobilemenu/i7.png" /> <span>Fantezi Futbol</span> </a>
+				<a href="/bahis"> <img src="/img/mobilemenu/i4.png" /> <span>Spor</span> </a>
+				<a href='/'> <img src="/img/mobilemenu/i3.png" /> <span>Anasayfa</span> </a>
+				<a href="/canli_bahis"> <img src="/img/mobilemenu/i5.png" /> <span>Canlı Bahis</span> </a>
+				<a href="/casino"> <img src="/img/mobilemenu/i6.png" /> <span>Casino</span> </a>
 			</div>
 		</fast-menu>
 	</app-mobilemenu>
