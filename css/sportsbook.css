@@ -1039,7 +1039,7 @@ match-details.match-details .odds-cont .odds-opts .odds-list .odd-detail .odds .
 		white-space: nowrap;
 	}
 	.mobile-menu .ma-item.active {
-		background: #8261a6;
+		background: var(--baseColor);
 		box-shadow: 0px 0px 12px -7px rgba(130, 97, 166, 1);
 	}
 	.odd-text {
