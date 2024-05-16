@@ -2125,7 +2125,7 @@ def casino():
 
 @app.route("/casino/<game_id>")
 def casino_game(game_id):
-    freespin_bonus = current_user.get_bonuses("casino", "freespin").bonus
+    freespin_bonus = current_user.get_bonuses("casino", "freespin")
     if freespin_bonus:
         current_user.get_bonuses("casino", "freespin").status = "Kullanıldı"
     from casino_utils import get_game_iframe
