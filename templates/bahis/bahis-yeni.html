@@ -434,6 +434,7 @@
 				<div onclick="document.getElementById('coupon-iframe').src = `/coupon?timestamp=${Date.now()}`" class="header">
 				{% else %}
 				<div onclick="document.location = `/login`" class="header">
+				{% endif %}
 					Bahis Kuponu
 				</div>
 				<iframe id="coupon-iframe" style="height: 250px" src="/coupon" frameborder="0"></iframe>
