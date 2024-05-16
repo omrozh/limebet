@@ -48,7 +48,7 @@ games_and_descriptions = {
                   "lower then the displayed number. For every correct guess get 50% compounded every time. In this "
                   "game we do not have a statistical edge a correct strategy and a strong will can even give you the "
                   "advantage.",
-    "limbo": "Limbo seçtiğiniz çarpanın üzerinde mi yoksa altında mı çarpan geleceğini tahmin ettiğiniz bir LimeBet özel oyunudur.",
+    "limbo": "Limbo seçtiğiniz çarpanın üzerinde mi yoksa altında mı çarpan geleceğini tahmin ettiğiniz bir KadroMilyon özel oyunudur.",
     "slots-egyptian": "Plutus Slots has the lowest house edge in "
                       "any slot game ever with only 0.015% (99.985% RTP). 1000x Jackpot",
     "slots-jungle": "A slot game build solely for adventure seekers. 13250x Jackpot and 500x if you match all 5 slots "
@@ -60,7 +60,7 @@ games_and_descriptions = {
                    "existing ones. One you open a new card there is no going back when you withdraw all of your "
                    "multipliers are multiplied and your wins are calculated. ",
     "max_money": "Drawn daily and the player that bets the highest amount wins all the money",
-    "double": "Double paranızı ikiye katlayabileceğiniz yüksek adrenelinli bir LimeBet orijinal oyunudur."
+    "double": "Double paranızı ikiye katlayabileceğiniz yüksek adrenelinli bir KadroMilyon orijinal oyunudur."
               " Double ile kazanma potansiyeliniz tam anlamıyla sınırsızdır. Paranızı sonsuza kadar ikiye katlamaya devam edebilirsiniz.",
     "divo": "In this Plutus original you divide your bet into different sections and only one of them wins. "
             "Create your own play style according to your risk tolerance.",
@@ -95,9 +95,9 @@ bundesliga_teams = ['BayernMünih', 'BorussiaDortmund', 'Leipzig', 'UnionBerlin'
 
 app.config["SECRET_KEY"] = "ksjf-sjc-wsf12-sac"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///site.db"
-app.config["DO_ROUTE_USERS"] = True
+app.config["DO_ROUTE_USERS"] = False
 # True if website is not kadromilyon
-app.config["CASINO_BASE_URL"] = "https://limebet.com/casino-callback/"
+app.config["CASINO_BASE_URL"] = "https://kadromilyon.com/casino-callback/"
 
 db = SQLAlchemy(app)
 
