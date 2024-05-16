@@ -495,7 +495,7 @@
 				<div class="line"></div>
 				<div class="livechat"> <a href="#."> <img src="/img/mobilemenu/i2.png" /> </a> </div>
 				{% if current_user.is_authenticated %}
-					<div class="mybet-chart"> <a href="#."> <i class="fa-solid fa-futbol"></i> </a> </div>
+					<div onclick="document.getElementById('coupon-iframe').src = `/coupon?timestamp=${Date.now()}`" class="mybet-chart"> <a href="#."> <i class="fa-solid fa-futbol"></i> </a> </div>
 				{% else %}
 					<div onclick="document.location = '/login'" class="mybet-chart"> <a href="#."> <i class="fa-solid fa-futbol"></i> </a> </div>
 				{% endif %}
