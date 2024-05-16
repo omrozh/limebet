@@ -173,16 +173,16 @@
 					<div class="sliders">
 						<div class="col-12 col-lg-10 slider-one">
 							<div class="sLymx1 owl-carousel">
-								<div class="slide"> <a href="#."> <img src="/img/slider/slider-main/slider-home.png" /> </a> </div>
-								<div class="slide"> <a href="#."> <img src="/img/slider/slider-main/slider-home.png" /> </a> </div>
-								<div class="slide"> <a href="#."> <img src="/img/slider/slider-main/slider-home.png" /> </a> </div>
+								{% for i in sliders_main %}
+									<div class="slide"> <a href="#."> <img src="{{ i }}" /> </a> </div>
+								{% endfor %}
 							</div>
 						</div>
 						<div class="col-12 col-lg-4 slider-two">
 							<div class="sLmx2 owl-carousel">
-								<div class="slide"> <a href="#."> <img src="/img/slider/slider-sub/slider-sub.png" /> </a> </div>
-								<div class="slide"> <a href="#."> <img src="/img/slider/slider-sub/slider-sub.png" /> </a> </div>
-								<div class="slide"> <a href="#."> <img src="/img/slider/slider-sub/slider-sub.png" /> </a> </div>
+								{% for i in sliders_sub %}
+									<div class="slide"> <a href="#."> <img src="{{ i }}" /> </a> </div>
+								{% endfor %}
 							</div>
 						</div>
 					</div>
