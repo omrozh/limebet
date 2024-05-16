@@ -160,6 +160,19 @@ class SitePartner(db.Model):
     partnership_status = db.Column(db.String)
 
 
+class UserAssignedPermission(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_fk = db.Column(db.String)
+    permission_fk = db.Column(db.String)
+
+
+class UserPermissions(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    permissions_list = db.Column(db.String)
+
+# TO DO: Create panel user, permission
+
+
 class ContactM2(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String)
@@ -408,6 +421,11 @@ class User(db.Model, UserMixin):
     sports_bonus_balance = db.Column(db.Float)
     completed_first_deposit = db.Column(db.Boolean)
     site_partner_fk = db.Column(db.Integer)
+
+    def user_has_permission(self, permission_to_check):
+        assigned_permission = UserAssignedPermission.query.filter_by(user_fk=self.id)
+        user_permission = UserPermissions.query.get(assigned_permission.permission_fk)
+        return permission_to_check in user_permission.permissions_list.split("&&")
 
     @property
     def site_partner(self):
