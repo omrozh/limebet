@@ -352,10 +352,9 @@
 										</div>
 										{% if i.who_wins_bet %}
 											<div class="odds">
-												<div class="odd odd1 new-up"> <span class="d-hide m-show c-f odd-text">1</span> <button> {{ i.who_wins_bet.bet_odds.0.odd }} </button> </div>
-												<div class="odd odd2"> <span class="d-hide m-show c-f odd-text">X</span> <button> {{ i.who_wins_bet.bet_odds.1.odd }} </button> </div>
-												<div class="odd odd3"> <span class="d-hide m-show c-f odd-text">2</span> <button> {{ i.who_wins_bet.bet_odds.2.odd }} </button> </div>
-												<div class="odd oddmore"> <button> + </button> </div>
+												<div class="odd odd1 new-up"> <span class="d-hide m-show c-f odd-text">1</span> <button style="min-width: fit-content"> {{ i.who_wins_bet.bet_odds.0.odd }} </button> </div>
+												<div class="odd odd2"> <span class="d-hide m-show c-f odd-text">X</span> <button style="min-width: fit-content"> {{ i.who_wins_bet.bet_odds.1.odd }} </button> </div>
+												<div class="odd odd3"> <span class="d-hide m-show c-f odd-text">2</span> <button style="min-width: fit-content"> {{ i.who_wins_bet.bet_odds.2.odd }} </button> </div>
 											</div>
 										{% endif %}
 									</div>
