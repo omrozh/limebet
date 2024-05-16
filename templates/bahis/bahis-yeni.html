@@ -429,11 +429,12 @@
 					</div>
 				</match-details>
 			</div>
-			<mybet class="mybet">
-				<div class="header">
-					Bahis Kuponu <span>(0)</span>
+			<mybet class="mybet" style="height: fit-content">
+				<div onclick="document.getElementById('coupon-iframe').src = `/coupon?timestamp=${Date.now()}`" class="header">
+					Bahis Kuponu
 				</div>
-				<div class="bets">
+				<iframe id="coupon-iframe" style="height: 250px" src="/coupon" frameborder="0"></iframe>
+				<div style="display: none" class="bets">
 					<empty-bet style="display:none">
 						<p>Bahis Kuponu Boş</p>
 						<span>Lütfen bahis yapmak istediğiniz etkinlikleri ekleyiniz.</span>

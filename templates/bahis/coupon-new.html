@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+	<title>KadroMilyon</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	<link rel="stylesheet" href="/css/sportsbook.css" />
+	<link rel="stylesheet" href="/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="/css/fontawesome.min.css" />
+	<link rel="stylesheet" href="/plugins/owl/owl.carousel.min.css" />
+	<link rel="stylesheet" href="/plugins/perfect-scrollbar/perfect-scrollbar.css" />
+	<style>
+		::placeholder {
+		  color: var(--generalTextColor);
+		  opacity: 1;
+		}
+
+		::-ms-input-placeholder {
+		  color: var(--generalTextColor);
+		}
+	</style>
+</head>
+<body style="padding: 0; margin: 0">
+  <mybet class="mybet" style="overflow-y: auto; border-radius: 0; width: 100vw; height: 100vh; position: relative; right: 0; max-width: 100vw; display: block;">
+		<div class="bets" style="width: 100vw; height: 100vh">
+			<empty-bet style="display:none">
+				<p>Bahis Kuponu Boş</p>
+				<span>Lütfen bahis yapmak istediğiniz etkinlikleri ekleyiniz.</span>
+			</empty-bet>
+			<playable-bet>
+				<div class="matchs">
+					{% for i in current_coupon.odd_options %}
+						<div class="match">
+							<div class="t">
+								<div class="icon"> <span class="sb sb-soccer"></span> </div>
+								<div class="matchName"> {{ i.bet_option.game_name }} </div>
+								<div class="close" onclick="document.location = '/remove_bet/{{ i.id }}?coupon=true'"> <i class="fa-solid fa-xmark"></i> </div>
+							</div>
+							<div class="b">
+								<div class="betDetails"> {{ i.value }} </div>
+								<div class="betratio"> {{ i.odd }} </div>
+							</div>
+						</div>
+                    {% endfor %}
+				</div>
+				<div class="settings">
+					<button class="removeAll" onclick="document.location = '/coupon/removeAll'"> <i class="fa-solid fa-trash-can"></i> Tümünü Kaldırın </button>
+					<div class="total"> Toplam Oran: <span>{{ '%0.2f'| format(current_coupon.total_odd) }}</span> </div>
+				</div>
+				<div class="result" style="background-color: transparent; border: none">
+					<form method="post" enctype="multipart/form-data">
+						<div class="result-cont">
+							<div class="titler"><input name="coupon_value" id="coupon-val" oninput="calculateTotalPrize()" type="text" style="width: 40px; background: transparent; color: var(--generalTextColor); border: none; outline: none" placeholder="Bahis"> </div>
+							<div class="totalText"> <p>Toplam Kazanç</p> <span class="amount" id="total_prize"></span><i class="fa-solid fa-turkish-lira-sign"></i> </div>
+						</div>
+						<br>
+						<button type="submit" style="color: var(--generalTextColor); background-color: var(--baseColor); padding: 5px; box-sizing: border-box; width: 100%; border: none; outline: none; border-radius: 5px">Bahis Yap</button>
+						<br>
+						<br>
+					</form>
+					<script>
+						function calculateTotalPrize(){
+                          if(isNaN(document.getElementById('coupon-val').value)){
+                            document.getElementById("total_prize").innerText = 0;
+                            return;
+                          }
+
+                          document.getElementById("total_prize").innerText = parseFloat(parseFloat(document.getElementById('coupon-val').value) * {{ '%0.2f'| format(current_coupon.total_odd) }}).toFixed(2)
+                      }
+					</script>
+				</div>
+			</playable-bet>
+		</div>
+	</mybet>
+</body>
+</html>

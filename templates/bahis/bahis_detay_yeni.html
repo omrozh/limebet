@@ -55,7 +55,7 @@
 											{% for c in i.bet_odds %}
 												{% if c.odd %}
 													{% if c.user_selected %}
-														<odd style="background-color: red; color: white;" onclick="document.location = '/remove_bet/{{c.id}}'"> <span>{{ c.value }}</span> <button class="odd">{{ c.odd }}</button> </odd>
+														<odd onclick="document.location = '/remove_bet/{{c.id}}'"> <span>{{ c.value }}</span> <button class="odd" style="background-color: red; ">{{ c.odd }}</button> </odd>
 													{% else %}
 														<odd onclick="document.location = '/take_bet/{{c.id}}'"> <span>{{ c.value }}</span> <button class="odd">{{ c.odd }}</button> </odd>
 													{% endif %}

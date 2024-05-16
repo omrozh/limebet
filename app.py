@@ -1817,7 +1817,18 @@ def remove_bet(odd_id):
 
     from_frame = flask.request.args.get("iframe", False) == "True"
 
+    if flask.request.args.get("coupon", None):
+        return flask.redirect("/coupon")
     return flask.redirect(f"/bahis/mac/{option.open_bet_fk}?iframe={from_frame}")
+
+
+@app.route("/coupon/removeAll")
+def remove_all():
+    current_coupon = BetCoupon.query.filter_by(user_fk=current_user.id).filter_by(status="Oluşturuluyor").first()
+    for i in current_coupon.all_selects:
+        db.session.delete(i)
+    db.session.commit()
+    return flask.redirect("/coupon")
 
 
 @app.route("/coupon", methods=["POST", "GET"])
@@ -1841,13 +1852,14 @@ def coupon():
             continue
         i.match_name = i.odd.bet_option.match_name
         i.game_name = i.odd.bet_option.game_name
-        if i.odd.bettable:
+        '''if i.odd.bettable:
             from cloudbet import cloudbet_instant_odd_update
             prev_val = i.odd.odd
             cloudbet_instant_odd_update(i.odd)
             if not i.odd.odd == prev_val:
                 changed_odds.append(i.odd.id)
-            i.odd_locked_in_rate = i.odd.odd
+            i.odd_locked_in_rate = i.odd.odd'''
+        i.odd_locked_in_rate = i.odd.odd
         if not i.odd.bettable:
             db.session.delete(i)
             db.session.commit()
@@ -1912,7 +1924,7 @@ def coupon():
 
         db.session.commit()
         return flask.redirect("/profile")
-    return flask.render_template("bahis/coupon.html", current_coupon=current_coupon, current_user=current_user,
+    return flask.render_template("bahis/coupon-new.html", current_coupon=current_coupon, current_user=current_user,
                                  changed_odds=changed_odds, odds_did_change=len(changed_odds) > 0)
 
 
