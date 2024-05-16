@@ -494,7 +494,11 @@
 				<div class="info"> <a href="#."> <img src="/img/mobilemenu/i1.png" /> </a> </div>
 				<div class="line"></div>
 				<div class="livechat"> <a href="#."> <img src="/img/mobilemenu/i2.png" /> </a> </div>
-				<div class="mybet-chart"> <a href="#."> <i class="fa-solid fa-futbol"></i> </a> </div>
+				{% if current_user.is_authenticated %}
+					<div class="mybet-chart"> <a href="#."> <i class="fa-solid fa-futbol"></i> </a> </div>
+				{% else %}
+					<div onclick="document.location = '/login'" class="mybet-chart"> <a href="#."> <i class="fa-solid fa-futbol"></i> </a> </div>
+				{% endif %}
 			</div>
 			<div class="mobile-menu">
 				<a href="/fantezi"> <img src="/img/mobilemenu/i7.png" /> <span>Fantezi Futbol</span> </a>
