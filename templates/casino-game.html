@@ -1,437 +1,161 @@
-<html lang="en">
+<!DOCTYPE HTML>
+<html lang="tr-TR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>KadroMilyon | Fantezi Futbol'un Merkezi</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <script src="https://kit.fontawesome.com/88bd62ac48.js" crossorigin="anonymous"></script>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&amp;family=Protest+Guerrilla&amp;display=swap"
-          rel="stylesheet">
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        th, td {
-            text-align: left;
-            padding: 8px;
-        }
-
-        .menu-main{
-            width: 100%; box-sizing: border-box; height: 200px;
-        }
-
-        .slider-wrapper{
-            background-color: #0f1012; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 40px; padding: 10px; overflow: auto; width: 90%; box-sizing: border-box
-        }
-
-        .promotion-image {
-            width: 25%;
-            display: inline-block;
-            margin-left: 3%;
-        }
-
-        .competition-div {
-            background-color: white;
-            width: 72%;
-            text-align: left;
-            display: inline-block;
-            float: left;
-        }
-
-        .games-div{
-          width: 95%; text-align: left; background-color: #0f1012; border: 1px solid rgba(255, 255, 255, 0.3); box-sizing: border-box; border-radius: 15px; font-family: 'Open Sans', sans-serif;
-        }
-        #search-box{
-          width: 40%; border-radius: 10px; outline: none; border: none; padding: 10px 15px; font-family: sans-serif; outline: none; font-size: 1rem; box-sizing: border-box; background: transparent; color: white; border: 1px solid white
-        }
-
-        .kadro-mil {
-            background-image: url('/static/km-fantasy-slider.png');
-            background-size: 100% auto;
-            background-repeat: no-repeat;
-            width: 64%;
-            text-align: left;
-            box-sizing: border-box;
-            padding: 20px 50px;
-            min-height: 300px;
-            background-position: center;
-            float: left;
-            border-radius: 40px;
-        }
-
-        .game-img{
-          width: 10.7vw;
-        }
-
-        #main-content-wrapper {
-            width: 90%;
-            float: right;
-            margin-left: -70px
-        }
-
-        .play-select{
-            width: 50px; height: 50px; border-radius: 100px; background: #292D30FF; position: absolute; bottom: 40px; right: 10px
-        }
-
-        .select-wrapper{
-            display: inline-block; border-radius: 15px; box-sizing: content-box; background-size: cover; padding: 5px; padding-bottom: 20px; position:relative; width: 250px
-        }
-
-        .picture-select{
-            height: 250px; width: 200px;  background-image: url('/static/km-popular1.jpg'); background-position: center; background-size: cover; border-radius: 15px
-        }
-
-        .game-div{
-            width: 90%;
-        }
-
-        #side-bar {
-            display: block;
-        }
-
-        @media screen and (max-width: 800px) {
-            .login-span{
-                display: none;
-            }
-          .game-img{
-            width: 34vw;
-          }
-            .game-div{
-                width: 80%;
-                margin-left: 5%;
-            }
-          #search-box{
-            width: 95%;
-            margin-left: 2.5%;
-          }
-          .games-div{
-            width: 95%;
-            margin-left: 2.5%;
-          }
-            .play-select{
-                width: 30px;
-                height: 30px;
-                bottom: 50px;
-                right: 15px;
-            }
-            .picture-select{
-                height: 150px;
-                width: 100px;
-            }
-            .select-wrapper{
-                width: 150px
-            }
-            .slider-wrapper{
-                border: none;
-                background: transparent;
-            }
-            .menu-main{
-                height: 100px;
-            }
-            .kadro-mil{
-                border-radius: 0;
-                width: 90%;
-                height: 350px;
-                background-size: cover;
-            }
-            .promotion-image {
-                display: none;
-            }
-            #navbar-main{
-                display: none;
-            }
-
-            .competition-div {
-                width: 100%;
-                float: none;
-            }
-        }
-
-
-        @media screen and (max-width: 1400px) {
-            #main-content-wrapper {
-                width: 100%;
-                float: none;
-                margin-left: 0;
-            }
-
-            #side-bar {
-                display: none;
-            }
-
-            .kadro-mil {
-                min-height: fit-content;
-                height: 320px;
-                width: 100%;
-            }
-
-            #promotion-img {
-                display: none;
-            }
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-    </style>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+	<title>KadroMilyon</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	<link rel="stylesheet" href="/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="/css/fontawesome.min.css" />
+	<link rel="stylesheet" href="/plugins/owl/owl.carousel.min.css" />
+	<script src="//code.tidio.co/6sibsyjb7qcqlirjvzar5yfkqjjk6ips.js" async></script>
 </head>
-<body style="background-color: #191a1f; padding: 0; margin: 0; font-family: 'Open Sans', sans-serif;">
-<div style="width: 100%;">
-    <center style="padding: 20px 50px; background-color: orange; display: none;" id="promotion-insta">
-        <span style="color: white; font-family: 'Open Sans', sans-serif; font-size: 16px; text-decoration: underline;"
-              onclick="window.localStorage.setItem('hidePromotionInsta', 'true'); document.location = '/promotions/instagram';">Yatırımsız 500TL fırsatı!</span>
-        <script>
-            document.getElementById("promotion-insta").style.display = "none";
-            if (window.localStorage.getItem("hidePromotionInsta") === 'true') {
-                document.getElementById("promotion-insta").style.display = "none";
-            }
-        </script>
-    </center>
-    <div class="menu-main">
-        <img id="iconmain" src="/img/logo.png" alt="" style="width: 200px; padding: 20px; float: left">
-        <script>
-            if(window.innerWidth < window.innerHeight){
-                document.getElementById("iconmain").style.width = "50px";
-            }
-        </script>
-        <div style="float: left;" id="hid-mob">
-
-        </div>
-        <div style="float: right; margin-top: 40px;">
-            {% if current_user.is_authenticated %}
-            <div style="background-color: #292d30; border-radius: 50px; color: white; padding: 10px; box-sizing: border-box; margin-right: 20px; margin-top: -10px; float: right">
-                <span style="background-color: #212226; padding: 5px; padding-left: 12px; padding-right: 12px; border-radius: 50px; box-sizing: border-box">₺</span>
-                <span id="balance" style="padding-right: 5px; padding-left: 5px">{{'%0.2f'| format(current_user.balance|float)}}</span>
+<body>
+	<app-header>
+		<app-home-header class="sticky-top">
+			<div class="nav">
+				<div class="logo"> <a href="/"> <img src="/img/logo.png" /> </a> </div>
+				<div class="fast-links">
+					<a href="#." class="btn"> <i class="km km-affiliate"></i> Affiliate </a>
+					<a href="#." class="btn"> <i class="km km-call"></i> Sizi Arayalım </a>
+					<a href="#." class="btn"> <i class="km km-whatsapp"></i> Whatsapp </a>
+					<a href="#." class="btn"> <i class="km km-telegram"></i> Telegram </a>
+					<a href="#." class="btn"> <i class="km km-twitter"></i> Twitter </a>
+				</div>
+				<div class="rightmenu">
+					{% if not current_user.is_authenticated %}
+					<app-not-loggedin>
+							<a href="/login" class="btn login-btn"> <i class="fa-solid fa-right-to-bracket"></i> Giriş Yap </a>
+							<a href="/signup" class="btn register-btn"> <i class="fa-solid fa-user-plus"></i> Kayıt Ol </a>
+						<div class="lang-select">
+							<div class="view"> <img src="/img/flag/tr.png" /> TR <i class="fa-solid fa-chevron-down"></i> </div>
+						</div>
+						<div class="timer" id="timer">
+							16:40:50
+						</div>
+						<script>
+							function setTimer(){
+								var d = new Date();
+								var n = d.toLocaleTimeString();
+								document.getElementById("timer").innerText = n;
+							}
+							setInterval(setTimer, 1000)
+						</script>
+						<a href="#." class="notification"> <i class="fa-solid fa-bell"></i> </a>
+					</app-not-loggedin>
+					{% else %}
+					<app-loggedin>
+						<a href="#." class="btn price-btn"> <i class="fa-solid fa-turkish-lira-sign"></i>
+							{% if current_user.sports_bonus_balance + current_user.casino_bonus_balance > 0 %}
+								<span style="display: inline-block; vertical-align: middle">
+									<p style="font-size: 12px; margin-bottom: 0; margin-block-start: 0; margin-block-end: 0;">{{'%0.2f'| format(current_user.balance|float)}}</p>
+									<p style="font-size: 8px; color: var(--baseColor); margin-top: 0; margin-bottom: 0; margin-block-start: 0; margin-block-end: 0">{{'%0.2f'| format(current_user.casino_bonus_balance + current_user.sports_bonus_balance |float)}}</p>
+								</span>
+							{% else %}
+								{{'%0.2f'| format(current_user.balance|float)}}
+							{% endif %}
+						</a>
+						<a href="/profile" class="btn setting-btn"> <i class="fa-solid fa-gear"></i> </a>
+						<a href="/notifications" class="btn notification-btn"> <i class="fa-regular fa-bell"></i> <div class="counter">2</div> </a>
+						<a href="/profile" class="btn profile-btn"> <img src="/img/profile-demo.png" /> </a>
+					</app-loggedin>
+					{% endif %}
+				</div>
+			</div>
+			<div class="menu-container">
+				<div class="menu">
+					<a href="/canli_bahis" class="n-link"> <i class="km km-live"></i> <span>CANLI BAHİS</span> </a>
+					<a href="/bahis" class="n-link"> <i class="km km-sports"></i> <span>SPOR</span> </a>
+					<a href="/casino" class="n-link"> <i class="km km-slot"></i> <span>SLOT</span> </a>
+					<a href="/casino" class="n-link"> <i class="km km-live-casino"></i> <span>CANLI CASINO</span> </a>
+					<a href="/fantezi" class="n-link"> <i class="km km-games"></i> <span>OYUNLAR</span> </a>
+					<a href="/casino?search_query=bingo" class="n-link"> <i class="km km-tomb"></i> <span>TOMBALA</span> </a>
+					<a href="/casino/1022357" class="n-link"> <i class="km km-aviator"></i> <span>AVIATOR</span> </a>
+					<a href="/promotions" class="n-link"> <i class="km km-promotions"></i> <span>PROMOSYONLAR</span> </a>
+				</div>
+			</div>
+		</app-home-header>
+	</app-header>
+	<app-content>
+		<div class="container">
+          <br>
+			<div class="row">
+                <iframe src="{{ game_iframe }}" style="width: 100%; height: 80vh" frameborder="0"></iframe>
             </div>
-            <span onclick="refreshBalance()"
-                  style="margin-right: 25px; font-size: 2rem; float: right; color: white; margin-top: -13px">&#x21ba;</span>
-            <script>
-                function updateBalance(balance) {
-                    document.getElementById("balance").innerText = balance;
-                }
-
-                function refreshBalance() {
-                    document.getElementById("balance").innerText = "..."
-                    fetch("/refresh-balance")
-                        .then(x => x.text())
-                        .then(y => updateBalance(y));
-                }
-            </script>
-            <a href="/profile" style="color: dodgerblue; text-decoration: none; margin-right: 25px; float: right">
-                <img style="width: 25px" src="/static/profile.png" alt="">
-            </a>
-            {% else %}
-            <div id="desktop-join">
-                <div onclick="document.location = '/login'"
-                     style="background-color: #292d30; border-radius: 50px; color: white; padding: 10px; box-sizing: border-box; margin-right: 5px; margin-top: -20px; display: inline-block">
-                    <span style="background-color: #212226; padding: 5px; padding-left: 12px; padding-right: 12px; border-radius: 50px; box-sizing: border-box"><i
-                            class="fa-solid fa-right-to-bracket"></i></span>
-                    <span class="login-span" style="padding-right: 5px; padding-left: 5px; font-size: 16px">Giriş Yap</span>
-                </div>
-                <div onclick="document.location = '/signup'"
-                     style="background-color: #7b00ff; border-radius: 50px; color: white; padding: 10px; box-sizing: border-box; margin-right: 20px; margin-top: -20px; display: inline-block">
-                    <span style="background-color: #6000c0; padding: 5px; padding-left: 12px; padding-right: 12px; border-radius: 50px; box-sizing: border-box"><i
-                            class="fa-solid fa-user-plus"></i></span>
-                    <span class="login-span" style="padding-right: 5px; padding-left: 5px">Kayıt Ol</span>
-                </div>
-            </div>
-            {% endif %}
-        </div>
-        <script>
-            if (window.innerHeight > window.innerWidth) {
-                document.getElementById("hid-mob").style.display = "none";
-            }
-        </script>
-        <div style="padding: 20px 50px; overflow-x: auto; float: left; white-space: nowrap; width: 100vw; background-color: #0f1012; box-sizing: border-box" id="navbar-main">
-                <span style="display: inline-block; color: white; font-family: 'Open Sans', sans-serif"
-                      onclick="document.location = '/'">
-                    Anasayfa
-                </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
-                  onclick="localStorage.clear(); window.location.reload()">
-                    Kampanyalar
-                </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
-                  onclick="document.location = '/?filter_q=daily'">
-                    Günlük Yarışmalar
-                </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
-                  onclick="document.location = '/?filter_q=weekly'">
-                    Haftalık Yarışmalar
-                </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
-                  onclick="document.location = '/?filter_q=daily'">
-                    Yüksek Limitli Yarışmalar
-                </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
-                  onclick="document.location = '/?filter_q=Premier-Lig'">
-                    Premier Lig
-                </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
-                  onclick="document.location = '/?filter_q=Süper-Lig'">
-                    Süper Lig
-                </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
-                  onclick="document.location = '/?filter_q=Bundesliga'">
-                    Bundesliga
-                </span>
-            <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif"
-                  onclick="document.location = '/?filter_q=LaLiga'">
-                    LaLiga
-                </span>
-
-
-            {% if not current_user.is_authenticated %}
-            <span style="display: inline-block; margin-left: 50px; font-family: 'Open Sans', sans-serif; color: dodgerblue;"
-                  class="hid-desktop"
-                  onclick="document.location = '/login'">
-                        Giriş Yap
-                    </span>
-
-            <span style="display: inline-block; margin-left: 50px; color: #7b00ff; font-family: 'Open Sans', sans-serif;"
-                  class="hid-desktop"
-                  onclick="document.location = '/signup'">
-                        Kayıt Ol
-                    </span>
-            {% endif %}
-
-        </div>
-    </div>
-    <center style="width: 5%; margin-right: 1%; float: left; height: 600px; background: #0f1012; margin-left: 25px; border-radius: 15px; border: 1px solid rgba(255, 255, 255, .3)"
-            id="side-bar">
-        <div style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 10px; color: white; position: relative" onclick="document.location = '/fantezi'">
-            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
-                <i class="fa-solid fa-medal"></i>
-            </div>
-        </div>
-
-        <div onclick="document.location = '/'" style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 10px; color: white; position: relative;">
-            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
-                <i class="fa-solid fa-house"></i>
-            </div>
-        </div>
-
-        <div onclick="document.location = '/bahis'"
-             style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 40px; color: white; position: relative;">
-            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
-                <i class="fa-solid fa-futbol"></i>
-            </div>
-        </div>
-
-        <div onclick="document.location = '/casino'" style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 10px; color: white; position: relative; background-color: #7b00ff">
-            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
-                <i class="fa-solid fa-dice"></i>
-            </div>
-        </div>
-
-        <div onclick="document.location = '/profile'"
-             style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 40px; color: white; position: relative;">
-            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
-                <i class="fa-solid fa-user"></i>
-            </div>
-        </div>
-
-        <div onclick="document.location = '/logout'"
-             style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 40px; color: white; position: relative;">
-            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
-                <i class="fa-solid fa-right-from-bracket"></i>
-            </div>
-        </div>
-
-        <div onclick="document.location = 'mailto:destek@m2betting.com'"
-             style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 10px; color: lawngreen; position: relative;">
-            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
-                <i class="fa-solid fa-envelope"></i>
-            </div>
-        </div>
-
-        <div onclick="document.location = '/howtoplay'"
-             style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 10px; color: white; position: relative;">
-            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
-                <i class="fa-solid fa-circle-info"></i>
-            </div>
-        </div>
-
-    </center>
-    <div id="main-content-wrapper">
-                <center style="background: #0f1012; padding: 15px; border-radius: 15px;" class="game-div">
-        <iframe src="{{ game_iframe }}" style="width: 100%; height: 80vh" frameborder="0"></iframe>
-
-        <br>
-
-    </center>
-            <script>
-                function searchPlayer(){
-                let search_query = document.getElementById("search-box").value;
-                let searchable_divs = document.getElementsByClassName("searchable-div");
-                if (search_query.length > 2){
-                    document.location = '?search_query=' + search_query
-                }
-            }
-            </script>
-            <div id="mobile-menu" style="position: fixed; bottom: 110px; left: 20px; display: none">
-                <div onclick="document.location = '/fantezi'"
-                     style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 40px; color: white; position: relative; background: #292d30">
-                    <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
-                        <i class="fa-solid fa-medal"></i>
-                    </div>
-                </div>
-                <div onclick="document.location = '/bahis'"
-                     style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 10px; color: white; position: relative; background: #292d30">
-                    <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
-                        <i class="fa-solid fa-futbol"></i>
-                    </div>
-                </div>
-            </div>
-            <center id="mobile-home" style="color: white; position: fixed; bottom: 0; left: 0; width: 100%; background-color: #26292d; padding-top: 15px; box-sizing: border-box;" onclick="openMobileMenu()">
-                <div onclick="document.location = '/bahis'" style="border-radius: 50px; background-color: transparent; display: inline-block; color: white; padding: 20px; width: fit-content; height: fit-content; font-size: 1rem">
-                    <i class="fa-solid fa-futbol"></i>
-                </div>
-                <div onclick="document.location = '/fantezi'" style="border-radius: 50px; background-color: transparent; display: inline-block; color: white; padding: 20px; width: fit-content; height: fit-content; font-size: 1rem">
-                    <i class="fa-solid fa-medal"></i>
-                </div>
-                <div onclick="document.location = '/'" style="border-radius: 50px; background-color: #6a4898; display: inline-block; color: white; padding: 20px; width: fit-content; height: fit-content; font-size: 1rem">
-                    <i class="fa-solid fa-house"></i>
-                </div>
-                <div onclick="document.location = '/casino'" style="border-radius: 50px; background-color: transparent; display: inline-block; color: white; padding: 20px; width: fit-content; height: fit-content; font-size: 1rem">
-                    <i class="fa-solid fa-dice"></i>
-                </div>
-                <div onclick="document.location = '/profile'" style="border-radius: 50px; background-color: transparent; display: inline-block; color: white; padding: 20px; width: fit-content; height: fit-content; font-size: 1rem">
-                    <i class="fa-solid fa-user"></i>
-                </div>
-                <br>
-                <br>
-            </center>
-        </center>
-        <br>
-        <span style="opacity: 0">KadroMilyon</span>
-        <br>
-        <span style="opacity: 0">KadroMilyon</span>
-    </div>
-    <script>
-        function openMobileMenu(){
-            let mobile_menu = document.getElementById("mobile-menu");
-            if(mobile_menu.style.display === "block"){
-                mobile_menu.style.display = "none";
-                document.getElementById("mobile-home").innerHTML = "<i class=\"fa-solid fa-bars\"></i>"
-            }else{
-                mobile_menu.style.display = "block"
-                document.getElementById("mobile-home").innerHTML = "<i class=\"fa-solid fa-circle-chevron-down\"></i>"
-            }
-        }
-        if (window.innerWidth < window.innerHeight) {
-            document.getElementById("mobile-home").style.display = "block";
-            document.getElementById("desktop-join").style.marginTop = "5px";
-            document.getElementById("desktop-join").style += "; float: right; width: 300px; overflow-x: auto; white-space: nowrap; padding-top: 10px; margin-top: -13px"
-        } else {
-           document.getElementById("mobile-home").style.display = "none";
-        }
-    </script>
-</div>
+		</div>
+	</app-content>
+	<app-footer>
+		<div class="footer">
+			<div class="inner">
+				<div class="fast-links">
+					<a href="mailto:sales@m2betting.com" class="btn"> <i class="km km-affiliate"></i> Affiliate </a>
+					<a href="/signup" class="btn"> <i class="km km-call"></i> Sizi Arayalım </a>
+					<a href="#." class="btn"> <i class="km km-whatsapp"></i> Whatsapp </a>
+					<a href="#." class="btn"> <i class="km km-telegram"></i> Telegram </a>
+					<a href="#." class="btn"> <i class="km km-twitter"></i> Twitter </a>
+				</div>
+				<div class="details">
+					<div class="col-2">
+						<h3> Hakkımızda </h3>
+						<ul>
+							<li> <a href="/howtoplay"> Firma Bilgileri </a> </li>
+							<li> <a href="#."> İletişim </a> </li>
+							<li> <a href="#."> Yardım - SSS </a> </li>
+						</ul>
+					</div>
+					<div class="col-2">
+						<h3> ŞARTLAR VE KURALLAR </h3>
+						<ul>
+							<li> <a href="#."> Genel Kural ve Şartlar </a> </li>
+							<li> <a href="#."> Gizlilik Politikası </a> </li>
+							<li> <a href="#."> Sorumlu Oyun </a> </li>
+						</ul>
+					</div>
+					<div class="col-2">
+						<h3> GÖSTERİMLER </h3>
+						<ul>
+							<li> <a href="#."> Affiliate </a> </li>
+							<li> <a href="/casino"> Turnuvalar </a> </li>
+							<li> <a href="/bahis"> Maç Programı </a> </li>
+						</ul>
+					</div>
+				</div>
+				<div class="providers">
+					<img src="/img/providers/desk.png" />
+				</div>
+				<div class="copy">
+					<a href="#." class="licence-url"> <img src="/img/licence.png" /> </a>
+					<p> KadroMilyon.com is operated by M2 Betting registered under No. 164124 at, Chuchubiweg 17, Curaçao. This website is licensed and regulated by Curaçao eGaming, license No. 1668/JAZ.  In
+	order to register for this website, the user is required to accept the “<a href="#.">General Terms and Conditions.</a>" In the event the ”<a href="#.">General Terms and Conditions</a>" are updated, existing users may choose to
+	discontinue using the products and services before the said update shall become effective, which is a minimum of two weeks after it has been announced.  </p>
+				</div>
+				<div class="finish">
+					<a href="/"> <img src="/img/logo.png" /> </a>
+					<p> 2024 © KadroMilyon </p>
+				</div>
+			</div>
+		</div>
+	</app-footer>
+	<app-mobilemenu>
+		<fast-menu>
+			<div class="area">
+				<div class="info"> <a href="/howtoplay"> <img src="/img/mobilemenu/i1.png" /> </a> </div>
+				<div class="line"></div>
+				<div class="livechat"> <a href="/contact"> <img src="/img/mobilemenu/i2.png" /> </a> </div>
+			</div>
+			<div class="mobile-menu">
+				<a href="/fantezi"> <img src="/img/mobilemenu/i7.png" /> <span>Fantezi Futbol</span> </a>
+				<a href="/bahis"> <img src="/img/mobilemenu/i4.png" /> <span>Spor</span> </a>
+				<a href='/'> <img src="/img/mobilemenu/i3.png" /> <span>Anasayfa</span> </a>
+				<a href="/canli_bahis"> <img src="/img/mobilemenu/i5.png" /> <span>Canlı Bahis</span> </a>
+				<a href="/casino"> <img src="/img/mobilemenu/i6.png" /> <span>Casino</span> </a>
+			</div>
+		</fast-menu>
+	</app-mobilemenu>C
+	<script type="text/javascript" src="/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/plugins/owl/owl.carousel.min.js"></script>
+	<script type="text/javascript" src="/js/script.js"></script>
 </body>
 </html>
