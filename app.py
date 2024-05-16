@@ -97,7 +97,7 @@ app.config["SECRET_KEY"] = "ksjf-sjc-wsf12-sac"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///site.db"
 app.config["DO_ROUTE_USERS"] = True
 # True if website is not kadromilyon
-app.config["CASINO_BASE_URL"] = "https://limebet.com/casino-callback/"
+app.config["CASINO_BASE_URL"] = "http://172.233.248.220/casino-callback/"
 
 db = SQLAlchemy(app)
 
