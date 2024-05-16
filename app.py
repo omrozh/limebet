@@ -1852,13 +1852,13 @@ def coupon():
             continue
         i.match_name = i.odd.bet_option.match_name
         i.game_name = i.odd.bet_option.game_name
-        '''if i.odd.bettable:
+        if i.odd.bettable:
             from cloudbet import cloudbet_instant_odd_update
             prev_val = i.odd.odd
             cloudbet_instant_odd_update(i.odd)
             if not i.odd.odd == prev_val:
                 changed_odds.append(i.odd.id)
-            i.odd_locked_in_rate = i.odd.odd'''
+            i.odd_locked_in_rate = i.odd.odd
         i.odd_locked_in_rate = i.odd.odd
         if not i.odd.bettable:
             db.session.delete(i)
