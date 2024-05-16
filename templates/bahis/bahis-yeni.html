@@ -349,9 +349,9 @@
 								<center>
 									{% for i in number_of_chunks %}
 										{% if offset == i %}
-											<a href="?offset={{ i }}" style="color: var(--backgroundDark); background-color: var(--generalTextColor); border-radius: 5px; border: 1px solid var(--buttonBorder); padding: 5px 15px 5px 15px; box-sizing: border-box; display: inline-block">{{ i }}</a>
+											<a href="?offset={{ i }}" style="color: var(--backgroundDark); background-color: var(--generalTextColor); border-radius: 5px; border: 1px solid var(--buttonBorder); padding: 5px 15px 5px 15px; box-sizing: border-box; display: inline-block">{{ i + 1 }}</a>
 										{% else %}
-											<a href="?offset={{ i }}" style="color: var(--generalTextColor); border-radius: 5px; border: 1px solid var(--buttonBorder); padding: 5px 15px 5px 15px; box-sizing: border-box; display: inline-block">{{ i }}</a>
+											<a href="?offset={{ i }}" style="color: var(--generalTextColor); border-radius: 5px; border: 1px solid var(--buttonBorder); padding: 5px 15px 5px 15px; box-sizing: border-box; display: inline-block">{{ i + 1 }}</a>
 										{% endif %}
 									{% endfor %}
 								</center>
