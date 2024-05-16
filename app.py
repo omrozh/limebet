@@ -95,9 +95,9 @@ bundesliga_teams = ['BayernMünih', 'BorussiaDortmund', 'Leipzig', 'UnionBerlin'
 
 app.config["SECRET_KEY"] = "ksjf-sjc-wsf12-sac"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///site.db"
-app.config["DO_ROUTE_USERS"] = False
+app.config["DO_ROUTE_USERS"] = True
 # True if website is not kadromilyon
-app.config["CASINO_BASE_URL"] = "https://kadromilyon.com/casino-callback/"
+app.config["CASINO_BASE_URL"] = "https://limebet.com/casino-callback/"
 
 db = SQLAlchemy(app)
 
