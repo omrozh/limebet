@@ -299,7 +299,7 @@ app-home-header.other-pages.sticky-top {
     display: flex;
 }
 .sportsbook .c4 .rgmts button.active {
-    background: #383f44;
+    background: var(--baseColor);
 }
 .sportsbook .c4 .matchlist {
     border-top: 1px solid #474849;
