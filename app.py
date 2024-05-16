@@ -1859,7 +1859,6 @@ def coupon():
             if not i.odd.odd == prev_val:
                 changed_odds.append(i.odd.id)
             i.odd_locked_in_rate = i.odd.odd
-        i.odd_locked_in_rate = i.odd.odd
         if not i.odd.bettable:
             db.session.delete(i)
             db.session.commit()
