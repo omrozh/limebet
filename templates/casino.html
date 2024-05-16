@@ -136,7 +136,7 @@
             <div class="games-div" style="text-align: center">
               <br>
               {% if provider_id %}
-				<div style="width: 98%; white-space: nowrap; overflow-x: auto">
+				<div style="width: 98%; white-space: nowrap; overflow-x: auto; text-align: left">
                     {% for i in providers %}
                           <div onclick="document.location = '/casino?provider_id={{ i.id }}&provider_name={{ i.name }}'" class="searchable-div" style="background-color: #1a1c1f; min-width: fit-content; padding: 15px; border-radius: 15px; display: inline-block; margin-left: 15px; margin-bottom: 15px">
                             <p style="font-family: 'Open Sans', sans-serif; color: white; font-size: 16px; margin-bottom: 5px; overflow-x: auto; width: 150px; max-width: 30vw; white-space: nowrap">{{ i.name }}</p>
@@ -149,7 +149,7 @@
                   </div>
                 {% endfor %}
               {% else %}
-                <div style="width: 98%; white-space: nowrap; overflow-x: auto">
+                <div style="width: 98%; white-space: nowrap; overflow-x: auto; text-align: left">
                     {% for i in providers %}
                           <div onclick="document.location = '/casino?provider_id={{ i.id }}&provider_name={{ i.name }}'" class="searchable-div" style="background-color: #1a1c1f; min-width: fit-content; padding: 15px; border-radius: 15px; display: inline-block; margin-left: 15px; margin-bottom: 15px">
                             <p style="font-family: 'Open Sans', sans-serif; color: white; font-size: 16px; margin-bottom: 5px; overflow-x: auto; width: 150px; max-width: 30vw; white-space: nowrap">{{ i.name }}</p>
