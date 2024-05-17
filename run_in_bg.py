@@ -1,4 +1,4 @@
-from app import run_pending_jobs, app
+from app import app
 from betting_utils import live_betting, register_open_bet
 import time
 
