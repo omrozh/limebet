@@ -606,6 +606,7 @@ mybet.mybet playable-bet .matchs .match .t .icon {
 mybet.mybet playable-bet .matchs .match .t .matchName {
     font-size: 13px;
     margin-right: 25px;
+    color: var(--generalTextColor);
 }
 mybet.mybet playable-bet .matchs .match .b {
     display: flex;
@@ -617,7 +618,7 @@ mybet.mybet playable-bet .matchs .match .b {
     justify-content: space-between;
 }
 mybet.mybet playable-bet .matchs .match .b .betDetails {
-    color: #525355;
+    color: var(--subTextColor);
     font-size: 13px;
 }
 mybet.mybet playable-bet .matchs .match .b .betDetails b {
@@ -639,7 +640,7 @@ mybet.mybet playable-bet .settings {
     margin: 15px 0px;
 }
 mybet.mybet playable-bet .settings .removeAll, mybet.mybet playable-bet .settings .total {
-    color: #848585;
+    color: var(--generalTextColor);
     background: none;
     border: none;
 }
@@ -671,7 +672,7 @@ mybet.mybet playable-bet .result .result-cont span.amount, mybet.mybet playable-
     color: #fff;
 }
 mybet.mybet playable-bet .result .result-cont .totalText, mybet.mybet playable-bet .result .result-cont .titler {
-    color: #bdbac5;
+    color: var(--generalTextColor);
     font-size: 13px;
 }
 mybet.mybet playable-bet .matchs {
@@ -777,7 +778,7 @@ match-details.match-details .odds-cont .odds-opts .odds-sep.ps {
     height: 90%;
 }
 match-details.match-details .odds-cont .odds-opts .odds-list {
-    color: #fff;
+    color: var(--generalTextColor);
     gap: 20px;
 }
 match-details.match-details .odds-cont .odds-opts .odds-list .odd-detail .odd-title {
