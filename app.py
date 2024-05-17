@@ -19,25 +19,6 @@ import feedparser
 import base64
 from imap_tools import MailBox
 
-import schedule
-import time
-
-from betting_utils import distribute_rewards, live_betting, instant_odds_update, register_open_bet, \
-    open_bet_garbage_collector
-
-schedule.clear()
-
-# schedule.every(3).hours.do(distribute_rewards)
-schedule.every(1).minutes.do(live_betting)
-# schedule.every(1).minutes.do(instant_odds_update)
-schedule.every(3).hours.do(register_open_bet)
-
-
-def run_pending_jobs():
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
-
 
 app = flask.Flask(__name__)
 
