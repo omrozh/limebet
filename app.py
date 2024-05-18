@@ -2685,7 +2685,7 @@ def casino_get_balance():
     })
 
 
-@app.route("/casino-callback/moveFunds")
+@app.route("/casino-callback/moveFunds", methods=["POST", "GET"])
 def casino_result_bet():
     m2_callback_router = M2CallbackRouter.query.filter_by(user_uuid=flask.request.args.get("token")).first()
     if m2_callback_router:
