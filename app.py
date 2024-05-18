@@ -2697,9 +2697,9 @@ def casino_result_bet():
 
     net_change = float(flask.request.args.get("amount")) - casino_bonus_balance
 
-    current_user.sports_bonus_balance -= float(flask.request.args.get("amount"))
-    if current_user.casino_bonus_balance < 0:
-        current_user.casino_bonus_balance = 0
+    subject_user.casino_bonus_balance -= float(flask.request.args.get("amount"))
+    if subject_user.casino_bonus_balance < 0:
+        subject_user.casino_bonus_balance = 0
 
     if net_change < 0:
         net_change = 0
