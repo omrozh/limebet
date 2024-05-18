@@ -2211,6 +2211,21 @@ def admin_panel_providers():
     return flask.render_template("panel/providers.html", providers=providers)
 
 
+
+@app.route("/admin/update/withdraw")
+def update_withdraw():
+    if not current_user.user_has_permission("transactions"):
+        return flask.redirect("/admin/home")
+
+    withdraw_request = WithdrawalRequest.query.get(flask.request.args.get("withdraw_request_id"))
+    withdraw_request.user.balance -= withdraw_request.withdrawal_amount
+    withdraw_request.status = flask.request.args.get("update_to")
+    db.session.commit()
+
+    return flask.redirect("/admin/home")
+
+
+
 @app.route("/admin/partnership", methods=["POST", "GET"])
 def admin_panel_partnership():
     if not current_user.user_has_permission("partnerships"):

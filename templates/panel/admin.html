@@ -395,8 +395,8 @@
                                             ₺{{ i.withdrawal_amount }} (Çekim)
                                         </td>
                                         <td class="text-end">
-                                            <a href="#" class="btn btn-sm btn-neutral">Onayla</a>
-                                            <a href="#" class="btn btn-sm btn-neutral">Reddet</a>
+                                            <a href="/admin/update/withdraw?withdraw_request_id={{ i.id }}&update_to=Tamamlandı" class="btn btn-sm btn-neutral">Onayla</a>
+                                            <a href="/admin/update/withdraw?withdraw_request_id={{ i.id }}&update_to=Reddedildi" class="btn btn-sm btn-neutral">Reddet</a>
                                         </td>
                                     </tr>
                             {% endfor %}
