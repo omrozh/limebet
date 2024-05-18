@@ -2691,7 +2691,7 @@ def casino_result_bet():
     if m2_callback_router:
         if not m2_callback_router.base_url == app.config.get("CASINO_BASE_URL"):
             return requests.get(m2_callback_router.base_url + "moveFunds", data=flask.request.values).json()
-
+    print(flask.request.values)
     subject_user = User.query.get(flask.request.values.get("userId"))
     casino_bonus_balance = subject_user.casino_bonus_balance
 
