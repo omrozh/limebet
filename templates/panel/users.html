@@ -130,12 +130,14 @@
                             <div class="card shadow border-0" style="display: inline-block; width: 80vw; margin-top: 25px">
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col">
+                                        <form class="col" method="post" enctype="multipart/form-data">
                                             <h1 class="h3 font-bold mb-0">Kullanıcı Ekle</h1>
                                           <br>
-                                          <select onchange="document.getElementById(this.value).style.display = 'block'" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                                          <select name="user_permission" onchange="document.getElementById(this.value).style.display = 'block'" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
                                             <option value="select-type">Kullanıcı Sınıfı</option>
-                                            <option value="DEMO TEST">DEMO TEST</option>
+                                            {% for i in permissions %}
+                                                <option value="{{ i.id }}">{{ i.permission_name }}</option>
+                                              {% endfor %}
                                             <option value="new-class">Yeni Sınıf</option>
                                           </select>
 
@@ -143,55 +145,49 @@
                                             <br>
 
                                           <div id="new-class" style="display: none">
-                                              <input type="text" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none" placeholder="Kullanıcı Sınıfı İsmi">
+                                              <input type="text" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none" name="permission_name" placeholder="Kullanıcı Sınıfı İsmi">
                                               <br>
                                               <br>
                                               <h3>Erişim İzinleri</h3>
                                               <br>
                                               <div style="margin-left: 20px; display: inline-block">
-                                                  <input type="checkbox"> Finansal Raporlar
+                                                  <input name="permissions_providers" type="checkbox"> Oyun İşlemleri
                                               </div>
                                               <div style="margin-left: 20px; display: inline-block">
-                                                  <input type="checkbox"> Yatırım/Çekim Talepleri
+                                                  <input name="permissions_partnerships" type="checkbox"> Kasa İşlemleri
                                               </div>
                                               <div style="margin-left: 20px; display: inline-block">
-                                                  <input type="checkbox"> Oyun İşlemleri
+                                                  <input name="permissions_cms" type="checkbox"> CMS
                                               </div>
                                               <div style="margin-left: 20px; display: inline-block">
-                                                  <input type="checkbox"> Oyuncu İşlemleri
+                                                  <input name="permissions_general" type="checkbox"> Site Özeti
                                               </div>
                                               <div style="margin-left: 20px; display: inline-block">
-                                                  <input type="checkbox"> Bonus İşlemleri
+                                                  <input name="permissions_add_users" type="checkbox"> Admin Kullanıcısı Ekleme/Çıkartma
                                               </div>
                                               <div style="margin-left: 20px; display: inline-block">
-                                                  <input type="checkbox"> Affiliate
+                                                  <input name="permissions_transactions" type="checkbox"> Loglar
                                               </div>
                                               <div style="margin-left: 20px; display: inline-block">
-                                                  <input type="checkbox"> Raporlar
+                                                  <input name="permissions_deposit_methods" type="checkbox"> Yatırım/Çekim Metotları
                                               </div>
                                               <div style="margin-left: 20px; display: inline-block; margin-top: 10px">
-                                                  <input type="checkbox"> Admin Kullanıcıları
-                                              </div>
-                                              <div style="margin-left: 20px; display: inline-block; margin-top: 10px">
-                                                  <input type="checkbox"> Dışa Aktarım
-                                              </div>
-                                              <div style="margin-left: 20px; display: inline-block; margin-top: 10px">
-                                                  <input type="checkbox"> Canlı Destek
+                                                  <input name="permissions_players" type="checkbox"> Oyuncular
                                               </div>
                                               <br>
                                               <br>
                                           </div>
-                                              <input type="text" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none" placeholder="Kullanıcı Adı">
-                                              <input type="password" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none" placeholder="Şifre">
+                                              <input type="text" name="username" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none" placeholder="Kullanıcı Adı">
+                                              <input name="password" type="password" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none" placeholder="Şifre">
                                               <input type="password" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none" placeholder="Şifre Tekrar">
                                               <br>
                                               <br>
                                               <textarea style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 70vw" placeholder="Not"></textarea>
                                               <br>
                                               <div style="display: block">
-                                                  <input type="button" placeholder="" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 200px; background: #1e7bf2; color: white" value="Kaydet">
+                                                  <input type="submit" placeholder="" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none; min-width: 200px; background: #1e7bf2; color: white" value="Kaydet">
                                                 </div>
-                                    </div>
+                                    </form>
                                       <br>
                                       <br>
                     <div class="card shadow border-0 mb-7">
@@ -204,7 +200,7 @@
                                 <tr>
                                     <th scope="col">Kullanıcı ID</th>
                                     <th scope="col">Kullanıcı Adı</th>
-                                    <th scope="col">Yönetici İsmi</th>
+                                    <th scope="col">Yönetici İzinleri</th>
                                     <th scope="col">Not</th>
                                     <th scope="col">Panel Dili</th>
                                     <th scope="col">Son Giriş</th>
@@ -212,44 +208,46 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {% for i in admin_users %}
                                 <tr>
                                     <td>
                                         <a class="text-heading font-semibold" href="#">
-                                            1
+                                            {{ i.id }}
                                         </a>
                                     </td>
                                     <td>
 
                                         <a class="text-heading font-semibold" href="#">
-                                            test-admin
+                                            {{ i.email }}
                                         </a>
                                     </td>
                                     <td>
-                                        Test Admin
+                                        -
                                     </td>
                                     <td>
                                         <a class="text-heading font-semibold" href="#">
-                                            Demo Kullanıcısı
+                                            {{ i.permission_name }}
                                         </a>
                                     </td>
                                     <td>
                                         Türkçe
                                     </td>
                                     <td>
-                                        Nisan, 30 2024 15:18:50
+                                        {{ i.last_login }}
                                     </td>
                                     <td class="text-end">
                                         <a href="#" class="btn btn-sm btn-neutral">Detaylar</a>
-                                        <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
+                                        <button  onclick="document.location = '/admin/remove_user?user_id={{ i.id }}'" type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
                                             <i class="bi bi-trash"></i>
                                         </button>
                                     </td>
                                 </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
                     <div class="card-footer border-0 py-5">
-                        <span class="text-muted text-sm">1 Kullanıcı Mevcut</span>
+                        <span class="text-muted text-sm">{{ admin_users  | length }} Kullanıcı Mevcut</span>
                     </div>
                 </div>
                                     </div>

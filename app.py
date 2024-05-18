@@ -19,6 +19,8 @@ import feedparser
 import base64
 from imap_tools import MailBox
 
+import schedule
+import time
 
 app = flask.Flask(__name__)
 
@@ -29,7 +31,7 @@ games_and_descriptions = {
                   "lower then the displayed number. For every correct guess get 50% compounded every time. In this "
                   "game we do not have a statistical edge a correct strategy and a strong will can even give you the "
                   "advantage.",
-    "limbo": "Limbo seçtiğiniz çarpanın üzerinde mi yoksa altında mı çarpan geleceğini tahmin ettiğiniz bir LimeBet özel oyunudur.",
+    "limbo": "Limbo seçtiğiniz çarpanın üzerinde mi yoksa altında mı çarpan geleceğini tahmin ettiğiniz bir KadroMilyon özel oyunudur.",
     "slots-egyptian": "Plutus Slots has the lowest house edge in "
                       "any slot game ever with only 0.015% (99.985% RTP). 1000x Jackpot",
     "slots-jungle": "A slot game build solely for adventure seekers. 13250x Jackpot and 500x if you match all 5 slots "
@@ -41,7 +43,7 @@ games_and_descriptions = {
                    "existing ones. One you open a new card there is no going back when you withdraw all of your "
                    "multipliers are multiplied and your wins are calculated. ",
     "max_money": "Drawn daily and the player that bets the highest amount wins all the money",
-    "double": "Double paranızı ikiye katlayabileceğiniz yüksek adrenelinli bir LimeBet orijinal oyunudur."
+    "double": "Double paranızı ikiye katlayabileceğiniz yüksek adrenelinli bir KadroMilyon orijinal oyunudur."
               " Double ile kazanma potansiyeliniz tam anlamıyla sınırsızdır. Paranızı sonsuza kadar ikiye katlamaya devam edebilirsiniz.",
     "divo": "In this Plutus original you divide your bet into different sections and only one of them wins. "
             "Create your own play style according to your risk tolerance.",
@@ -150,6 +152,8 @@ class UserAssignedPermission(db.Model):
 class UserPermissions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     permissions_list = db.Column(db.String)
+    permission_name = db.Column(db.String)
+
 
 # TO DO: Create panel user, permission
 
@@ -403,8 +407,14 @@ class User(db.Model, UserMixin):
     completed_first_deposit = db.Column(db.Boolean)
     site_partner_fk = db.Column(db.Integer)
 
+    @property
+    def permission_name(self):
+        assigned_permission = UserAssignedPermission.query.filter_by(user_fk=self.id).first()
+        user_permission = UserPermissions.query.get(assigned_permission.permission_fk)
+        return user_permission.permission_name
+
     def user_has_permission(self, permission_to_check):
-        assigned_permission = UserAssignedPermission.query.filter_by(user_fk=self.id)
+        assigned_permission = UserAssignedPermission.query.filter_by(user_fk=self.id).first()
         user_permission = UserPermissions.query.get(assigned_permission.permission_fk)
         return permission_to_check in user_permission.permissions_list.split("&&")
 
@@ -719,7 +729,6 @@ class BetOption(db.Model):
             return processed_bet_odds
 
         return bet_odds
-
 
     @property
     def open_bet_obj(self):
@@ -1113,42 +1122,42 @@ def admin_console():
                 <br>
                 // Affiliate ekle
                 <br>
-                
+
                 add-team <takım_adı> <görsel_url>
                 <br>
                 // Takım ekle
                 <br>
-                
+
                 add-athlete <oyuncu_adı> <oyuncu_maliyeti> <takım_adı>
                 <br>
                 // Oyuncu ekle
                 <br>
-                
+
                 add-match <maçın_bugünden_kaç_gün_sonra_olacağı> <takım_1> <takım_2> <maçın_ligi>
                 <br>
                 // Maç ekle
                 <br>
-                
+
                 change-request-status <status_id> <new_status>
                 <br>
                 // Ödeme Statüsü Değiştir
                 <br>
-                
+
                 add-points <puan_miktarı> <oyuncu_adı> <puanın_kaç_gün_önce_kazanıldığı>
                 <br>
                 // Puan ekle
                 <br>
-                
+
                 remove-athlete <oyuncu_adı>
                 <br>
                 // Oyuncuyu sil
                 <br>
-                
+
                 list-players
                 <br>
                 // Oyuncuların listesi
                 <br>
-                
+
                 list-teams
                 <br>
                 // Takımların listesi 
@@ -1242,6 +1251,7 @@ def profile():
     return flask.render_template("profile.html", current_user=current_user, withdrawal_requests=reversed(
         WithdrawalRequest.query.filter_by(user_fk=current_user.id).all()))
 
+
 # TO DO: Implement bonuses in profile.
 
 
@@ -1313,7 +1323,8 @@ def index():
             pass
     resp = flask.make_response(
         flask.render_template("anasayfa-yeni.html", current_user=current_user, providers=providers,
-                              games_popular=games_popular, live_casino_games=live_casino_games, sliders_main=sliders_main, sliders_sub=sliders_sub))
+                              games_popular=games_popular, live_casino_games=live_casino_games,
+                              sliders_main=sliders_main, sliders_sub=sliders_sub))
     if flask.request.args.get("ref", False):
         resp.set_cookie('referrer', flask.request.args.get("ref"))
     return resp
@@ -1636,7 +1647,8 @@ def signup():
             }
             requests.post("https://kadromilyon.com/save_user_to_m2router", data=data)
         return flask.redirect("/profile")
-    return flask.render_template("signup.html", sliders_sub=sliders_sub, sliders_main=sliders_main, games_popular=games_popular, live_casino_games=live_casino_games)
+    return flask.render_template("signup.html", sliders_sub=sliders_sub, sliders_main=sliders_main,
+                                 games_popular=games_popular, live_casino_games=live_casino_games)
 
 
 @app.route("/save_user_to_m2router", methods=["POST", "GET"])
@@ -1714,6 +1726,7 @@ def bahis():
                                  number_of_chunks=number_of_chunks, offset=offset,
                                  sports_and_leagues=sports_and_leagues)
 
+
 # TO DO: Complete sports betting integration FE.
 
 
@@ -1724,7 +1737,9 @@ def canli_bahis():
     league = flask.request.args.get("league", None)
     search_q = flask.request.args.get("search_q", None)
     if search_q:
-        open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime <= datetime.datetime.now(), or_(OpenBet.team_1.like('%' + search_q + '%'), OpenBet.team_2.like('%' + search_q + '%'))).filter_by(
+        open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime <= datetime.datetime.now(),
+                                         or_(OpenBet.team_1.like('%' + search_q + '%'),
+                                             OpenBet.team_2.like('%' + search_q + '%'))).filter_by(
             live_betting_expired=False).filter_by(has_odds=True)
     else:
         open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime <= datetime.datetime.now()).filter_by(
@@ -2130,8 +2145,10 @@ def casino():
             except AttributeError or KeyError:
                 pass
 
-    return flask.render_template("casino.html", current_user=current_user, providers=providers,games=games, provider_id=provider_id,
+    return flask.render_template("casino.html", current_user=current_user, providers=providers, games=games,
+                                 provider_id=provider_id,
                                  games_popular=games_popular)
+
 
 @app.route("/casino/<game_id>")
 def casino_game(game_id):
@@ -2152,6 +2169,8 @@ def error_500(e):
 
 @app.route("/admin/games")
 def admin_panel_providers():
+    if not current_user.user_has_permission("providers"):
+        return flask.redirect("/admin/home")
     from casino_utils import get_providers, get_games
     providers = []
     for c in get_providers():
@@ -2165,6 +2184,8 @@ def admin_panel_providers():
 
 @app.route("/admin/partnership", methods=["POST", "GET"])
 def admin_panel_partnership():
+    if not current_user.user_has_permission("partnerships"):
+        return flask.redirect("/admin/home")
     partner = User.query.get(flask.request.args["user_id"])
 
     if flask.request.method == "POST":
@@ -2194,6 +2215,8 @@ def admin_panel_partnership():
 
 @app.route("/admin/partnership/balance", methods=["POST", "GET"])
 def admin_panel_partnership_operations():
+    if not current_user.user_has_permission("partnerships"):
+        return flask.redirect("/admin/home")
     partnership = SitePartner.query.get(flask.request.args["partnership_id"])
     if flask.request.method == "POST":
         partnership.partnership_balance += float(flask.request.values["balance_increase"])
@@ -2205,6 +2228,8 @@ def admin_panel_partnership_operations():
 
 @app.route("/admin/cms", methods=["POST", "GET"])
 def admin_panel_cms():
+    if not current_user.user_has_permission("cms"):
+        return flask.redirect("/admin/home")
     css_dict = []
     with open("css/cms-styles.css", 'r') as file:
         for line in file:
@@ -2239,11 +2264,14 @@ def admin_panel_cms():
 
         return flask.redirect("/admin/cms")
 
-    return flask.render_template("panel/cms.html", css_dict=css_dict, images=images, option=flask.request.args.get("option"))
+    return flask.render_template("panel/cms.html", css_dict=css_dict, images=images,
+                                 option=flask.request.args.get("option"))
 
 
 @app.route("/admin/home")
 def admin_panel():
+    if not current_user.user_has_permission("general"):
+        return flask.redirect("/")
     import admin_utils
     day_difference = int(flask.request.args.get("days", 1))
 
@@ -2311,6 +2339,8 @@ def admin_panel():
 
 @app.route("/admin/games/<provider_id>/<provider_name>")
 def admin_panel_provider_details(provider_id, provider_name):
+    if not current_user.user_has_permission("providers"):
+        return flask.redirect("/admin/home")
     from casino_utils import get_providers, get_games
     from urllib.parse import unquote
     games = []
@@ -2329,6 +2359,8 @@ def admin_panel_provider_details(provider_id, provider_name):
 
 @app.route("/admin/game/<provider_id>/<game_id>")
 def admin_panel_game_details(provider_id, game_id):
+    if not current_user.user_has_permission("providers"):
+        return flask.redirect("/admin/home")
     from casino_utils import get_games
     for c in get_games(provider_id).get("games"):
         if str(game_id) == str(c.get("id")):
@@ -2346,6 +2378,8 @@ def admin_panel_game_details(provider_id, game_id):
 
 @app.route("/admin/bonuses", methods=["POST", "GET"])
 def admin_panel_bonuses():
+    if not current_user.user_has_permission("bonuses"):
+        return flask.redirect("/admin/home")
     bonuses = Bonus.query.all()
     number_of_bonuses = len(bonuses)
     if flask.request.method == "POST":
@@ -2380,6 +2414,8 @@ def admin_panel_bonuses():
 
 @app.route("/admin/bonus_requests", methods=["POST", "GET"])
 def admin_panel_bonus_request():
+    if not current_user.user_has_permission("bonuses"):
+        return flask.redirect("/admin/home")
     bonus_requests = BonusAssigned.query.filter_by(status="Talep Edildi").all()
     return flask.render_template("panel/bonus_request.html", bonus_requests=bonus_requests,
                                  number_of_requests=len(bonus_requests))
@@ -2387,6 +2423,8 @@ def admin_panel_bonus_request():
 
 @app.route("/admin/accept_bonus_request", methods=["POST", "GET"])
 def admin_panel_accept_bonus_request():
+    if not current_user.user_has_permission("bonuses"):
+        return flask.redirect("/admin/home")
     subject_bonus_request = BonusAssigned.query.get(flask.request.args["bonus_id"])
     if flask.request.method == "POST":
         subject_bonus_request.status = "Kullanılabilir"
@@ -2399,19 +2437,69 @@ def admin_panel_accept_bonus_request():
 
 @app.route("/admin/decline_bonus_request")
 def admin_panel_decline_bonus_request():
+    if not current_user.user_has_permission("bonuses"):
+        return flask.redirect("/admin/home")
     subject_bonus_request = BonusAssigned.query.get(flask.request.args["bonus_id"])
     subject_bonus_request.status = "Reddedildi"
     db.session.commit()
     return flask.redirect("/admin/bonus_requests")
 
 
-@app.route("/admin/users")
+@app.route("/admin/users", methods=["POST", "GET"])
 def admin_panel_users():
-    return flask.render_template("panel/users.html")
+    '''if not current_user.user_has_permission("add_users"):
+        return flask.redirect("/admin/home")'''
+    if flask.request.method == "POST":
+        user_permission = flask.request.values.get("user_permission")
+        if user_permission == "new-class":
+            permissions_list = []
+            for i in flask.request.values:
+                if "permissions_" in i:
+                    permissions_list.append(i.replace("permissions_", ""))
+            new_user_permission = UserPermissions(
+                permission_name=flask.request.values.get("permission_name"),
+                permissions_list="&&".join(permissions_list)
+            )
+            db.session.add(new_user_permission)
+            db.session.commit()
+        new_user_permission = UserPermissions.query.get(flask.request.values.get("user_permission"))
+        new_user = User(
+            email=flask.request.values.get("username"),
+            password=bcrypt.generate_password_hash(flask.request.values.get("password")),
+            is_admin=True,
+            balance=0,
+            casino_bonus_balance=0,
+            sports_bonus_balance=0
+        )
+        db.session.add(new_user)
+        db.session.commit()
+
+        new_user_assigned_permission = UserAssignedPermission(
+            user_fk=new_user.id,
+            permission_fk=new_user_permission.id
+        )
+        db.session.add(new_user_assigned_permission)
+        db.session.commit()
+
+        return flask.redirect("/admin/users")
+
+    return flask.render_template("panel/users.html", admin_users=User.query.filter_by(is_admin=True).all(),
+                                 permissions=UserPermissions.query.all())
+
+
+@app.route("/admin/remove_user")
+def remove_admin_user():
+    if not current_user.user_has_permission("add_users"):
+        return flask.redirect("/admin/home")
+    db.session.delete(User.query.get(flask.request.args.get("user_id")))
+    db.session.commit()
+    return flask.redirect("/admin/users")
 
 
 @app.route("/admin/finance")
 def admin_panel_finance():
+    if not current_user.user_has_permission("transactions"):
+        return flask.redirect("/admin/home")
     transactions = TransactionLog.query.all()
     number_of_transactions = len(transactions)
     return flask.render_template("panel/finance.html", transactions=transactions,
@@ -2420,19 +2508,24 @@ def admin_panel_finance():
 
 @app.route("/admin/deposit-methods")
 def admin_panel_finance_deposit_methods():
+    if not current_user.user_has_permission("deposit_methods"):
+        return flask.redirect("/admin/home")
     return flask.render_template("panel/deposit-methods.html")
 
 
 @app.route("/admin/players")
 def admin_panel_players():
+    if not current_user.user_has_permission("players"):
+        return flask.redirect("/admin/home")
     users = User.query.all()
     number_of_users = len(users)
     return flask.render_template("panel/players.html", users=users, number_of_users=number_of_users)
 
 
-
 @app.route("/admin/remove_user")
 def remove_user():
+    if not current_user.user_has_permission("players"):
+        return flask.redirect("/admin/home")
     db.session.delete(User.query.get(flask.request.args["user_id"]))
     db.session.commit()
     return flask.redirect("/admin/players")
