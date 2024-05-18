@@ -474,6 +474,8 @@ class User(db.Model, UserMixin):
             self.get_bonuses("sport-betting", "yatirim-bonusu")
         ]
         for bonus in bonuses:
+            if not bonus:
+                continue
             if bonus.bonus.minimum_deposit < deposit_amount < bonus.bonus.maximum_deposit:
                 if bonus.bonus.bonus_product == "casino":
                     self.casino_bonus_balance += self.give_percent_bonus(bonus, deposit_amount)
