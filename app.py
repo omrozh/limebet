@@ -2687,48 +2687,48 @@ def casino_get_balance():
 
 @app.route("/casino-callback/moveFunds", methods=["POST", "GET"])
 def casino_result_bet():
-    m2_callback_router = M2CallbackRouter.query.filter_by(user_uuid=flask.request.args.get("token")).first()
+    m2_callback_router = M2CallbackRouter.query.filter_by(user_uuid=flask.request.values.get("token")).first()
     if m2_callback_router:
         if not m2_callback_router.base_url == app.config.get("CASINO_BASE_URL"):
-            return requests.get(m2_callback_router.base_url + "moveFunds", params=flask.request.args).json()
+            return requests.get(m2_callback_router.base_url + "moveFunds", data=flask.request.values).json()
 
-    subject_user = User.query.get(flask.request.args.get("userId"))
+    subject_user = User.query.get(flask.request.values.get("userId"))
     casino_bonus_balance = subject_user.casino_bonus_balance
 
-    net_change = float(flask.request.args.get("amount")) - casino_bonus_balance
+    net_change = float(flask.request.values.get("amount")) - casino_bonus_balance
 
-    subject_user.casino_bonus_balance -= float(flask.request.args.get("amount"))
+    subject_user.casino_bonus_balance -= float(flask.request.values.get("amount"))
     if subject_user.casino_bonus_balance < 0:
         subject_user.casino_bonus_balance = 0
 
     if net_change < 0:
         net_change = 0
 
-    if not subject_user.user_uuid == flask.request.args.get("token"):
+    if not subject_user.user_uuid == flask.request.values.get("token"):
         return {
             "status": False,
             "errors": {
                 "error": "Authorization Error"
             }
         }
-    if flask.request.args.get("eventType") == "Win":
-        new_transaction = TransactionLog(transaction_amount=float(flask.request.args.get("amount")),
+    if flask.request.values.get("eventType") == "Win":
+        new_transaction = TransactionLog(transaction_amount=float(flask.request.values.get("amount")),
                                          transaction_type="casino_win", transaction_date=datetime.date.today(),
                                          user_fk=current_user.id, transaction_status="completed",
                                          payment_unique_number=f"Casino Kazancı - Oyun ID: {flask.request.values.get('gameId')}")
         db.session.add(new_transaction)
 
-        subject_user.balance -= float(flask.request.args.get("amount"))
+        subject_user.balance -= float(flask.request.values.get("amount"))
 
         if subject_user.referrer:
             if subject_user.referrer.site_partner:
-                if subject_user.referrer.site_partner.partnership_balance < float(flask.request.args.get("amount")):
+                if subject_user.referrer.site_partner.partnership_balance < float(flask.request.values.get("amount")):
                     subject_user.referrer.site_partner.partnership_status = "Yetersiz Bakiye"
                     db.session.commit()
                 else:
-                    subject_user.referrer.site_partner.partnership_balance -= float(flask.request.args.get("amount"))
-    if flask.request.args.get("eventType") == "Lose":
-        new_transaction = TransactionLog(transaction_amount=float(flask.request.args.get("amount")),
+                    subject_user.referrer.site_partner.partnership_balance -= float(flask.request.values.get("amount"))
+    if flask.request.values.get("eventType") == "Lose":
+        new_transaction = TransactionLog(transaction_amount=float(flask.request.values.get("amount")),
                                          transaction_type="casino_loss", transaction_date=datetime.date.today(),
                                          user_fk=current_user.id, transaction_status="completed",
                                          payment_unique_number=f"Casino Kaybı - Oyun ID: {flask.request.values.get('gameId')}")
