@@ -2371,6 +2371,7 @@ def complete_deposit():
         return flask.redirect("/admin/home")
     transaction = TransactionLog.query.get(flask.request.args.get("transaction_id"))
     transaction.transaction_status = "completed"
+    User.query.get(transaction.user_fk).update_bonus_balance(transaction.transaction_amount)
     User.query.get(transaction.user_fk).balance += transaction.transaction_amount
     db.session.commit()
     return flask.redirect("/admin/home")
