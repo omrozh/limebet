@@ -2647,7 +2647,7 @@ def casino_player_details():
     if m2_callback_router:
         if not m2_callback_router.base_url == app.config.get("CASINO_BASE_URL"):
             return requests.get(m2_callback_router.base_url + "playerDetails", params=flask.request.args).json()
-    subject_user = User.query.get(flask.request.args.get("userID"))
+    subject_user = User.query.get(flask.request.args.get("userId"))
     if not subject_user.user_uuid == flask.request.args.get("token"):
         return {
             "status": False,
@@ -2671,7 +2671,7 @@ def casino_get_balance():
         if not m2_callback_router.base_url == app.config.get("CASINO_BASE_URL"):
             return requests.get(m2_callback_router.base_url + "getBalance", params=flask.request.args).json()
 
-    subject_user = User.query.get(flask.request.args.get("userID"))
+    subject_user = User.query.get(flask.request.args.get("userId"))
     if not subject_user.user_uuid == flask.request.args.get("token"):
         return {
             "status": False,
@@ -2681,7 +2681,7 @@ def casino_get_balance():
         }
     return flask.jsonify({
         "status": True,
-        "balance": round(current_user.balance, 2)
+        "balance": round(subject_user.balance, 2)
     })
 
 
@@ -2692,7 +2692,7 @@ def casino_result_bet():
         if not m2_callback_router.base_url == app.config.get("CASINO_BASE_URL"):
             return requests.get(m2_callback_router.base_url + "moveFunds", params=flask.request.args).json()
 
-    subject_user = User.query.get(flask.request.args.get("userID"))
+    subject_user = User.query.get(flask.request.args.get("userId"))
     casino_bonus_balance = current_user.casino_bonus_balance
 
     net_change = float(flask.request.args.get("amount")) - casino_bonus_balance
@@ -2742,7 +2742,7 @@ def casino_result_bet():
     db.session.commit()
     return flask.jsonify({
         "status": True,
-        "balance": round(current_user.balance, 2)
+        "balance": round(subject_user.balance, 2)
     })
 
 
