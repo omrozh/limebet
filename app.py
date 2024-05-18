@@ -2693,7 +2693,7 @@ def casino_result_bet():
             return requests.get(m2_callback_router.base_url + "moveFunds", params=flask.request.args).json()
 
     subject_user = User.query.get(flask.request.args.get("userId"))
-    casino_bonus_balance = current_user.casino_bonus_balance
+    casino_bonus_balance = subject_user.casino_bonus_balance
 
     net_change = float(flask.request.args.get("amount")) - casino_bonus_balance
 
