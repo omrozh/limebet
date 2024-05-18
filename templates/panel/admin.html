@@ -334,6 +334,7 @@
                                     <th scope="col">Tarih</th>
                                     <th scope="col">Oyuncu ID</th>
                                     <th scope="col">Kullanıcı Adı</th>
+                                    <th scope="col">Çekim Yapılacak Hesap(Çekim için)</th>
                                     <th scope="col">Tutar</th>
                                     <th></th>
                                 </tr>
@@ -356,6 +357,9 @@
                                         </td>
                                         <td>
                                             {{ i.user.username }}
+                                        </td>
+                                        <td>
+                                            -
                                         </td>
                                         <td>
                                             ₺{{ i.transaction_amount }} (Yatırım)
@@ -383,6 +387,9 @@
                                         </td>
                                         <td>
                                             {{ i.user.username }}
+                                        </td>
+                                        <td>
+                                            {{ i.withdraw_to }}
                                         </td>
                                         <td>
                                             ₺{{ i.withdrawal_amount }} (Çekim)
