@@ -2720,7 +2720,7 @@ def casino_result_bet():
                                          payment_unique_number=f"Casino Kazancı - Oyun ID: {flask.request.values.get('gameId')}")
         db.session.add(new_transaction)
 
-        subject_user.balance -= float(flask.request.values.get("amount"))
+        subject_user.balance += float(flask.request.values.get("amount"))
 
         if subject_user.referrer:
             if subject_user.referrer.site_partner:
@@ -2729,7 +2729,7 @@ def casino_result_bet():
                     db.session.commit()
                 else:
                     subject_user.referrer.site_partner.partnership_balance -= float(flask.request.values.get("amount"))
-    if flask.request.values.get("eventType") == "Lose":
+    if flask.request.values.get("eventType") == "BetPlacing":
         new_transaction = TransactionLog(transaction_amount=float(flask.request.values.get("amount")),
                                          transaction_type="casino_loss", transaction_date=datetime.date.today(),
                                          user_fk=subject_user.id, transaction_status="completed",
