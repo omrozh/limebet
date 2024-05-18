@@ -2714,7 +2714,7 @@ def casino_result_bet():
     if flask.request.values.get("eventType") == "Win":
         new_transaction = TransactionLog(transaction_amount=float(flask.request.values.get("amount")),
                                          transaction_type="casino_win", transaction_date=datetime.date.today(),
-                                         user_fk=current_user.id, transaction_status="completed",
+                                         user_fk=subject_user.id, transaction_status="completed",
                                          payment_unique_number=f"Casino Kazancı - Oyun ID: {flask.request.values.get('gameId')}")
         db.session.add(new_transaction)
 
@@ -2730,7 +2730,7 @@ def casino_result_bet():
     if flask.request.values.get("eventType") == "Lose":
         new_transaction = TransactionLog(transaction_amount=float(flask.request.values.get("amount")),
                                          transaction_type="casino_loss", transaction_date=datetime.date.today(),
-                                         user_fk=current_user.id, transaction_status="completed",
+                                         user_fk=subject_user.id, transaction_status="completed",
                                          payment_unique_number=f"Casino Kaybı - Oyun ID: {flask.request.values.get('gameId')}")
         db.session.add(new_transaction)
         subject_user.balance -= net_change
