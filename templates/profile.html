@@ -504,18 +504,29 @@
                 <div style="border-radius: 15px 15px 0 0; font-family: sans-serif; height: fit-content; padding: 15px; display: inline-block; margin: 15px; background: #333333; box-sizing: border-box; width: 200px">
                     <img src="https://avatars.githubusercontent.com/u/24546447?s=280&v=4" style="width: 150px; border-radius: 15px" alt="">
                     <p style="font-size: 12px; color: white">
-                        Servis Sağlayıcı: LimeBet Ödeme Servisi
+                        Servis Sağlayıcı: Manuel Ödeme
                     </p>
                 </div>
                 <div style="color: white; font-family: 'Open Sans', sans-serif; background-color: #7b00ff; width: 200px; margin-top: -15px; padding: 10px; box-sizing: border-box; border-radius: 0 0 15px 15px">
                     Papara
                 </div>
             </div>
+            <div id="payfix-modal-button"  style="display: inline-block" class="select-payment">
+                <div style="border-radius: 15px 15px 0 0; font-family: sans-serif; height: fit-content; padding: 15px; display: inline-block; margin: 15px; background: #333333; box-sizing: border-box; width: 200px">
+                    <img src="https://www.find.com.tr/assets/images/Uploads/Company/2370249/find_2020107_234237975.jpg" style="width: 150px; border-radius: 15px" alt="">
+                    <p style="font-size: 12px; color: white">
+                        Servis Sağlayıcı: Manuel Ödeme
+                    </p>
+                </div>
+                <div style="color: white; font-family: 'Open Sans', sans-serif; background-color: #7b00ff; width: 200px; margin-top: -15px; padding: 10px; box-sizing: border-box; border-radius: 0 0 15px 15px">
+                    Payfix
+                </div>
+            </div>
             <div style="display: inline-block" class="select-payment">
                 <div id="bank-modal-button" style="border-radius: 15px 15px 0 0; font-family: sans-serif; height: fit-content; padding: 15px; display: inline-block; margin: 15px; background: #333333; box-sizing: border-box; width: 200px">
                     <img src="https://cdn-icons-png.flaticon.com/512/349/349260.png" style="width: 150px" alt="">
                     <p style="font-size: 12px; color: white">
-                        Servis Sağlayıcı: LimeBet Ödeme Servisi
+                        Servis Sağlayıcı: Manuel Ödeme
                     </p>
                 </div>
                 <div style="color: white; font-family: 'Open Sans', sans-serif; background-color: #7b00ff; width: 200px; margin-top: -15px; padding: 10px; box-sizing: border-box; border-radius: 0 0 15px 15px">
@@ -580,10 +591,16 @@
 
             var btn = document.getElementById("papara-modal-button");
             var bankbtn = document.getElementById("bank-modal-button");
+            var payfixbtn = document.getElementById("payfix-modal-button");
 
             btn.onclick = function() {
               modal.style.display = "block";
               document.getElementById("deposit-id").src = "/deposit/papara"
+            }
+
+            payfixbtn.onclick = function() {
+              modal.style.display = "block";
+              document.getElementById("deposit-id").src = "/deposit/payfix"
             }
 
             bankbtn.onclick = function() {

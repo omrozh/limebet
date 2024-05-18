@@ -194,6 +194,18 @@
                                       <br>
                                       <br>
                     <div>
+                        <form method="post" enctype="multipart/form-data">
+                            <h5>Metod Ekle</h5>
+                            <select name="payment_type" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                                <option value="">Metod Türü</option>
+                                <option value="papara">Papara</option>
+                                <option value="payfix">Payfix</option>
+                                <option value="bank">Banka</option>
+                            </select>
+                            <input placeholder="Hesap Sahibi Adı" name="account_holder_name" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                            <input placeholder="Hesap Numarası" name="payment_number" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                            <button style="background-color: #5c60f5; color: white; border-radius: 5px; margin-top: 15px; padding: 5px">Kaydet</button>
+                        </form>
                     <div class="card-header">
                         <h5 class="mb-0">Yatırım/Çekim Metodları</h5>
                     </div>
@@ -212,6 +224,95 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {% for i in manual_payment_sources %}
+                                    <tr>
+                                    <td>
+                                        <a class="text-heading font-semibold" href="#">
+                                            Manuel Ödeme
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="text-heading font-semibold" href="#">
+                                            -
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="text-heading font-semibold" href="#">
+                                            -
+                                        </a>
+                                    </td>
+                                    <td>
+                                        -
+                                    </td>
+                                    <td>
+                                        <a class="text-heading font-semibold" href="#">
+                                            {% if i.is_active_payment_source %}
+                                                Aktif
+                                            {% else %}
+                                                İnaktif
+                                            {% endif %}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="text-heading font-semibold" href="#">
+                                            -
+                                        </a>
+                                    </td>
+                                    <td>
+
+                                        <a class="text-heading font-semibold" href="#">
+                                            -
+                                        </a>
+                                    </td>
+                                    <td class="text-end">
+                                        {% if i.is_active_payment_source %}
+                                            <a href="/admin/payments/deactivate?payment_method={{ i.id }}" class="btn btn-sm btn-neutral">Deaktive Et</a>
+                                        {% else %}
+                                            <a href="/admin/payments/activate?payment_method={{ i.id }}" class="btn btn-sm btn-neutral">Aktive Et</a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                <tr>
+                                    <td>
+                                        <a class="text-heading font-semibold" href="#">
+                                            Yatırım
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="text-heading font-semibold" href="#">
+                                            Anında Havale
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="text-heading font-semibold" href="#">
+                                            %5
+                                        </a>
+                                    </td>
+                                    <td>
+                                        -
+                                    </td>
+                                    <td>
+                                        <a class="text-heading font-semibold" href="#">
+                                            Aktif
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="text-heading font-semibold" href="#">
+                                            50.00₺
+                                        </a>
+                                    </td>
+                                    <td>
+
+                                        <a class="text-heading font-semibold" href="#">
+                                            100.000₺
+                                        </a>
+                                    </td>
+                                    <td class="text-end">
+                                        <a href="#" class="btn btn-sm btn-neutral">Detaylar</a>
+                                        <a href="#" class="btn btn-sm btn-neutral">Deaktive Et</a>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td>
                                         <a class="text-heading font-semibold" href="#">
@@ -296,7 +397,7 @@
                         </table>
                     </div>
                     <div class="card-footer border-0 py-5">
-                        <span class="text-muted text-sm">2 Metod Mevcut</span>
+                        <span class="text-muted text-sm">-</span>
                     </div>
                 </div>
                                     </div>

@@ -339,6 +339,32 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {% for i in deposit_requests %}
+                                    <tr>
+                                        <td>
+                                            <a class="text-heading font-semibold" href="#">
+                                                {{ i.user.username }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            {{ i.transaction_date }}
+                                        </td>
+                                        <td>
+                                            <a class="text-heading font-semibold" href="#">
+                                                {{ i.user.id }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            {{ i.user.username }}
+                                        </td>
+                                        <td>
+                                            ₺{{ i.transaction_amount }} (Yatırım)
+                                        </td>
+                                        <td class="text-end">
+                                            <a href="/admin/complete_deposit?transaction_id={{ i.id }}" class="btn btn-sm btn-neutral">Tamamla</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
                                 {% for i in withdrawal_requests %}
                                     <tr>
                                         <td>
@@ -371,7 +397,7 @@
                         </table>
                     </div>
                     <div class="card-footer border-0 py-5">
-                        <span class="text-muted text-sm">{{ number_of_requests }} Talep Mevcut</span>
+                        <span class="text-muted text-sm">Talepler Bitti</span>
                     </div>
                 </div>
             </div>
