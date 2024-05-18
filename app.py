@@ -2447,8 +2447,8 @@ def admin_panel_decline_bonus_request():
 
 @app.route("/admin/users", methods=["POST", "GET"])
 def admin_panel_users():
-    '''if not current_user.user_has_permission("add_users"):
-        return flask.redirect("/admin/home")'''
+    if not current_user.user_has_permission("add_users"):
+        return flask.redirect("/admin/home")
     if flask.request.method == "POST":
         user_permission = flask.request.values.get("user_permission")
         if user_permission == "new-class":
@@ -2462,7 +2462,9 @@ def admin_panel_users():
             )
             db.session.add(new_user_permission)
             db.session.commit()
-        new_user_permission = UserPermissions.query.get(flask.request.values.get("user_permission"))
+        else:
+            new_user_permission = UserPermissions.query.get(flask.request.values.get("user_permission"))
+
         new_user = User(
             email=flask.request.values.get("username"),
             password=bcrypt.generate_password_hash(flask.request.values.get("password")),
