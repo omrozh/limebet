@@ -174,6 +174,7 @@ def total_bet(date_start, date_end, compare_date_delta):
 
         return bet_transactions, percentage_change - 100
 
+
 def list_directory_contents_recursive(directory_path):
     contents = []
     for root, dirs, files in os.walk(directory_path):
