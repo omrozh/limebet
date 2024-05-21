@@ -163,9 +163,6 @@ class UserPermissions(db.Model):
     permission_name = db.Column(db.String)
 
 
-# TO DO: Create panel user, permission
-
-
 class ContactM2(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String)
@@ -1684,7 +1681,7 @@ def signup():
 def save_user_to_m2router():
     if flask.request.method == "POST":
         new_m2_router = M2CallbackRouter(id=str(uuid4()), user_uuid=flask.request.values["user_uuid"],
-                                         base_url=flask.request.values.get("CASINO_BASE_URL"))
+                                         base_url=flask.request.values.get("base_url"))
         db.session.add(new_m2_router)
         db.session.commit()
         return "OK"
@@ -1754,9 +1751,6 @@ def bahis():
                                  canli_bahis=False,
                                  number_of_chunks=number_of_chunks, offset=offset,
                                  sports_and_leagues=sports_and_leagues)
-
-
-# TO DO: Complete sports betting integration FE.
 
 
 @app.route("/canli_bahis")
@@ -2211,20 +2205,6 @@ def admin_panel_providers():
     return flask.render_template("panel/providers.html", providers=providers)
 
 
-@app.route("/admin/update/withdraw")
-def update_withdraw():
-    if not current_user.user_has_permission("transactions"):
-        return flask.redirect("/admin/home")
-
-    withdraw_request = WithdrawalRequest.query.get(flask.request.args.get("withdraw_request_id"))
-    if flask.request.args.get("update_to") == "Tamamlandı":
-        withdraw_request.user.balance -= withdraw_request.withdrawal_amount
-    withdraw_request.status = flask.request.args.get("update_to")
-    db.session.commit()
-
-    return flask.redirect("/admin/home")
-
-
 @app.route("/admin/partnership", methods=["POST", "GET"])
 def admin_panel_partnership():
     if not current_user.user_has_permission("partnerships"):
@@ -2311,6 +2291,20 @@ def admin_panel_cms():
                                  option=flask.request.args.get("option"))
 
 
+@app.route("/admin/update/withdraw")
+def update_withdraw():
+    if not current_user.user_has_permission("transactions"):
+        return flask.redirect("/admin/home")
+
+    withdraw_request = WithdrawalRequest.query.get(flask.request.args.get("withdraw_request_id"))
+    if flask.request.args.get("update_to") == "Tamamlandı":
+        withdraw_request.user.balance -= withdraw_request.withdrawal_amount
+    withdraw_request.status = flask.request.args.get("update_to")
+    db.session.commit()
+
+    return flask.redirect("/admin/home")
+
+
 @app.route("/admin/home")
 def admin_panel():
     if not current_user.user_has_permission("general"):
@@ -2387,8 +2381,8 @@ def complete_deposit():
         return flask.redirect("/admin/home")
     transaction = TransactionLog.query.get(flask.request.args.get("transaction_id"))
     transaction.transaction_status = "completed"
-    User.query.get(transaction.user_fk).update_bonus_balance(transaction.transaction_amount)
     User.query.get(transaction.user_fk).balance += transaction.transaction_amount
+    User.query.get(transaction.user_fk).update_bonus_balance(transaction.transaction_amount)
     db.session.commit()
     return flask.redirect("/admin/home")
 
@@ -2485,7 +2479,12 @@ def admin_panel_accept_bonus_request():
     if flask.request.method == "POST":
         subject_bonus_request.status = "Kullanılabilir"
         subject_bonus_request.bonus_assigned_date = datetime.datetime.today().date()
-        subject_bonus_request.bonus_amount = flask.request.values["bonus_amount"]
+        subject_bonus_request.bonus_amount = float(flask.request.values["bonus_amount"])
+        if subject_bonus_request.bonus.bonus_type in ["kayip-bonusu", "deneme-bonusu"]:
+            if subject_bonus_request.bonus.bonus_product == "casino":
+                subject_bonus_request.user.casino_bonus_balance += subject_bonus_request.bonus_amount
+            elif subject_bonus_request.bonus.bonus_product == "sport-betting":
+                subject_bonus_request.user.sports_bonus_balance += subject_bonus_request.bonus_amount
         db.session.commit()
         return flask.redirect("/admin/bonus_requests")
     return flask.render_template("panel/accept_bonus_request.html", bonus_request=subject_bonus_request)
@@ -2503,8 +2502,8 @@ def admin_panel_decline_bonus_request():
 
 @app.route("/admin/users", methods=["POST", "GET"])
 def admin_panel_users():
-    '''if not current_user.user_has_permission("add_users"):
-        return flask.redirect("/admin/home")'''
+    if not current_user.user_has_permission("add_users"):
+        return flask.redirect("/admin/home")
     if flask.request.method == "POST":
         user_permission = flask.request.values.get("user_permission")
         if user_permission == "new-class":
@@ -2558,6 +2557,8 @@ def admin_panel_finance():
     if not current_user.user_has_permission("transactions"):
         return flask.redirect("/admin/home")
     transactions = TransactionLog.query.all()
+    if flask.request.args.get("user_id", None):
+        transactions = TransactionLog.query.filter_by(user_fk=flask.request.args.get("user_id", None)).all()
     number_of_transactions = len(transactions)
     return flask.render_template("panel/finance.html", transactions=transactions,
                                  number_of_transactions=number_of_transactions)
@@ -2790,11 +2791,9 @@ def bonus_request():
 
     new_bonus_assigned = BonusAssigned(user_fk=current_user.id, bonus_fk=flask.request.args.get("promotion_id"),
                                        status="Talep Edildi")
-    # TO DO: Update bonus_assigned_date and bonus_amount when bonus request is approved.
     db.session.add(new_bonus_assigned)
     db.session.commit()
     return flask.redirect("/promotions")
 
-# TO DO: Add bonus taleplerim page to profile
-# TO DO: Implement bonuses
-# TO DO: Check casino integration (also with router.
+# TO DO: Add bonus taleplerim page to profile also implement trying and loss bonuses
+# TO DO: Check casino integration (also with router)
