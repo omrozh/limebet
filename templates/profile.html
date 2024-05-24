@@ -425,26 +425,7 @@
                     <button style="color: white; font-family: sans-serif; width: 100%; padding: 10px; box-sizing: border-box; background-color: var(--baseColor); outline: none; border: none">Para Çek</button>
                 </form>
                 {% endfor %}
-                {% for key, item in available_withdraw_methods.items() %}
-                <form method="post" id="form_{{ item }}" enctype="multipart/form-data" style="background-color: var(--categoryBackground); border-radius: 5px; color: white; box-sizing: border-box; width: fit-content; height: fit-content; max-width: 70vw; display: none">
-                    <h1 style="color: white; font-family: 'Open Sans', sans-serif">
-                      Para Çek
-                    </h1>
-                    <input type="text" name="form-type" value="withdraw-money" style="display: none">
-                    <input type="text" name="withdraw_type" style="display: none" id="withdraw_type_{{item}}">
-                    <label for="amount" style="font-family: sans-serif; font-size: 12px">Çekmek İstenen Miktar</label>
-                    <br>
-                    <input id="amount" name="amount" type="text" style="width: 300px; max-width: 90%; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem">
-                    <br>
-                    <br>
-                    <label for="iban" style="font-family: sans-serif; font-size: 12px">Hesap Adresi</label>
-                    <br>
-                    <textarea id="iban" name="iban"  style="width: 300px; max-width: 90%; padding: 5px; font-family: sans-serif; outline: none; font-size: 1rem; height: 80px"></textarea>
-                    <br>
-                    <br>
-                    <button style="color: white; font-family: sans-serif; width: 100%; padding: 10px; box-sizing: border-box; background-color: var(--baseColor); outline: none; border: none">Para Çek</button>
-                </form>
-                {% endfor %}
+
             </div>
             <br>
             <br>
@@ -534,16 +515,6 @@
                         </div>
                         <div style="color: white; font-family: 'Open Sans', sans-serif; background-color: var(--baseColor); width: 200px; margin-top: -15px; padding: 10px; box-sizing: border-box; border-radius: 0 0 15px 15px">
                             {{ i.payment_type.capitalize() }} Yatırım Talebi
-                        </div>
-                    </div>
-                {% endfor %}
-                {% for key, item in available_withdraw_methods.items() %}
-                    <div onclick="document.getElementById('deposit_type_{{ item }}').value = '{{ item }}'; this.style.opacity = 0.3; let withdraw_methods = document.getElementsByClassName('searchable-div'); document.getElementById('deposit_form_{{ item }}').style.display = 'block'; for(let i = 0; i < withdraw_methods.length; i++){withdraw_methods[i].onclick = function(){console.log('cannot change payment type')}}; document.getElementById('deposit-options-div').style.display = 'none'" style="display: inline-block" class="select-payment">
-                        <div style="border-radius: 15px 15px 0 0; font-family: sans-serif; height: fit-content; padding: 15px; display: inline-block; margin: 15px; background: #333333; box-sizing: border-box; width: 200px">
-                            <img src="/img/payment_methods/{{ item.replace('kralpay_', '').replace('vevopay_', '') }}.jpg" style="width: 150px; border-radius: 15px" alt="">
-                        </div>
-                        <div style="color: white; font-family: 'Open Sans', sans-serif; background-color: var(--baseColor); width: 200px; margin-top: -15px; padding: 10px; box-sizing: border-box; border-radius: 0 0 15px 15px">
-                            {{ key }}
                         </div>
                     </div>
                 {% endfor %}
