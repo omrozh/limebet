@@ -40,7 +40,7 @@
                     </li>
                     <li class="nav-item" onclick="document.location = '/admin/finance'">
                         <a class="nav-link" href="#">
-                            <i class="bi bi-bar-chart"></i> Finans
+                            <i class="bi bi-bar-chart"></i> İşlemler
                         </a>
                     </li>
                     <li class="nav-item" onclick="document.location = '/admin/games'">
@@ -51,7 +51,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/admin/players">
                             <i class="bi bi-person-bounding-box"></i> Oyuncular
-                            <span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-auto">1</span>
                         </a>
                     </li>
                     <li class="nav-item" onclick="document.location = '/admin/bonuses'">
@@ -69,66 +68,6 @@
                 <hr class="navbar-divider my-5 opacity-20">
                 <!-- Navigation -->
                 <ul class="navbar-nav mb-md-4">
-                    <li>
-                        <div class="nav-link text-xs font-semibold text-uppercase text-muted ls-wide" href="#">
-                            İşlemler
-                            <span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-4">3</span>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link d-flex align-items-center">
-                            <div class="me-4">
-
-                            </div>
-                            <div>
-                                <span class="d-block text-sm font-semibold">
-                                    Canlı Destek - 1
-                                </span>
-                                <span class="d-block text-xs text-muted font-regular">
-                                    Canlı Destek
-                                </span>
-                            </div>
-                            <div class="ms-auto">
-                                <i class="bi bi-chat"></i>
-                            </div>
-                        </a>
-                    </li>
-                  <li>
-                        <a href="#" class="nav-link d-flex align-items-center">
-                            <div class="me-4">
-
-                            </div>
-                            <div>
-                                <span class="d-block text-sm font-semibold">
-                                    Canlı Destek - 2
-                                </span>
-                                <span class="d-block text-xs text-muted font-regular">
-                                    Canlı Destek
-                                </span>
-                            </div>
-                            <div class="ms-auto">
-                                <i class="bi bi-chat"></i>
-                            </div>
-                        </a>
-                    </li>
-                  <li>
-                        <a href="#" class="nav-link d-flex align-items-center">
-                            <div class="me-4">
-
-                            </div>
-                            <div>
-                                <span class="d-block text-sm font-semibold">
-                                    Canlı Destek - 3
-                                </span>
-                                <span class="d-block text-xs text-muted font-regular">
-                                    Canlı Destek
-                                </span>
-                            </div>
-                            <div class="ms-auto">
-                                <i class="bi bi-chat"></i>
-                            </div>
-                        </a>
-                    </li>
 
                 <!-- Push content down -->
                 <div class="mt-auto"></div>
@@ -166,7 +105,7 @@
                                     <span class=" pe-2">
                                         <i class="bi bi-pencil"></i>
                                     </span>
-                                    <span>Ara</span>
+                                    <span>Filtrele</span>
                                 </a>
                                 <a href="/admin/deposit-methods" class="btn d-inline-flex btn-sm btn-primary mx-1">
                                     <span>Para Yatırma Kaynakları</span>
@@ -196,6 +135,36 @@
                     </div>
                         <br>
                         <input type="text" oninput="searchRow()" id="search-box" placeholder="İşlem Ara" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                        <select id="transaction_type" class="filter" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                            <option value="">İşlem Türü</option>
+                            {% for i in transaction_types %}
+                                <option value="{{ i }}">{{ i }}</option>
+                            {% endfor %}
+                        </select>
+                        <select id="transaction_status" class="filter" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                            <option value="">İşlem Durumu</option>
+                            {% for i in transaction_statuses %}
+                                <option value="{{ i }}">{{ i }}</option>
+                            {% endfor %}
+                        </select>
+                        <input class="filter" id="user_id" type="text" placeholder="Kullanıcı ID" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                        <input class="filter" id="amount_gte" type="text" placeholder="Minimum Tutar" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                        <input class="filter" id="amount_lte" type="text" placeholder="Maksimum Tutar" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                        <input class="filter" id="date_after" type="date" placeholder="İşlem Tarihi Aralığı (Başlangıç)" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                        <input class="filter" id="date_before" type="date" placeholder="İşlem Tarihi Aralığı (Bitiş)" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">
+                        <button onclick="doFilter()" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none">Filtrele</button>
+                        <script>
+                            function doFilter(){
+                                let all_filters = document.getElementsByClassName("filter")
+                                let url_string = "?";
+                                for(let i = 0; i < all_filters.length; i++){
+                                    if(all_filters[i].value !== ""){
+                                        url_string += all_filters[i].id + "=" + all_filters[i].value + "&";
+                                    }
+                                }
+                                document.location = url_string;
+                            }
+                        </script>
                         <br>
                         <br>
                     <div class="table-responsive">
@@ -211,7 +180,7 @@
                                     <th scope="col">Kanal</th>
                                     <th scope="col">IP Adresi</th>
                                     <th scope="col">Affiliate ID</th>
-                                    <th scope="col">Not</th>
+                                    <th scope="col">Ek Bilgiler</th>
                                     <th scope="col">Statü</th>
                                     <th></th>
                                 </tr>
@@ -226,7 +195,7 @@
                                     </td>
                                     <td>
                                         <a class="text-heading font-semibold" href="#">
-                                            {{ i.user.username }}
+                                            {{ i.user.user_uuid }}
                                         </a>
                                     </td>
                                     <td>
@@ -252,11 +221,11 @@
                                     <td>
 
                                         <a class="text-heading font-semibold" href="#">
-                                            {{ i.payment_unique_number }}
+                                            {{ i.transaction_type }}
                                         </a>
                                     </td>
                                     <td>
-                                        -
+                                        {{ i.user.ip_address }}
                                     </td>
                                     <td>
                                         <a class="text-heading font-semibold" href="#">
@@ -264,7 +233,7 @@
                                         </a>
                                     </td>
                                     <td>
-                                        -
+                                        {{ i.payment_unique_number }}
                                     </td>
                                     <td>
                                         {{ i.transaction_status }}
@@ -278,7 +247,7 @@
                         </table>
                     </div>
                     <div class="card-footer border-0 py-5">
-                        <span class="text-muted text-sm">{{ number_of_transactions }} İşlem Mevcut</span>
+                        <span class="text-muted text-sm">{{ number_of_transactions }} İşlem Mevcut | {{ total_amount }}₺ Toplam Değer</span>
                     </div>
                 </div>
                                     </div>

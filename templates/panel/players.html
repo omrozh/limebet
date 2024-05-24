@@ -40,7 +40,7 @@
                     </li>
                     <li class="nav-item" onclick="document.location = '/admin/finance'">
                         <a class="nav-link" href="#">
-                            <i class="bi bi-bar-chart"></i> Finans
+                            <i class="bi bi-bar-chart"></i> İşlemler
                         </a>
                     </li>
                     <li class="nav-item" onclick="document.location = '/admin/games'">
@@ -51,7 +51,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/admin/players">
                             <i class="bi bi-person-bounding-box"></i> Oyuncular
-                            <span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-auto">1</span>
+
                         </a>
                     </li>
                     <li class="nav-item" onclick="document.location = '/admin/bonuses'">
@@ -225,7 +225,7 @@
                                         {{ i.site_partner.partnership_earnings }}
                                     </td>
                                     <td class="text-end">
-                                        <a href="#" class="btn btn-sm btn-neutral" onclick="document.location = '/admin/finance?user_id={{ i.id }}'">Detaylar</a>
+                                        <a href="#" class="btn btn-sm btn-neutral" onclick="document.location = '/admin/user_details?user_id={{ i.id }}'">Detaylar</a>
                                         {% if not i.site_partner %}
                                             <a href="/admin/partnership?user_id={{ i.id }}" class="btn btn-sm btn-neutral">Kasa Yap</a>
                                         {% else %}

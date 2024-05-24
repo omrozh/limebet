@@ -19,9 +19,6 @@ import feedparser
 import base64
 from imap_tools import MailBox
 
-import schedule
-import time
-
 app = flask.Flask(__name__)
 
 games_and_descriptions = {
@@ -31,7 +28,7 @@ games_and_descriptions = {
                   "lower then the displayed number. For every correct guess get 50% compounded every time. In this "
                   "game we do not have a statistical edge a correct strategy and a strong will can even give you the "
                   "advantage.",
-    "limbo": "Limbo seçtiğiniz çarpanın üzerinde mi yoksa altında mı çarpan geleceğini tahmin ettiğiniz bir KadroMilyon özel oyunudur.",
+    "limbo": "Limbo seçtiğiniz çarpanın üzerinde mi yoksa altında mı çarpan geleceğini tahmin ettiğiniz bir Grand Casino özel oyunudur.",
     "slots-egyptian": "Plutus Slots has the lowest house edge in "
                       "any slot game ever with only 0.015% (99.985% RTP). 1000x Jackpot",
     "slots-jungle": "A slot game build solely for adventure seekers. 13250x Jackpot and 500x if you match all 5 slots "
@@ -43,7 +40,7 @@ games_and_descriptions = {
                    "existing ones. One you open a new card there is no going back when you withdraw all of your "
                    "multipliers are multiplied and your wins are calculated. ",
     "max_money": "Drawn daily and the player that bets the highest amount wins all the money",
-    "double": "Double paranızı ikiye katlayabileceğiniz yüksek adrenelinli bir KadroMilyon orijinal oyunudur."
+    "double": "Double paranızı ikiye katlayabileceğiniz yüksek adrenelinli bir Grand Casino orijinal oyunudur."
               " Double ile kazanma potansiyeliniz tam anlamıyla sınırsızdır. Paranızı sonsuza kadar ikiye katlamaya devam edebilirsiniz.",
     "divo": "In this Plutus original you divide your bet into different sections and only one of them wins. "
             "Create your own play style according to your risk tolerance.",
@@ -407,6 +404,8 @@ class User(db.Model, UserMixin):
     telegram_chat_id = db.Column(db.String)
     last_login = db.Column(db.DateTime)
     registration_date = db.Column(db.DateTime)
+    ip_address = db.Column(db.String)
+    notes = db.Column(db.String)
     casino_bonus_balance = db.Column(db.Float)
     sports_bonus_balance = db.Column(db.Float)
     completed_first_deposit = db.Column(db.Boolean)
@@ -491,15 +490,44 @@ class User(db.Model, UserMixin):
             TransactionLog.user_fk == self.id
         ).order_by(desc(TransactionLog.transaction_date)).first()
 
+        if transaction_type == "çekim":
+            latest_transaction = TransactionLog.query.filter(
+                WithdrawalRequest.status == "Tamamlandı",
+                TransactionLog.user_fk == self.id
+            ).order_by(desc(WithdrawalRequest.request_date)).first()
+            if latest_transaction:
+                return latest_transaction.request_date
+            else:
+                return "-"
+
         if latest_transaction:
             return latest_transaction.transaction_date
+        else:
+            return "-"
+
+    def get_total_volume(self, transaction_type):
+        latest_transactions = TransactionLog.query.filter(
+            TransactionLog.transaction_status == "Tamamlandı",
+            TransactionLog.transaction_type == transaction_type,
+            TransactionLog.user_fk == self.id
+        ).order_by(desc(TransactionLog.transaction_date)).all()
+
+        if transaction_type == "çekim":
+            latest_transactions = TransactionLog.query.filter(
+                WithdrawalRequest.status == "Tamamlandı",
+                TransactionLog.user_fk == self.id
+            ).order_by(desc(WithdrawalRequest.request_date)).all()
+            return sum([i.withdrawal_amount for i in latest_transactions])
+
+        if latest_transactions:
+            return sum([i.transaction_amount for i in latest_transactions])
         else:
             return "-"
 
     @property
     def total_bets(self):
         return sum([i.transaction_amount for i in TransactionLog.query.filter(
-            TransactionLog.transaction_type in ["place_bet", "casino_win", "casino_loss"]
+            TransactionLog.transaction_type.in_(["place_bet", "casino_win", "casino_bet"]), TransactionLog.user_fk == self.id
         ).all()])
 
     @property
@@ -796,7 +824,9 @@ class WithdrawalRequest(db.Model):
     status = db.Column(db.String, default="Beklemede")
     user_fk = db.Column(db.Integer)
     withdraw_to = db.Column(db.String)
+    withdraw_type = db.Column(db.String)
     request_date = db.Column(db.DateTime)
+    bank_id = db.Column(db.String)
 
     @property
     def user(self):
@@ -1223,8 +1253,36 @@ def logout():
 def profile():
     if not current_user.is_authenticated:
         return flask.redirect("/")
+
+    available_manual_accounts = PaymentSource.query.all()
+    available_withdraw_methods = {}
+
+    from finance_utils import deposit_types, get_available_banks_kralpay
+
+    for key, item in deposit_types.items():
+        available_withdraw_methods[item] = key
+
+    bank_list = {"s": 1}
+
     if flask.request.method == "POST":
         values = flask.request.values
+        if flask.request.values["form-type"] == "deposit-money":
+            new_transaction = TransactionLog(transaction_amount=float(values["amount"]),
+                                             transaction_type="yatirim", transaction_date=datetime.date.today(),
+                                             user_fk=current_user.id, transaction_status="Ödeme Bekliyor",
+                                             payment_unique_number=str(shortuuid.ShortUUID().random(length=8)))
+            db.session.add(new_transaction)
+            db.session.commit()
+
+            from finance_utils import get_iframe_vevopay, get_iframe_url_kralpay
+            if "vevopay_" in flask.request.values.get("deposit_type"):
+                start_deposit_url = get_iframe_vevopay(new_transaction, flask.request.values.get("deposit_type"))
+            if "kralpay_" in flask.request.values.get("deposit_type"):
+                start_deposit_url = get_iframe_url_kralpay(new_transaction, flask.request.values.get("deposit_type"),
+                                                           flask.request.base_url, flask.request.values.get("bank_id", None))
+
+            return flask.redirect(start_deposit_url, code=302)
+
         if flask.request.values["form-type"] == "user-info":
             user_info = UserInformation.query.filter_by(user_fk=current_user.id).first()
 
@@ -1247,6 +1305,7 @@ def profile():
             return flask.redirect("/profile")
         if flask.request.values["form-type"] == "withdraw-money":
             new_wr = WithdrawalRequest(
+                withdraw_type="auto_" + flask.request.values.get("withdraw_type"),
                 withdrawal_amount=float(flask.request.values["amount"]),
                 user_fk=current_user.id,
                 withdraw_to=flask.request.values["iban"],
@@ -1255,8 +1314,8 @@ def profile():
             db.session.add(new_wr)
             db.session.commit()
 
-    return flask.render_template("profile.html", current_user=current_user, withdrawal_requests=reversed(
-        WithdrawalRequest.query.filter_by(user_fk=current_user.id).all()))
+    return flask.render_template("profile.html", bank_banks=bank_list, available_withdraw_methods=available_withdraw_methods, current_user=current_user, withdrawal_requests=reversed(
+        WithdrawalRequest.query.filter_by(user_fk=current_user.id).all()), available_manual_accounts=available_manual_accounts)
 
 
 # TO DO: Implement bonuses in profile.
@@ -1352,7 +1411,7 @@ def coupon_result(bet_coupon_id):
         elif bet_status == "HALF_WIN":
             total_reward *= i.odd_locked_in_rate / 2
         elif bet_status == "HALF_LOSS":
-            total_reward *= .5
+            total_reward *= 0.5
         elif bet_status == "ACCEPTED" or bet_status == "PENDING_ACCEPTANCE":
             return flask.redirect("/profile")
         elif bet_status == "PARTIAL":
@@ -1362,10 +1421,10 @@ def coupon_result(bet_coupon_id):
         else:
             return flask.redirect("/profile")
 
-    bet_coupon.status = "Sonuçlandı"
+    bet_coupon.status = f"Sonuçlandı | Kazanç: { total_reward }"
     new_transaction = TransactionLog(transaction_amount=float(total_reward),
                                      transaction_type="bet_win", transaction_date=datetime.date.today(),
-                                     user_fk=current_user.id, transaction_status="completed",
+                                     user_fk=current_user.id, transaction_status="Tamamlandı",
                                      payment_unique_number=f"Spor Bahisi Kazancı - Kupon {bet_coupon_id}")
 
     db.session.add(new_transaction)
@@ -1452,6 +1511,7 @@ def deposit_bank():
     return flask.render_template("bank_deposit_form.html")
 
 
+# TO DO: completed backend for vivopay and kralpay, complete frontend for them. Example: lidyacasino.
 @app.route("/deposit/papara", methods=["POST", "GET"])
 def deposit_papara():
     if flask.request.method == "POST":
@@ -1659,7 +1719,8 @@ def signup():
             freebet_usable=0,
             freebet=0,
             registration_date=datetime.datetime.now(),
-            user_uuid=str(uuid4())
+            user_uuid=str(uuid4()),
+            ip_address=flask.requests.environ["REMOTE_ADDR"] if not flask.request.environ.get('HTTP_X_FORWARDED_FOR') else flask.request.environ.get('HTTP_X_FORWARDED_FOR')
         )
         db.session.add(new_user)
         db.session.commit()
@@ -1920,8 +1981,8 @@ def coupon():
 
         new_transaction = TransactionLog(transaction_amount=float(flask.request.values["coupon_value"]),
                                          transaction_type="place_bet", transaction_date=datetime.date.today(),
-                                         user_fk=current_user.id, transaction_status="completed",
-                                         payment_unique_number=f"Spor Bahisi - Kupon {current_coupon.id}")
+                                         user_fk=current_user.id, transaction_status="Tamamlandı",
+                                         payment_unique_number=f"Spor Bahisi - Kupon {current_coupon.id} - {str(' | '.join([c.odd.bet_option.open_bet_obj.match_league for c in current_coupon.all_selects]))} - {str(' | '.join([c.odd.bet_option.open_bet_obj.sport for c in current_coupon.all_selects]))}")
 
         db.session.add(new_transaction)
 
@@ -2205,6 +2266,39 @@ def admin_panel_providers():
     return flask.render_template("panel/providers.html", providers=providers)
 
 
+@app.route("/admin/user_details", methods=["POST", "GET"])
+def admin_panel_user_profile():
+    if not current_user.user_has_permission("players"):
+        return flask.redirect("/admin/home")
+    available_bonuses = Bonus.query.filter(Bonus.start_date <= datetime.datetime.today().date(),
+                                 Bonus.end_date >= datetime.datetime.today().date()).all()
+
+    user = User.query.get(flask.request.args.get("user_id"))
+    number_of_users_with_same_ip = len(User.query.filter_by(ip_address=user.ip_address).all())
+    transactions = TransactionLog.query.filter_by(user_fk=user.id).all()
+    bonus_requests = BonusAssigned.query.filter_by(user_fk=user.id).all()
+    withdrawal_requests = WithdrawalRequest.query.filter_by(user_fk=user.id).all()
+    coupons = BetCoupon.query.filter_by(user_fk=user.id).all()
+
+    if flask.request.method == "POST":
+        if flask.request.values.get("notes", None):
+            user.notes = flask.request.values.get("notes")
+            db.session.commit()
+        elif flask.request.values.get("bonus_id"):
+            new_bonus_assigned = BonusAssigned(user_fk=user.id, bonus_fk=flask.request.values.get("bonus_id"),
+                                               status="Talep Edildi")
+            db.session.add(new_bonus_assigned)
+            db.session.commit()
+            return flask.redirect(f"/admin/user_details?user_id={user.id}")
+
+    return flask.render_template("panel/user_details.html", user=user, transactions=transactions,
+                                 bonus_requests=bonus_requests, withdrawal_requests=withdrawal_requests,
+                                 coupons=coupons, available_bonuses=available_bonuses,
+                                 number_of_users_with_same_ip=number_of_users_with_same_ip)
+
+# TO DO: Affiliate panel and promo code creating. Bonus based on promo code.
+
+
 @app.route("/admin/partnership", methods=["POST", "GET"])
 def admin_panel_partnership():
     if not current_user.user_has_permission("partnerships"):
@@ -2297,8 +2391,19 @@ def update_withdraw():
         return flask.redirect("/admin/home")
 
     withdraw_request = WithdrawalRequest.query.get(flask.request.args.get("withdraw_request_id"))
+
     if flask.request.args.get("update_to") == "Tamamlandı":
-        withdraw_request.user.balance -= withdraw_request.withdrawal_amount
+        if "auto_" in withdraw_request.withdraw_type:
+            from finance_utils import withdraw_vevopay, withdraw_kralpay
+            # Complete implementations for withdrawals
+            if "vevopay" in withdraw_request.withdraw_type:
+                withdraw_vevopay(withdraw_request)
+            if "kralpay" in withdraw_request.withdraw_type:
+                withdraw_kralpay(withdraw_request)
+            else:
+                withdraw_request.user.balance -= withdraw_request.withdrawal_amount
+                db.session.commit()
+
     withdraw_request.status = flask.request.args.get("update_to")
     db.session.commit()
 
@@ -2380,7 +2485,7 @@ def complete_deposit():
     if not current_user.user_has_permission("transactions"):
         return flask.redirect("/admin/home")
     transaction = TransactionLog.query.get(flask.request.args.get("transaction_id"))
-    transaction.transaction_status = "completed"
+    transaction.transaction_status = "Tamamlandı"
     User.query.get(transaction.user_fk).balance += transaction.transaction_amount
     User.query.get(transaction.user_fk).update_bonus_balance(transaction.transaction_amount)
     db.session.commit()
@@ -2504,6 +2609,7 @@ def admin_panel_decline_bonus_request():
 def admin_panel_users():
     if not current_user.user_has_permission("add_users"):
         return flask.redirect("/admin/home")
+    # owner / PSu1NTGE9i
     if flask.request.method == "POST":
         user_permission = flask.request.values.get("user_permission")
         if user_permission == "new-class":
@@ -2556,12 +2662,38 @@ def remove_admin_user():
 def admin_panel_finance():
     if not current_user.user_has_permission("transactions"):
         return flask.redirect("/admin/home")
-    transactions = TransactionLog.query.all()
+    transaction_types = ["casino_win", "casino_bet", "yatirim", "çekim", "place_bet", "bet_win", "casino_all"]
+    transaction_statuses = ["Tamamlandı", "Ödeme Bekliyor", "Reddedildi", "Oluşturuluyor", "Oluşturuldu", "Talep Edildi", "Aktif"]
+    transactions = TransactionLog.query
+
     if flask.request.args.get("user_id", None):
-        transactions = TransactionLog.query.filter_by(user_fk=flask.request.args.get("user_id", None)).all()
+        transactions = transactions.filter(TransactionLog.user_fk == flask.request.args.get("user_id", None))
+    if flask.request.args.get("transaction_status", None):
+        transactions = transactions.filter(TransactionLog.transaction_status == flask.request.args.get("transaction_status", None))
+    if flask.request.args.get("amount_gte", None):
+        transactions = transactions.filter(TransactionLog.transaction_amount >= flask.request.args.get("amount_gte", None))
+    if flask.request.args.get("amount_lte", None):
+        transactions = transactions.filter(TransactionLog.transaction_amount <= flask.request.args.get("amount_lte", None))
+    if flask.request.args.get("date_before", None):
+        transactions = transactions.filter(
+            TransactionLog.transaction_date <= datetime.datetime.strptime(flask.request.args.get("date_before", None), '%Y-%m-%d'))
+    if flask.request.args.get("date_after", None):
+        transactions = transactions.filter(
+            TransactionLog.transaction_date >= datetime.datetime.strptime(flask.request.args.get("date_after", None), '%Y-%m-%d'))
+    if flask.request.args.get("transaction_type", None):
+        if flask.request.args.get("transaction_type", None) == "casino_all":
+            transactions = transactions.filter(
+                TransactionLog.transaction_type.in_(["casino_bet", "casino_win"]))
+        else:
+            transactions = transactions.filter(
+                TransactionLog.transaction_type == flask.request.args.get("transaction_type", None))
+
+    transactions = transactions.all()
     number_of_transactions = len(transactions)
-    return flask.render_template("panel/finance.html", transactions=transactions,
-                                 number_of_transactions=number_of_transactions)
+    total_amount = sum([i.transaction_amount for i in transactions])
+    return flask.render_template("panel/finance.html", transactions=transactions, total_amount=total_amount,
+                                 number_of_transactions=number_of_transactions, transaction_types=transaction_types,
+                                 transaction_statuses=transaction_statuses)
 
 
 @app.route("/admin/payments/deactivate")
@@ -2604,7 +2736,10 @@ def admin_panel_finance_deposit_methods():
 def admin_panel_players():
     if not current_user.user_has_permission("players"):
         return flask.redirect("/admin/home")
-    users = User.query.all()
+    users = User.query
+    if flask.request.args.get("user_ip", None):
+        users = users.filter(User.ip_address == flask.request.args.get("user_ip", None))
+    users = users.all()
     number_of_users = len(users)
     return flask.render_template("panel/players.html", users=users, number_of_users=number_of_users)
 
@@ -2728,11 +2863,26 @@ def casino_result_bet():
                 "error": "Authorization Error"
             }
         }
+    game_info = ""
+    provider_id = 0
+    from casino_utils import get_games, get_providers
+
+    for c in get_games().get("games"):
+        if int(flask.request.values.get('gameId')) == int(c.get("id")):
+            game_info = f"{c.get('type')} | {c.get('name')}"
+            provider_id = c.get("providerId")
+
+    for c in get_providers():
+        if int(c.get("id")) == provider_id:
+            provider_id = c.get("name")
+
+    game_info += f" | {provider_id}"
+
     if flask.request.values.get("eventType") == "Win":
         new_transaction = TransactionLog(transaction_amount=float(flask.request.values.get("amount")),
                                          transaction_type="casino_win", transaction_date=datetime.date.today(),
-                                         user_fk=subject_user.id, transaction_status="completed",
-                                         payment_unique_number=f"Casino Kazancı - Oyun ID: {flask.request.values.get('gameId')}")
+                                         user_fk=subject_user.id, transaction_status="Tamamlandı",
+                                         payment_unique_number=f"Casino Kazancı - Oyun ID: {flask.request.values.get('gameId')} - {game_info}")
         db.session.add(new_transaction)
 
         subject_user.balance += float(flask.request.values.get("amount"))
@@ -2746,9 +2896,9 @@ def casino_result_bet():
                     subject_user.referrer.site_partner.partnership_balance -= float(flask.request.values.get("amount"))
     if flask.request.values.get("eventType") == "BetPlacing":
         new_transaction = TransactionLog(transaction_amount=float(flask.request.values.get("amount")),
-                                         transaction_type="casino_loss", transaction_date=datetime.date.today(),
-                                         user_fk=subject_user.id, transaction_status="completed",
-                                         payment_unique_number=f"Casino Kaybı - Oyun ID: {flask.request.values.get('gameId')}")
+                                         transaction_type="casino_bet", transaction_date=datetime.date.today(),
+                                         user_fk=subject_user.id, transaction_status="Tamamlandı",
+                                         payment_unique_number=f"Casino Bahisi - Oyun ID: {flask.request.values.get('gameId')} - {game_info}")
         db.session.add(new_transaction)
         subject_user.balance -= net_change
 
@@ -2794,6 +2944,85 @@ def bonus_request():
     db.session.add(new_bonus_assigned)
     db.session.commit()
     return flask.redirect("/promotions")
+
+
+@app.route("/transaction_callback", methods=["POST", "GET"])
+def transaction_callback_vevopay():
+    if flask.request.method == "POST":
+
+        values = flask.request.values
+        transaction = TransactionLog.query.get(int(values.get("referans", None)))
+
+        subject_user = User.query.get(int(values.get("kullanici_id")))
+
+        if values.get("islem", None) == "yatirimsonuc":
+            if values.get("durum", None) == "onay":
+                subject_user.balance += transaction.transaction_amount
+
+        if values.get("Process", None) == "WithdrawalReturn":
+            withdrawal_request = WithdrawalRequest.query.get(values.get("Reference", None))
+            subject_user.balance -= transaction.transaction_amount
+            withdrawal_request.status = "Tamamlandı"
+
+        if transaction:
+            transaction.transaction_status = "Tamamlandı"
+        db.session.commit()
+
+        return flask.jsonify({
+            "status": True
+        })
+    return "OK"
+
+
+@app.route("/api/kralpy/", methods=["POST", "GET"])
+def transaction_callback_kralpay():
+    if flask.request.method == "POST":
+
+        values = flask.request.values
+        if values.get("service") == "info":
+            if User.query.get(values.get("user_id")):
+                return flask.jsonify({
+                    {
+                        "code": 200,
+                        "message": "Müşteri yatırım gerçekleştirebilir!"
+                    }
+                })
+        if values.get("service") == "deposit" and values.get("status", None) == "S":
+            transaction = TransactionLog.query.get(values.get("trx"))
+            transaction.transaction_status = "Tamamlandı"
+            subject_user = transaction.user
+            subject_user.balance += float(values.get("amount"))
+            db.session.commit()
+            return flask.jsonify({
+                  "code": 200,
+                  "message": "Müşteri hesabına bakiye eklendi!"
+                }
+            )
+
+        if values.get("service") == "withdraw" and values.get("status", None) == "C":
+            withdrawal_request = WithdrawalRequest.query.get(values.get("trx"))
+            subject_user = withdrawal_request.user
+            withdrawal_request.status = "Tamamlandı"
+            subject_user.balance -= float(values.get("amount"))
+            db.session.commit()
+            return flask.jsonify({
+                  "code": 200,
+                  "message": "Müşteri hesabına bakiye eklendi!"
+                }
+            )
+        return flask.jsonify({
+            "code": 999,
+            "message": "Bir hata ile karşılaştık."
+        })
+    return flask.jsonify({
+        "code": 999,
+        "message": "Bir hata ile karşılaştık."
+    })
+
+
+@app.route("/transaction_return")
+def transaction_return():
+    return flask.render_template("payment_form_submit.html")
 
 # TO DO: Add bonus taleplerim page to profile also implement trying and loss bonuses
 # TO DO: Check casino integration (also with router)
