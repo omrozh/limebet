@@ -399,11 +399,7 @@
                             <p id="{{ i.payment_type }}" style="font-family: 'Open Sans', sans-serif; color: white; font-size: 16px; margin-bottom: 5px; overflow-x: auto; width: 150px; max-width: 30vw; white-space: nowrap">{{ i.payment_type.capitalize() }} Çekim Talebi</p>
                         </div>
                       {% endfor %}
-                      {% for key, item in available_withdraw_methods.items() %}
-                        <div onclick="document.getElementById('withdraw_type_{{item}}').value = '{{ item }}'; this.style.opacity = 0.3; let withdraw_methods = document.getElementsByClassName('searchable-div'); document.getElementById('form_{{ item }}').style.display = 'block'; for(let i = 0; i < withdraw_methods.length; i++){withdraw_methods[i].onclick = function(){console.log('cannot change payment type')}}" class="searchable-div" style="background-color: var(--backgroundDark); min-width: fit-content; padding: 15px; border-radius: 15px; display: inline-block; margin-left: 15px; margin-bottom: 15px">
-                            <p id="{{ item }}" style="font-family: 'Open Sans', sans-serif; color: white; font-size: 16px; margin-bottom: 5px; overflow-x: auto; width: 150px; max-width: 30vw; white-space: nowrap">{{ key }}</p>
-                        </div>
-                      {% endfor %}
+
                 </div>
                 {% for i in available_manual_accounts %}
                 <form method="post" id="form_{{ i.id }}" enctype="multipart/form-data" style="background-color: var(--categoryBackground); border-radius: 5px; color: white; box-sizing: border-box; width: fit-content; height: fit-content; max-width: 70vw; display: none">
@@ -537,16 +533,7 @@
                         </div>
                     </div>
                 {% endfor %}
-                {% for key, item in available_withdraw_methods.items() %}
-                    <div onclick="document.getElementById('deposit_type_{{ item }}').value = '{{ item }}'; this.style.opacity = 0.3; let withdraw_methods = document.getElementsByClassName('searchable-div'); document.getElementById('deposit_form_{{ item }}').style.display = 'block'; for(let i = 0; i < withdraw_methods.length; i++){withdraw_methods[i].onclick = function(){console.log('cannot change payment type')}}; document.getElementById('deposit-options-div').style.display = 'none'" style="display: inline-block" class="select-payment">
-                        <div style="border-radius: 15px 15px 0 0; font-family: sans-serif; height: fit-content; padding: 15px; display: inline-block; margin: 15px; background: #333333; box-sizing: border-box; width: 200px">
-                            <img src="/img/payment_methods/{{ item.replace('kralpay_', '').replace('vevopay_', '') }}.jpg" style="width: 150px; border-radius: 15px" alt="">
-                        </div>
-                        <div style="color: white; font-family: 'Open Sans', sans-serif; background-color: var(--baseColor); width: 200px; margin-top: -15px; padding: 10px; box-sizing: border-box; border-radius: 0 0 15px 15px">
-                            {{ key }}
-                        </div>
-                    </div>
-                {% endfor %}
+
             </div>
             <br>
             <br>
