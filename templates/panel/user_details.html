@@ -144,7 +144,8 @@
                                       <br>
                                       Adres: {{ user.user_information.address }}
                                       <br>
-                                      Bakiyesi: {{ user.balance }}
+                                      Bakiyesi:
+                                        <form id="balance-form" method="post" enctype="multipart/form-data"><input type="text" style="-webkit-appearance: none; border: 1px solid gray; padding: 5px; border-radius: 5px; outline: none" value="{{ user.balance }}" onchange="document.getElementById('balance-form').submit()" name="balance"></form>
                                       <br>
                                       En Son Para Yatırma: {{ user.get_last('yatirim') }}
                                         <br>
@@ -235,7 +236,7 @@
                                     <div style="float: left; width: 45%; margin-left: 5%">
                                       Durum: Aktif
                                       <br>
-                                      Kimlik Onayı: {{ user.id_verified }}
+                                      Kimlik Onayı: {{ user.user_information.id_verified }}
                                       <br>
                                       Telefon Numarası: {{ user.user_information.tel_no }}
                                       <br>
