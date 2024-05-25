@@ -1497,7 +1497,7 @@ def refresh_balance():
 def deposit_bank():
     if flask.request.method == "POST":
         values = flask.request.values
-        if float(values["transaction_amount"]) < 500:
+        if float(values["transaction_amount"]) < 100:
             return flask.redirect("/deposit/bank")
         new_transaction = TransactionLog(transaction_amount=float(values["transaction_amount"]),
                                          transaction_type="yatirim", transaction_date=datetime.date.today(),
@@ -1516,7 +1516,7 @@ def deposit_bank():
 def deposit_papara():
     if flask.request.method == "POST":
         values = flask.request.values
-        if float(values["transaction_amount"]) < 200:
+        if float(values["transaction_amount"]) < 100:
             return flask.redirect("/deposit/papara")
         new_transaction = TransactionLog(transaction_amount=float(values["transaction_amount"]),
                                          transaction_type="yatirim", transaction_date=datetime.date.today(),
