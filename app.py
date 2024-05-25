@@ -86,8 +86,6 @@ bcrypt = Bcrypt(app)
 migrate = Migrate(app, db)
 
 
-# TO DO: Upgrade profile with automatic withdrawal and deposit from kralpay
-
 def user_on_mobile() -> bool:
     user_agent = flask.request.headers.get("User-Agent")
     user_agent = user_agent.lower()
@@ -493,9 +491,9 @@ class User(db.Model, UserMixin):
         ).order_by(desc(TransactionLog.transaction_date)).first()
 
         if transaction_type == "çekim":
-            latest_transaction = TransactionLog.query.filter(
+            latest_transaction = WithdrawalRequest.query.filter(
                 WithdrawalRequest.status == "Tamamlandı",
-                TransactionLog.user_fk == self.id
+                WithdrawalRequest.user_fk == self.id
             ).order_by(desc(WithdrawalRequest.request_date)).first()
             if latest_transaction:
                 return latest_transaction.request_date
@@ -515,9 +513,9 @@ class User(db.Model, UserMixin):
         ).order_by(desc(TransactionLog.transaction_date)).all()
 
         if transaction_type == "çekim":
-            latest_transactions = TransactionLog.query.filter(
+            latest_transactions = WithdrawalRequest.query.filter(
                 WithdrawalRequest.status == "Tamamlandı",
-                TransactionLog.user_fk == self.id
+                WithdrawalRequest.user_fk == self.id
             ).order_by(desc(WithdrawalRequest.request_date)).all()
             return sum([i.withdrawal_amount for i in latest_transactions])
 
@@ -1264,7 +1262,7 @@ def profile():
     for key, item in deposit_types.items():
         available_withdraw_methods[item] = key
 
-    bank_list = {"s": 1}
+    bank_list = get_available_banks_kralpay()
 
     if flask.request.method == "POST":
         values = flask.request.values
@@ -2617,7 +2615,6 @@ def admin_panel_decline_bonus_request():
 def admin_panel_users():
     if not current_user.user_has_permission("add_users"):
         return flask.redirect("/admin/home")
-    # owner / PSu1NTGE9i
     if flask.request.method == "POST":
         user_permission = flask.request.values.get("user_permission")
         if user_permission == "new-class":
