@@ -1,12 +1,14 @@
 import requests
 
-kralpay_site_id = "643"
-kralpay_merchant_key = "9cj4aj2b53jmk6c534c2sufrop750ab39407e34jnh04bic07l9cyd2ziuytmn6kchka"
+kralpay_site_id = "grand casino site id"
+kralpay_merchant_key = "grand casino site key"
 
-vevopay_firma_key = "c800e21052a99ac4e8bf349487721db1"
+vevopay_firma_key = "grand casino vevopay key(s)"
 
 deposit_types = {
 }
+
+# Add all finance options back.
 
 withdraw_types_kralpay = {
     "auto_kralpay_papara": "Papara",
