@@ -6,19 +6,6 @@ kralpay_merchant_key = "9cj4aj2b53jmk6c534c2sufrop750ab39407e34jnh04bic07l9cyd2z
 vevopay_firma_key = "c800e21052a99ac4e8bf349487721db1"
 
 deposit_types = {
-    "kralpay_papara": "Kralpay Papara",
-    "kralpay_crypto": "Kralpay Kripto",
-    "kralpay_mft": "Kralpay Mefete",
-    "kralpay_banka": "Kralpay Banka Transferi",
-    "kralpay_creditCard": "Kralpay Kredi Kartı",
-    "vevopay_papara": "Vevopay Papara",
-    "vevopay_havale": "Vevopay Havale",
-    "vevopay_mefete": "Vevopay Mefete",
-    "vevopay_payfix": "Vevopay Payfix",
-    "vevopay_parazula": "Vevopay Parazula",
-    "vevopay_fups": "Vevopay Fups",
-    "vevopay_pep": "Vevopay PeP",
-    "vevopay_cmt": "Vevopay CMT"
 }
 
 withdraw_types_kralpay = {
