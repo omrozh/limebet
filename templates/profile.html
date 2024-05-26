@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>LimeBet | Güvenilir Casino</title>
+    <title>KadroMilyon | Güvenilir Casino</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="stylesheet" href="/css/style.css" />
 	<link rel="stylesheet" href="/css/bootstrap.min.css" />
@@ -367,7 +367,7 @@
     <center><button style="color: white;font-family: sans-serif;width: 90%;padding: 10px;box-sizing: border-box;background-color: var(--baseColor);outline: none;border: none;max-width: 50vw;" type="submit">Güncelle</button></center>
       <br>
       <br>
-      <center>All right reserved. © LimeBet<p>2024</p></center>
+      <center>All right reserved. © KadroMilyon<p>2024</p></center>
 
       <script>
           let step = 1
@@ -393,16 +393,20 @@
                 </div>
             </center>
             <div style="background-color: var(--categoryBackground); width: fit-content; box-sizing: border-box;  margin-top: 50px">
-                <div style="width: 98%; max-width: 70vw; white-space: nowrap; overflow-x: auto; text-align: left">
+                <div style="width: 98%; max-width: 70vw;">
                     {% for i in available_manual_accounts %}
-                        <div onclick="document.getElementById('withdraw_type_{{i.id}}').value = '{{ i.payment_type }}'; this.style.opacity = 0.3; let withdraw_methods = document.getElementsByClassName('searchable-div'); document.getElementById('form_{{ i.id }}').style.display = 'block'; for(let i = 0; i < withdraw_methods.length; i++){withdraw_methods[i].onclick = function(){console.log('cannot change payment type')}}" class="searchable-div" style="background-color: var(--backgroundDark); min-width: fit-content; padding: 15px; border-radius: 15px; display: inline-block; margin-left: 15px; margin-bottom: 15px">
-                            <p id="{{ i.payment_type }}" style="font-family: 'Open Sans', sans-serif; color: white; font-size: 16px; margin-bottom: 5px; overflow-x: auto; width: 150px; max-width: 30vw; white-space: nowrap">{{ i.payment_type.capitalize() }} Çekim Talebi</p>
+                        <div onclick="document.getElementById('withdraw_type_{{i.id}}').value = '{{ i.payment_type }}'; this.style.opacity = 0.3; let withdraw_methods = document.getElementsByClassName('searchable-div'); document.getElementById('form_{{ i.id }}').style.display = 'block'; for(let i = 0; i < withdraw_methods.length; i++){withdraw_methods[i].onclick = function(){console.log('cannot change payment type')}}" style="display: inline-block" class="select-payment">
+                            <div style="color: black; font-family: 'Open Sans', sans-serif; background-color: white; width: 200px; margin-top: -15px; padding: 10px; box-sizing: border-box; border-radius: 15px">
+                                {{ i.payment_type.capitalize() }} Çekim Talebi
+                            </div>
                         </div>
                       {% endfor %}
                       {% for key, item in available_withdraw_methods.items() %}
                         {% if not item == "kralpay_creditCard" %}
-                        <div onclick="document.getElementById('withdraw_type_{{item}}').value = '{{ item }}'; this.style.opacity = 0.3; let withdraw_methods = document.getElementsByClassName('searchable-div'); document.getElementById('form_{{ item }}').style.display = 'block'; for(let i = 0; i < withdraw_methods.length; i++){withdraw_methods[i].onclick = function(){console.log('cannot change payment type')}}" class="searchable-div" style="background-color: var(--backgroundDark); min-width: fit-content; padding: 15px; border-radius: 15px; display: inline-block; margin-left: 15px; margin-bottom: 15px">
-                                <p id="{{ item }}" style="font-family: 'Open Sans', sans-serif; color: white; font-size: 16px; margin-bottom: 5px; overflow-x: auto; width: 150px; max-width: 30vw; white-space: nowrap">{{ key }}</p>
+                        <div onclick="document.getElementById('withdraw_type_{{item}}').value = '{{ item }}'; this.style.opacity = 0.3; let withdraw_methods = document.getElementsByClassName('searchable-div'); document.getElementById('form_{{ item }}').style.display = 'block'; for(let i = 0; i < withdraw_methods.length; i++){withdraw_methods[i].onclick = function(){console.log('cannot change payment type')}}" style="display: inline-block" class="select-payment">
+                            <div style="font-family: sans-serif; height: fit-content; display: inline-block; margin: 15px; background: white; box-sizing: border-box; width: 200px; border-radius: 15px;">
+                                    <img src="/img/payment_methods/{{ item }}.jpg" style="width: 200px; border-radius: 15px" alt="">
+                            </div>
                         </div>
                         {% endif %}
                       {% endfor %}
@@ -708,7 +712,7 @@
         }
     </script>
     <br>
-    <span style="opacity: 0">LimeBet</span>
+    <span style="opacity: 0">KadroMilyon</span>
     </div>
 </body>
 </html>
