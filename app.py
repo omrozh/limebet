@@ -28,7 +28,7 @@ games_and_descriptions = {
                   "lower then the displayed number. For every correct guess get 50% compounded every time. In this "
                   "game we do not have a statistical edge a correct strategy and a strong will can even give you the "
                   "advantage.",
-    "limbo": "Limbo seçtiğiniz çarpanın üzerinde mi yoksa altında mı çarpan geleceğini tahmin ettiğiniz bir LimeBet özel oyunudur.",
+    "limbo": "Limbo seçtiğiniz çarpanın üzerinde mi yoksa altında mı çarpan geleceğini tahmin ettiğiniz bir KadroMilyon özel oyunudur.",
     "slots-egyptian": "Plutus Slots has the lowest house edge in "
                       "any slot game ever with only 0.015% (99.985% RTP). 1000x Jackpot",
     "slots-jungle": "A slot game build solely for adventure seekers. 13250x Jackpot and 500x if you match all 5 slots "
@@ -40,7 +40,7 @@ games_and_descriptions = {
                    "existing ones. One you open a new card there is no going back when you withdraw all of your "
                    "multipliers are multiplied and your wins are calculated. ",
     "max_money": "Drawn daily and the player that bets the highest amount wins all the money",
-    "double": "Double paranızı ikiye katlayabileceğiniz yüksek adrenelinli bir LimeBet orijinal oyunudur."
+    "double": "Double paranızı ikiye katlayabileceğiniz yüksek adrenelinli bir KadroMilyon orijinal oyunudur."
               " Double ile kazanma potansiyeliniz tam anlamıyla sınırsızdır. Paranızı sonsuza kadar ikiye katlamaya devam edebilirsiniz.",
     "divo": "In this Plutus original you divide your bet into different sections and only one of them wins. "
             "Create your own play style according to your risk tolerance.",
@@ -1275,8 +1275,16 @@ def create_iframe_session():
 
 @app.route("/howtoplay")
 def how_to_play():
-    return flask.render_template("how_to_play.html", current_user=current_user)
-    # TO DO: write a how to play page.
+    data = flask.request.args.get("data", "generalTermsAndConditions")
+    info_file = os.listdir(f"img/text/{data}")[0]
+    data_dict = {
+        "generalTermsAndConditions": "Genel Kural ve Şartlar",
+        "contact": "Firma Bilgileri ve İletişim",
+        "generalBonusConditions": "Bonus Kuralları ve Şartları"
+    }
+    with open(f"img/text/{data}/{info_file}") as f:
+        info = f.read()
+    return flask.render_template("sss1.html", current_user=current_user, info=info, data=data, title=data_dict.get(data))
 
 
 @app.route("/logout")
@@ -2569,6 +2577,7 @@ def complete_deposit():
     User.query.get(transaction.user_fk).update_bonus_balance(transaction.transaction_amount)
     db.session.commit()
     return flask.redirect("/admin/home")
+
 
 
 @app.route("/admin/cancel_deposit")
