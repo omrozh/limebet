@@ -18,6 +18,7 @@ import shortuuid
 import feedparser
 import base64
 from imap_tools import MailBox
+from flask_mail import Mail, Message
 
 app = flask.Flask(__name__)
 
@@ -28,7 +29,7 @@ games_and_descriptions = {
                   "lower then the displayed number. For every correct guess get 50% compounded every time. In this "
                   "game we do not have a statistical edge a correct strategy and a strong will can even give you the "
                   "advantage.",
-    "limbo": "Limbo seçtiğiniz çarpanın üzerinde mi yoksa altında mı çarpan geleceğini tahmin ettiğiniz bir KadroMilyon özel oyunudur.",
+    "limbo": "Limbo seçtiğiniz çarpanın üzerinde mi yoksa altında mı çarpan geleceğini tahmin ettiğiniz bir LimeBet özel oyunudur.",
     "slots-egyptian": "Plutus Slots has the lowest house edge in "
                       "any slot game ever with only 0.015% (99.985% RTP). 1000x Jackpot",
     "slots-jungle": "A slot game build solely for adventure seekers. 13250x Jackpot and 500x if you match all 5 slots "
@@ -40,7 +41,7 @@ games_and_descriptions = {
                    "existing ones. One you open a new card there is no going back when you withdraw all of your "
                    "multipliers are multiplied and your wins are calculated. ",
     "max_money": "Drawn daily and the player that bets the highest amount wins all the money",
-    "double": "Double paranızı ikiye katlayabileceğiniz yüksek adrenelinli bir KadroMilyon orijinal oyunudur."
+    "double": "Double paranızı ikiye katlayabileceğiniz yüksek adrenelinli bir LimeBet orijinal oyunudur."
               " Double ile kazanma potansiyeliniz tam anlamıyla sınırsızdır. Paranızı sonsuza kadar ikiye katlamaya devam edebilirsiniz.",
     "divo": "In this Plutus original you divide your bet into different sections and only one of them wins. "
             "Create your own play style according to your risk tolerance.",
@@ -78,6 +79,16 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///site.db"
 app.config["DO_ROUTE_USERS"] = True
 # True if website is not kadromilyon
 app.config["CASINO_BASE_URL"] = "http://172.233.248.220/casino-callback/"
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+app.config['MAIL_USERNAME'] = 'operations@m2betting.com'
+app.config['MAIL_PASSWORD'] = 'qvegsrxwmbwrxaxx'
+app.config['MAIL_DEFAULT_SENDER'] = 'operations@m2betting.com'
+
+mail = Mail(app)
 
 db = SQLAlchemy(app)
 
@@ -445,6 +456,14 @@ class User(db.Model, UserMixin):
     sports_bonus_balance = db.Column(db.Float)
     completed_first_deposit = db.Column(db.Boolean)
     site_partner_fk = db.Column(db.Integer)
+
+    def send_password_reset_email(self, current_domain):
+        msg = Message(
+            'LimeBet şifre sıfırlama talebi ',
+            recipients=[self.email],
+            body=f'Şifrenizi sıfırlamak için bu linke tıklayın: {current_domain}?reset_code={self.user_uuid}'
+        )
+        mail.send(msg)
 
     @property
     def permission_name(self):
@@ -1688,6 +1707,23 @@ def admin():
     if not current_user.is_admin:
         return ""
     return flask.render_template("admin.html")
+
+
+@app.route("/forgot_password", methods=["POST", "GET"])
+def forgot_password():
+    query_user = User.query.filter_by(user_uuid=flask.request.args.get("reset_code", "no-uuid")).first()
+    if query_user:
+        if flask.request.method == "POST":
+            query_user.password = bcrypt.generate_password_hash(flask.request.values.get("password"))
+            db.session.commit()
+            return flask.redirect("/login")
+        return flask.render_template("new_password.html")
+    else:
+        if flask.request.method == "POST":
+            email_user = User.query.filter_by(email=flask.request.values.get("email")).first()
+            email_user.send_password_reset_email(flask.request.base_url)
+            return flask.redirect("/login")
+    return flask.render_template("forgot_password.html")
 
 
 @app.route("/login", methods=["POST", "GET"])
