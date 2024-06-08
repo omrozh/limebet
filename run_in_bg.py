@@ -1,5 +1,5 @@
 from app import app
-from betting_utils import live_betting, register_open_bet
+from betting_utils import live_betting, register_open_bet, open_bet_garbage_collector
 import time
 
 total_minutes = 0
@@ -8,15 +8,10 @@ with app.app_context():
     while True:
         print(total_minutes)
         if total_minutes == 120:
-            try:
-                register_open_bet()
-            except:
-                pass
+            open_bet_garbage_collector()
+            register_open_bet()
             total_minutes = 0
-        try:
-            live_betting()
-        except:
-            pass
+        live_betting()
         total_minutes += 1
         time.sleep(60)
 
