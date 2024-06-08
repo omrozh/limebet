@@ -158,7 +158,7 @@
         <app-header>
 		<app-home-header class="sticky-top">
 			<div class="nav" style="border-bottom: none">
-				<div class="logo"> <a href="/"> <img src="/limebet/img/logo.png" /> </a> </div>
+				<div class="logo"> <a href="/"> <img src="//img/logo.png" /> </a> </div>
 				<div class="fast-links">
 					<a href="#." class="btn"> <i class="km km-affiliate"></i> Affiliate </a>
 					<a href="#." class="btn"> <i class="km km-call"></i> Sizi Arayalım </a>
@@ -172,7 +172,7 @@
 							<a href="/login" class="btn login-btn"> <i class="fa-solid fa-right-to-bracket"></i> Giriş Yap </a>
 							<a href="/signup" class="btn register-btn"> <i class="fa-solid fa-user-plus"></i> Kayıt Ol </a>
 						<div class="lang-select">
-							<div class="view"> <img src="/limebet/img/flag/tr.png" /> TR <i class="fa-solid fa-chevron-down"></i> </div>
+							<div class="view"> <img src="//img/flag/tr.png" /> TR <i class="fa-solid fa-chevron-down"></i> </div>
 						</div>
 						<div class="timer" id="timer">
 							16:40:50
@@ -201,7 +201,7 @@
 						</a>
 						<a href="/profile" class="btn setting-btn"> <i class="fa-solid fa-gear"></i> </a>
 						<a href="/notifications" class="btn notification-btn"> <i class="fa-regular fa-bell"></i> <div class="counter">0</div> </a>
-						<a href="/profile" class="btn profile-btn"> <img src="/limebet/img/profile-demo.png" /> </a>
+						<a href="/profile" class="btn profile-btn"> <img src="//img/profile-demo.png" /> </a>
 					</app-loggedin>
 					{% endif %}
 				</div>
@@ -326,7 +326,7 @@
             </center>
             <div style="background-color: var(--categoryBackground); width: fit-content; box-sizing: border-box;  margin-top: 50px">
                 <form method="post" enctype="multipart/form-data" class="form-main" style="max-width: 70vw">
-                    <img src="/limebet/img/logo.png" style="width: 150px" alt="">
+                    <img src="//img/logo.png" style="width: 150px" alt="">
                     <br>
                     <input type="text" name="form-type" value="user-info" style="display: none">
 
@@ -405,7 +405,7 @@
                         {% if not item == "kralpay_creditCard" %}
                         <div onclick="document.getElementById('withdraw_type_{{item}}').value = '{{ item }}'; this.style.opacity = 0.3; let withdraw_methods = document.getElementsByClassName('searchable-div'); document.getElementById('form_{{ item }}').style.display = 'block'; for(let i = 0; i < withdraw_methods.length; i++){withdraw_methods[i].onclick = function(){console.log('cannot change payment type')}}" style="display: inline-block" class="select-payment">
                             <div style="font-family: sans-serif; height: fit-content; display: inline-block; margin: 15px; background: white; box-sizing: border-box; width: 200px; border-radius: 15px;">
-                                    <img src="/limebet/img/payment_methods/{{ item }}.jpg" style="width: 200px; border-radius: 15px" alt="">
+                                    <img src="//img/payment_methods/{{ item }}.jpg" style="width: 200px; border-radius: 15px" alt="">
                             </div>
                         </div>
                         {% endif %}
@@ -585,7 +585,7 @@
                 {% for key, item in available_withdraw_methods.items() %}
                     <div onclick="document.getElementById('deposit_type_{{ item }}').value = '{{ item }}'; this.style.opacity = 0.3; let withdraw_methods = document.getElementsByClassName('searchable-div'); document.getElementById('deposit_form_{{ item }}').style.display = 'block'; for(let i = 0; i < withdraw_methods.length; i++){withdraw_methods[i].onclick = function(){console.log('cannot change payment type')}}; document.getElementById('deposit-options-div').style.display = 'none'" style="display: inline-block" class="select-payment">
                         <div style="font-family: sans-serif; height: fit-content; display: inline-block; margin: 15px; background: white; box-sizing: border-box; width: 200px; border-radius: 15px;">
-                                <img src="/limebet/img/payment_methods/{{ item }}.jpg" style="width: 200px; border-radius: 15px" alt="">
+                                <img src="//img/payment_methods/{{ item }}.jpg" style="width: 200px; border-radius: 15px" alt="">
                         </div>
                     </div>
                 {% endfor %}

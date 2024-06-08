@@ -222,7 +222,7 @@ app-header app-home-header .nav .rightmenu a.btn.notification-btn .counter {
 	content: "";
 	width: 35px;
 	height: 35px;
-	background-image: url(/limebet/img/fastlinks.png);
+	background-image: url(//img/fastlinks.png);
 	background-size: cover;
 }
 .fast-links i.km.km-affiliate { background-position: 0px 0px; }
@@ -270,7 +270,7 @@ app-header app-home-header .menu .km {
 	content: "";
 	width: 40px;
 	height: 40px;
-	background-image: url(/limebet/img/menu_icons.png);
+	background-image: url(//img/menu_icons.png);
 	background-size: cover;
 }
 #detailed-balance{
@@ -422,7 +422,7 @@ slider {
 	content: "";
 	width: 40px;
 	height: 40px;
-	background-image: url(/limebet/img/menu_icons.png);
+	background-image: url(//img/menu_icons.png);
 	background-size: cover;
 }
 .col-categories .km.km-live { background-position: 0px 0px; }
