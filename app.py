@@ -750,7 +750,7 @@ class OpenBet(db.Model):
 
     @property
     def who_wins_bet(self):
-        return BetOption.query.filter_by(open_bet_fk=self.id).filter_by(game_name="Maç Sonucu").first()
+        return None
 
     @property
     def sport_readable(self):
