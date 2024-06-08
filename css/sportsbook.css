@@ -163,7 +163,7 @@ app-home-header.other-pages.sticky-top {
     font-size: 7px;
 }
 .icon1 {
-    background: url(//img/sportsbooks/icons1.png);
+    background: url(/img/sportsbooks/icons1.png);
     background-size: cover;
     width: 25px;
     height: 25px;
@@ -173,7 +173,7 @@ app-home-header.other-pages.sticky-top {
 .icon1.icon-2 {background-position: 25px 0px;}
 .icon1.icon-3 {background-position: 50px 0px;}
 .sb {
-    background: url(//img/sportsbooks/icons2.png);
+    background: url(/img/sportsbooks/icons2.png);
     background-size: 55px;
     width: 25px;
     height: 25px;
@@ -690,7 +690,7 @@ match-details.match-details {
 }
 match-details.match-details .firsdt-cont {
     padding: 10px;
-    background: url(//img/sportsbooks/matchdetailsbg.png);
+    background: url(/img/sportsbooks/matchdetailsbg.png);
     background-position: center;
 }
 match-details.match-details .firsdt-cont .firsdt {padding: 10px;display: flex;flex-direction: column;flex-wrap: wrap;}
@@ -716,7 +716,7 @@ match-details.match-details .firsdt-cont .firsdt .match-details .teams {
     align-items: center;
     text-align: center;
     margin-top: 25px;
-    gap: 25px;
+    gap: 10px;
     color: #fff;
 }
 match-details.match-details .firsdt-cont .firsdt .match-details .teams .team-cont {
