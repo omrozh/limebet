@@ -2648,11 +2648,6 @@ def admin_panel_affiliate():
 
 @app.route("/admin/home")
 def admin_panel():
-    try:
-        if not current_user.user_has_permission("general"):
-            return flask.redirect("/")
-    except:
-        return flask.redirect("/login?continue=admin")
     import admin_utils
     day_difference = int(flask.request.args.get("days", 1))
 
