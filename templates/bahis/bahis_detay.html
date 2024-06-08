@@ -1,468 +1,133 @@
 <html lang="en"><head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>LimeBet | Güvenilir Bahis Sitesi</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <script src="https://kit.fontawesome.com/88bd62ac48.js" crossorigin="anonymous"></script>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&amp;family=Protest+Guerrilla&amp;display=swap" rel="stylesheet">
-    <style>
-
-        #main-content-wrapper {
-            width: 95%;
-            float: right;
-            margin-left: -70px
-        }
-
-        th, td {
-            text-align: left;
-            padding: 8px;
-        }
-        .promotion-image{
-            width: 25%; display: inline-block; margin-left: 3%;
-        }
-
-        .competition-div{
-            background-color: white; width: 72%; text-align: left; display: inline-block; float: left;
-        }
-        .kadro-mil {
-            background-image: url('/static/km-fantasy-slider.png');
-            background-size: 100% auto;
-            background-repeat: no-repeat;
-            width: 64%;
-            text-align: left;
-            box-sizing: border-box;
-            padding: 20px 50px;
-            min-height: 300px;
-            background-position: center;
-            float: left;
-            border-radius: 40px;
-        }
-        .slider-wrapper{
-            background-color: #0f1012; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 40px; padding: 10px; overflow: auto; width: 90%; box-sizing: border-box;
-        }
-
-        .menu-main{
-            width: 100%; box-sizing: border-box; height: 200px;
-        }
-
-        @media screen and (max-width: 800px) {
-            #main-content-wrapper{
-                width: 100%;
-            }
-            .slider-wrapper{
-                border: none;
-                background: transparent;
-            }
-            .menu-main{
-                height: 100px;
-            }
-            .kadro-mil{
-                border-radius: 0;
-                width: 90%;
-                height: 350px;
-                background-size: cover;
-            }
-            .promotion-image {
-                display: none;
-            }
-            #navbar-main{
-                display: none;
-            }
-
-            .competition-div {
-                width: 100%;
-                float: none;
-            }
-        }
-
-        @media screen and (max-width: 800px){
-            .promotion-image{
-                display: none;
-            }
-            .competition-div{
-                width: 100%;
-                float: none;
-            }
-            .login-span{
-                display: none;
-            }
-        }
-
-        #side-bar {
-                display: block;
-        }
-
-        table{
-            width: 80%;
-        }
-
-        @media screen and (max-width: 1400px) {
-            .kadro-mil{
-                min-height: fit-content;
-                height: 320px;
-                width: 100%;
-                float: none;
-            }
-            #side-bar {
-                display: none;
-            }
-            .promotion-img{
-                display: none;
-            }
-            table{
-                width: 80%;
-                float: none;
-                margin-left: 0;
-                overflow-x: auto;
-            }
-            #promotion-img{
-                display: none;
-            }
-        }
-
-        tr:nth-child(even) {
-            background-color: #22252a;
-        }
-    </style>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+	<title>LimeBet</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	<link rel="stylesheet" href="/css/sportsbook.css" />
+	<link rel="stylesheet" href="/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="/css/fontawesome.min.css" />
+	<link rel="stylesheet" href="/plugins/owl/owl.carousel.min.css" />
+	<link rel="stylesheet" href="/plugins/perfect-scrollbar/perfect-scrollbar.css" />
 </head>
-{% if not from_frame %}
-<body style="background-color: #191a1f; padding: 0; margin: 0; font-family: 'Open Sans', sans-serif;">
-{% else %}
-<body style="background-color: transparent; padding: 0; margin: 0; font-family: 'Open Sans', sans-serif;">
-{% endif %}
-    <div style="width: 100%;">
-        <center style="padding: 20px 50px; background-color: orange; display: none;" id="promotion-insta">
-            <span style="color: white; font-family: 'Open Sans', sans-serif; font-size: 16px; text-decoration: underline;" onclick="window.localStorage.setItem('hidePromotionInsta', 'true'); document.location = '/promotions/instagram';">Yatırımsız 500TL fırsatı!</span>
-            <script>
-                document.getElementById("promotion-insta").style.display = "none";
-                if(window.localStorage.getItem("hidePromotionInsta") === 'true'){
-                    document.getElementById("promotion-insta").style.display = "none";
-                }
-            </script>
-        </center>
-        {% if not from_frame %}
-            <div class="menu-main">
-            <img id="iconmain" src="/img/logo.png" alt="" style="width: 200px; padding: 20px; float: left">
-    <script>
-        if(window.innerWidth < window.innerHeight){
-            document.getElementById("iconmain").style.width = "50px";
-        }
-    </script>
-            <div style="float: left;" id="hid-mob">
 
-            </div>
-            <div style="float: right; margin-top: 40px;">
-                {% if current_user.is_authenticated %}
-                    <div style="background-color: #292d30; border-radius: 50px; color: white; padding: 10px; box-sizing: border-box; margin-right: 20px; margin-top: -10px; float: right">
-                        <span style="background-color: #212226; padding: 5px; padding-left: 12px; padding-right: 12px; border-radius: 50px; box-sizing: border-box">₺</span>
-                        <span id="balance" style="padding-right: 5px; padding-left: 5px">{{'%0.2f'| format(current_user.balance|float)}}</span>
-                    </div>
-                    <span onclick="refreshBalance()" style="margin-right: 25px; font-size: 2rem; float: right; color: white; margin-top: -13px">&#x21ba;</span>
-                    <script>
-                        function updateBalance(balance){
-                            document.getElementById("balance").innerText = balance;
-                        }
-                        function refreshBalance(){
-                            document.getElementById("balance").innerText = "..."
-                            fetch("/refresh-balance")
-                            .then(x => x.text())
-                            .then(y => updateBalance(y));
-                        }
-                    </script>
-                    <a href="/profile" style="color: dodgerblue; text-decoration: none; margin-right: 25px; float: right">
-                        <img style="width: 25px" src="/static/profile.png" alt="">
-                    </a>
-                {% else %}
+<body>
+    <match-details class="match-details">
+					<div class="firsdt-cont">
+						<div class="firsdt">
+							<div class="league">
+								<span class="match-league"> {{ open_bet.match_league }} </span>
+								<div>
+									{% if open_bet.sport == "soccer" and is_canli_bahis %}
+										<span style="background-color: var(--baseColor); color: var(--generalTextColor); opacity: 0.8; width: fit-content; border-radius: 10px 0 0 10px; padding: 10px;">
+											<span id="half"></span>
+										</span>
+										<span id="minute" style="background-color: var(--baseColor); color: var(--generalTextColor); width: fit-content; border-radius: 0 10px 10px 0; padding: 10px;">
+											{{ current_score.Time }}'
+										</span>
+									{% endif %}
+								</div>
+							</div>
+							<div class="match-details">
+								<div class="date"> {{ open_bet.bet_ending_datetime }} </div>
+								<div class="teams">
+									<div class="team-cont">
+										<div class="team-logo">
+											<div class="team-sep">
+												<img style="width: 50px; height: 50px" src="/img/home_jersey.png" />
+											</div>
+										</div>
+										<div class="team-name"> {{ open_bet.team_1 }} </div>
+									</div>
+									{% if open_bet.sport == "soccer" and is_canli_bahis %}
+										<span class="teamvs">{{ current_score.HomeGoals }}</span>
+										<div class="teamvs"> : </div>
+										<span class="teamvs">{{ current_score.AwayGoals }}</span>
+									{% else %}
+										<div class="teamvs"> VS </div>
+									{% endif %}
+									<div class="team-cont">
+										<div class="team-logo">
+											<div class="team-sep">
+												<img style="width: 50px; height: 50px" src="/img/away_jersey.png" />
+											</div>
+										</div>
+										<div class="team-name"> {{ open_bet.team_2 }} </div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<script>
+						let elapsed_minute = {{ current_score.Time }}
+						function updateTime(){
+							elapsed_minute += 1
 
-                    <div id="desktop-join">
-                        <div onclick="document.location = '/login'"
-                             style="background-color: #292d30; border-radius: 50px; color: white; padding: 10px; box-sizing: border-box; margin-right: 5px; margin-top: -20px; display: inline-block">
-                            <span style="background-color: #212226; padding: 5px; padding-left: 12px; padding-right: 12px; border-radius: 50px; box-sizing: border-box"><i
-                                    class="fa-solid fa-right-to-bracket"></i></span>
-                            <span class="login-span" style="padding-right: 5px; padding-left: 5px; font-size: 16px">Giriş Yap</span>
-                        </div>
-                        <div onclick="document.location = '/signup'"
-                             style="background-color: #7b00ff; border-radius: 50px; color: white; padding: 10px; box-sizing: border-box; margin-right: 20px; margin-top: -20px; display: inline-block">
-                            <span style="background-color: #6000c0; padding: 5px; padding-left: 12px; padding-right: 12px; border-radius: 50px; box-sizing: border-box"><i
-                                    class="fa-solid fa-user-plus"></i></span>
-                            <span class="login-span" style="padding-right: 5px; padding-left: 5px">Kayıt Ol</span>
-                        </div>
-                    </div>
-                {% endif %}
-            </div>
-            <script>
-                if(window.innerHeight > window.innerWidth){
-                    document.getElementById("hid-mob").style.display = "none";
-                }
-            </script>
-            <div style="padding: 20px 50px; overflow-x: auto; float: left; white-space: nowrap; width: 100vw; background-color: #0f1012; box-sizing: border-box" id="navbar-main">
-                <span style="display: inline-block; color: white; font-family: 'Open Sans', sans-serif" onclick="document.location = '/'">
-                    Anasayfa
-                </span>
-                <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif" onclick="localStorage.clear(); window.location.reload()">
-                    Kampanyalar
-                </span>
-                <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif" onclick="document.location = '/?filter_q=daily'">
-                    Günlük Yarışmalar
-                </span>
-                <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif" onclick="document.location = '/?filter_q=weekly'">
-                    Haftalık Yarışmalar
-                </span>
-                <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif" onclick="document.location = '/?filter_q=daily'">
-                    Yüksek Limitli Yarışmalar
-                </span>
-                <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif" onclick="document.location = '/?filter_q=Premier-Lig'">
-                    Premier Lig
-                </span>
-                <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif" onclick="document.location = '/?filter_q=Süper-Lig'">
-                    Süper Lig
-                </span>
-                <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif" onclick="document.location = '/?filter_q=Bundesliga'">
-                    Bundesliga
-                </span>
-                <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif" onclick="document.location = '/?filter_q=LaLiga'">
-                    LaLiga
-                </span>
-                <span style="display: inline-block; margin-left: 50px; color: white; font-family: 'Open Sans', sans-serif" onclick="document.location = '/bahis'">
-                    Bahis
-                </span>
-            </div>
-        </div>
-        {% else %}
-            <br>
-        {% endif %}
-        <center style="width: 5%; margin-right: 1%; float: left; height: 600px; background: #0f1012; margin-left: 25px; border-radius: 15px; border: 1px solid rgba(255, 255, 255, .3)"
-            id="side-bar">
-        <div style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 10px; color: white; position: relative">
-            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
-                <i class="fa-solid fa-medal"></i>
-            </div>
-        </div>
+							if(60 > elapsed_minute > 45) {
+								document.getElementById("half").innerText = "Devre Arası";
+								document.getElementById("minute").innerText = "45";
+								return;
+							}
 
-        <div onclick="document.location = '/'" style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 10px; color: white; position: relative;">
-            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
-                <i class="fa-solid fa-house"></i>
-            </div>
-        </div>
+							if(elapsed_minute > 45){
+								document.getElementById("half").innerText = "2.Yarı";
+								elapsed_minute -= 15;
+							}
+							else
+							{
+								document.getElementById("half").innerText = "1.Yarı";
+							}
+							document.getElementById("minute").innerText = elapsed_minute.toString() + "'";
+						}
+						setInterval(updateTime, 1000*60)
+						updateTime()
+					</script>
+					<div style="white-space: nowrap; overflow-x: auto; padding-left: 15px; padding-top: 15px">
+						{% for i in bet_categories %}
+							<div onclick="searchCategory('{{ i }}')" style="background-color: var(--categoryBackground); border-radius: 5px; padding: 10px; box-sizing: border-box; margin-top: 5px; width: fit-content; color: var(--generalTextColor); display: inline-block">
+								{{ i }}
+							</div>
+						{% endfor %}
+						<script>
+							function searchCategory(data){
+								let odd_details = document.getElementsByClassName("odd-detail");
+								for(let i = 0; i < odd_details.length; i++){
+									odd_details[i].style.display = "none";
+									if(odd_details[i].innerHTML.includes(data)){
+										odd_details[i].style.display = "block";
+									}
+								}
+							}
+						</script>
+					</div>
 
-        <div onclick="document.location = '/bahis'"
-             style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 40px; color: white; position: relative; background: #7b00ff">
-            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
-                <i class="fa-solid fa-futbol"></i>
-            </div>
-        </div>
-
-        <div onclick="document.location = '/casino'" style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 10px; color: white; position: relative;">
-            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
-                <i class="fa-solid fa-dice"></i>
-            </div>
-        </div>
-
-        <div onclick="document.location = '/profile'"
-             style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 40px; color: white; position: relative;">
-            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
-                <i class="fa-solid fa-user"></i>
-            </div>
-        </div>
-
-        <div onclick="document.location = '/logout'"
-             style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 40px; color: white; position: relative;">
-            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
-                <i class="fa-solid fa-right-from-bracket"></i>
-            </div>
-        </div>
-
-        <div onclick="document.location = 'mailto:destek@m2betting.com'"
-             style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 10px; color: lawngreen; position: relative;">
-            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
-                <i class="fa-solid fa-envelope"></i>
-            </div>
-        </div>
-
-        <div onclick="document.location = '/howtoplay'"
-             style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 15px; width: 50px; height: 50px; margin-top: 10px; color: white; position: relative;">
-            <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; height: fit-content; width: fit-content">
-                <i class="fa-solid fa-circle-info"></i>
-            </div>
-        </div>
-
-    </center>
-        <div id="main-content-wrapper">
-        <center>
-            <center>
-    {% if not from_frame %}
-                <center style="background-color: #0f1012; width: 87%; border-radius: 15px">
-    {% else %}
-            <center style="background-color: #0f1012; width: 100%; border-radius: 15px">
-    {% endif %}
-
-        <div style="width: 100%; box-shadow: rgba(109, 107, 105, 0.2) 0px 8px 24px; box-sizing: border-box; text-align: left; color: white; border-radius: 15px 15px 0 0">
-            <div style="width: 100%; height: fit-content; background: rgb(40, 40, 40); background-size: cover; box-sizing: border-box; border-radius: 15px 15px 0 0;">
-                <div style="width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); box-sizing: border-box; border-radius: 15px 15px 0 0; background-image: url('/static/kadromilyon_ai_stadium_purple.jpg'); background-size: cover">
-                    <br>
-                    <p style="font-family: 'Open Sans', sans-serif; font-size: 12px; color: white; margin-top: -10px; margin-left: 15px;">{{ open_bet.match_league }}</p>
-                    <p style="font-family: 'Open Sans', sans-serif; color: white; font-size: 12px; margin-top: -10px; margin-left: 15px;">{{ open_bet.bet_ending_datetime }}</p>
-                    <div style="width: 100%; height: fit-content; padding: 15px; background-color: rgba(0, 0, 0, 0.5); box-sizing: border-box">
-                        <p style="font-family: 'Open Sans', sans-serif; color: white; font-size: 14px">Ev Sahibi: {{ open_bet.team_1 }}</p>
-                        <p style="font-family: 'Open Sans', sans-serif; color: white; margin-top: -10px; font-size: 14px">Deplasman: {{ open_bet.team_2 }}</p>
-                    </div>
-                    <br>
-                </div>
-            </div>
-            <p style="margin-left: 15px">Marketler</p>
-      {% for i in open_bet.bet_options %}
-
-        {% if i.has_odds %}
-                <div style="font-family: 'Open Sans', sans-serif; width: 100%; background-color: #242425; padding: 5px; padding-left: 15px; box-sizing: border-box">
-          {{ i.game_name }}
-        </div>
-        <div style="white-space: nowrap; overflow-x: auto;">
-            {% for c in i.bet_odds %}
-                {% if c.odd %}
-                    {% if c.user_selected %}
-                        <center style="border-radius: 0; color: white; padding: 10px 20px; background-color: #ff4c59; box-sizing: border-box; display: inline-block; width: 30%; min-width: fit-content" class="bet-odd" onclick="document.location = {% if not from_frame %} '/remove_bet/{{c.id}}' {% else %} '/remove_bet/{{c.id}}?iframe=True' {% endif %}">
-                            <span style="font-family: 'Open Sans', sans-serif">{{ c.value }}</span>
-                            <span style="color: white; margin-left: 15px">Oran: {{ c.odd }}</span>
-                        </center>
-                    {% else %}
-                        <center style="border-radius: 0; color: white; padding: 10px 20px; background-color: #1a1c1f; box-sizing: border-box; display: inline-block; width: 30%; min-width: fit-content" class="bet-odd" onclick="document.location = {% if not from_frame %} '/take_bet/{{c.id}}' {% else %} '/take_bet/{{c.id}}?iframe=True' {% endif %}">
-                            <span style="font-family: 'Open Sans', sans-serif">{{ c.value }}</span>
-                            <span style="color: white; margin-left: 15px">Oran: {{ c.odd }}</span>
-                        </center>
-                    {% endif %}
-                {% endif %}
-            {% endfor %}
-        </div>
-        {% endif %}
-      {% endfor %}
-    </div>
-    </center>
-                <br style="clear: both">
-                <br>
-                <br>
-                <br>
-                <span style="opacity: 0;">KM</span>
-            </center>
-            {% if not from_frame %}
-                <div style="background-color: #6a4898; position: fixed; bottom: 100px; right: 0; border-radius: 15px 0 0 15px; color: white; padding: 10px"  onclick="window.open('/coupon')">
-                    Kuponum
-                </div>
-                <center id="mobile-home" style="color: white; position: fixed; bottom: 0; left: 0; width: 100%; background-color: #26292d; padding-top: 15px; box-sizing: border-box;" onclick="openMobileMenu()">
-                <div onclick="document.location = '/bahis'" style="border-radius: 50px; background-color: transparent; display: inline-block; color: white; padding: 20px; width: fit-content; height: fit-content; font-size: 1rem">
-                    <i class="fa-solid fa-futbol"></i>
-                </div>
-                <div onclick="document.location = '/fantezi'" style="border-radius: 50px; background-color: transparent; display: inline-block; color: white; padding: 20px; width: fit-content; height: fit-content; font-size: 1rem">
-                    <i class="fa-solid fa-medal"></i>
-                </div>
-                <div onclick="document.location = '/'" style="border-radius: 50px; background-color: #6a4898; display: inline-block; color: white; padding: 20px; width: fit-content; height: fit-content; font-size: 1rem">
-                    <i class="fa-solid fa-house"></i>
-                </div>
-                <div onclick="document.location = '/casino'" style="border-radius: 50px; background-color: transparent; display: inline-block; color: white; padding: 20px; width: fit-content; height: fit-content; font-size: 1rem">
-                    <i class="fa-solid fa-dice"></i>
-                </div>
-                <div onclick="document.location = '/profile'" style="border-radius: 50px; background-color: transparent; display: inline-block; color: white; padding: 20px; width: fit-content; height: fit-content; font-size: 1rem">
-                    <i class="fa-solid fa-user"></i>
-                </div>
-                <br>
-                <br>
-            </center>
-    <script>
-      function searchBet(){
-            let search_query = document.getElementById("search-box").value;
-            let searchable_divs = document.getElementsByClassName("searchable-div")
-            for(let i = 0; i < searchable_divs.length; i++){
-                if(search_query.length > 2){
-                    if(!searchable_divs[i].innerHTML.includes(search_query)){
-                        searchable_divs[i].style.display = "none";
-                    }else{
-                        searchable_divs[i].style.display = "table-row";
-                    }
-                }else{
-                    searchable_divs[i].style.display = "table-row";
-                }
-            }
-        }
-    </script></center>
-    <script>
-        function openMobileMenu(){
-            let mobile_menu = document.getElementById("mobile-menu");
-            if(mobile_menu.style.display === "block"){
-                mobile_menu.style.display = "none";
-                document.getElementById("mobile-home").innerHTML = "<i class=\"fa-solid fa-bars\"></i>"
-            }else{
-                mobile_menu.style.display = "block"
-                document.getElementById("mobile-home").innerHTML = "<i class=\"fa-solid fa-circle-chevron-down\"></i>"
-            }
-        }
-        if (window.innerWidth < window.innerHeight) {
-            document.getElementById("mobile-home").style.display = "block";
-            document.getElementById("desktop-join").style.marginTop = "5px";
-            document.getElementById("desktop-join").style += "; float: right; width: 300px; overflow-x: auto; white-space: nowrap; padding-top: 10px; margin-top: -13px"
-        } else {
-           document.getElementById("mobile-home").style.display = "none";
-        }
-    </script>
-            {% endif %}
-            <div style="background-color: black; box-shadow: rgba(109, 107, 105, 0.2) 0px 8px 24px; position: absolute; bottom: 120px; box-sizing: border-box; color: white; right: 0; display: none;" id="bet-added">
-                <div style="margin: 15px">
-                    Bahis Kupona Eklendi
-                </div>
-
-                <div id="bet-added-loadbar" style="background-color: #7b00ff; width: 100%; height: 2px; float: right"></div>
-            </div>
-    <script>
-        let decreaseInterval = setInterval(decreaseBetAddedLoadbar, 30)
-        function decreaseBetAddedLoadbar(){
-            if(parseInt(document.getElementById("bet-added-loadbar").style.width.replace("%", "")) === 0){
-                clearInterval(decreaseInterval);
-            }
-            document.getElementById("bet-added-loadbar").style.width = parseInt(document.getElementById("bet-added-loadbar").style.width.replace("%", "")) - 1 + "%"
-        }
-      function searchBet(){
-            let search_query = document.getElementById("search-box").value;
-            let searchable_divs = document.getElementsByClassName("searchable-div")
-            for(let i = 0; i < searchable_divs.length; i++){
-                if(search_query.length > 2){
-                    if(!searchable_divs[i].innerHTML.includes(search_query)){
-                        searchable_divs[i].style.display = "none";
-                    }
-                }else{
-                    searchable_divs[i].style.display = "table-row";
-                }
-            }
-        }
-    </script></center>
-    <script>
-        var url_string = window.location
-        var url = new URL(url_string);
-        var c = url.searchParams.get("added_new");
-        if (c === "True"){
-            document.getElementById("bet-added").style.display = "block";
-            setTimeout(betAdded, 3000)
-        }
-        function openMobileMenu(){
-            let mobile_menu = document.getElementById("mobile-menu");
-            if(mobile_menu.style.display === "block"){
-                mobile_menu.style.display = "none";
-                document.getElementById("mobile-home").innerHTML = "<i class=\"fa-solid fa-bars\"></i>"
-            }else{
-                mobile_menu.style.display = "block"
-                document.getElementById("mobile-home").innerHTML = "<i class=\"fa-solid fa-circle-chevron-down\"></i>"
-            }
-        }
-        if (window.innerWidth < window.innerHeight) {
-            document.getElementById("mobile-home").style.display = "block";
-            document.getElementById("desktop-join").style.marginTop = "5px";
-            document.getElementById("desktop-join").style += "; float: right; width: 300px; overflow-x: auto; white-space: nowrap; padding-top: 10px; margin-top: -13px"
-        } else {
-           document.getElementById("mobile-home").style.display = "none";
-        }
-        function betAdded(){
-            document.getElementById("bet-added").style.display = "none";
-        }
-    </script>
-    </div></div>
+					<div class="odds-cont">
+						<div class="odds-opts">
+							<div class="odds-sep">
+								<div class="odds-list">
+                                    {% for i in open_bet.bet_options %}
+                                    	{% if i.has_odds %}
+										<div class="odd-detail">
+											<span style="display: none">{{ i.category }} Tüm Bahisler</span>
+											<div class="odd-title" style="background-color: var(--categoryBackground); border-radius: 5px; padding: 10px; box-sizing: border-box; margin-top: 5px; width: 100%; opacity: 0.5;"> <p style="margin-bottom: 0">{{ i.game_name }}</p> </div>
+											<div class="odds">
+											{% for c in i.bet_odds %}
+												{% if c.odd %}
+													{% if c.user_selected %}
+														<odd onclick="document.location = '/remove_bet/{{c.id}}'"> <span>{{ c.value }}</span> <button class="odd" style="background-color: red; ">{{ c.odd }}</button> </odd>
+													{% else %}
+														<odd onclick="document.location = '/take_bet/{{c.id}}'"> <span>{{ c.value }}</span> <button class="odd">{{ c.odd }}</button> </odd>
+													{% endif %}
+												{% endif %}
+											{% endfor %}
+											</div>
+										</div>
+										{% endif %}
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+					</div>
+				</match-details>
 </body>
 </html>
