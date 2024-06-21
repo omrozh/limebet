@@ -56,6 +56,7 @@ def get_odds_cloudbet(is_live=False, sport_name="soccer"):
                     for selection in submarkets.get(submarket).get("selections"):
                         selections.append(selection)
                 category = "Tüm Bahisler"
+                print(market)
                 if len(language_dictionary.get(market).get("Variables")) > 0:
                     category = language_dictionary.get(market).get("Variables")[0]
                 odds.append(
