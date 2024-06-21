@@ -120,30 +120,10 @@
 					</div>
 					<div class="after">
 						<div class="col1">
-							{% for i in games_popular.0 %}
-								<a href="/casino/{{i.id}}"> <img style="max-height: 170px; border-radius: 10px" src="{{i.img}}"/> </a>
-							{% endfor %}
-						</div>
-						<div class="col2">
-							{% for i in games_popular.1 %}
-								<a href="/casino/{{i.id}}"> <img style="max-height: 170px; border-radius: 10px" src="{{i.img}}"/> </a>
-							{% endfor %}
-						</div>
-					</div>
-				</div>
-				<div class="col-live-casino">
-					<div class="first">
-						<a href="/casino"> <img src="/img/live-casino/live-casino.png"/> </a>
-					</div>
-					<div class="after">
-						<div class="col1">
-							{% for i in live_casino_games.0 %}
-								<a href="/casino/{{i.id}}"> <img style="max-height: 170px; border-radius: 10px" src="{{i.img}}"/> </a>
-							{% endfor %}
-						</div>
-						<div class="col2">
-							{% for i in live_casino_games.1 %}
-								<a href="/casino/{{i.id}}"> <img style="max-height: 170px; border-radius: 10px" src="{{i.img}}"/> </a>
+							{% for i in open_bets %}
+								<div style="background: var(--backgroundDark); padding: 10px; border-radius: 10px; color: var(--generalTextColor)">
+									<h3>{{ i.team_1 }} vs {{ i.team_2 }}</h3>
+								</div>
 							{% endfor %}
 						</div>
 					</div>

@@ -1500,44 +1500,11 @@ def index():
             "id": c.get("id")
         })
     live_casino_games = [[], []]
-    col_index = 0
-    for c in get_games(provider_id="22").get("games"):
-        try:
-            games_popular[col_index].append({
-                "img": c.get("img_vertical"),
-                "name": c.get("name"),
-                "provider_name": "-",
-                "category": c.get("category"),
-                "id": c.get("id")
-            })
-
-            if len(games_popular[col_index]) >= 8:
-                col_index += 1
-            if col_index == 2:
-                break
-        except AttributeError or KeyError:
-            pass
-    col_index = 0
-
-    for c in get_games(provider_id="1").get("games"):
-        try:
-            live_casino_games[col_index].append({
-                "img": c.get("img_vertical"),
-                "name": c.get("name"),
-                "provider_name": "-",
-                "category": c.get("category"),
-                "id": c.get("id")
-            })
-
-            if len(live_casino_games[col_index]) >= 8:
-                col_index += 1
-            if col_index == 2:
-                break
-        except AttributeError or KeyError:
-            pass
+    open_bets = OpenBet.query.filter(OpenBet.bet_ending_datetime > datetime.datetime.now()).filter_by(
+        has_odds=True).all()[:10]
     resp = flask.make_response(
         flask.render_template("anasayfa-yeni.html", current_user=current_user, providers=providers,
-                              games_popular=games_popular, live_casino_games=live_casino_games,
+                              open_bets=open_bets,
                               sliders_main=sliders_main, sliders_sub=sliders_sub))
     if flask.request.args.get("ref", False):
         resp.set_cookie('referrer', flask.request.args.get("ref"))
