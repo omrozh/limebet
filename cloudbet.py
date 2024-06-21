@@ -57,7 +57,7 @@ def get_odds_cloudbet(is_live=False, sport_name="soccer"):
                 category = "Tüm Bahisler"
                 if not language_dictionary.get(market, None):
                     continue
-                if len(language_dictionary.get(market, {}).get("Variables"), ()) > 0:
+                if len(language_dictionary.get(market, {}).get("Variables", [])) > 0:
                     category = language_dictionary.get(market).get("Variables")[0]
                 odds.append(
                     {
