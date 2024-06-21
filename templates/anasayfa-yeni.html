@@ -115,14 +115,11 @@
 					</div>
 				</div>
 				<div class="col-casino">
-					<div class="first">
-						<a href="/casino"> <img src="/img/casino/casino.png"/> </a>
-					</div>
 					<div class="after">
-						<div class="col1" style="overflow-x: auto; white-space: nowrap">
+						<div class="col1" style="overflow-x: auto; white-space: nowrap; width: 80vw;">
 							{% for i in open_bets %}
-								<div style="display:inline-block; background: var(--balanceBGColor); padding: 10px; border-radius: 10px; color: var(--generalTextColor)">
-									<p>{{ i.team_1 }} vs {{ i.team_2 }}</p>
+								<div style="display:inline-block; background: var(--balanceBGColor); box-sizing: border-box; padding: 15px; border-radius: 10px; color: var(--generalTextColor)">
+									<p style="margin-bottom: 0">{{ i.team_1 }} vs {{ i.team_2 }}</p>
 								</div>
 							{% endfor %}
 						</div>
