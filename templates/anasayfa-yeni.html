@@ -122,9 +122,10 @@
 									<span style="margin-bottom: 0">{{ i.team_1 }} vs {{ i.team_2 }}</span>
 									<br>
 									<br>
-									<span style="display: inline-block; width: 33%; background: var(--backgroundDark); border-radius: 10px 0 0 10px; padding: 10px;">{{ i.who_wins_odds.bet_odds.0.odd }}</span>
-									<span style="display: inline-block; width: 33%; background: var(--backgroundDark); padding: 10px;">{{ i.who_wins_odds.bet_odds.1.odd }}</span>
-									<span style="display: inline-block; width: 33%; background: var(--backgroundDark); padding: 10px; border-radius: 0 10px 10px 0;">{{ i.who_wins_odds.bet_odds.2.odd }}</span>
+
+									<span onclick="document.location = '/take_bet/{{ i.who_wins_odds.bet_odds.0.odd }}'" style="display: inline-block; width: 33%; background: var(--backgroundDark); border-radius: 10px 0 0 10px; padding: 10px;">{{ i.who_wins_odds.bet_odds.0.odd }}</span>
+									<span onclick="document.location = '/take_bet/{{ i.who_wins_odds.bet_odds.0.odd }}'" style="display: inline-block; width: 33%; background: var(--backgroundDark); padding: 10px;">{{ i.who_wins_odds.bet_odds.1.odd }}</span>
+									<span onclick="document.location = '/take_bet/{{ i.who_wins_odds.bet_odds.0.odd }}'" style="display: inline-block; width: 33%; background: var(--backgroundDark); padding: 10px; border-radius: 0 10px 10px 0;">{{ i.who_wins_odds.bet_odds.2.odd }}</span>
 								</div>
 							{% endfor %}
 						</div>
