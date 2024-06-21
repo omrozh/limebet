@@ -120,6 +120,7 @@
 							{% for i in open_bets %}
 								<div style="display:inline-block; background: var(--balanceBGColor); box-sizing: border-box; padding: 15px; border-radius: 10px; color: var(--generalTextColor)">
 									<p style="margin-bottom: 0">{{ i.team_1 }} vs {{ i.team_2 }}</p>
+									<span style="display: inline-block; width: 33%; background: var(--backgroundDark); padding: 10px;">{{ i.who_wins_odds.bet_odds.0 }}</span>
 								</div>
 							{% endfor %}
 						</div>
