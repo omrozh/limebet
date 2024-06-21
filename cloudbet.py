@@ -12,7 +12,6 @@ api_key = "eyJhbGciOiJSUzI1NiIsImtpZCI6IkhKcDkyNnF3ZXBjNnF3LU9rMk4zV05pXzBrRFd6c
 def get_odds_cloudbet(is_live=False, sport_name="soccer"):
     with open("cloudbets_readable_json", "r") as language_data:
         language_dictionary = json.loads(language_data.read())
-    print(language_dictionary)
 
     if not is_live:
         event_url = f"https://sports-api.cloudbet.com/pub/v2/odds/events?sport={sport_name}&live=false&limit=1000&from={int(time.time())}&to={int(time.time() + 3600 * 24)}"
@@ -56,8 +55,9 @@ def get_odds_cloudbet(is_live=False, sport_name="soccer"):
                     for selection in submarkets.get(submarket).get("selections"):
                         selections.append(selection)
                 category = "Tüm Bahisler"
-                print(market)
-                if len(language_dictionary.get(market).get("Variables")) > 0:
+                if not language_dictionary.get(market, None):
+                    continue
+                if len(language_dictionary.get(market, {}).get("Variables"), 0) > 0:
                     category = language_dictionary.get(market).get("Variables")[0]
                 odds.append(
                     {

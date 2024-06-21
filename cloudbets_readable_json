@@ -10,6 +10,7 @@
 			"home": "{{home}}"
 		}
 	},
+
 	"american_football.double_chance": {
 		"Name": "Double chance",
 		"Variables": [],
@@ -4136,6 +4137,19 @@
 		"Description": "See our [article on Asian Handicap](/{{locale}}/blog/betting-strategy/what-are-asian-handicaps/)",
 		"Variables": [
 			"Handikaplar"
+		],
+		"Split": "period=ft",
+		"Outcomes": {
+			"away": "{{away}} {{-handicap}}",
+			"home": "{{home}} {{handicap}}"
+		}
+	},
+	"soccer.1st_half_total_corners": {
+		"Name": "İlk Yarı Toplam Kornerler",
+		"Primary": true,
+		"Description": "See our [article on Asian Handicap](/{{locale}}/blog/betting-strategy/what-are-asian-handicaps/)",
+		"Variables": [
+			"Yarılar"
 		],
 		"Split": "period=ft",
 		"Outcomes": {
