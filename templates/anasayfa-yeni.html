@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 	<title>PegasusBet</title>
 	<link rel="stylesheet" href="/css/style.css" />
+	<link rel="stylesheet" href="/css/sportsbook.css" />
 	<link rel="stylesheet" href="/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="/css/fontawesome.min.css" />
 	<link rel="stylesheet" href="/plugins/owl/owl.carousel.min.css" />
@@ -114,21 +115,45 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-casino">
-					<div class="after">
-						<div class="col1" style="overflow-x: auto; white-space: nowrap; width: 80vw;">
-							{% for i in open_bets %}
-								<div style="display:inline-block; background: var(--balanceBGColor); box-sizing: border-box; padding: 15px; border-radius: 10px; color: var(--generalTextColor)">
-									<p style="margin-bottom: 0">{{ i.team_1 }} vs {{ i.team_2 }}</p>
-									<br>
-									<span style="display: inline-block; width: 33%; background: var(--backgroundDark); padding: 10px;">{{ i.who_wins_odds.bet_odds.0.odd }}</span>
-									<span style="display: inline-block; width: 33%; background: var(--backgroundDark); padding: 10px;">{{ i.who_wins_odds.bet_odds.1.odd }}</span>
-									<span style="display: inline-block; width: 33%; background: var(--backgroundDark); padding: 10px;">{{ i.who_wins_odds.bet_odds.2.odd }}</span>
+				<<div class="matchs-cont">
+							<div class="matchs">
+								{% for i in open_bets %}
+								<div class="item">
+									<div class="p1">
+										<div class="mtchdtls">
+											<span class="match"> <a onclick="document.getElementById('iframe-betting-detail').src = '/bahis/mac/{{ i.id }}'" href="#."> {{ i.team_1 }} - {{ i.team_2 }} </a> </span>
+											<span class="match-league"> {{ i.match_league }} </span>
+										</div>
+									</div>
+									<div class="p2">
+										<div class="time">
+											<a href="#." class="info"> <i class="fa-solid fa-circle-info"></i> </a>
+											<span class="timeText"> {{ i.bet_ending_datetime }} </span>
+											<a href="#." class="watc"> <i class="fa-solid fa-display"></i> </a>
+										</div>
+										{% if i.who_wins_bet %}
+											<div class="odds">
+												<div class="odd odd1"> <span class="d-hide m-show c-f odd-text">1</span> <button style="min-width: fit-content"> {{ i.who_wins_bet.bet_odds.0.odd }} </button> </div>
+												<div class="odd odd2"> <span class="d-hide m-show c-f odd-text">X</span> <button style="min-width: fit-content"> {{ i.who_wins_bet.bet_odds.1.odd }} </button> </div>
+												<div class="odd odd3"> <span class="d-hide m-show c-f odd-text">2</span> <button style="min-width: fit-content"> {{ i.who_wins_bet.bet_odds.2.odd }} </button> </div>
+											</div>
+										{% endif %}
+									</div>
 								</div>
-							{% endfor %}
+								{% endfor %}
+								<br>
+								<center>
+									{% for i in number_of_chunks %}
+										{% if offset == i %}
+											<a href="?offset={{ i }}" style="color: var(--backgroundDark); background-color: var(--generalTextColor); border-radius: 5px; border: 1px solid var(--buttonBorder); padding: 5px 15px 5px 15px; box-sizing: border-box; display: inline-block">{{ i + 1 }}</a>
+										{% else %}
+											<a href="?offset={{ i }}" style="color: var(--generalTextColor); border-radius: 5px; border: 1px solid var(--buttonBorder); padding: 5px 15px 5px 15px; box-sizing: border-box; display: inline-block">{{ i + 1 }}</a>
+										{% endif %}
+									{% endfor %}
+								</center>
+								<br>
+							</div>
 						</div>
-					</div>
-				</div>
 			</div>
 		</div>
 	</app-content>
