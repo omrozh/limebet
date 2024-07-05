@@ -1532,6 +1532,7 @@ def index():
                 break
         except AttributeError or KeyError:
             pass
+    print(games_popular)
     resp = flask.make_response(
         flask.render_template("anasayfa-yeni.html", current_user=current_user, providers=providers,
                               games_popular=games_popular, live_casino_games=live_casino_games,
