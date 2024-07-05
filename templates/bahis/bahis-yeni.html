@@ -16,7 +16,7 @@
 	<app-header>
 		<app-home-header class="other-pages sticky-top">
 			<div class="nav">
-				<div class="logo"> <a href="/"> <img src="//img/logo.png" /> </a> </div>
+				<div class="logo"> <a href="/"> <img src="/imglogo.png" /> </a> </div>
 				<div class="sportsbook-menu">
 					<div class="menu">
 						<a href="/" class="n-link"> <span>ANASAYFA</span> </a>
@@ -31,7 +31,7 @@
 						<a href="/login" class="btn login-btn"> <i class="fa-solid fa-right-to-bracket"></i> Giriş Yap </a>
 							<a href="/signup" class="btn register-btn"> <i class="fa-solid fa-user-plus"></i> Kayıt Ol </a>
 						<div class="lang-select">
-							<div class="view"> <img src="//img/flag/tr.png" /> TR <i class="fa-solid fa-chevron-down"></i> </div>
+							<div class="view"> <img src="/imgflag/tr.png" /> TR <i class="fa-solid fa-chevron-down"></i> </div>
 						</div>
 						<div class="timer" id="timer">
 							16:40:50
@@ -60,7 +60,7 @@
 						</a>
 						<a href="/profile" class="btn setting-btn"> <i class="fa-solid fa-gear"></i> </a>
 						<a href="/notifications" class="btn notification-btn"> <i class="fa-regular fa-bell"></i> <div class="counter">0</div> </a>
-						<a href="/profile" class="btn profile-btn"> <img src="//img/profile-demo.png" /> </a>
+						<a href="/profile" class="btn profile-btn"> <img src="/imgprofile-demo.png" /> </a>
 					</app-loggedin>
 					{% endif %}
 				</div>
@@ -101,7 +101,7 @@
 						</div>
 						<div class="allof">
 							<span class="selector"> <i class="fa fa-clock"></i> TÜMÜ </span>
-							<a href="#."> <img src="//img/logo.png" style="width: 50px;"> </a>
+							<a href="#."> <img src="/imglogo.png" style="width: 50px;"> </a>
 						</div>
 						<div class="mobile-menu">
 							<div class="mobileSlider owl-carousel">
@@ -406,7 +406,7 @@
 											<odd> <span>1</span> <button class="odd">1.41</button> </odd>
 											<odd> <span>X</span> <button class="odd">4.05</button> </odd>
 											<odd> <span>2</span> <button class="odd">11.8</button> </odd>
-											<div class="betbuilder"> <a href="#."> <div class="bb"> <img src="//img/sportsbooks/bb.png"> </div> </a> </div>
+											<div class="betbuilder"> <a href="#."> <div class="bb"> <img src="/imgsportsbooks/bb.png"> </div> </a> </div>
 										</div>
 									</div>
 								</div>
@@ -494,9 +494,9 @@
 	<app-mobilemenu>
 		<fast-menu class="page-sportsbook">
 			<div class="area">
-				<div class="info"> <a href="#."> <img src="//img/mobilemenu/i1.png" /> </a> </div>
+				<div class="info"> <a href="#."> <img src="/imgmobilemenu/i1.png" /> </a> </div>
 				<div class="line"></div>
-				<div class="livechat"> <a href="#."> <img src="//img/mobilemenu/i2.png" /> </a> </div>
+				<div class="livechat"> <a href="#."> <img src="/imgmobilemenu/i2.png" /> </a> </div>
 				{% if current_user.is_authenticated %}
 					<div onclick="document.getElementById('coupon-iframe').src = `/coupon?timestamp=${Date.now()}`" class="mybet-chart"> <a href="#."> <i class="fa-solid fa-futbol"></i> </a> </div>
 				{% else %}
@@ -504,11 +504,11 @@
 				{% endif %}
 			</div>
 			<div class="mobile-menu">
-				<a href="/casino?provider_id=122&provider_name=Evolution"> <img src="//img/mobilemenu/i7.png" /> <span>Canlı Casino</span> </a>
-				<a href="/bahis"> <img src="//img/mobilemenu/i4.png" /> <span>Spor</span> </a>
-				<a href='/'> <img src="//img/mobilemenu/i3.png" /> <span>Anasayfa</span> </a>
-				<a href="/canli_bahis"> <img src="//img/mobilemenu/i5.png" /> <span>Canlı Bahis</span> </a>
-				<a href="/casino"> <img src="//img/mobilemenu/i6.png" /> <span>Casino</span> </a>
+				<a href="/casino?provider_id=122&provider_name=Evolution"> <img src="/imgmobilemenu/i7.png" /> <span>Canlı Casino</span> </a>
+				<a href="/bahis"> <img src="/imgmobilemenu/i4.png" /> <span>Spor</span> </a>
+				<a href='/'> <img src="/imgmobilemenu/i3.png" /> <span>Anasayfa</span> </a>
+				<a href="/canli_bahis"> <img src="/imgmobilemenu/i5.png" /> <span>Canlı Bahis</span> </a>
+				<a href="/casino"> <img src="/imgmobilemenu/i6.png" /> <span>Casino</span> </a>
 			</div>
 		</fast-menu>
 	</app-mobilemenu>
