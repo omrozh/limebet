@@ -10,22 +10,28 @@ api_key = "na"
 
 
 def get_live_score(open_bet):
-    r = requests.get("https://www.thesportsdb.com/api/v1/json/3/latestsoccer.php")
+    r = requests.get("https://www.thesportsdb.com/api/v2/json/623577/livescore.php?s=Soccer")
     match_likelihood = 0
-    for i in r.json().get("teams").get("Match"):
+    if not r.json().get("events"):
+        return {
+            "intHomeScore": "-",
+            "intAwayScore": "-",
+            "strProgress": "N/A"
+        }
+    for i in r.json().get("events"):
         for c in open_bet.team_1.split(" "):
-            if c in i.get("HomeTeam"):
+            if c in i.get("strHomeTeam"):
                 match_likelihood += 1
         for c in open_bet.team_2.split(" "):
-            if c in i.get("AwayTeam"):
+            if c in i.get("strAwayTeam"):
                 match_likelihood += 1
-        if match_likelihood > 2:
+        if match_likelihood >= 2:
             return i
 
     return {
-        "HomeGoals": "-",
-        "AwayGoals": "-",
-        "Time": 0
+        "intHomeScore": "-",
+        "intAwayScore": "-",
+        "strProgress": "N/A"
     }
 
 
