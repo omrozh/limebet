@@ -2898,8 +2898,6 @@ def admin_panel_decline_bonus_request():
 
 @app.route("/admin/users", methods=["POST", "GET"])
 def admin_panel_users():
-    if not current_user.user_has_permission("add_users"):
-        return flask.redirect("/admin/home")
     if flask.request.method == "POST":
         user_permission = flask.request.values.get("user_permission")
         if user_permission == "new-class" and not flask.request.values.get("user_permission", None) == "affiliate":
@@ -3045,6 +3043,8 @@ def admin_panel_finance_deposit_methods():
 
 @app.route("/admin/players")
 def admin_panel_players():
+    if not current_user.user_has_permission("players"):
+        return flask.redirect("/admin/home")
     users = User.query
     if flask.request.args.get("user_ip", None):
         users = users.filter(User.ip_address == flask.request.args.get("user_ip", None))
