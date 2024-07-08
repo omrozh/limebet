@@ -3045,8 +3045,6 @@ def admin_panel_finance_deposit_methods():
 
 @app.route("/admin/players")
 def admin_panel_players():
-    if not current_user.user_has_permission("players"):
-        return flask.redirect("/admin/home")
     users = User.query
     if flask.request.args.get("user_ip", None):
         users = users.filter(User.ip_address == flask.request.args.get("user_ip", None))
