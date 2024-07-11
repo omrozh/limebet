@@ -1,11 +1,16 @@
 import requests
 
-kralpay_site_id = "grand casino site id"
-kralpay_merchant_key = "grand casino site key"
+kralpay_site_id = 650
+kralpay_merchant_key = "1fmf8bsuz6tt4fesucmt3zfn1ubkzl6jmuanabzyy8cf8rhnifdac28tio1uru47gpdl"
 
 vevopay_firma_key = "grand casino vevopay key(s)"
 
 deposit_types = {
+    "kralpay_papara": "Kralpay Papara",
+    "kralpay_crypto": "Kralpay Kripto",
+    "kralpay_mft": "Kralpay Mefete",
+    "kralpay_banka": "Kralpay Banka Transferi",
+    "kralpay_creditCard": "Kralpay Kredi Kartı",
 }
 
 # TO DO: Add all finance options back.
