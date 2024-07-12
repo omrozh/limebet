@@ -1,19 +1,31 @@
 import requests
 
-kralpay_site_id = 650
-kralpay_merchant_key = "1fmf8bsuz6tt4fesucmt3zfn1ubkzl6jmuanabzyy8cf8rhnifdac28tio1uru47gpdl"
+kralpay_site_id = "643"
+kralpay_merchant_key = "9cj4aj2b53jmk6c534c2sufrop750ab39407e34jnh04bic07l9cyd2ziuytmn6kchka"
 
-vevopay_firma_key = "grand casino vevopay key(s)"
+vevopay_firma_key = "c800e21052a99ac4e8bf349487721db1"
+
+deposit_keys_vevopay = {
+    "vevopay_papara": "c800e21052a99ac4e8bf349487721db1",
+    "vevopay_havale": "9b10b8e92204a56ad64daaaa3f9b85a9",
+    "vevopay_mefete": "691b79f195b9cdb422eb1a73accd54e8",
+    "vevopay_payfix": "1ef7651f987cbc76aa13fc5e4ea5046d",
+    "vevopay_parazula": "eddf7d08c0ffab9486b40eb5fe489622",
+    "vevopay_cmt": "2fca0aa40f29e90b7468382a8f628b64",
+}
 
 deposit_types = {
     "kralpay_papara": "Kralpay Papara",
-    "kralpay_crypto": "Kralpay Kripto",
-    "kralpay_mft": "Kralpay Mefete",
     "kralpay_banka": "Kralpay Banka Transferi",
-    "kralpay_creditCard": "Kralpay Kredi Kartı",
+    "vevopay_papara": "Vevopay Papara",
+    "vevopay_havale": "Vevopay Havale",
+    "vevopay_mefete": "Vevopay Mefete",
+    "vevopay_payfix": "Vevopay Payfix",
+    "vevopay_parazula": "Vevopay Parazula",
+    "vevopay_cmt": "Vevopay CMT"
 }
 
-# TO DO: Add all finance options back.
+# TO DO: Add kralpay kripto, mefete and kredi kartı back.
 
 withdraw_types_kralpay = {
     "auto_kralpay_papara": "Papara",
@@ -35,11 +47,8 @@ def get_available_banks_kralpay():
     url = f"https://kralpy.com/api/v1/available-banks/?sid={kralpay_site_id}"
     r = requests.get(url, verify=False)
     bank_list = {}
-    try:
-        for i in r.json().get("banks"):
-            bank_list[i.get("isim")] = i.get("id")
-    except:
-        bank_list = {"-": 1}
+    for i in r.json().get("banks"):
+        bank_list[i.get("isim")] = i.get("id")
     return bank_list
 
 
@@ -47,20 +56,21 @@ def get_iframe_vevopay(transaction, method):
     user = transaction.user
     data = {
             "islem": "iframeolustur",
-            "firma_key": vevopay_firma_key,
+            "firma_key": deposit_keys_vevopay.get(method),
             "kullanici_isim": user.user_information.name,
             "kullanici_id": user.id,
             "referans": transaction.id,
             "yontem": method.replace("vevopay_", "")
         }
-    return requests.post("https://management.vevopay.com/api/veri", data=data, verify=False).json().get("iframe_bilgileri", {}).get("link", None)
+    r = requests.post("https://management.vevopay.com/api/veri", data=data, verify=False)
+    return r.json().get("iframe_bilgileri", {}).get("link", None)
 
 
 def withdraw_vevopay(withdrawal_request):
     user = withdrawal_request.user
     data = {
         "Process": "Withdrawal",
-        "firma_key": vevopay_firma_key,
+        "firma_key": deposit_keys_vevopay.get(withdrawal_request.withdraw_type.replace("auto_", "")),
         "UserID": user.id,
         "NameSurname": user.user_information.name,
         "BankAccountNo": withdrawal_request.withdraw_to,
