@@ -3150,7 +3150,8 @@ def casino_get_balance():
         }
     return flask.jsonify({
         "status": True,
-        "balance": round(subject_user.balance, 2)
+        "balance": round(subject_user.balance, 2) + subject_user.casino_bonus_balance
+
     })
 
 
